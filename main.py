@@ -1,3 +1,6 @@
+#Import course Run py Functions
+from courseRunFunctions import *
+
 import tkinter as tk
 from tkinter import *
 from tkinter import ttk
@@ -66,6 +69,10 @@ class StartPage(tk.Frame):
 class PageOne(tk.Frame):
 
     def __init__(self, parent, controller):
+
+        #load initialization method from courseRunFunctions.py  
+        initialization()      
+        
         tk.Frame.__init__(self, parent)
 
         self.inner = tk.Frame(self)
@@ -82,7 +89,9 @@ class PageOne(tk.Frame):
         label2 = tk.Label(self, text="You are about to add a course run")
         label2.place(relx=0.5, rely=0.15, anchor=CENTER)
 
-        def AddCourse():
+        def AddCourse():  
+            response = postHttpRequest("https://uat-api.ssg-wsg.sg/courses/runs" , loadPayload("CourseRunPayLoad.json"))
+            saveContent(response,  "demoInfo.json")
             messagebox.showinfo("Successful", "Added Course into API")
 
         def DownloadFile():

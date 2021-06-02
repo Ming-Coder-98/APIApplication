@@ -1,0 +1,101 @@
+{
+  "course": {
+    "courseReferenceNumber": "TGS-2020000697", 
+    "trainingProvider": {
+      "uen": "199900650G"
+    },
+    "runs": [
+      {
+        "sequenceNumber": 0,
+        "registrationDates": {
+          "opening": 20210605,
+          "closing": 20210630
+        },
+        "courseDates": {
+          "start": 20210701,
+          "end": 20210725
+        },
+        "scheduleInfoType": {
+          "code": "01",
+          "description": "Description"
+        },
+        "scheduleInfo": "Sat / 5 Sats / 9am - 6pm",
+        "venue": {
+          "block": "112A",
+          "street": "Street ABC",
+          "floor": "15",
+          "unit": "001",
+          "building": "Building ABC",
+          "postalCode": 570111,
+          "room": "24",
+          "wheelChairAccess": true
+        },
+        "intakeSize": 50,
+        "threshold": 10,
+        "registeredUserCount": 50,
+        "modeOfTraining": "1",
+        "courseAdminEmail": "test@email.com",
+        "courseVacancy": {
+          "code": "L",
+          "description": "Limited Vacancy"
+        },
+        "file": {
+          "Name": "ABC.jpg",
+          "content": "test"
+        },
+        "sessions": [
+          {
+            "startDate": "20210701",
+            "endDate": "20210725",
+            "startTime": "15:30",
+            "endTime": "17:30",
+            "modeOfTraining": "9",
+            "venue": {
+              "block": "112ABC",
+              "street": "Street ABCDE",
+              "floor": "15",
+              "unit": "001",
+              "building": "Building ABCDE",
+              "postalCode": "570111",
+              "room": "24",
+              "wheelChairAccess": true,
+              "primaryVenue": false
+            }
+          }
+        ],
+        "linkCourseRunTrainer": [
+          {
+            "trainer": {
+              "trainerType": {
+                "code": "2",
+                "description": "New"
+              },
+              "indexNumber": 0,
+              "id": "",
+              "name": "string",
+              "email": "abc@test.com",
+              "inTrainingProviderProfile": true,
+              "domainAreaOfPractice": "Testing Management in Computer Application and Diploma in Computer Application",
+              "experience": "Testing ABC",
+              "linkedInURL": "https://sg.linkedin.com/company/linkedin/abc",
+              "salutationId": 1,
+              "photo": {
+                "name": "abc.jpg",
+                "content": "testcontent"
+              },
+              "linkedSsecEQAs": [
+                {
+                  "description": "EQA test 4",
+                  "ssecEQA": {
+                    "code": "12"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
+
