@@ -19,7 +19,7 @@ def initialization():
 
       try:
             #Load the runId saved
-            tempFile = open("demoInfo.json")
+            tempFile = open("config.json")
             jsonTempFile = json.load(tempFile)
             runId = jsonTempFile["runId"]
             
@@ -35,8 +35,8 @@ def initialization():
                   postHttpRequest("https://uat-api.ssg-wsg.sg/courses/runs/" + str(runId), payload)
       except:
             print ("There is an Error reading the File - Initialization")
-            # payload = "{\"course\":{\"courseReferenceNumber\":\"TGS-2020000697\",\"trainingProvider\":{\"uen\":\"199900650G\"},\"run\":{\"action\":\"delete\"}}}"
-            # postHttpRequest("https://uat-api.ssg-wsg.sg/courses/runs/223684", payload, None)
+            payload = "{\"course\":{\"courseReferenceNumber\":\"TGS-2020000697\",\"trainingProvider\":{\"uen\":\"199900650G\"},\"run\":{\"action\":\"delete\"}}}"
+            postHttpRequest("https://uat-api.ssg-wsg.sg/courses/runs/223874", payload)
 
 def getHttpRequest(request_url):
       response = requests.get(request_url, cert = certPath)
@@ -73,5 +73,3 @@ def saveContent(content, fileName):
       demoInfo["CourseRefNum"] =  ((json.loads(payload)["course"])["courseReferenceNumber"])
       demoInfo["ExtCourseRefNum"] = ((json.loads(payload)["course"])["courseReferenceNumber"])
       saveJsonFormat(demoInfo, fileName)
-
-

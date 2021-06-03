@@ -90,9 +90,12 @@ class PageOne(tk.Frame):
         label2.place(relx=0.5, rely=0.15, anchor=CENTER)
 
         def AddCourse():  
-            response = postHttpRequest("https://uat-api.ssg-wsg.sg/courses/runs" , loadPayload("CourseRunPayLoad.json"))
-            saveContent(response,  "demoInfo.json")
-            messagebox.showinfo("Successful", "Added Course into API")
+            try:
+                response = postHttpRequest("https://uat-api.ssg-wsg.sg/courses/runs" , loadPayload("CourseRunPayLoad.json"))
+                saveContent(response,  "config.json")
+                messagebox.showinfo("Successful", "Added Course into API")
+            except:
+                messagebox.showerror("Invalid Response","Unable to add Course Run")
 
         def DownloadFile():
             messagebox.showinfo("Successful", "CSV file has been downloaded")
