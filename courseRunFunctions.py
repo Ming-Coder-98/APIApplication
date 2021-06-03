@@ -3,7 +3,7 @@ import requests
 import json
 
 baseurl = "https://uat-api.ssg-wsg.sg/courses/runs"
-certPath = ('/Users/User/KeyAndCert/CorpPass/cert.pem', '/Users/User/KeyAndCert/CorpPass/key.pem')
+certPath = ('/Users/Ming/Documents/APIApplication/cert.pem', '/Users/Ming/Documents/APIApplication/key.pem')
 payload = ''
 demoInfo = {
       "StatusCode": "",

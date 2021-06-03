@@ -9,6 +9,9 @@ from tkinter import messagebox
 import json
 import datetime
 from PIL import ImageTk, Image
+from tkinter import filedialog
+import pandas as pd
+
 
 # Quit Program
 def quit_program():
@@ -91,14 +94,34 @@ class PageOne(tk.Frame):
 
         def AddCourse():  
             try:
-                response = postHttpRequest("https://uat-api.ssg-wsg.sg/courses/runs" , loadPayload("CourseRunPayLoad.json"))
+                response = postHttpRequest("https://uat-api.ssg-wsg.sg/courses/runs", loadPayload("CourseRunPayLoad.json"))
                 saveContent(response,  "config.json")
-                messagebox.showinfo("Successful", "Added Course into API")
+                messagebox.showinfo("Successful", "Added Course into API \n Status Code: 200")
             except:
-                messagebox.showerror("Invalid Response","Unable to add Course Run")
+                messagebox.showerror("Invalid Response", "Unable to add as Course Run has already been added. \n Status Code: 400 ", )
 
         def DownloadFile():
-            messagebox.showinfo("Successful", "CSV file has been downloaded")
+            try:
+                df = pd.read_json('/Users/Ming/Documents/APIApplication/CourseRunPayLoad.json')
+                df.to_csv(filedialog.asksaveasfilename(defaultextension='.csv'))
+                messagebox.showinfo("Successful", "CSV file has been downloaded")
+            except:
+                print("user didnt save.")
+
+        def ViewJsonFile():
+            json_filename = 'CourseRunPayLoad.json'
+            Interface = Tk()
+
+            with open(json_filename, 'r') as inside:
+                data = json.load(inside)
+
+            text = Text(Interface, state='normal', height=20, width=50)
+            text.place(x=20, y=40)
+            text.insert('1.0', str(data))
+
+            Interface.geometry("450x200")
+
+            Interface.mainloop()
 
         # When button is pressed, function should be called
         AddButton = tk.Button(self, command=AddCourse, text='Add', width=10, pady=5, bg="white")
@@ -108,10 +131,12 @@ class PageOne(tk.Frame):
         BackButton.place(relx=0.3, rely=0.5, anchor=CENTER)
         NextButton = tk.Button(self, text="Next", width=10, pady=5, bg="white", command=lambda: controller.show_frame(PageTwo))
         NextButton.place(relx=0.7, rely=0.5, anchor=CENTER)
-        ViewButton = tk.Button(self, text="View course run in CSV", width=18, pady=5, bg="white",
+        ViewButton = tk.Button(self, text="Download course run in CSV", width=22, pady=5, bg="white",
                                command=DownloadFile)
         ViewButton.place(relx=0.5, rely=0.6, anchor=CENTER)
-
+        ViewJsonButton = tk.Button(self, text="View course run in json", width=18, pady=5, bg="white",
+                               command=ViewJsonFile)
+        ViewJsonButton.place(relx=0.5, rely=0.65, anchor=CENTER)
 
 
 # Add enrollment into API
@@ -138,6 +163,10 @@ class PageTwo(tk.Frame):
             messagebox.showinfo("Successful", "Added Enrollment into API")
 
         def DownloadFile():
+            global read_file
+
+            export_file_path = filedialog.asksaveasfilename(defaultextension='.csv')
+            read_file.to_csv(export_file_path, index=None, header=True)
             messagebox.showinfo("Successful", "CSV file has been downloaded")
 
         # When button is pressed, function is called
