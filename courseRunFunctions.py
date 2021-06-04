@@ -18,7 +18,6 @@ def saveCourseRunDetails(content):
 
 #If data exists, delete
 def courseRunInitialization():
-      print("initialization Function")
 
       try:
             #Load the runId saved
@@ -35,6 +34,7 @@ def courseRunInitialization():
             if (resp.status_code < 400):
                   print("Deletion")
                   deleteCourserun(runId, jsonTempFile["CourseRefNum"], jsonTempFile["UEN"])
+                  print("Successfully delete Course Run")
 
 
       except:

@@ -1,3 +1,4 @@
+from os import error
 from cryptography.hazmat.primitives.ciphers.base import CipherContext
 from EncryptAndDecryptFunction import *
 from HttpRequestFunction import *
@@ -12,19 +13,24 @@ cancelPayloadurl = "https://uat-api.ssg-wsg.sg/tpg/enrolments/details/ENR-2106-0
 
 def enrollmentInitialization():
     print ("enrolment Init")
+
     #Search Enrolment
     tempFile = open("config.json")
     jsonTempFile = json.load(tempFile)
     enrolmentId = jsonTempFile["enrollRefNum"]
-    searchUrl = "https://uat-api.ssg-wsg.sg/tpg/enrolments/details/" + str(enrolmentId)
-    resp = getHttpRequest(searchUrl)
-    plaintext = doDecryption(resp.text)
+    if (enrolmentId != ""):
+        searchUrl = "https://uat-api.ssg-wsg.sg/tpg/enrolments/details/" + str(enrolmentId)
+        resp = getHttpRequest(searchUrl)
+        #print(resp.text)
 
-    #Delete if exists a record
-    json_load = json.loads(plaintext.decode())
-    if (int(json_load["status"]) < 400):
-        print("There is an Enrolment record")
-        cancelEnrolment(enrolmentId)
+        plaintext = doDecryption(resp.text)
+        #print(plaintext)
+
+        #Delete if exists a record
+        json_load = json.loads(plaintext.decode())
+        if (int(json_load["status"]) < 400):
+            print("There is an Enrolment record")
+            cancelEnrolment(enrolmentId)
 
     #load config File
     configInfo = loadFile("config.json")
@@ -49,7 +55,7 @@ def addEnrolment():
     plainText = doDecryption(response.text)
     pprintJsonFormat(plainText)
     json_load = json.loads(plainText.decode())
-    
+    #print(json_load["error"]["details"]["message"])
     #Update the enrolment Ref Number in config.json
     if (json_load["status"] < 400):
         print("Successfully Add Enrolment")
@@ -82,9 +88,9 @@ def saveEnrolmentId(enrolId):
 
 
 enrollmentInitialization()
-# resp = getHttpRequest("https://uat-api.ssg-wsg.sg/courses/runs/224002")
+# resp = getHttpRequest("https://uat-api.ssg-wsg.sg/courses/runs/224049")
 # print(resp.status_code)
-addEnrolment()
-#cancelEnrolment("ENR-2106-000129")
+# addEnrolment()
+# cancelEnrolment("ENR-2106-000138")
 
 
