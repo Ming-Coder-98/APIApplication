@@ -1,5 +1,5 @@
 #Import course Run py Functions
-from CourseRunFunctions import *
+from courseRunFunctions import *
 
 import tkinter as tk
 from tkinter import *
@@ -11,6 +11,17 @@ import datetime
 from PIL import ImageTk, Image
 from tkinter import filedialog
 import pandas as pd
+
+# Open the json file where the "courserun info" is being stored
+with open("CourseRunPayLoad.json") as f:
+    # Load the json file data into local variable "data"
+    data = json.load(f)
+# Store the list of data into local variable "courseTPinfo & courseRuninfo"
+courseTPinfo = data["course"]
+courseRuninfo = data["course"]["runs"]
+courseTPUEN = courseTPinfo["trainingProvider"]["uen"]
+courseRefNumber = courseTPinfo["courseReferenceNumber"]
+courseAdminEmail = courseRuninfo[0]["courseAdminEmail"]
 
 
 # Quit Program
@@ -89,8 +100,15 @@ class PageOne(tk.Frame):
         img2.image = render
         img2.place(x=0, y=0, relwidth=1, relheight=1)
 
-        label2 = tk.Label(self, text="You are about to add a course run")
-        label2.place(relx=0.5, rely=0.15, anchor=CENTER)
+        label1 = tk.Label(self, text="You are about to add a Course Run to the course below: ")
+        label1.place(relx=0.5, rely=0.15, anchor=CENTER)
+        label2 = tk.Label(self, text="Course Reference Number: " + courseRefNumber)
+        label2.place(relx=0.5, rely=0.2, anchor=CENTER)
+        label3 = tk.Label(self, text="Training Provider UEN: " + courseTPUEN)
+        label3.place(relx=0.5, rely=0.25, anchor=CENTER)
+        label4 = tk.Label(self, text="Course Admin Email: " + courseAdminEmail)
+        label4.place(relx=0.5, rely=0.3, anchor=CENTER)
+
 
         def AddCourse():  
             try:

@@ -20,7 +20,6 @@ key = b64decode(configInfoJson["key"])
 iv = (configInfoJson["IV"]).encode()
 cipher = Cipher(algorithms.AES(key), modes.CBC(iv), backend=backend)
 
-
 #encryption Function
 def doEncryption(payloadByte):
     #preConfiguration
