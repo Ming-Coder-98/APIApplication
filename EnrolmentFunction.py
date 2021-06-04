@@ -38,10 +38,8 @@ enrollmentInitialization()
 enrollmentPayload = loadPayload("EnrollmentPayLoad.json")
 
 ciptertext = doEncryption(enrollmentPayload.encode())
-
+print(ciptertext)
 response = requests.post(createEnrollmenturl, json = ciptertext.decode(), cert=certPath)
-
-
 plainText = doDecryption(response.text)
 pprintJsonFormat(plainText)
 
