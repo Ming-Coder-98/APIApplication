@@ -1,0 +1,44 @@
+{
+    "enrolment": {
+        "course": {
+            "run": {
+                "id": 223968
+            },
+            "referenceNumber": "TGS-2020000697"
+        },
+        "trainee": {
+            "id": "S9918316H",
+            "fees": {
+                "discountAmount": 50.25,
+                "collectionStatus": "Full Payment"
+            },
+            "idType": {
+                "type": "NRIC"
+            },
+            "employer": {
+                "uen": "199900650G",
+                "contact": {
+                    "fullName": "Stephen Chua",
+                    "emailAddress": "abc@abc.com",
+                    "contactNumber": {
+                        "countryCode": "65",
+                        "phoneNumber": "88881234"
+                    }
+                }
+            },
+            "fullName": "Jon Chua",
+            "dateOfBirth": "1950-10-16",
+            "emailAddress": "abc@abc.com",
+            "contactNumber": {
+                "countryCode": "65",
+                "phoneNumber": "88884321"
+            },
+            "enrolmentDate": "2021-07-15",
+            "sponsorshipType": "EMPLOYER"
+        },
+        "trainingPartner": {
+            "uen": "199900650G",
+            "code": "199900650G-01"
+        }
+    }
+}

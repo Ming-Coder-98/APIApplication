@@ -1,5 +1,5 @@
 #Import course Run py Functions
-from courseRunFunctions import *
+from CourseRunFunctions import *
 
 import tkinter as tk
 from tkinter import *
@@ -71,7 +71,7 @@ class PageOne(tk.Frame):
     def __init__(self, parent, controller):
 
         #load initialization method from courseRunFunctions.py  
-        initialization()      
+        courseRunInitialization()      
         
         tk.Frame.__init__(self, parent)
 
@@ -91,7 +91,8 @@ class PageOne(tk.Frame):
 
         def AddCourse():  
             try:
-                response = postHttpRequest("https://uat-api.ssg-wsg.sg/courses/runs" , loadPayload("CourseRunPayLoad.json"))
+                #payload variable is obtained from CourseRunFunction.py
+                response = postHttpRequest("https://uat-api.ssg-wsg.sg/courses/runs" , payload)
                 saveContent(response,  "config.json")
                 messagebox.showinfo("Successful", "Added Course into API")
             except:

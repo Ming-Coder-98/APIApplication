@@ -1,7 +1,12 @@
 {
+    "key": "WB9YusKNEEwYwpXuv0Bx5yuGzPIhXTBnMevAumwtcQ4=",
+    "certPath": "/Users/User/KeyAndCert/CorpPass/cert.pem",
+    "keyPath": "/Users/User/KeyAndCert/CorpPass/key.pem",
+    "IV": "SSGAPIInitVector",
     "StatusCode": 200,
     "UEN": "199900650G",
     "CourseRefNum": "TGS-2020000697",
     "ExtCourseRefNum": "TGS-2020000697",
-    "runId": 223876
+    "runId": 223968,
+    "enrollRefNum": ""
 }
