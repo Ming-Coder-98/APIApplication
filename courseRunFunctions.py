@@ -1,3 +1,4 @@
+from EnrolmentFunction import addEnrolment, enrollmentInitialization
 import requests
 import json
 from HttpRequestFunction import *
@@ -6,8 +7,6 @@ baseurl = "https://uat-api.ssg-wsg.sg/courses/runs"
 payload = loadPayload("CourseRunPayLoad.json")
 
 def saveContent(content, fileName):
-
-      global demoInfo
       configInfo = loadPayload("config.json")
       configInfo = json.loads(configInfo)
       configInfo["StatusCode"] = content.status_code
@@ -30,17 +29,28 @@ def courseRunInitialization():
             
 
             #Call a Get HTTP to see if runId exists
-            print("Search Existing runId")
+            print("Search existing runId")
             resp = getHttpRequest("https://uat-api.ssg-wsg.sg/courses/runs/" + str(runId))
             
             #Deletion
             if (resp.status_code < 400):
                   print("Deletion")
-                  payload = "{\"course\":{\"courseReferenceNumber\":\"TGS-2020000697\",\"trainingProvider\":{\"uen\":\"199900650G\"},\"run\":{\"action\":\"delete\"}}}"
+                  #deleteCourserun(runId, jsonTempFile["CourseRefNum"], jsonTempFile["UEN"])
+                  payload = "{\"course\":{\"courseReferenceNumber\":\"TGS-2020001874\",\"trainingProvider\":{\"uen\":\"199900650G\"},\"run\":{\"action\":\"delete\"}}}"
                   postHttpRequest("https://uat-api.ssg-wsg.sg/courses/runs/" + str(runId), payload)
+
       except:
             print ("There is an Error reading the File - Initialization")
-            payload = "{\"course\":{\"courseReferenceNumber\":\"TGS-2020000697\",\"trainingProvider\":{\"uen\":\"199900650G\"},\"run\":{\"action\":\"delete\"}}}"
-            postHttpRequest("https://uat-api.ssg-wsg.sg/courses/runs/223947", payload)
+            # payload = "{\"course\":{\"courseReferenceNumber\":\"TGS-2020000697\",\"trainingProvider\":{\"uen\":\"199900650G\"},\"run\":{\"action\":\"delete\"}}}"
+            # postHttpRequest("https://uat-api.ssg-wsg.sg/courses/runs/223947", payload)
 
 
+def addCourserun():
+      #payload variable is obtained from CourseRunFunction.py
+      response = postHttpRequest("https://uat-api.ssg-wsg.sg/courses/runs" , payload)
+      saveContent(response,  "config.json")
+
+# def deleteCourserun(runId, crn, uen):
+#       payload = "{\"course\":{\"courseReferenceNumber\":\"" + crn + "\",\"trainingProvider\":{\"uen\":\"" + uen + "\"},\"run\":{\"action\":\"delete\"}}}"
+#       postHttpRequest("https://uat-api.ssg-wsg.sg/courses/runs/" + str(runId), payload)
+      

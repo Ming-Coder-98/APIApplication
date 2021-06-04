@@ -1,6 +1,6 @@
 {
   "course": {
-    "courseReferenceNumber": "TGS-2020000697", 
+    "courseReferenceNumber": "TGS-2020001874", 
     "trainingProvider": {
       "uen": "199900650G"
     },
@@ -8,7 +8,7 @@
       {
         "sequenceNumber": 0,
         "registrationDates": {
-          "opening": 20210605,
+          "opening": 20210615,
           "closing": 20210630
         },
         "courseDates": {

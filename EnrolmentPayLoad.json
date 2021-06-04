@@ -2,12 +2,12 @@
     "enrolment": {
         "course": {
             "run": {
-                "id": 223972
+                "id": 223996
             },
-            "referenceNumber": "TGS-2020000697"
+            "referenceNumber": "TGS-2020001874"
         },
         "trainee": {
-            "id": "S9518316D",
+            "id": "S8195288D",
             "fees": {
                 "discountAmount": 50.25,
                 "collectionStatus": "Full Payment"
@@ -21,17 +21,19 @@
                     "fullName": "Stephen Chua",
                     "emailAddress": "abc@abc.com",
                     "contactNumber": {
+                        "areaCode": "",
                         "countryCode": "65",
                         "phoneNumber": "88881234"
                     }
                 }
             },
-            "fullName": "David Tan",
-            "dateOfBirth": "1950-10-16",
+            "fullName": "Aileen Chong",
+            "dateOfBirth": "1981-01-10",
             "emailAddress": "abc@abc.com",
             "contactNumber": {
+                "areaCode": "",
                 "countryCode": "65",
-                "phoneNumber": "88884321"
+                "phoneNumber": "88881234"
             },
             "enrolmentDate": "2021-07-15",
             "sponsorshipType": "EMPLOYER"

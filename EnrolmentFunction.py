@@ -17,7 +17,6 @@ def enrollmentInitialization():
     # cancelPayload = "{\"enrolment\":{\"action\":\"Update\"}}"
     # cancelPayloadurl = "https://uat-api.ssg-wsg.sg/tpg/enrolments/details/{refNumber}"
     # postHttpRequestJson(cancelPayloadurl, json=cancelPayload)
-    
 
     #load config File
     configInfo = loadPayload("config.json")
@@ -27,19 +26,28 @@ def enrollmentInitialization():
     enrollmentPayload = loadPayload("EnrolmentPayLoad.json")
     enrollmentPayloadJson = json.loads(enrollmentPayload)
 
+    #Update the important value in enrolment payload with config file
     enrollmentPayloadJson["enrolment"]["course"]["run"]["id"] = configInfoJson["runId"]
     enrollmentPayloadJson["enrolment"]["course"]["referenceNumber"] = configInfoJson["CourseRefNum"]
     enrollmentPayloadJson["enrolment"]["trainingPartner"]["uen"] = configInfoJson["UEN"]
 
     saveJsonFormat(enrollmentPayloadJson, "EnrolmentPayLoad.json")
 
+def addEnrolment():
+    enrollmentPayload = loadPayload("EnrolmentPayLoad.json")
+    ciptertext = doEncryption(enrollmentPayload.encode())
+    response = requests.post(createEnrollmenturl, json = ciptertext.decode(), cert=certPath)
+    plainText = doDecryption(response.text)
+    pprintJsonFormat(plainText)
 
-enrollmentInitialization()
-enrollmentPayload = loadPayload("EnrollmentPayLoad.json")
+# enrollmentPayload = loadPayload("EnrollmentPayLoad.json")
 
-ciptertext = doEncryption(enrollmentPayload.encode())
-print(ciptertext)
-response = requests.post(createEnrollmenturl, json = ciptertext.decode(), cert=certPath)
-plainText = doDecryption(response.text)
-pprintJsonFormat(plainText)
+# enrollmentInitialization()
+# addEnrolment()
+
+# ciptertext = doEncryption(enrollmentPayload.encode())
+# print(ciptertext)
+# response = requests.post(createEnrollmenturl, json = ciptertext.decode(), cert=certPath)
+# plainText = doDecryption(response.text)
+# pprintJsonFormat(plainText)
 

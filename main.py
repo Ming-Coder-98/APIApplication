@@ -94,9 +94,7 @@ class PageOne(tk.Frame):
 
         def AddCourse():  
             try:
-                #payload variable is obtained from CourseRunFunction.py
-                response = postHttpRequest("https://uat-api.ssg-wsg.sg/courses/runs" , payload)
-                saveContent(response,  "config.json")
+                addCourserun()
                 messagebox.showinfo("Successful", "Added Course into API \n Status Code: 200")
             except:
                 messagebox.showerror("Invalid Response", "Unable to add as Course Run has already been added. \n Status Code: 400 ", )
