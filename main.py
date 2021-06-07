@@ -24,6 +24,20 @@ courseTPUEN = courseTPinfo["trainingProvider"]["uen"]
 courseRefNumber = courseTPinfo["courseReferenceNumber"]
 courseAdminEmail = courseRuninfo[0]["courseAdminEmail"]
 
+# Open the json file where the "config info" is being stored
+with open("config.json") as a:
+    # Load the json file data into local variable "data"
+    data1 = json.load(a)
+
+# Open the json file where the "enrolment info" is being stored
+with open("EnrolmentPayLoad.json") as b:
+    # Load the json file data into local variable "data"
+    data2 = json.load(b)
+# Store the list of data into local variable enrolmentinfo"
+courseEnrolmentInfo = data2["enrolment"]
+enrolmentCourseId = courseEnrolmentInfo["course"]["run"]["id"]
+enrolmentRefNo = courseEnrolmentInfo["course"]["referenceNumber"]
+enrolmentTpUen = courseEnrolmentInfo["trainingPartner"]["uen"]
 
 # Quit Program
 def quit_program():
@@ -110,13 +124,12 @@ class PageOne(tk.Frame):
         label4 = tk.Label(self, text="Course Admin Email: " + courseAdminEmail)
         label4.place(relx=0.5, rely=0.3, anchor=CENTER)
 
-
         def AddCourse():  
             try:
                 addCourserun()
-                messagebox.showinfo("Successful", "Added Course into API \n Status Code: 200")
+                messagebox.showinfo("Successful", "Status Code: 200 \nAdded Course into API")
             except:
-                messagebox.showerror("Invalid Response", "Unable to add as Course Run has already been added. \n Status Code: 400 ", )
+                messagebox.showerror("Invalid Response", "Status Code: 400 \nCourse Run already exist. The Course Run ID is " + str(data1["runId"]), )
 
         def DownloadFile():
             try:
@@ -126,7 +139,7 @@ class PageOne(tk.Frame):
             except:
                 print("user didnt save.")
 
-        def ViewJsonFile():
+        def ViewCourseRunJsonFile():
             json_filename = 'CourseRunPayLoad.json'
             Interface = Tk()
 
@@ -152,9 +165,9 @@ class PageOne(tk.Frame):
         ViewButton = tk.Button(self, text="Download course run in CSV", width=22, pady=5, bg="white",
                                command=DownloadFile)
         ViewButton.place(relx=0.5, rely=0.6, anchor=CENTER)
-        ViewJsonButton = tk.Button(self, text="View course run in json", width=18, pady=5, bg="white",
-                               command=ViewJsonFile)
-        ViewJsonButton.place(relx=0.5, rely=0.65, anchor=CENTER)
+        ViewCourseRunJsonButton = tk.Button(self, text="View course run in json", width=18, pady=5, bg="white",
+                               command=ViewCourseRunJsonFile)
+        ViewCourseRunJsonButton.place(relx=0.5, rely=0.65, anchor=CENTER)
 
 
 # Add enrollment into API
@@ -174,34 +187,66 @@ class PageTwo(tk.Frame):
         img2.image = render
         img2.place(x=0, y=0, relwidth=1, relheight=1)
 
-        label2 = tk.Label(self, text="You are about to add an enrollment")
-        label2.place(relx=0.5, rely=0.15, anchor=CENTER)
+        label1 = tk.Label(self, text="You are about to add an Enrolment")
+        label1.place(relx=0.5, rely=0.15, anchor=CENTER)
+        label2 = tk.Label(self, text="Enrolment Course Run ID: " + str(enrolmentCourseId))
+        label2.place(relx=0.5, rely=0.2, anchor=CENTER)
+        label3 = tk.Label(self, text="Enrolment Reference No: " + enrolmentRefNo)
+        label3.place(relx=0.5, rely=0.25, anchor=CENTER)
+        label4 = tk.Label(self, text="Enrolment TP UEN: " + enrolmentTpUen)
+        label4.place(relx=0.5, rely=0.3, anchor=CENTER)
+
 
         def AddEnrollment():
-            enrollmentInitialization()
-            addEnrolment()
-            messagebox.showinfo("Successful", "Added Enrollment into API")
+            try:
+                addEnrolment()
+                messagebox.showinfo("Successful", "Status Code: 200 \nAdded Enrolment into API")
+            except:
+                messagebox.showerror("Invalid Response",
+                                         "Status Code: 400 \nEnrolmentID already exist. The Enrolment ID is " + str(
+                                             data1["enrollRefNum"]), )
 
            
 
         def DownloadFile():
-            global read_file
+            try:
+                df = pd.read_json('/Users/Ming/Documents/APIApplication/EnrolmentPayload.json')
+                df.to_csv(filedialog.asksaveasfilename(defaultextension='.csv'))
+                messagebox.showinfo("Successful", "CSV file has been downloaded")
+            except:
+                print("user didnt save.")
 
-            export_file_path = filedialog.asksaveasfilename(defaultextension='.csv')
-            read_file.to_csv(export_file_path, index=None, header=True)
-            messagebox.showinfo("Successful", "CSV file has been downloaded")
+        def ViewEnrolmentJsonFile():
+            json_filename = 'EnrolmentPayLoad.json'
+            Interface = Tk()
 
-        # When button is pressed, function is called
+            with open(json_filename, 'r') as inside:
+                data = json.load(inside)
+
+            text = Text(Interface, state='normal', height=20, width=50)
+            text.place(x=20, y=40)
+            text.insert('1.0', str(data))
+
+            Interface.geometry("450x200")
+
+            Interface.mainloop()
+
+            # When button is pressed, function should be called
+
         AddButton = tk.Button(self, command=AddEnrollment, text='Add', width=10, pady=5, bg="white")
         AddButton.place(relx=0.5, rely=0.5, anchor=CENTER)
         BackButton = tk.Button(self, text="Back", width=10, pady=5, bg="white",
                                command=lambda: controller.show_frame(StartPage))
         BackButton.place(relx=0.3, rely=0.5, anchor=CENTER)
-        NextButton = tk.Button(self, text="Next", width=10, pady=5, bg="white", command=lambda: controller.show_frame(PageThree))
+        NextButton = tk.Button(self, text="Next", width=10, pady=5, bg="white",
+                               command=lambda: controller.show_frame(PageThree))
         NextButton.place(relx=0.7, rely=0.5, anchor=CENTER)
-        ViewButton = tk.Button(self, text="View enrollment in CSV", width=18, pady=5, bg="white",
+        ViewButton = tk.Button(self, text="Download Enrolment in CSV", width=22, pady=5, bg="white",
                                command=DownloadFile)
         ViewButton.place(relx=0.5, rely=0.6, anchor=CENTER)
+        ViewEnrolmentJsonButton = tk.Button(self, text="View Enrolment in json", width=18, pady=5, bg="white",
+                                            command=ViewEnrolmentJsonFile)
+        ViewEnrolmentJsonButton.place(relx=0.5, rely=0.65, anchor=CENTER)
 
 
 # Add attendance into API

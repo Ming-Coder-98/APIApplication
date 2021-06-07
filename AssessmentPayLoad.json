@@ -1,0 +1,24 @@
+{
+    "assessment": {
+      "trainingPartner": {
+        "code": "199900650G-01",
+        "uen": "199900650G"
+      },
+      "course": {
+        "referenceNumber": "TGS-2020001831",
+        "run": {
+          "id": "224265"
+        }
+      },
+      "trainee": {
+        "idType": "NRIC",
+        "id": "S8195288D",
+        "fullName": "Aileen Chong"
+      },
+      "result": "Pass",
+      "score": 80,
+      "grade": "B",
+      "assessmentDate": "2021-06-07",
+      "skillCode": "TCA-01"
+    }
+  }

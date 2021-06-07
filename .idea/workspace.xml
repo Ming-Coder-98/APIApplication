@@ -3,7 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="334dd218-34f3-4180-b43b-f82e69c63fb1" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CourseRunPayLoad.json" beforeDir="false" afterPath="$PROJECT_DIR$/CourseRunPayLoad.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/EncryptAndDecryptFunction.py" beforeDir="false" afterPath="$PROJECT_DIR$/EncryptAndDecryptFunction.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EnrolmentFunction.py" beforeDir="false" afterPath="$PROJECT_DIR$/EnrolmentFunction.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EnrolmentPayLoad.json" beforeDir="false" afterPath="$PROJECT_DIR$/EnrolmentPayLoad.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config.json" beforeDir="false" afterPath="$PROJECT_DIR$/config.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
@@ -26,7 +29,7 @@
     <property name="last_opened_file_path" value="$USER_HOME$/PycharmProjects/APITest" />
     <property name="restartRequiresConfirmation" value="false" />
   </component>
-  <component name="RunManager" selected="Python.EnrolmentFunction">
+  <component name="RunManager" selected="Python.main">
     <configuration name="EnrolmentFunction" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="APIApplication" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -92,9 +95,9 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.EnrolmentFunction" />
-        <item itemvalue="Python.courseRunFunctions" />
         <item itemvalue="Python.main" />
+        <item itemvalue="Python.courseRunFunctions" />
+        <item itemvalue="Python.EnrolmentFunction" />
       </list>
     </recent_temporary>
   </component>
@@ -119,5 +122,6 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>

@@ -1,5 +1,5 @@
-from os import error
 from cryptography.hazmat.primitives.ciphers.base import CipherContext
+from requests.models import Response
 from EncryptAndDecryptFunction import *
 from HttpRequestFunction import *
 
@@ -13,20 +13,20 @@ cancelPayloadurl = "https://uat-api.ssg-wsg.sg/tpg/enrolments/details/ENR-2106-0
 
 def enrollmentInitialization():
     print ("enrolment Init")
-
     #Search Enrolment
     tempFile = open("config.json")
     jsonTempFile = json.load(tempFile)
     enrolmentId = jsonTempFile["enrollRefNum"]
+
     if (enrolmentId != ""):
         searchUrl = "https://uat-api.ssg-wsg.sg/tpg/enrolments/details/" + str(enrolmentId)
         resp = getHttpRequest(searchUrl)
-        #print(resp.text)
+        # print(resp.text)
 
         plaintext = doDecryption(resp.text)
-        #print(plaintext)
+        # print(plaintext)
 
-        #Delete if exists a record
+        # Delete if exists a record
         json_load = json.loads(plaintext.decode())
         if (int(json_load["status"]) < 400):
             print("There is an Enrolment record")
@@ -41,8 +41,10 @@ def enrollmentInitialization():
     enrollmentPayloadJson = json.loads(enrollmentPayload)
 
     #Update the important value in enrolment payload with the latest value in config file
-    enrollmentPayloadJson["enrolment"]["course"]["run"]["id"] = configInfoJson["runId"]
-    enrollmentPayloadJson["enrolment"]["course"]["referenceNumber"] = configInfoJson["CourseRefNum"]
+    #enrollmentPayloadJson["enrolment"]["course"]["run"]["id"] = configInfoJson["runId"]
+    enrollmentPayloadJson["enrolment"]["course"]["run"]["id"] = 224244
+    # enrollmentPayloadJson["enrolment"]["course"]["referenceNumber"] = configInfoJson["CourseRefNum"]
+    enrollmentPayloadJson["enrolment"]["course"]["referenceNumber"] = "TGS-2020001831"
     enrollmentPayloadJson["enrolment"]["trainingPartner"]["uen"] = configInfoJson["UEN"]
 
     saveJsonFormat(enrollmentPayloadJson, "EnrolmentPayLoad.json")
@@ -59,13 +61,13 @@ def addEnrolment():
     plainText = doDecryption(response.text)
     pprintJsonFormat(plainText)
     json_load = json.loads(plainText.decode())
-    #print(json_load["error"]["details"]["message"])
+    
     #Update the enrolment Ref Number in config.json
     if (json_load["status"] < 400):
         print("Successfully Add Enrolment")
-        saveEnrolmentId(json_load["data"]["enrolment"]["referenceNumber"])
+        saveEnrolmentId(json_load["data"]["enrolment"]["referenceNumber"], json.loads(enrollmentPayload)["enrolment"]["trainingPartner"]["code"])
     else:
-        raise Exception(json_load["error"]["message"])
+        raise Exception
 
 def cancelEnrolment(enrolmentId):
     print("Cancel Enrolment")
@@ -81,20 +83,20 @@ def cancelEnrolment(enrolmentId):
     json_load = json.loads(plainText.decode())
     if (json_load["status"] < 400):
         print("Successfully Cancel Enrolment")
-        saveEnrolmentId("")
+        saveEnrolmentId("","")
 
 
-def saveEnrolmentId(enrolId):
+def saveEnrolmentId(enrolId, code):
     configInfo = loadFile("config.json")
     configInfo = json.loads(configInfo)
     configInfo["enrollRefNum"] = enrolId
+    configInfo["code"] = code
     saveJsonFormat(configInfo, "config.json")
 
 
 enrollmentInitialization()
-# resp = getHttpRequest("https://uat-api.ssg-wsg.sg/courses/runs/224049")
-# print(resp.status_code)
-# addEnrolment()
-# cancelEnrolment("ENR-2106-000138")
+# resp = getHttpRequest("https://uat-api.ssg-wsg.sg/courses/runs/224244")
+# print(resp.text)
+#cancelEnrolment("ENR-2106-000129")
 
 
