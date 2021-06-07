@@ -21,6 +21,7 @@ def getHttpRequest(request_url):
 def postHttpRequest(request_url, payload):
       print("Post Http Request")
       response = requests.post(request_url, data = payload,cert = (certPath,keyPath))
+      print(response.status_code)
       printResponse(response)
       print(response.status_code)
       return response
