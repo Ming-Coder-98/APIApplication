@@ -18,15 +18,16 @@ def getHttpRequest(request_url):
       return response
       
 #payload must not be in Bytes
-#Reminder: doEncryption Function return in Byte
 def postHttpRequest(request_url, payload):
       print("Post Http Request")
       response = requests.post(request_url, data = payload,cert = (certPath,keyPath))
       printResponse(response)
+      print(response.status_code)
       return response
 
 #payload must not be in Bytes
 #Reminder: doEncryption Function return in Byte
+#Use this if Encryption is needed
 def postHttpRequestJson(request_url, payload):
       print("Post Http Request")
       response = requests.post(request_url, json = payload,cert =  (certPath,keyPath))

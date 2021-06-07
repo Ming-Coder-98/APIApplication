@@ -27,14 +27,13 @@ def courseRunInitialization():
             
 
             #Call a Get HTTP to see if runId exists
-            print("Search existing runId")
+            print("Searching Course Run Id: " + str(runId))
             resp = getHttpRequest("https://uat-api.ssg-wsg.sg/courses/runs/" + str(runId))
-            
+            print(resp.status_code)
             #Deletion
             if (resp.status_code < 400):
-                  print("Deletion")
                   deleteCourserun(runId, jsonTempFile["CourseRefNum"], jsonTempFile["UEN"])
-                  print("Successfully delete Course Run")
+                  print("Successfully delete Course Run: " + str(runId))
 
 
       except:
@@ -45,6 +44,7 @@ def courseRunInitialization():
 
 
 def addCourserun():
+
       #payload variable is obtained from CourseRunFunction.py
       response = postHttpRequest("https://uat-api.ssg-wsg.sg/courses/runs" , payload)
       saveCourseRunDetails(response)
@@ -52,4 +52,9 @@ def addCourserun():
 def deleteCourserun(runId, crn, uen):
       payload = "{\"course\":{\"courseReferenceNumber\":\"" + crn + "\",\"trainingProvider\":{\"uen\":\"" + uen + "\"},\"run\":{\"action\":\"delete\"}}}"
       postHttpRequest("https://uat-api.ssg-wsg.sg/courses/runs/" + str(runId), payload)
-      
+
+
+#Manual Delete
+#payload = "{\"course\":{\"courseReferenceNumber\":\"TGS-2020000703\",\"trainingProvider\":{\"uen\":\"199900650G\"},\"run\":{\"action\":\"delete\"}}}"
+#postHttpRequest("https://uat-api.ssg-wsg.sg/courses/runs/224183", payload)
+#deleteCourserun(runId, crn, "199900650G")
