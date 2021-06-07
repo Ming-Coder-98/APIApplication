@@ -42,7 +42,7 @@ def enrollmentInitialization():
 
     #Update the important value in enrolment payload with the latest value in config file
     #enrollmentPayloadJson["enrolment"]["course"]["run"]["id"] = configInfoJson["runId"]
-    enrollmentPayloadJson["enrolment"]["course"]["run"]["id"] = 224244
+    enrollmentPayloadJson["enrolment"]["course"]["run"]["id"] = 224265
     # enrollmentPayloadJson["enrolment"]["course"]["referenceNumber"] = configInfoJson["CourseRefNum"]
     enrollmentPayloadJson["enrolment"]["course"]["referenceNumber"] = "TGS-2020001831"
     enrollmentPayloadJson["enrolment"]["trainingPartner"]["uen"] = configInfoJson["UEN"]

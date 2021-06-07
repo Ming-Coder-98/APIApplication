@@ -8,12 +8,12 @@
       {
         "sequenceNumber": 0,
         "registrationDates": {
-          "opening": 20210615,
-          "closing": 20210630
+          "opening": 20210607,
+          "closing": 20210607
         },
         "courseDates": {
-          "start": 20210701,
-          "end": 20210725
+          "start": 20210607,
+          "end": 20210612
         },
         "scheduleInfoType": {
           "code": "01",
@@ -45,8 +45,8 @@
         },
         "sessions": [
           {
-            "startDate": "20210701",
-            "endDate": "20210725",
+            "startDate": "20210607",
+            "endDate": "20210607",
             "startTime": "15:30",
             "endTime": "17:30",
             "modeOfTraining": "9",
