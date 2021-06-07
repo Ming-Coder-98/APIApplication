@@ -24,10 +24,12 @@ courseTPUEN = courseTPinfo["trainingProvider"]["uen"]
 courseRefNumber = courseTPinfo["courseReferenceNumber"]
 courseAdminEmail = courseRuninfo[0]["courseAdminEmail"]
 
-# Open the json file where the "config info" is being stored
-with open("config.json") as a:
-    # Load the json file data into local variable "data"
-    data1 = json.load(a)
+def load_json_config():
+    # Open the json file where the "config info" is being stored
+    with open("config.json") as a:
+        # Load the json file data into local variable "data"
+        data1 = json.load(a)
+        return data1
 
 # Open the json file where the "enrolment info" is being stored
 with open("EnrolmentPayLoad.json") as b:
@@ -127,9 +129,13 @@ class PageOne(tk.Frame):
         def AddCourse():  
             try:
                 addCourserun()
-                messagebox.showinfo("Successful", "Status Code: 200 \nAdded Course into API")
+                data1 = load_json_config()
+                messagebox.showinfo("Successful", "Status Code: 200 \nAdded Course into API. The Course Run ID is " + str(data1["runId"]))
+                print(str(data1["runId"]))
             except:
+                data1 = load_json_config()
                 messagebox.showerror("Invalid Response", "Status Code: 400 \nCourse Run already exist. The Course Run ID is " + str(data1["runId"]), )
+                print(str(data1["runId"]))
 
         def DownloadFile():
             try:
@@ -199,13 +205,17 @@ class PageTwo(tk.Frame):
 
         def AddEnrollment():
             try:
-                enrollmentInitialization()
                 addEnrolment()
-                messagebox.showinfo("Successful", "Status Code: 200 \nAdded Enrolment into API")
+                data1 = load_json_config()
+                messagebox.showinfo("Successful", "Status Code: 200 \nAdded Enrolment into API Your Enrolment ID is " +
+                                    (data1["enrollRefNum"]))
+                print((data1["enrollRefNum"]))
             except:
+                data1 = load_json_config()
                 messagebox.showerror("Invalid Response",
-                                         "Status Code: 400 \nEnrolmentID already exist. The Enrolment ID is " + str(
-                                             data1["enrollRefNum"]), )
+                                         "Status Code: 400 \nEnrolmentID already exist. The Enrolment ID is " +
+                                     (data1["enrollRefNum"]))
+                print((data1["enrollRefNum"]))
 
         def DownloadFile():
             try:

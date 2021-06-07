@@ -16,6 +16,7 @@ def saveCourseRunDetails(content):
       saveJsonFormat(configInfo, "config.json")
 
 
+
 #If data exists, delete
 def courseRunInitialization():
 
