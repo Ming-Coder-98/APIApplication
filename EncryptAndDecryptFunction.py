@@ -24,7 +24,7 @@ cipher = Cipher(algorithms.AES(key), modes.CBC(iv), backend=backend)
 def doEncryption(payloadByte):
     #preConfiguration
     padder = padding.PKCS7(128).padder()
-    cipher = Cipher(algorithms.AES(key), modes.CBC(iv), backend=backend)
+    
     encryptor = cipher.encryptor()
     payloadToSend = padder.update(payloadByte) + padder.finalize()
     ct = encryptor.update(payloadToSend) + encryptor.finalize()
@@ -35,7 +35,7 @@ def doEncryption(payloadByte):
 def doDecryption(response):
     #preConfiguration
     unpadder = padding.PKCS7(128).unpadder()
-    cipher = Cipher(algorithms.AES(key), modes.CBC(iv), backend=backend)
+
     result = b64decode(response)
     decryptor = cipher.decryptor()
     plain = decryptor.update(result) + decryptor.finalize()

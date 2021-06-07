@@ -1,4 +1,3 @@
-from os import error
 from cryptography.hazmat.primitives.ciphers.base import CipherContext
 from EncryptAndDecryptFunction import *
 from HttpRequestFunction import *
@@ -13,20 +12,20 @@ cancelPayloadurl = "https://uat-api.ssg-wsg.sg/tpg/enrolments/details/ENR-2106-0
 
 def enrollmentInitialization():
     print ("enrolment Init")
-
     #Search Enrolment
     tempFile = open("config.json")
     jsonTempFile = json.load(tempFile)
     enrolmentId = jsonTempFile["enrollRefNum"]
+
     if (enrolmentId != ""):
         searchUrl = "https://uat-api.ssg-wsg.sg/tpg/enrolments/details/" + str(enrolmentId)
         resp = getHttpRequest(searchUrl)
-        #print(resp.text)
+        # print(resp.text)
 
         plaintext = doDecryption(resp.text)
-        #print(plaintext)
+        # print(plaintext)
 
-        #Delete if exists a record
+        # Delete if exists a record
         json_load = json.loads(plaintext.decode())
         if (int(json_load["status"]) < 400):
             print("There is an Enrolment record")
@@ -55,11 +54,13 @@ def addEnrolment():
     plainText = doDecryption(response.text)
     pprintJsonFormat(plainText)
     json_load = json.loads(plainText.decode())
-    #print(json_load["error"]["details"]["message"])
+    
     #Update the enrolment Ref Number in config.json
     if (json_load["status"] < 400):
         print("Successfully Add Enrolment")
         saveEnrolmentId(json_load["data"]["enrolment"]["referenceNumber"])
+    else:
+        raise Exception
 
 def cancelEnrolment(enrolmentId):
     print("Cancel Enrolment")
@@ -88,9 +89,8 @@ def saveEnrolmentId(enrolId):
 
 
 enrollmentInitialization()
-# resp = getHttpRequest("https://uat-api.ssg-wsg.sg/courses/runs/224049")
+# resp = getHttpRequest("https://uat-api.ssg-wsg.sg/courses/runs/224002")
 # print(resp.status_code)
-# addEnrolment()
-# cancelEnrolment("ENR-2106-000138")
+#cancelEnrolment("ENR-2106-000129")
 
 
