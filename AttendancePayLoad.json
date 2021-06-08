@@ -1,0 +1,30 @@
+{
+  "uen": "199900650G",
+  "course": {
+    "sessionID": "TGS-2020001831-224436-S1",
+    "attendance": {
+      "status": {
+        "code": 1
+      },
+      "trainee": {
+        "id": "S8195288D",
+        "name": "Tom",
+        "email": "abc@test.com",
+        "idType": {
+          "code": "SB"
+        },
+        "contactNumber": {
+          "mobile": "85858585",
+          "areaCode": null,
+          "countryCode": 65
+        },
+        "numberOfHours": 3.5,
+        "surveyLanguage": {
+          "code": "EL"
+        }
+      }
+    },
+    "referenceNumber": "TGS-2020001831"
+  },
+  "corppassId": "S1449757I"
+}

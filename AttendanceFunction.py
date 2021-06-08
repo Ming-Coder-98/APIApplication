@@ -19,15 +19,15 @@ def retrieveSesId():
     print(resp.text)
     return(resp)
 
-retrieveSesId()
-
 
 def saveSesIdDetails(resp):
     configInfo = loadFile("config.json")
     configInfo = json.loads(configInfo)
     configInfo["SesId"] = resp.json()["data"]["sessions"][0]["id"]
     saveJsonFormat(configInfo, "config.json")
-print(configInfo)
+
+
+saveSesIdDetails(retrieveSesId())
 
 def retrieveAttendance():
     tempFile = open("config.json")
@@ -41,6 +41,20 @@ def retrieveAttendance():
     result = doDecryption(response.text)
     pprintJsonFormat(result)
 
-retrieveAttendance()
 
+def uploadAttendance():
+    tempFile = open("config.json")
+    jsonTempFile = json.load(tempFile)
+    runId = jsonTempFile["runId"]
+    baseAttendanceURL = "https://uat-api.ssg-wsg.sg/courses/runs/" + str(runId) + "/sessions/attendance"
+    attendancePayload = loadFile("AttendancePayLoad.json")
+    print(attendancePayload)
+    ciptertext = doEncryption(attendancePayload.encode())
+    response = postHttpRequestJson(baseAttendanceURL, ciptertext.decode())
+    print(response)
+
+    if (response.status_code < 400):
+        print("Successfully uploaded Attendance")
+    else:
+        raise Exception
 

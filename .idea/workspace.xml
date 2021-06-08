@@ -20,15 +20,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="334dd218-34f3-4180-b43b-f82e69c63fb1" name="Default Changelist" comment="Attendance File Added">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AttendancePayLoad.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_6_2021_3_07_PM__Default_Changelist_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_6_2021_3_07_PM__Default_Changelist_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_6_6_2021_9_39_PM__Default_Changelist_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_6_6_2021_9_39_PM__Default_Changelist_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_7_6_2021_12_31_PM__Default_Changelist_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_7_6_2021_12_31_PM__Default_Changelist_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/AttendanceFunction.py" beforeDir="false" afterPath="$PROJECT_DIR$/AttendanceFunction.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EnrolmentFunction.py" beforeDir="false" afterPath="$PROJECT_DIR$/EnrolmentFunction.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CourseRunPayLoad.json" beforeDir="false" afterPath="$PROJECT_DIR$/CourseRunPayLoad.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/EnrolmentPayLoad.json" beforeDir="false" afterPath="$PROJECT_DIR$/EnrolmentPayLoad.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config.json" beforeDir="false" afterPath="$PROJECT_DIR$/config.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,13 +54,14 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="JSON" />
     <property name="last_opened_file_path" value="$USER_HOME$/PycharmProjects/APITest" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
     <property name="restartRequiresConfirmation" value="false" />
   </component>
-  <component name="RunManager" selected="Python.AttendanceFunction">
+  <component name="RunManager" selected="Python.main">
     <configuration name="AttendanceFunction" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="APIApplication" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -146,8 +148,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.AttendanceFunction" />
         <item itemvalue="Python.main" />
+        <item itemvalue="Python.AttendanceFunction" />
         <item itemvalue="Python.EnrolmentFunction" />
         <item itemvalue="Python.courseRunFunctions" />
       </list>
@@ -203,22 +205,30 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="121" y="0" key="#Project_Structure/0.0.1280.680@0.0.1280.680" timestamp="1623111166601" />
-    <state width="1237" height="191" key="GridCell.Tab.0.bottom" timestamp="1623143053567">
+    <state x="376" y="143" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1623145880346">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="191" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1623143053567" />
-    <state width="1237" height="191" key="GridCell.Tab.0.center" timestamp="1623143053567">
+    <state x="376" y="143" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1280.680@0.0.1280.680" timestamp="1623145880346" />
+    <state x="421" y="96" key="FileChooserDialogImpl" timestamp="1623146622650">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="191" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1623143053567" />
-    <state width="1237" height="191" key="GridCell.Tab.0.left" timestamp="1623143053567">
+    <state x="421" y="96" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1623146622650" />
+    <state width="1237" height="191" key="GridCell.Tab.0.bottom" timestamp="1623148620837">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="191" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1623143053567" />
-    <state width="1237" height="191" key="GridCell.Tab.0.right" timestamp="1623143053567">
+    <state width="1237" height="191" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1623148620837" />
+    <state width="1237" height="191" key="GridCell.Tab.0.center" timestamp="1623148620834">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="191" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1623143053567" />
+    <state width="1237" height="191" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1623148620834" />
+    <state width="1237" height="191" key="GridCell.Tab.0.left" timestamp="1623148620834">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1237" height="191" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1623148620834" />
+    <state width="1237" height="191" key="GridCell.Tab.0.right" timestamp="1623148620835">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1237" height="191" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1623148620835" />
     <state width="1237" height="204" key="GridCell.Tab.1.bottom" timestamp="1623112149186">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
@@ -243,9 +253,9 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="233" y="74" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1623040279661" />
-    <state x="450" y="255" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1623143059629">
+    <state x="450" y="255" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1623148048597">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="450" y="255" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1280.680@0.0.1280.680" timestamp="1623143059629" />
+    <state x="450" y="255" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1280.680@0.0.1280.680" timestamp="1623148048597" />
   </component>
 </project>
