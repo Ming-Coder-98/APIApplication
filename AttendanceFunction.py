@@ -19,13 +19,6 @@ def retrieveSesId():
     print(resp.text)
     return(resp)
 
-    # response = resp.text()
-    # response['uen'] = str(uen)
-    # response['runId'] = str(runId)
-    # response['courseReferenceNumber'] = str(courseReferenceNumber)
-    # print(response)
-    # saveSesIdDetails(response)
-
 retrieveSesId()
 
 
