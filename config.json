@@ -4,13 +4,13 @@
     "keyPath": "C:/Users/User/Desktop/application/APIApplication/key.pem",
     "IV": "SSGAPIInitVector",
     "StatusCode": 200,
-    "UEN": "199900650G",
+    "UEN": "",
     "CourseRefNum": "",
     "ExtCourseRefNum": "",
     "runId": "",
     "enrollRefNum": "",
     "code": "",
-    "demoRunId": "",
-    "demoCourseRefNum": "",
-    "SesId":""
+    "demoRunId": "224265",
+    "demoCourseRefNum": "TGS-2020001831",
+    "SesId": ""
 }
