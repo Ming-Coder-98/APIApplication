@@ -5,9 +5,11 @@
     "IV": "SSGAPIInitVector",
     "StatusCode": 200,
     "UEN": "199900650G",
-    "CourseRefNum": "TGS-2020000703",
-    "ExtCourseRefNum": "TGS-2020000703",
-    "runId": 224294,
+    "CourseRefNum": "",
+    "ExtCourseRefNum": "",
+    "runId": "",
     "enrollRefNum": "",
-    "code": ""
+    "code": "",
+    "demoRunId": "",
+    "demoCourseRefNum": ""
 }

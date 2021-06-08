@@ -3,8 +3,6 @@ from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.primitives import padding
 from cryptography.hazmat.backends import default_backend
 from base64 import b64decode, b64encode
-
-import requests
 import json
 
 
@@ -42,7 +40,7 @@ def doDecryption(response):
     plain = unpadder.update(plain) + unpadder.finalize()
     return plain
 
-#Display Info In pretty-print format
+#Display Info In pretty-print(readable) format
 def pprintJsonFormat(plain):
     json_load = json.loads(plain.decode())  
     print(json.dumps(json_load, indent = 4))

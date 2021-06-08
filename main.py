@@ -1,4 +1,5 @@
 #Import course Run py Functions
+from AssessmentFunction import addAssessment
 from EnrolmentFunction import addEnrolment, enrollmentInitialization
 from courseRunFunctions import *
 
@@ -59,7 +60,7 @@ class APIProject(tk.Tk):
 
         self.frames = {}
 
-        for F in (StartPage, PageOne, PageTwo, PageThree, PageFour):
+        for F in (StartPage, PageOne, PageTwo, PageThree, PageFour, FinalPage):
             frame = F(container, self)
 
             self.frames[F] = frame
@@ -277,26 +278,67 @@ class PageThree(tk.Frame):
         img2.image = render
         img2.place(x=0, y=0, relwidth=1, relheight=1)
 
-        label2 = tk.Label(self, text="You are about to add an attendance")
-        label2.place(relx=0.5, rely=0.15, anchor=CENTER)
+        label1 = tk.Label(self, text="You are about to add an Attendance")
+        label1.place(relx=0.5, rely=0.15, anchor=CENTER)
+        label2 = tk.Label(self, text="Attendance Course Run ID: ")
+        label2.place(relx=0.5, rely=0.2, anchor=CENTER)
+        label3 = tk.Label(self, text="Attendance Reference No: " )
+        label3.place(relx=0.5, rely=0.25, anchor=CENTER)
+        label4 = tk.Label(self, text="Attendance TP UEN: " )
+        label4.place(relx=0.5, rely=0.3, anchor=CENTER)
+
 
         def AddAttendance():
-            messagebox.showinfo("Successful", "Added Attendance into API")
+            try:
+                #addAttendance()
+                data1 = load_json_config()
+                messagebox.showinfo("Successful", "Status Code: 200 \nAdded Attendance into API Your Enrolment ID is ")
+                #(data1["attendance"])
+            except:
+                data1 = load_json_config()
+                messagebox.showerror("Invalid Response",
+                                         "Status Code: 400 \nAttendance ID already exist. The Attendance ID is ")
+                #(data1["attendance"])
 
         def DownloadFile():
-            messagebox.showinfo("Successful", "CSV file has been downloaded")
+            try:
+                df = pd.read_json('/Users/Ming/Documents/APIApplication/AttendancePayload.json')
+                df.to_csv(filedialog.asksaveasfilename(defaultextension='.csv'))
+                messagebox.showinfo("Successful", "CSV file has been downloaded")
+            except:
+                print("user didnt save.")
 
-        # When button is pressed, function is called
+        def ViewAttendanceJsonFile():
+            json_filename = 'AttendancePayLoad.json'
+            Interface = Tk()
+
+            with open(json_filename, 'r') as inside:
+                data = json.load(inside)
+
+            text = Text(Interface, state='normal', height=20, width=50)
+            text.place(x=20, y=40)
+            text.insert('1.0', str(data))
+
+            Interface.geometry("450x200")
+
+            Interface.mainloop()
+
+            # When button is pressed, function should be called
+
         AddButton = tk.Button(self, command=AddAttendance, text='Add', width=10, pady=5, bg="white")
         AddButton.place(relx=0.5, rely=0.5, anchor=CENTER)
         BackButton = tk.Button(self, text="Back", width=10, pady=5, bg="white",
                                command=lambda: controller.show_frame(StartPage))
         BackButton.place(relx=0.3, rely=0.5, anchor=CENTER)
-        NextButton = tk.Button(self, text="Next", width=10, pady=5, bg="white", command=lambda: controller.show_frame(PageFour))
+        NextButton = tk.Button(self, text="Next", width=10, pady=5, bg="white",
+                               command=lambda: controller.show_frame(PageFour))
         NextButton.place(relx=0.7, rely=0.5, anchor=CENTER)
-        ViewButton = tk.Button(self, text="View attendance in CSV", width=18, pady=5, bg="white",
+        ViewButton = tk.Button(self, text="Download Attendance in CSV", width=22, pady=5, bg="white",
                                command=DownloadFile)
         ViewButton.place(relx=0.5, rely=0.6, anchor=CENTER)
+        ViewAttendanceJsonButton = tk.Button(self, text="View Attendance in json", width=18, pady=5, bg="white",
+                                            command=ViewAttendanceJsonFile)
+        ViewAttendanceJsonButton.place(relx=0.5, rely=0.65, anchor=CENTER)
 
 
 # Add assessment into API
@@ -316,28 +358,86 @@ class PageFour(tk.Frame):
         img2.image = render
         img2.place(x=0, y=0, relwidth=1, relheight=1)
 
-        label2 = tk.Label(self, text="You are about to add an assessment")
-        label2.place(relx=0.5, rely=0.15, anchor=CENTER)
+        label1 = tk.Label(self, text="You are about to add an Assessment")
+        label1.place(relx=0.5, rely=0.15, anchor=CENTER)
+        label2 = tk.Label(self, text="Assessment Course Run ID: ")
+        label2.place(relx=0.5, rely=0.2, anchor=CENTER)
+        label3 = tk.Label(self, text="Assessment Reference No: " )
+        label3.place(relx=0.5, rely=0.25, anchor=CENTER)
+        label4 = tk.Label(self, text="Assessment TP UEN: " )
+        label4.place(relx=0.5, rely=0.3, anchor=CENTER)
+
 
         def AddAssessment():
-            messagebox.showinfo("Successful", "Added Assessment into API")
+            try:
+                addAssessment()
+                data1 = load_json_config()
+                messagebox.showinfo("Successful", "Status Code: 200 \nAdded Assessment into API Your Enrolment ID is ")
+                #(data1["assessment"])
+            except:
+                data1 = load_json_config()
+                messagebox.showerror("Invalid Response",
+                                         "Status Code: 400 \nAssessment already exist. The Assessment ID is ")
+                #(data1["assessment"])
 
         def DownloadFile():
-            messagebox.showinfo("Successful", "CSV file has been downloaded")
+            try:
+                df = pd.read_json('/Users/Ming/Documents/APIApplication/AssessmentPayload.json')
+                df.to_csv(filedialog.asksaveasfilename(defaultextension='.csv'))
+                messagebox.showinfo("Successful", "CSV file has been downloaded")
+            except:
+                print("user didnt save.")
 
-        # When button is pressed, function is called
+        def ViewAssessmentJsonFile():
+            json_filename = 'AssessmentPayLoad.json'
+            Interface = Tk()
+
+            with open(json_filename, 'r') as inside:
+                data = json.load(inside)
+
+            text = Text(Interface, state='normal', height=20, width=50)
+            text.place(x=20, y=40)
+            text.insert('1.0', str(data))
+
+            Interface.geometry("450x200")
+
+            Interface.mainloop()
+
+            # When button is pressed, function should be called
+
         AddButton = tk.Button(self, command=AddAssessment, text='Add', width=10, pady=5, bg="white")
         AddButton.place(relx=0.5, rely=0.5, anchor=CENTER)
         BackButton = tk.Button(self, text="Back", width=10, pady=5, bg="white",
                                command=lambda: controller.show_frame(StartPage))
         BackButton.place(relx=0.3, rely=0.5, anchor=CENTER)
-        NextButton = tk.Button(self, text="Next", width=10, pady=5, bg="white", command=lambda: controller.show_frame(PageTwo))
+        NextButton = tk.Button(self, text="Next", width=10, pady=5, bg="white",
+                               command=lambda: controller.show_frame(FinalPage))
         NextButton.place(relx=0.7, rely=0.5, anchor=CENTER)
-        ViewButton = tk.Button(self, text="View assessment in CSV", width=18, pady=5, bg="white",
+        ViewButton = tk.Button(self, text="Download Assessment in CSV", width=22, pady=5, bg="white",
                                command=DownloadFile)
         ViewButton.place(relx=0.5, rely=0.6, anchor=CENTER)
+        ViewAssessmentJsonButton = tk.Button(self, text="View Assessment in json", width=18, pady=5, bg="white",
+                                            command=ViewAssessmentJsonFile)
+        ViewAssessmentJsonButton.place(relx=0.5, rely=0.65, anchor=CENTER)
 
+class FinalPage(tk.Frame):
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
 
+        load = Image.open("SKFFinalPage.JPG")
+        render = ImageTk.PhotoImage(load)
+
+        # labels can be text or images
+        img2 = Label(self, image=render)
+        img2.image = render
+        img2.place(x=0, y=0, relwidth=1, relheight=1)
+
+        BackButton = tk.Button(self, text="Back", width=10, pady=5, bg="white",
+                               command=lambda: controller.show_frame(StartPage))
+        BackButton.place(relx=0.5, rely=0.55, anchor=CENTER)
+        button1 = tk.Button(self, text="Press to Exit App", bg="white", width=20, pady=5,
+                            command=quit_program)  # quit program
+        button1.place(relx=0.5, rely=0.6, anchor=CENTER)
 
 app = APIProject()
 app.geometry("500x747")

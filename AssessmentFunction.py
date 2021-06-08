@@ -1,6 +1,7 @@
+import base64
 import json
 from EncryptAndDecryptFunction import doDecryption, doEncryption, pprintJsonFormat
-from HttpRequestFunction import loadFile, postHttpRequestJson
+from HttpRequestFunction import getHttpRequest, loadFile, postHttpRequestJson
 
 
 #ASM-2106-000048
@@ -31,5 +32,9 @@ def deleteAssessment():
     pprintJsonFormat(plainText)
 
 
-#addAssessment()
+# addAssessment()
 #deleteAssessment()
+# resp = getHttpRequest("https://uat-api.ssg-wsg.sg/tpg/assessments/details/ASM-2106-000048")
+# #print(resp.text)
+# plainText = doDecryption(resp.text)
+# pprintJsonFormat(plainText)
