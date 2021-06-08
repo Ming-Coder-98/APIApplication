@@ -1,12 +1,13 @@
 {
     "key": "WB9YusKNEEwYwpXuv0Bx5yuGzPIhXTBnMevAumwtcQ4=",
-    "certPath": "/Users/Ming/Documents/APIApplication/cert.pem",
-    "keyPath": "/Users/Ming/Documents/APIApplication/key.pem",
+    "certPath": "/Users/45200/Documents/SSG API/cert.pem",
+    "keyPath": "/Users/45200/Documents/SSG API/key.pem",
     "IV": "SSGAPIInitVector",
     "StatusCode": 200,
     "UEN": "199900650G",
     "CourseRefNum": "TGS-2020000697",
     "ExtCourseRefNum": "TGS-2020000697",
-    "runId": 224371,
-    "enrollRefNum": ""
+    "runId": 224413,
+    "enrollRefNum": "",
+    "SesId": "TGS-2020000697-224413-S1"
 }

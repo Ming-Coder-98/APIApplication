@@ -91,6 +91,6 @@ def saveEnrolmentId(enrolId):
 enrollmentInitialization()
 # resp = getHttpRequest("https://uat-api.ssg-wsg.sg/courses/runs/224002")
 # print(resp.status_code)
-#cancelEnrolment("ENR-2106-000129")
+# cancelEnrolment("ENR-2106-000129")
 
 
