@@ -1,4 +1,5 @@
 #Import course Run py Functions
+
 from AssessmentFunction import addAssessment
 from EnrolmentFunction import addEnrolment, enrollmentInitialization
 from AttendanceFunction import uploadAttendance
@@ -14,6 +15,8 @@ import datetime
 from PIL import ImageTk, Image
 from tkinter import filedialog
 import pandas as pd
+import pyjsonviewer
+
 
 # Open the json file where the "courserun info" is being stored
 with open("CourseRunPayLoad.json") as f:
@@ -148,19 +151,7 @@ class PageOne(tk.Frame):
                 print("user didnt save.")
 
         def ViewCourseRunJsonFile():
-            json_filename = 'CourseRunPayLoad.json'
-            Interface = Tk()
-
-            with open(json_filename, 'r') as inside:
-                data = json.load(inside)
-
-            text = Text(Interface, state='normal', height=20, width=50)
-            text.place(x=20, y=40)
-            text.insert('1.0', str(data))
-
-            Interface.geometry("450x200")
-
-            Interface.mainloop()
+                pyjsonviewer.view_data(json_file="/Users/Ming/Documents/APIApplication/CourseRunPayLoad.json")
 
         # When button is pressed, function should be called
         AddButton = tk.Button(self, command=AddCourse, text='Add', width=10, pady=5, bg="white")
@@ -230,19 +221,7 @@ class PageTwo(tk.Frame):
                 print("user didnt save.")
 
         def ViewEnrolmentJsonFile():
-            json_filename = 'EnrolmentPayLoad.json'
-            Interface = Tk()
-
-            with open(json_filename, 'r') as inside:
-                data = json.load(inside)
-
-            text = Text(Interface, state='normal', height=20, width=50)
-            text.place(x=20, y=40)
-            text.insert('1.0', str(data))
-
-            Interface.geometry("450x200")
-
-            Interface.mainloop()
+            pyjsonviewer.view_data(json_file="/Users/Ming/Documents/APIApplication/EnrolmentPayload.json")
 
             # When button is pressed, function should be called
 
@@ -310,19 +289,7 @@ class PageThree(tk.Frame):
                 print("user didnt save.")
 
         def ViewAttendanceJsonFile():
-            json_filename = 'AttendancePayLoad.json'
-            Interface = Tk()
-
-            with open(json_filename, 'r') as inside:
-                data = json.load(inside)
-
-            text = Text(Interface, state='normal', height=20, width=50)
-            text.place(x=20, y=40)
-            text.insert('1.0', str(data))
-
-            Interface.geometry("450x200")
-
-            Interface.mainloop()
+            pyjsonviewer.view_data(json_file="/Users/Ming/Documents/APIApplication/AttendancePayload.json")
 
             # When button is pressed, function should be called
 
@@ -374,7 +341,7 @@ class PageFour(tk.Frame):
                 addAssessment()
                 data1 = load_json_config()
                 messagebox.showinfo("Successful", "Status Code: 200 \nAdded Assessment into API Your Enrolment ID is ")
-                #(data1["assessment"])
+                #(data1["asses      sment"])
             except:
                 data1 = load_json_config()
                 messagebox.showerror("Invalid Response",
@@ -390,19 +357,7 @@ class PageFour(tk.Frame):
                 print("user didnt save.")
 
         def ViewAssessmentJsonFile():
-            json_filename = 'AssessmentPayLoad.json'
-            Interface = Tk()
-
-            with open(json_filename, 'r') as inside:
-                data = json.load(inside)
-
-            text = Text(Interface, state='normal', height=20, width=50)
-            text.place(x=20, y=40)
-            text.insert('1.0', str(data))
-
-            Interface.geometry("450x200")
-
-            Interface.mainloop()
+            pyjsonviewer.view_data(json_file="/Users/Ming/Documents/APIApplication/AssessmentPayload.json")
 
             # When button is pressed, function should be called
 

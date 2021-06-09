@@ -27,8 +27,6 @@ def saveSesIdDetails(resp):
     saveJsonFormat(configInfo, "config.json")
 
 
-saveSesIdDetails(retrieveSesId())
-
 def retrieveAttendance():
     tempFile = open("config.json")
     jsonTempFile = json.load(tempFile)
