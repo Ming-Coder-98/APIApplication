@@ -1,6 +1,6 @@
 {
     "course": {
-        "courseReferenceNumber": "TGS-2020001831",
+        "courseReferenceNumber": "TGS-2020000703",
         "trainingProvider": {
             "uen": "199900650G"
         },
@@ -47,6 +47,42 @@
                     {
                         "startDate": "20210610",
                         "endDate": "20210610",
+                        "startTime": "15:30",
+                        "endTime": "17:30",
+                        "modeOfTraining": "9",
+                        "venue": {
+                            "block": "112ABC",
+                            "street": "Street ABCDE",
+                            "floor": "15",
+                            "unit": "001",
+                            "building": "Building ABCDE",
+                            "postalCode": "570111",
+                            "room": "24",
+                            "wheelChairAccess": true,
+                            "primaryVenue": false
+                        }
+                    },
+                    {
+                        "startDate": "20210611",
+                        "endDate": "20210611",
+                        "startTime": "15:30",
+                        "endTime": "17:30",
+                        "modeOfTraining": "9",
+                        "venue": {
+                            "block": "112ABC",
+                            "street": "Street ABCDE",
+                            "floor": "15",
+                            "unit": "001",
+                            "building": "Building ABCDE",
+                            "postalCode": "570111",
+                            "room": "24",
+                            "wheelChairAccess": true,
+                            "primaryVenue": false
+                        }
+                    },
+                    {
+                        "startDate": "20210612",
+                        "endDate": "20210612",
                         "startTime": "15:30",
                         "endTime": "17:30",
                         "modeOfTraining": "9",

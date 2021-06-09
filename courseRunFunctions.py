@@ -8,7 +8,6 @@ payload = loadFile("CourseRunPayLoad.json")
 def saveCourseRunDetails(content):
       configInfo = loadFile("config.json")
       configInfo = json.loads(configInfo)
-      configInfo["StatusCode"] = content.status_code
       configInfo["runId"] = (((content.json())["data"])["runs"])[0]["id"]
       configInfo["UEN"] = ((json.loads(payload)["course"])["trainingProvider"])["uen"]
       configInfo["CourseRefNum"] =  ((json.loads(payload)["course"])["courseReferenceNumber"])
@@ -71,6 +70,7 @@ def updateCourseRunPayload():
       saveJsonFormat(courseRunPayload, "CourseRunPayLoad.json")
       payload = loadFile("CourseRunPayLoad.json")
 
+# addCourserun()
 #Manual Delete
 #payload = "{\"course\":{\"courseReferenceNumber\":\"TGS-2020000703\",\"trainingProvider\":{\"uen\":\"199900650G\"},\"run\":{\"action\":\"delete\"}}}"
 #postHttpRequest("https://uat-api.ssg-wsg.sg/courses/runs/224183", payload)

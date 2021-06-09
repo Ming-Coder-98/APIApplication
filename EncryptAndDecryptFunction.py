@@ -43,18 +43,5 @@ def doDecryption(response):
 #Display Info In pretty-print(readable) format
 def pprintJsonFormat(plain):
     json_load = json.loads(plain.decode())  
-    print(json.dumps(json_load, indent = 4))
-
-#Configuration
-# createEnrollmenturl = "https://uat-api.ssg-wsg.sg/tpg/enrolments"
-# courseRunPayload = open("EnrollmentPayLoad.json", "r")
-# payload = courseRunPayload.read()
-# payloadByte = payload.encode()
-
-# cancelPayload = "{\"enrolment\":{\"action\":\"Update\"}}"
-# cancelPayloadurl = "https://uat-api.ssg-wsg.sg/tpg/enrolments/details/{refNumber}"
-
-# load = doEncryption(payloadByte)
-# response = requests.post(createEnrollmenturl, json = load.decode(), cert = certPath)
-# text = doDecryption(response.text)
-# pprintJsonFormat(text)
+    text = json.dumps(json_load, indent = 4)
+    print(text)

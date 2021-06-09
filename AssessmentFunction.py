@@ -1,15 +1,16 @@
 import base64
 import json
 from EncryptAndDecryptFunction import doDecryption, doEncryption, pprintJsonFormat
-from HttpRequestFunction import getHttpRequest, loadFile, postHttpRequestJson
+from HttpRequestFunction import getHttpRequest, loadFile, postHttpRequestJson, saveJsonFormat
 
-
+fileName = "demoConfig.json"
 #ASM-2106-000048
 
 def AssessmentInit():
     print("Assessment Init")
 
 def addAssessment():
+    updateAttendancePayload()
     addAssessmentURL = "https://uat-api.ssg-wsg.sg/tpg/assessments"
     assessmentPayload = loadFile("AssessmentPayLoad.json")
     ciptertext = doEncryption(assessmentPayload.encode())
@@ -31,10 +32,21 @@ def deleteAssessment():
     plainText = doDecryption(resp.text)
     pprintJsonFormat(plainText)
 
+#Update the latest Session Id, UEN ,and Course Ref Number payload according to the config file
+def updateAttendancePayload():
+    #load config File
+    configInfo = loadFile(fileName)
+    configInfoJson = json.loads(configInfo)
 
-# addAssessment()
-#deleteAssessment()
-# resp = getHttpRequest("https://uat-api.ssg-wsg.sg/tpg/assessments/details/ASM-2106-000048")
-# #print(resp.text)
-# plainText = doDecryption(resp.text)
-# pprintJsonFormat(plainText)
+    #load Attendance Json File
+    attendancePayload = loadFile("AssessmentPayLoad.json")
+    attendancePayload = json.loads(attendancePayload)
+
+    #Update the latest value and save
+    attendancePayload["assessment"]["trainingPartner"]["code"] = configInfoJson["code"]
+    attendancePayload["assessment"]["course"]["referenceNumber"] = configInfoJson["CourseRefNum"]
+    attendancePayload["assessment"]["trainingPartner"]["uen"] = configInfoJson["UEN"]
+    attendancePayload["assessment"]["course"]["run"]["id"] = configInfoJson["runId"]
+    saveJsonFormat(attendancePayload, "AssessmentPayLoad.json")
+
+

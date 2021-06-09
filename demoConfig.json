@@ -1,7 +1,13 @@
 {
+    "key": "WB9YusKNEEwYwpXuv0Bx5yuGzPIhXTBnMevAumwtcQ4=",
+    "certPath": "C:/Users/User/Desktop/application/APIApplication/cert.pem",
+    "keyPath": "C:/Users/User/Desktop/application/APIApplication/key.pem",
+    "IV": "SSGAPIInitVector",
     "UEN": "199900650G",
+    "runId": "224565",
+    "CourseRefNum": "TGS-2020001831",
+    "ExtCourseRefNum": "TGS-2020001831",
     "enrollRefNum": "",
     "code": "",
-    "demoRunId": "",
-    "demoCourseRefNum": ""
+    "SesId": "TGS-2020001831-224265-S1"
 }

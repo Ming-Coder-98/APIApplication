@@ -294,12 +294,12 @@ class PageThree(tk.Frame):
                 uploadAttendance()
                 data1 = load_json_config()
                 messagebox.showinfo("Successful", "Status Code: 200 \nAdded Attendance into API Your Enrolment ID is ")
-                (data1["attendance"])
+                #(data1["attendance"])
             except:
                 data1 = load_json_config()
                 messagebox.showerror("Invalid Response",
                                          "Status Code: 400 \nAttendance ID already exist. The Attendance ID is ")
-                (data1["attendance"])
+                #(data1["attendance"])
 
         def DownloadFile():
             try:

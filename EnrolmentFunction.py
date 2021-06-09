@@ -4,12 +4,12 @@ from EncryptAndDecryptFunction import *
 from HttpRequestFunction import *
 
 
-
+fileName = "demoConfig.json"
 
 def enrollmentInitialization():
     print ("enrolment Init")
     #Search Enrolment
-    tempFile = open("config.json")
+    tempFile = open(fileName)
     jsonTempFile = json.load(tempFile)
     enrolmentId = jsonTempFile["enrollRefNum"]
 
@@ -60,16 +60,16 @@ def cancelEnrolment(enrolmentId):
 
 
 def saveEnrolmentId(enrolId, code):
-    configInfo = loadFile("config.json")
+    configInfo = loadFile(fileName)
     configInfo = json.loads(configInfo)
     configInfo["enrollRefNum"] = enrolId
     configInfo["code"] = code
-    saveJsonFormat(configInfo, "config.json")
+    saveJsonFormat(configInfo, fileName)
 
 #Update the latest Run Id, UEN ,and Course Ref Number payload according to the config file
 def updateEnrolmentPayload():
     #load config File
-    configInfo = loadFile("config.json")
+    configInfo = loadFile(fileName)
     configInfoJson = json.loads(configInfo)
 
     #load Enrollment Json File
@@ -77,17 +77,14 @@ def updateEnrolmentPayload():
     enrollmentPayloadJson = json.loads(enrollmentPayload)
 
     enrollmentPayloadJson["enrolment"]["course"]["run"]["id"] = configInfoJson["runId"]
-    #enrollmentPayloadJson["enrolment"]["course"]["run"]["id"] = configInfoJson["demoRunId"] <- ignore
-    
     enrollmentPayloadJson["enrolment"]["course"]["referenceNumber"] = configInfoJson["CourseRefNum"]
-    #enrollmentPayloadJson["enrolment"]["course"]["referenceNumber"] = configInfoJson["demoCourseRefNum"] <- ignore
     enrollmentPayloadJson["enrolment"]["trainingPartner"]["uen"] = configInfoJson["UEN"]
 
     saveJsonFormat(enrollmentPayloadJson, "EnrolmentPayLoad.json")
 
 
 enrollmentInitialization()
-# addEnrolment()
-# resp = getHttpRequest("https://uat-api.ssg-wsg.sg/courses/runs/224244")
-# print(resp.text)
-# cancelEnrolment("ENR-2106-000129")
+addEnrolment()
+#resp = getHttpRequest("https://uat-api.ssg-wsg.sg/courses/runs/224565")
+#print(resp.text)
+# cancelEnrolment("ENR-2106-000270")
