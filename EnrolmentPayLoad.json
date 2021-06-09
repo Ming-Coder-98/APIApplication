@@ -2,7 +2,7 @@
     "enrolment": {
         "course": {
             "run": {
-                "id": "224565"
+                "id": "224265"
             },
             "referenceNumber": "TGS-2020001831"
         },
@@ -35,7 +35,7 @@
                 "countryCode": "65",
                 "phoneNumber": "88881234"
             },
-            "enrolmentDate": "2021-06-09",
+            "enrolmentDate": "2021-07-15",
             "sponsorshipType": "EMPLOYER"
         },
         "trainingPartner": {

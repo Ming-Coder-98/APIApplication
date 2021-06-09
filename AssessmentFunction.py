@@ -21,6 +21,7 @@ def addAssessment():
 
     if (json_load["status"] < 400):
         print("Successfully Add Assessment")
+        saveAssessmentRefNumber(json_load["data"]["assessment"]["referenceNumber"])
     else:
         raise Exception
 
@@ -49,4 +50,8 @@ def updateAttendancePayload():
     attendancePayload["assessment"]["course"]["run"]["id"] = configInfoJson["runId"]
     saveJsonFormat(attendancePayload, "AssessmentPayLoad.json")
 
-
+def saveAssessmentRefNumber(assessmentRefNumber):
+    configInfo = loadFile(fileName)
+    configInfo = json.loads(configInfo)
+    configInfo["AssessmentRefNum"] = assessmentRefNumber
+    saveJsonFormat(configInfo, fileName)

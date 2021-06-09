@@ -1,4 +1,5 @@
 #Import course Run py Functions
+
 from AssessmentFunction import addAssessment
 from EnrolmentFunction import addEnrolment, enrollmentInitialization
 from AttendanceFunction import uploadAttendance
@@ -14,6 +15,8 @@ import datetime
 from PIL import ImageTk, Image
 from tkinter import filedialog
 import pandas as pd
+import pyjsonviewer
+
 
 # Open the json file where the "courserun info" is being stored
 with open("CourseRunPayLoad.json") as f:
@@ -32,6 +35,12 @@ def load_json_config():
         # Load the json file data into local variable "data"
         data1 = json.load(a)
         return data1
+def load_json_demoConfig():
+    # Open the json file where the "config info" is being stored
+    with open("demoConfig.json") as a:
+        # Load the json file data into local variable "data"
+        data1 = json.load(a)
+        return data1
 
 # Open the json file where the "enrolment info" is being stored
 with open("EnrolmentPayLoad.json") as b:
@@ -42,6 +51,25 @@ courseEnrolmentInfo = data2["enrolment"]
 enrolmentCourseId = courseEnrolmentInfo["course"]["run"]["id"]
 enrolmentRefNo = courseEnrolmentInfo["course"]["referenceNumber"]
 enrolmentTpUen = courseEnrolmentInfo["trainingPartner"]["uen"]
+
+# Open the json file where the "attendance info" is being stored
+with open("AttendancePayLoad.json") as b:
+    # Load the json file data into local variable "data"
+    attendanceData = json.load(b)
+# Store the list of data into local variable enrolmentinfo"
+attendanceSessionId = attendanceData["course"]["sessionID"]
+attendanceRefNo = attendanceData["course"]["referenceNumber"]
+attendanceTpUen = attendanceData["uen"]
+
+# Open the json file where the "Assessment info" is being stored
+with open("AssessmentPayLoad.json") as b:
+    # Load the json file data into local variable "data"
+    assessmentData = json.load(b)
+# Store the list of data into local variable enrolmentinfo"
+assessmentRunId = assessmentData["assessment"]["course"]["run"]["id"]
+assessmentRefNo = assessmentData["assessment"]["course"]["referenceNumber"]
+assessmentTpUen = assessmentData["assessment"]["trainingPartner"]["uen"]
+
 
 # Quit Program
 def quit_program():
@@ -141,26 +169,14 @@ class PageOne(tk.Frame):
 
         def DownloadFile():
             try:
-                df = pd.read_json('/Users/Ming/Documents/APIApplication/CourseRunPayLoad.json')
+                df = pd.read_json('C:/Users/User/Desktop/application/APIApplication/CourseRunPayLoad.json')
                 df.to_csv(filedialog.asksaveasfilename(defaultextension='.csv'))
                 messagebox.showinfo("Successful", "CSV file has been downloaded")
             except:
                 print("user didnt save.")
 
         def ViewCourseRunJsonFile():
-            json_filename = 'CourseRunPayLoad.json'
-            Interface = Tk()
-
-            with open(json_filename, 'r') as inside:
-                data = json.load(inside)
-
-            text = Text(Interface, state='normal', height=20, width=50)
-            text.place(x=20, y=40)
-            text.insert('1.0', str(data))
-
-            Interface.geometry("450x200")
-
-            Interface.mainloop()
+                pyjsonviewer.view_data(json_file="C:/Users/User/Desktop/application/APIApplication/CourseRunPayLoad.json")
 
         # When button is pressed, function should be called
         AddButton = tk.Button(self, command=AddCourse, text='Add', width=10, pady=5, bg="white")
@@ -208,12 +224,12 @@ class PageTwo(tk.Frame):
         def AddEnrollment():
             try:
                 addEnrolment()
-                data1 = load_json_config()
+                data1 = load_json_demoConfig()
                 messagebox.showinfo("Successful", "Status Code: 200 \nAdded Enrolment into API Your Enrolment ID is " +
                                     (data1["enrollRefNum"]))
                 print((data1["enrollRefNum"]))
             except:
-                data1 = load_json_config()
+                data1 = load_json_demoConfig()
                 messagebox.showerror("Invalid Response",
                                          "Status Code: 400 \nEnrolmentID already exist. The Enrolment ID is " +
                                      (data1["enrollRefNum"]))
@@ -223,26 +239,14 @@ class PageTwo(tk.Frame):
 
         def DownloadFile():
             try:
-                df = pd.read_json('/Users/Ming/Documents/APIApplication/EnrolmentPayload.json')
+                df = pd.read_json('C:/Users/User/Desktop/application/APIApplication/EnrolmentPayload.json')
                 df.to_csv(filedialog.asksaveasfilename(defaultextension='.csv'))
                 messagebox.showinfo("Successful", "CSV file has been downloaded")
             except:
                 print("user didnt save.")
 
         def ViewEnrolmentJsonFile():
-            json_filename = 'EnrolmentPayLoad.json'
-            Interface = Tk()
-
-            with open(json_filename, 'r') as inside:
-                data = json.load(inside)
-
-            text = Text(Interface, state='normal', height=20, width=50)
-            text.place(x=20, y=40)
-            text.insert('1.0', str(data))
-
-            Interface.geometry("450x200")
-
-            Interface.mainloop()
+            pyjsonviewer.view_data(json_file="C:/Users/User/Desktop/application/APIApplication/EnrolmentPayload.json")
 
             # When button is pressed, function should be called
 
@@ -281,48 +285,31 @@ class PageThree(tk.Frame):
 
         label1 = tk.Label(self, text="You are about to add an Attendance")
         label1.place(relx=0.5, rely=0.15, anchor=CENTER)
-        label2 = tk.Label(self, text="Attendance Course Run ID: ")
+        label2 = tk.Label(self, text="Attendance Course Session ID: " + attendanceSessionId)
         label2.place(relx=0.5, rely=0.2, anchor=CENTER)
-        label3 = tk.Label(self, text="Attendance Reference No: " )
+        label3 = tk.Label(self, text="Attendance Course Reference No: " + attendanceRefNo)
         label3.place(relx=0.5, rely=0.25, anchor=CENTER)
-        label4 = tk.Label(self, text="Attendance TP UEN: " )
+        label4 = tk.Label(self, text="Attendance TP UEN: " + attendanceTpUen)
         label4.place(relx=0.5, rely=0.3, anchor=CENTER)
-
 
         def AddAttendance():
             try:
                 uploadAttendance()
-                data1 = load_json_config()
-                messagebox.showinfo("Successful", "Status Code: 200 \nAdded Attendance into API Your Enrolment ID is ")
-                #(data1["attendance"])
+                messagebox.showinfo("Successful", "Status Code: 200 \nAdded Attendance into API")
             except:
-                data1 = load_json_config()
                 messagebox.showerror("Invalid Response",
-                                         "Status Code: 400 \nAttendance ID already exist. The Attendance ID is ")
-                #(data1["attendance"])
+                                         "Status Code: 400 \nAttendance already taken.")
 
         def DownloadFile():
             try:
-                df = pd.read_json('/Users/Ming/Documents/APIApplication/AttendancePayload.json')
+                df = pd.read_json('C:/Users/User/Desktop/application/APIApplication/AttendancePayload.json')
                 df.to_csv(filedialog.asksaveasfilename(defaultextension='.csv'))
                 messagebox.showinfo("Successful", "CSV file has been downloaded")
             except:
                 print("user didnt save.")
 
         def ViewAttendanceJsonFile():
-            json_filename = 'AttendancePayLoad.json'
-            Interface = Tk()
-
-            with open(json_filename, 'r') as inside:
-                data = json.load(inside)
-
-            text = Text(Interface, state='normal', height=20, width=50)
-            text.place(x=20, y=40)
-            text.insert('1.0', str(data))
-
-            Interface.geometry("450x200")
-
-            Interface.mainloop()
+            pyjsonviewer.view_data(json_file="C:/Users/User/Desktop/application/APIApplication/AttendancePayload.json")
 
             # When button is pressed, function should be called
 
@@ -361,48 +348,37 @@ class PageFour(tk.Frame):
 
         label1 = tk.Label(self, text="You are about to add an Assessment")
         label1.place(relx=0.5, rely=0.15, anchor=CENTER)
-        label2 = tk.Label(self, text="Assessment Course Run ID: ")
+        label2 = tk.Label(self, text="Assessment Course Run ID: " + assessmentRunId)
         label2.place(relx=0.5, rely=0.2, anchor=CENTER)
-        label3 = tk.Label(self, text="Assessment Reference No: " )
+        label3 = tk.Label(self, text="Assessment Course Reference No: " + assessmentRefNo)
         label3.place(relx=0.5, rely=0.25, anchor=CENTER)
-        label4 = tk.Label(self, text="Assessment TP UEN: " )
+        label4 = tk.Label(self, text="Assessment TP UEN: " + assessmentTpUen)
         label4.place(relx=0.5, rely=0.3, anchor=CENTER)
+
+
 
 
         def AddAssessment():
             try:
                 addAssessment()
-                data1 = load_json_config()
-                messagebox.showinfo("Successful", "Status Code: 200 \nAdded Assessment into API Your Enrolment ID is ")
-                #(data1["assessment"])
+                data1 = load_json_demoConfig()
+                messagebox.showinfo("Successful", "Status Code: 200 \nAdded Assessment into API Your Assessment Reference Number is ")
+                (data1["AssessmentRefNum"])
             except:
-                data1 = load_json_config()
+                data1 = load_json_demoConfig()
                 messagebox.showerror("Invalid Response",
-                                         "Status Code: 400 \nAssessment already exist. The Assessment ID is ")
-                #(data1["assessment"])
+                                         "Status Code: 400 \nAssessment already exist.")
 
         def DownloadFile():
             try:
-                df = pd.read_json('/Users/Ming/Documents/APIApplication/AssessmentPayload.json')
+                df = pd.read_json('C:/Users/User/Desktop/application/APIApplication/AssessmentPayload.json')
                 df.to_csv(filedialog.asksaveasfilename(defaultextension='.csv'))
                 messagebox.showinfo("Successful", "CSV file has been downloaded")
             except:
                 print("user didnt save.")
 
         def ViewAssessmentJsonFile():
-            json_filename = 'AssessmentPayLoad.json'
-            Interface = Tk()
-
-            with open(json_filename, 'r') as inside:
-                data = json.load(inside)
-
-            text = Text(Interface, state='normal', height=20, width=50)
-            text.place(x=20, y=40)
-            text.insert('1.0', str(data))
-
-            Interface.geometry("450x200")
-
-            Interface.mainloop()
+            pyjsonviewer.view_data(json_file="C:/Users/User/Desktop/application/APIApplication/AssessmentPayload.json")
 
             # When button is pressed, function should be called
 

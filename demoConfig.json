@@ -4,10 +4,11 @@
     "keyPath": "C:/Users/User/Desktop/application/APIApplication/key.pem",
     "IV": "SSGAPIInitVector",
     "UEN": "199900650G",
-    "runId": "224565",
+    "runId": "224265",
     "CourseRefNum": "TGS-2020001831",
     "ExtCourseRefNum": "TGS-2020001831",
     "enrollRefNum": "",
     "code": "",
-    "SesId": "TGS-2020001831-224265-S1"
+    "SesId": "TGS-2020001831-224265-S1",
+    "AssessmentRefNum":""
 }
