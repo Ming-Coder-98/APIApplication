@@ -8,8 +8,8 @@
             {
                 "sequenceNumber": 0,
                 "registrationDates": {
-                    "opening": 20210609,
-                    "closing": 20210609
+                    "opening": 20210610,
+                    "closing": 20210610
                 },
                 "courseDates": {
                     "start": 20210610,
@@ -47,8 +47,8 @@
                     {
                         "startDate": "20210610",
                         "endDate": "20210610",
-                        "startTime": "15:30",
-                        "endTime": "17:30",
+                        "startTime": "18:30",
+                        "endTime": "20:30",
                         "modeOfTraining": "9",
                         "venue": {
                             "block": "112ABC",

@@ -1,13 +1,13 @@
 {
     "uen": "199900650G",
     "course": {
-        "sessionID": "TGS-2020001831-224265-S1",
+        "sessionID": "TGS-2020001831-224553-S1",
         "attendance": {
             "status": {
                 "code": 1
             },
             "trainee": {
-                "id": "S8195288D",
+                "id": "S8190860E",
                 "name": "Tom",
                 "email": "abc@test.com",
                 "idType": {
