@@ -1,12 +1,18 @@
 {
     "key": "WB9YusKNEEwYwpXuv0Bx5yuGzPIhXTBnMevAumwtcQ4=",
-    "certPath": "C:/Users/User/Desktop/application/APIApplication/cert.pem",
-    "keyPath": "C:/Users/User/Desktop/application/APIApplication/key.pem",
+    "certPath": "C:/Users/Ming/Documents/APIApplication/cert.pem",
+    "keyPath": "C:/Users/Ming/Documents/APIApplication/key.pem",
     "IV": "SSGAPIInitVector",
     "UEN": "199900650G",
+<<<<<<< HEAD
     "CourseRefNum": "TGS-2020000703",
     "ExtCourseRefNum": "TGS-2020000703",
     "runId": 224609,
+=======
+    "CourseRefNum": "TGS-2020000697",
+    "ExtCourseRefNum": "TGS-2020000697",
+    "runId": 224589,
+>>>>>>> 5e29459bd3d434caf1a58b52aa557f5195a399ad
     "enrollRefNum": "",
     "code": "",
     "SesId": "",
