@@ -31,21 +31,22 @@ courseAdminEmail = courseRuninfo[0]["courseAdminEmail"]
 
 def load_json_config():
     # Open the json file where the "config info" is being stored
-    with open("config.json") as a:
+    with open("config.json") as f:
         # Load the json file data into local variable "data"
-        data1 = json.load(a)
-        return data1
+        data = json.load(f)
+        return data
+    
 def load_json_demoConfig():
     # Open the json file where the "config info" is being stored
-    with open("demoConfig.json") as a:
+    with open("demoConfig.json") as f:
         # Load the json file data into local variable "data"
-        data1 = json.load(a)
-        return data1
+        data = json.load(f)
+        return data
 
 # Open the json file where the "enrolment info" is being stored
-with open("EnrolmentPayLoad.json") as b:
+with open("EnrolmentPayLoad.json") as f:
     # Load the json file data into local variable "data"
-    data2 = json.load(b)
+    data2 = json.load(f)
 # Store the list of data into local variable enrolmentinfo"
 courseEnrolmentInfo = data2["enrolment"]
 enrolmentCourseId = courseEnrolmentInfo["course"]["run"]["id"]
@@ -53,18 +54,18 @@ enrolmentRefNo = courseEnrolmentInfo["course"]["referenceNumber"]
 enrolmentTpUen = courseEnrolmentInfo["trainingPartner"]["uen"]
 
 # Open the json file where the "attendance info" is being stored
-with open("AttendancePayLoad.json") as b:
+with open("AttendancePayLoad.json") as f:
     # Load the json file data into local variable "data"
-    attendanceData = json.load(b)
+    attendanceData = json.load(f)
 # Store the list of data into local variable enrolmentinfo"
 attendanceSessionId = attendanceData["course"]["sessionID"]
 attendanceRefNo = attendanceData["course"]["referenceNumber"]
 attendanceTpUen = attendanceData["uen"]
 
 # Open the json file where the "Assessment info" is being stored
-with open("AssessmentPayLoad.json") as b:
+with open("AssessmentPayLoad.json") as f:
     # Load the json file data into local variable "data"
-    assessmentData = json.load(b)
+    assessmentData = json.load(f)
 # Store the list of data into local variable enrolmentinfo"
 assessmentRunId = assessmentData["assessment"]["course"]["run"]["id"]
 assessmentRefNo = assessmentData["assessment"]["course"]["referenceNumber"]
@@ -139,7 +140,7 @@ class PageOne(tk.Frame):
         self.inner = tk.Frame(self)
         self.inner.place(relx=0.5, rely=0.2, anchor=CENTER)
 
-        load = Image.open("SKFBGPage.JPG")
+        load = Image.open("SKFCoursePage.JPG")
         render = ImageTk.PhotoImage(load)
 
         # labels can be text or images
@@ -159,24 +160,24 @@ class PageOne(tk.Frame):
         def AddCourse():  
             try:
                 addCourserun()
-                data1 = load_json_config()
-                messagebox.showinfo("Successful", "Status Code: 200 \nAdded Course into API. The Course Run ID is " + str(data1["runId"]))
-                print(str(data1["runId"]))
+                data = load_json_config()
+                messagebox.showinfo("Successful", "Status Code: 200 \nAdded Course into API. The Course Run ID is " + str(data["runId"]))
+                print(str(data["runId"]))
             except:
-                data1 = load_json_config()
-                messagebox.showerror("Invalid Response", "Status Code: 400 \nCourse Run already exist. The Course Run ID is " + str(data1["runId"]), )
-                print(str(data1["runId"]))
+                data = load_json_config()
+                messagebox.showerror("Invalid Response", "Status Code: 400 \nCourse Run already exist. The Course Run ID is " + str(data["runId"]), )
+                print(str(data["runId"]))
 
         def DownloadFile():
             try:
-                df = pd.read_json('C:/Users/User/Desktop/application/APIApplication/CourseRunPayLoad.json')
+                df = pd.read_json('C:/Users/Ming/Documents/APIApplication/CourseRunPayLoad.json')
                 df.to_csv(filedialog.asksaveasfilename(defaultextension='.csv'))
                 messagebox.showinfo("Successful", "CSV file has been downloaded")
             except:
                 print("user didnt save.")
 
         def ViewCourseRunJsonFile():
-                pyjsonviewer.view_data(json_file="C:/Users/User/Desktop/application/APIApplication/CourseRunPayLoad.json")
+                pyjsonviewer.view_data(json_file="C:/Users/Ming/Documents/APIApplication/CourseRunPayLoad.json")
 
         # When button is pressed, function should be called
         AddButton = tk.Button(self, command=AddCourse, text='Add', width=10, pady=5, bg="white")
@@ -203,7 +204,7 @@ class PageTwo(tk.Frame):
         self.inner = tk.Frame(self)
         self.inner.place(relx=0.5, rely=0.2, anchor=CENTER)
 
-        load = Image.open("SKFBGPage.JPG")
+        load = Image.open("SKFEnrolmentPage.JPG")
         render = ImageTk.PhotoImage(load)
 
         # labels can be text or images
@@ -224,29 +225,29 @@ class PageTwo(tk.Frame):
         def AddEnrollment():
             try:
                 addEnrolment()
-                data1 = load_json_demoConfig()
+                data = load_json_demoConfig()
                 messagebox.showinfo("Successful", "Status Code: 200 \nAdded Enrolment into API Your Enrolment ID is " +
-                                    (data1["enrollRefNum"]))
-                print((data1["enrollRefNum"]))
+                                    (data["enrollRefNum"]))
+                print((data["enrollRefNum"]))
             except:
-                data1 = load_json_demoConfig()
+                data = load_json_demoConfig()
                 messagebox.showerror("Invalid Response",
                                          "Status Code: 400 \nEnrolmentID already exist. The Enrolment ID is " +
-                                     (data1["enrollRefNum"]))
-                print((data1["enrollRefNum"]))
+                                     (data["enrollRefNum"]))
+                print((data["enrollRefNum"]))
 
            
 
         def DownloadFile():
             try:
-                df = pd.read_json('C:/Users/User/Desktop/application/APIApplication/EnrolmentPayload.json')
+                df = pd.read_json('C:/Users/Ming/Documents/APIApplication/EnrolmentPayload.json')
                 df.to_csv(filedialog.asksaveasfilename(defaultextension='.csv'))
                 messagebox.showinfo("Successful", "CSV file has been downloaded")
             except:
                 print("user didnt save.")
 
         def ViewEnrolmentJsonFile():
-            pyjsonviewer.view_data(json_file="C:/Users/User/Desktop/application/APIApplication/EnrolmentPayload.json")
+            pyjsonviewer.view_data(json_file="C:/Users/Ming/Documents/APIApplication/EnrolmentPayload.json")
 
             # When button is pressed, function should be called
 
@@ -275,7 +276,7 @@ class PageThree(tk.Frame):
         self.inner = tk.Frame(self)
         self.inner.place(relx=0.5, rely=0.2, anchor=CENTER)
 
-        load = Image.open("SKFBGPage.JPG")
+        load = Image.open("SKFAttendancePage.JPG")
         render = ImageTk.PhotoImage(load)
 
         # labels can be text or images
@@ -302,14 +303,14 @@ class PageThree(tk.Frame):
 
         def DownloadFile():
             try:
-                df = pd.read_json('C:/Users/User/Desktop/application/APIApplication/AttendancePayload.json')
+                df = pd.read_json('C:/Users/Ming/Documents/APIApplication/AttendancePayload.json')
                 df.to_csv(filedialog.asksaveasfilename(defaultextension='.csv'))
                 messagebox.showinfo("Successful", "CSV file has been downloaded")
             except:
                 print("user didnt save.")
 
         def ViewAttendanceJsonFile():
-            pyjsonviewer.view_data(json_file="C:/Users/User/Desktop/application/APIApplication/AttendancePayload.json")
+            pyjsonviewer.view_data(json_file="C:/Users/Ming/Documents/APIApplication/AttendancePayload.json")
 
             # When button is pressed, function should be called
 
@@ -338,7 +339,7 @@ class PageFour(tk.Frame):
         self.inner = tk.Frame(self)
         self.inner.place(relx=0.5, rely=0.2, anchor=CENTER)
 
-        load = Image.open("SKFBGPage.JPG")
+        load = Image.open("SKFAssessmentPage.JPG")
         render = ImageTk.PhotoImage(load)
 
         # labels can be text or images
@@ -361,24 +362,24 @@ class PageFour(tk.Frame):
         def AddAssessment():
             try:
                 addAssessment()
-                data1 = load_json_demoConfig()
+                data = load_json_demoConfig()
                 messagebox.showinfo("Successful", "Status Code: 200 \nAdded Assessment into API Your Assessment Reference Number is ")
-                (data1["AssessmentRefNum"])
+                (data["AssessmentRefNum"])
             except:
-                data1 = load_json_demoConfig()
+                data = load_json_demoConfig()
                 messagebox.showerror("Invalid Response",
                                          "Status Code: 400 \nAssessment already exist.")
 
         def DownloadFile():
             try:
-                df = pd.read_json('C:/Users/User/Desktop/application/APIApplication/AssessmentPayload.json')
+                df = pd.read_json('C:/Users/Ming/Documents/APIApplication/AssessmentPayload.json')
                 df.to_csv(filedialog.asksaveasfilename(defaultextension='.csv'))
                 messagebox.showinfo("Successful", "CSV file has been downloaded")
             except:
                 print("user didnt save.")
 
         def ViewAssessmentJsonFile():
-            pyjsonviewer.view_data(json_file="C:/Users/User/Desktop/application/APIApplication/AssessmentPayload.json")
+            pyjsonviewer.view_data(json_file="C:/Users/Ming/Documents/APIApplication/AssessmentPayload.json")
 
             # When button is pressed, function should be called
 
