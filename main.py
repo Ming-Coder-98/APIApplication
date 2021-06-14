@@ -1,6 +1,6 @@
 #Import course Run py Functions
 
-from configWindow import setConfigWindow
+from configWindow import setConfigWindow, showConfigWindow
 from AssessmentFunction import addAssessment
 from EnrolmentFunction import addEnrolment, enrollmentInitialization
 from AttendanceFunction import uploadAttendance
@@ -97,7 +97,8 @@ class APIProject(tk.Tk):
         #Menubar
         menubar = Menu(self, background='#ff8000', foreground='black', activebackground='white', activeforeground='black')  
         config = Menu(menubar, tearoff=1, background='#ffcc99', foreground='black')  
-        config.add_command(label="Setting", command=lambda:setConfigWindow(self))
+        config.add_command(label="Set Configuration", command=lambda:setConfigWindow(self))
+        config.add_command(label="Show Configuration", command=lambda:showConfigWindow(self))
         menubar.add_cascade(label="Setting", menu=config)
 
         courseMenu = Menu(menubar, tearoff=0)  
@@ -122,6 +123,7 @@ class APIProject(tk.Tk):
         frame.tkraise()
 
 
+
 # Starting Page (Press to start the Navigation/ Exit)
 # 2 options for the user to choose from
 class StartPage(tk.Frame):
@@ -144,6 +146,15 @@ class StartPage(tk.Frame):
                             command=quit_program)  # quit program
         button2.place(relx=0.5, rely=0.7, anchor=CENTER)
         
+
+
+    def show_frame(self, new_frame_class):
+        if self.current_frame:
+            self.current_frame.destroy()
+
+        self.current_frame = new_frame_class(self.container, controller=self)
+        self.current_frame.pack(fill="both", expand=True)
+
 
 # Add course run into API
 class PageOne(tk.Frame):
@@ -434,8 +445,6 @@ class FinalPage(tk.Frame):
         button1 = tk.Button(self, text="Press to Exit App", bg="white", width=20, pady=5,
                             command=quit_program)  # quit program
         button1.place(relx=0.5, rely=0.6, anchor=CENTER)
-
-
 
 app = APIProject()
 app.geometry("500x747")

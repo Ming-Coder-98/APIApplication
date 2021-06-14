@@ -13,13 +13,16 @@ def httpRequestInit():
       certPath = config["certPath"]
 
 def getHttpRequest(request_url):
+      httpRequestInit()
       response = requests.get(request_url, cert = (certPath,keyPath))
       #printResponse(response)
       return response
       
 #payload must not be in Bytes
 def postHttpRequest(request_url, payload):
+      httpRequestInit()
       print("Post Http Request")
+      print (certPath)
       response = requests.post(request_url, data = payload,cert = (certPath,keyPath))
       print(response.status_code)
       printResponse(response)
@@ -30,6 +33,7 @@ def postHttpRequest(request_url, payload):
 #Reminder: doEncryption Function return in Byte
 #Use this if Encryption is needed
 def postHttpRequestJson(request_url, payload):
+      httpRequestInit()
       print("Post Http Request")
       response = requests.post(request_url, json = payload,cert =  (certPath,keyPath))
       #printResponse(response)

@@ -83,7 +83,7 @@ def updateEnrolmentPayload():
     saveJsonFormat(enrollmentPayloadJson, "EnrolmentPayLoad.json")
 
 
-enrollmentInitialization()
+#enrollmentInitialization()
 #addEnrolment()
 #resp = getHttpRequest("https://uat-api.ssg-wsg.sg/courses/runs/224565")\
 # resp = getHttpRequest("https://uat-api.ssg-wsg.sg/trainingproviders/201003953Z/courses")
