@@ -1,46 +1,46 @@
 {
     "enrolment": {
+        "trainingPartner": {
+            "code": "199900650G-01",
+            "uen": "199900650G"
+        },
         "course": {
+            "referenceNumber": "TGS-2020000703",
             "run": {
-                "id": "224265"
-            },
-            "referenceNumber": "TGS-2020001831"
+                "id": "224596"
+            }
         },
         "trainee": {
-            "id": "S8190860E",
-            "fees": {
-                "discountAmount": 50.25,
-                "collectionStatus": "Full Payment"
-            },
             "idType": {
                 "type": "NRIC"
             },
+            "id": "S8194046J",
+            "dateOfBirth": "1981-07-12",
+            "fullName": "Aileen Chong",
+            "contactNumber": {
+                "countryCode": "+65",
+                "areaCode": "",
+                "phoneNumber": "88881234"
+            },
+            "emailAddress": "abc@abc.com",
+            "sponsorshipType": "EMPLOYER",
             "employer": {
                 "uen": "199900650G",
                 "contact": {
                     "fullName": "Stephen Chua",
-                    "emailAddress": "abc@abc.com",
                     "contactNumber": {
+                        "countryCode": "+65",
                         "areaCode": "",
-                        "countryCode": "65",
                         "phoneNumber": "88881234"
-                    }
+                    },
+                    "emailAddress": "abc@abc.com"
                 }
             },
-            "fullName": "Aileen Chong",
-            "dateOfBirth": "1981-08-14",
-            "emailAddress": "abc@abc.com",
-            "contactNumber": {
-                "areaCode": "",
-                "countryCode": "65",
-                "phoneNumber": "88881234"
+            "fees": {
+                "discountAmount": 0,
+                "collectionStatus": "Full Payment"
             },
-            "enrolmentDate": "2021-07-15",
-            "sponsorshipType": "EMPLOYER"
-        },
-        "trainingPartner": {
-            "uen": "199900650G",
-            "code": "199900650G-01"
+            "enrolmentDate": "2020-06-20"
         }
     }
 }

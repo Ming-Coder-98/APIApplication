@@ -85,6 +85,7 @@ def updateEnrolmentPayload():
 
 enrollmentInitialization()
 #addEnrolment()
-#resp = getHttpRequest("https://uat-api.ssg-wsg.sg/courses/runs/224565")
-#print(resp.text)
+#resp = getHttpRequest("https://uat-api.ssg-wsg.sg/courses/runs/224565")\
+# resp = getHttpRequest("https://uat-api.ssg-wsg.sg/trainingproviders/201003953Z/courses")
+# print(resp.text)
 #cancelEnrolment("ENR-2106-000284")

@@ -77,6 +77,7 @@ def quit_program():
     quit()
 
 
+
 class APIProject(tk.Tk):
 
     def __init__(self, *args, **kwargs):
@@ -125,7 +126,7 @@ class StartPage(tk.Frame):
         button2 = tk.Button(self, text="Exit", bg="white", width=25, pady=5,
                             command=quit_program)  # quit program
         button2.place(relx=0.5, rely=0.7, anchor=CENTER)
-
+        
 
 # Add course run into API
 class PageOne(tk.Frame):
@@ -170,14 +171,14 @@ class PageOne(tk.Frame):
 
         def DownloadFile():
             try:
-                df = pd.read_json('C:/Users/Ming/Documents/APIApplication/CourseRunPayLoad.json')
+                df = pd.read_json('C:/Users/User/Desktop/application/APIApplication/CourseRunPayLoad.json')
                 df.to_csv(filedialog.asksaveasfilename(defaultextension='.csv'))
                 messagebox.showinfo("Successful", "CSV file has been downloaded")
             except:
                 print("user didnt save.")
 
         def ViewCourseRunJsonFile():
-                pyjsonviewer.view_data(json_file="C:/Users/Ming/Documents/APIApplication/CourseRunPayLoad.json")
+                pyjsonviewer.view_data(json_file="C:/Users/User/Desktop/application/APIApplication/CourseRunPayLoad.json")
 
         # When button is pressed, function should be called
         AddButton = tk.Button(self, command=AddCourse, text='Add', width=10, pady=5, bg="white")
@@ -240,14 +241,14 @@ class PageTwo(tk.Frame):
 
         def DownloadFile():
             try:
-                df = pd.read_json('C:/Users/Ming/Documents/APIApplication/EnrolmentPayload.json')
+                df = pd.read_json('C:/Users/User/Desktop/application/APIApplication/EnrolmentPayload.json')
                 df.to_csv(filedialog.asksaveasfilename(defaultextension='.csv'))
                 messagebox.showinfo("Successful", "CSV file has been downloaded")
             except:
                 print("user didnt save.")
 
         def ViewEnrolmentJsonFile():
-            pyjsonviewer.view_data(json_file="C:/Users/Ming/Documents/APIApplication/EnrolmentPayload.json")
+            pyjsonviewer.view_data(json_file="C:/Users/User/Desktop/application/APIApplication/EnrolmentPayload.json")
 
             # When button is pressed, function should be called
 
@@ -303,14 +304,14 @@ class PageThree(tk.Frame):
 
         def DownloadFile():
             try:
-                df = pd.read_json('C:/Users/Ming/Documents/APIApplication/AttendancePayload.json')
+                df = pd.read_json('C:/Users/User/Desktop/application/APIApplication/AttendancePayload.json')
                 df.to_csv(filedialog.asksaveasfilename(defaultextension='.csv'))
                 messagebox.showinfo("Successful", "CSV file has been downloaded")
             except:
                 print("user didnt save.")
 
         def ViewAttendanceJsonFile():
-            pyjsonviewer.view_data(json_file="C:/Users/Ming/Documents/APIApplication/AttendancePayload.json")
+            pyjsonviewer.view_data(json_file="C:/Users/User/Desktop/application/APIApplication/AttendancePayload.json")
 
             # When button is pressed, function should be called
 
@@ -372,14 +373,14 @@ class PageFour(tk.Frame):
 
         def DownloadFile():
             try:
-                df = pd.read_json('C:/Users/Ming/Documents/APIApplication/AssessmentPayload.json')
+                df = pd.read_json('C:/Users/User/Desktop/application/APIApplication/AssessmentPayload.json')
                 df.to_csv(filedialog.asksaveasfilename(defaultextension='.csv'))
                 messagebox.showinfo("Successful", "CSV file has been downloaded")
             except:
                 print("user didnt save.")
 
         def ViewAssessmentJsonFile():
-            pyjsonviewer.view_data(json_file="C:/Users/Ming/Documents/APIApplication/AssessmentPayload.json")
+            pyjsonviewer.view_data(json_file="C:/Users/User/Desktop/application/APIApplication/AssessmentPayload.json")
 
             # When button is pressed, function should be called
 

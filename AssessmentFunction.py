@@ -10,7 +10,7 @@ def AssessmentInit():
     print("Assessment Init")
 
 def addAssessment():
-    updateAttendancePayload()
+    updateAssessmentPayload()
     addAssessmentURL = "https://uat-api.ssg-wsg.sg/tpg/assessments"
     assessmentPayload = loadFile("AssessmentPayLoad.json")
     ciptertext = doEncryption(assessmentPayload.encode())
@@ -33,22 +33,22 @@ def deleteAssessment():
     plainText = doDecryption(resp.text)
     pprintJsonFormat(plainText)
 
-#Update the latest Session Id, UEN ,and Course Ref Number payload according to the config file
-def updateAttendancePayload():
+#Update the latest Run Id, UEN ,and Course Ref Number payload according to the config file
+def updateAssessmentPayload():
     #load config File
     configInfo = loadFile(fileName)
     configInfoJson = json.loads(configInfo)
 
     #load Attendance Json File
-    attendancePayload = loadFile("AssessmentPayLoad.json")
-    attendancePayload = json.loads(attendancePayload)
+    assessmentPayload = loadFile("AssessmentPayLoad.json")
+    assessmentPayload = json.loads(assessmentPayload)
 
     #Update the latest value and save
-    attendancePayload["assessment"]["trainingPartner"]["code"] = configInfoJson["code"]
-    attendancePayload["assessment"]["course"]["referenceNumber"] = configInfoJson["CourseRefNum"]
-    attendancePayload["assessment"]["trainingPartner"]["uen"] = configInfoJson["UEN"]
-    attendancePayload["assessment"]["course"]["run"]["id"] = configInfoJson["runId"]
-    saveJsonFormat(attendancePayload, "AssessmentPayLoad.json")
+    assessmentPayload["assessment"]["trainingPartner"]["code"] = configInfoJson["code"]
+    assessmentPayload["assessment"]["course"]["referenceNumber"] = configInfoJson["CourseRefNum"]
+    assessmentPayload["assessment"]["trainingPartner"]["uen"] = configInfoJson["UEN"]
+    assessmentPayload["assessment"]["course"]["run"]["id"] = configInfoJson["runId"]
+    saveJsonFormat(assessmentPayload, "AssessmentPayLoad.json")
 
 def saveAssessmentRefNumber(assessmentRefNumber):
     configInfo = loadFile(fileName)

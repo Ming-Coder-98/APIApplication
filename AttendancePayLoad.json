@@ -1,13 +1,13 @@
 {
     "uen": "199900650G",
     "course": {
-        "sessionID": "TGS-2020001831-224553-S1",
+        "sessionID": "TGS-2020000703-224596-S1",
         "attendance": {
             "status": {
                 "code": 1
             },
             "trainee": {
-                "id": "S8190860E",
+                "id": "S8195288D",
                 "name": "Tom",
                 "email": "abc@test.com",
                 "idType": {
@@ -24,7 +24,7 @@
                 }
             }
         },
-        "referenceNumber": "TGS-2020001831"
+        "referenceNumber": "TGS-2020000703"
     },
     "corppassId": "S1449757I"
 }
