@@ -1,5 +1,6 @@
 #Import course Run py Functions
 
+from configWindow import setConfigWindow
 from AssessmentFunction import addAssessment
 from EnrolmentFunction import addEnrolment, enrollmentInitialization
 from AttendanceFunction import uploadAttendance
@@ -17,6 +18,10 @@ from tkinter import filedialog
 import pandas as pd
 import pyjsonviewer
 
+##Variables
+certFilePath = ''
+keyFilePath = ''
+##
 
 # Open the json file where the "courserun info" is being stored
 with open("CourseRunPayLoad.json") as f:
@@ -88,9 +93,21 @@ class APIProject(tk.Tk):
 
         container.grid_rowconfigure(0, weight=1)
         container.grid_columnconfigure(0, weight=1)
+        
+        #Menubar
+        menubar = Menu(self, background='#ff8000', foreground='black', activebackground='white', activeforeground='black')  
+        config = Menu(menubar, tearoff=1, background='#ffcc99', foreground='black')  
+        config.add_command(label="Setting", command=lambda:setConfigWindow(self))
+        menubar.add_cascade(label="Setting", menu=config)
 
+        courseMenu = Menu(menubar, tearoff=0)  
+        courseMenu.add_command(label="View Course")  
+        courseMenu.add_command(label="Add Course")  
+        courseMenu.add_command(label="Delete Course")  
+        menubar.add_cascade(label="Course", menu=courseMenu)  
+            
+        self.config(menu=menubar)
         self.frames = {}
-
         for F in (StartPage, PageOne, PageTwo, PageThree, PageFour, FinalPage):
             frame = F(container, self)
 
