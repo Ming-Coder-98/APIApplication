@@ -76,8 +76,6 @@ assessmentTpUen = assessmentData["assessment"]["trainingPartner"]["uen"]
 def quit_program():
     quit()
 
-
-
 class APIProject(tk.Tk):
 
     def __init__(self, *args, **kwargs):
@@ -198,8 +196,6 @@ class viewCourseRunPage(tk.Frame):
         BackButton = tk.Button(self, text="Back", width=25, pady=5, bg="white",
                                command=lambda: controller.show_frame(StartPage))
         BackButton.place(relx=0.5, rely=0.35, anchor=CENTER)
-
-
 
     def show_frame(self, new_frame_class):
         if self.current_frame:
