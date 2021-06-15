@@ -55,3 +55,5 @@ def printResponse(response):
       print(response.text)
 
 httpRequestInit()
+
+resp = getHttpRequest("")

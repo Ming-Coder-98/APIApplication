@@ -96,7 +96,8 @@ class APIProject(tk.Tk):
         
         #Menubar
         menubar = Menu(self, background='#ff8000', foreground='black', activebackground='white', activeforeground='black')  
-        config = Menu(menubar, tearoff=1, background='#ffcc99', foreground='black')  
+        
+        config = Menu(menubar, tearoff=0)  
         config.add_command(label="Set Configuration", command=lambda:setConfigWindow(self))
         config.add_command(label="Show Configuration", command=lambda:showConfigWindow(self))
         menubar.add_cascade(label="Setting", menu=config)
@@ -105,6 +106,7 @@ class APIProject(tk.Tk):
         courseMenu.add_command(label="View Course")  
         courseMenu.add_command(label="Add Course")  
         courseMenu.add_command(label="Delete Course")  
+        courseMenu.add_command(label="Update Course")  
         menubar.add_cascade(label="Course", menu=courseMenu)  
             
         self.config(menu=menubar)

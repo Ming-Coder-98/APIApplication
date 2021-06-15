@@ -14,7 +14,7 @@ certPath = (configInfoJson["certPath"],configInfoJson["keyPath"])
 backend = default_backend()
 padder = padding.PKCS7(128).padder()
 unpadder = padding.PKCS7(128).unpadder()
-key = b64decode(configInfoJson["key"])
+key = any
 iv = (configInfoJson["IV"]).encode()
 
 
