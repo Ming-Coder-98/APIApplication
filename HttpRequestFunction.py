@@ -22,11 +22,9 @@ def getHttpRequest(request_url):
 def postHttpRequest(request_url, payload):
       httpRequestInit()
       print("Post Http Request")
-      print (certPath)
       response = requests.post(request_url, data = payload,cert = (certPath,keyPath))
-      print(response.status_code)
+      # print(response.status_code)
       printResponse(response)
-      print(response.status_code)
       return response
 
 #payload must not be in Bytes
