@@ -1,5 +1,6 @@
 #Import course Run py Functions
-from configWindow import setConfigWindow
+
+from configWindow import setConfigWindow, showConfigWindow
 from AssessmentFunction import addAssessment
 from EnrolmentFunction import addEnrolment, enrollmentInitialization
 from AttendanceFunction import uploadAttendance
@@ -92,10 +93,23 @@ class APIProject(tk.Tk):
 
         container.grid_rowconfigure(0, weight=1)
         container.grid_columnconfigure(0, weight=1)
+        
+        #Menubar
+        menubar = Menu(self, background='#ff8000', foreground='black', activebackground='white', activeforeground='black')  
+        config = Menu(menubar, tearoff=1, background='#ffcc99', foreground='black')  
+        config.add_command(label="Set Configuration", command=lambda:setConfigWindow(self))
+        config.add_command(label="Show Configuration", command=lambda:showConfigWindow(self))
+        menubar.add_cascade(label="Setting", menu=config)
 
-
+        courseMenu = Menu(menubar, tearoff=0)  
+        courseMenu.add_command(label="View Course")  
+        courseMenu.add_command(label="Add Course")  
+        courseMenu.add_command(label="Delete Course")  
+        menubar.add_cascade(label="Course", menu=courseMenu)  
+            
+        self.config(menu=menubar)
         self.frames = {}
-        for F in (StartPage, PageOne, PageTwo, PageThree, PageFour,ViewCourseRunPage, FinalPage):
+        for F in (StartPage, PageOne, PageTwo, PageThree, PageFour, FinalPage):
             frame = F(container, self)
 
             self.frames[F] = frame
@@ -103,24 +117,11 @@ class APIProject(tk.Tk):
             frame.grid(row=0, column=0, sticky="nsew")
 
         self.show_frame(StartPage)
-        #Menubar
-        menubar = Menu(self, background='#ff8000', foreground='black', activebackground='white', activeforeground='black')  
-        config = Menu(menubar, tearoff=1, background='#ffcc99', foreground='black')  
-        config.add_command(label="Setting", command=lambda:setConfigWindow(self))
-        menubar.add_cascade(label="Setting", menu=config)
-
-
-        courseMenu = Menu(menubar, tearoff=0)  
-        courseMenu.add_command(label="View Course", command=lambda: self.show_frame(ViewCourseRunPage))
-        courseMenu.add_command(label="Add Course")  
-        courseMenu.add_command(label="Delete Course")  
-        menubar.add_cascade(label="Course", menu=courseMenu)
-
-        self.config(menu=menubar)
 
     def show_frame(self, cont):
         frame = self.frames[cont]
         frame.tkraise()
+
 
 
 # Starting Page (Press to start the Navigation/ Exit)
@@ -144,10 +145,15 @@ class StartPage(tk.Frame):
         button2 = tk.Button(self, text="Exit", bg="white", width=25, pady=5,
                             command=quit_program)  # quit program
         button2.place(relx=0.5, rely=0.7, anchor=CENTER)
-        button3 = tk.Button(self, text="Test", bg="white", width=25, pady=5,
-                            command=lambda: controller.show_frame(ViewCourseRunPage))  # quit program
-        button3.place(relx=0.5, rely=0.9, anchor=CENTER)
+        
 
+
+    def show_frame(self, new_frame_class):
+        if self.current_frame:
+            self.current_frame.destroy()
+
+        self.current_frame = new_frame_class(self.container, controller=self)
+        self.current_frame.pack(fill="both", expand=True)
 
 
 # Add course run into API
@@ -216,50 +222,6 @@ class PageOne(tk.Frame):
         ViewCourseRunJsonButton = tk.Button(self, text="View course run in json", width=18, pady=5, bg="white",
                                command=ViewCourseRunJsonFile)
         ViewCourseRunJsonButton.place(relx=0.5, rely=0.65, anchor=CENTER)
-
-
-class ViewCourseRunPage(tk.Frame):
-
-    def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
-
-        load = Image.open("SKFBGPage.JPG")
-        render = ImageTk.PhotoImage(load)
-
-        # labels can be text or images
-        img2 = Label(self, image=render)
-        img2.image = render
-        img2.place(x=0, y=0, relwidth=1, relheight=1)
-
-        # this creates 'Label' widget for View CourseRun Form and uses place() method.
-        label_0 = Label(self, text="View Course Run", width=20, font=("bold", 20))
-        # place method in tkinter is geometry manager it is used to organize widgets by placing them in specific position
-        label_0.place(x=90, y=60)
-
-        # this creates 'Label' widget for CourseRunID and uses place() method.
-        label_1 = Label(self, text="Course Run ID", width=20, font=("bold", 10))
-        label_1.place(x=80, y=130)
-
-        # this will accept the input string text from the user.
-        entry_1 = Entry(self)
-        entry_1.place(x=240, y=130)
-
-        def ViewEnrolmentJsonFile():
-            pyjsonviewer.view_data(json_file="C:/Users/Ming/Documents/APIApplication/EnrolmentPayload.json")
-
-        def Submit():
-            print("submitted")
-            SubmitButton = tk.Button(self, command=ViewEnrolmentJsonFile, text='Success', width=10, pady=5, bg="white")
-            SubmitButton.place(relx=0.5, rely=0.4, anchor=CENTER)
-
-        # this creates button for submitting the details provides by the user
-        SubmitButton = tk.Button(self, command=Submit, text='Submit', width=10, pady=5, bg="white")
-        SubmitButton.place(relx=0.5, rely=0.25, anchor=CENTER)
-
-        # this creates button for exporting the JSON file
-        ExportButton = tk.Button(self, command=Submit, text='Export as JSON File', width=20, pady=5, bg="white")
-        ExportButton.place(relx=0.5, rely=0.3, anchor=CENTER)
-
 
 
 # Add enrollment into API
@@ -483,8 +445,6 @@ class FinalPage(tk.Frame):
         button1 = tk.Button(self, text="Press to Exit App", bg="white", width=20, pady=5,
                             command=quit_program)  # quit program
         button1.place(relx=0.5, rely=0.6, anchor=CENTER)
-
-
 
 app = APIProject()
 app.geometry("500x747")

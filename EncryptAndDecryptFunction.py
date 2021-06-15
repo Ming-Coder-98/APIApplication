@@ -16,11 +16,15 @@ padder = padding.PKCS7(128).padder()
 unpadder = padding.PKCS7(128).unpadder()
 key = b64decode(configInfoJson["key"])
 iv = (configInfoJson["IV"]).encode()
-cipher = Cipher(algorithms.AES(key), modes.CBC(iv), backend=backend)
+
 
 #encryption Function
 def doEncryption(payloadByte):
+    global key, certPath
     #preConfiguration
+    certPath = (configInfoJson["certPath"],configInfoJson["keyPath"])
+    key = b64decode(configInfoJson["key"])
+    cipher = Cipher(algorithms.AES(key), modes.CBC(iv), backend=backend)
     padder = padding.PKCS7(128).padder()
     
     encryptor = cipher.encryptor()
@@ -31,7 +35,11 @@ def doEncryption(payloadByte):
 
 # #decryption
 def doDecryption(response):
+    global key, certPath
     #preConfiguration
+    certPath = (configInfoJson["certPath"],configInfoJson["keyPath"])
+    key = b64decode(configInfoJson["key"])
+    cipher = Cipher(algorithms.AES(key), modes.CBC(iv), backend=backend)
     unpadder = padding.PKCS7(128).unpadder()
 
     result = b64decode(response)
