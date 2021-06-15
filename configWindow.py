@@ -28,6 +28,7 @@ class setConfigWindow(Toplevel):
                 entries.append(LabelEntry(self, field, button))
             else:
                 entries.append(LabelEntry(self, field))
+
 class LabelEntry(tkinter.Frame):
     def __init__(self, parent, text, button=None):
         super().__init__(parent)
