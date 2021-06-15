@@ -1,11 +1,12 @@
 #Import course Run py Functions
 
-from configWindow import setConfigWindow, showConfigWindow
+from configWindow import setConfigWindow, showConfigWindow, entries, certPemPath, keyPemPath
 from AssessmentFunction import addAssessment
 from EnrolmentFunction import addEnrolment, enrollmentInitialization
 from AttendanceFunction import uploadAttendance
 from courseRunFunctions import *
 
+from HttpRequestFunction import loadFile, saveJsonFormat
 import tkinter as tk
 from tkinter import *
 from tkinter import ttk
@@ -93,7 +94,16 @@ class APIProject(tk.Tk):
 
         container.grid_rowconfigure(0, weight=1)
         container.grid_columnconfigure(0, weight=1)
-        
+
+
+        self.frames = {}
+        for F in (StartPage, PageOne, PageTwo, PageThree, PageFour, viewCourseRunPage, FinalPage):
+            frame = F(container, self)
+
+            self.frames[F] = frame
+
+            frame.grid(row=0, column=0, sticky="nsew")
+
         #Menubar
         menubar = Menu(self, background='#ff8000', foreground='black', activebackground='white', activeforeground='black')  
         config = Menu(menubar, tearoff=1, background='#ffcc99', foreground='black')  
@@ -102,26 +112,73 @@ class APIProject(tk.Tk):
         menubar.add_cascade(label="Setting", menu=config)
 
         courseMenu = Menu(menubar, tearoff=0)  
-        courseMenu.add_command(label="View Course")  
+        courseMenu.add_command(label="View Course",command=lambda: self.show_frame(viewCourseRunPage))
         courseMenu.add_command(label="Add Course")  
         courseMenu.add_command(label="Delete Course")  
-        menubar.add_cascade(label="Course", menu=courseMenu)  
-            
+        menubar.add_cascade(label="Course", menu=courseMenu)
+
         self.config(menu=menubar)
-        self.frames = {}
-        for F in (StartPage, PageOne, PageTwo, PageThree, PageFour, FinalPage):
-            frame = F(container, self)
-
-            self.frames[F] = frame
-
-            frame.grid(row=0, column=0, sticky="nsew")
-
         self.show_frame(StartPage)
 
     def show_frame(self, cont):
         frame = self.frames[cont]
         frame.tkraise()
 
+
+# Starting Page (Press to start the Navigation/ Exit)
+# 2 options for the user to choose from
+class viewCourseRunPage(tk.Frame):
+
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+
+        load = Image.open("SKFBGPage.JPG")
+        render = ImageTk.PhotoImage(load)
+
+
+
+
+        # labels can be text or images
+        img2 = Label(self, image=render)
+        img2.image = render
+        img2.place(x=0, y=0, relwidth=1, relheight=1)
+
+        label_0 = Label(self, text="View Course Run", width=20, font=("bold", 20))
+        label_0.place(x=90, y=53)
+
+        label_1 = Label(self, text="Course Run ID", width=20, font=("bold", 10))
+        label_1.place(x=80, y=130)
+
+        entry_1 = Entry(self)
+        entry_1.place(x=240, y=130)
+
+        def courseRunViewer():
+            courseRunID = entry_1.get()
+            if (courseRunID != ""):
+                # Call a Get HTTP to see if runId exists
+                print("Searching Course Run Id: " + str(courseRunID))
+                resp = getHttpRequest("https://uat-api.ssg-wsg.sg/courses/runs/" + str(courseRunID))
+                print(resp.status_code)
+                # Deletion
+                if (resp.status_code < 400):
+                    print(resp.json)
+                else:
+                    print("Run ID Does not exist ")
+
+        submitButton = tk.Button(self, text="Submit", bg="white", width=25, pady=5,
+                            command=lambda: courseRunViewer())
+        submitButton.place(relx=0.5, rely=0.25, anchor=CENTER)
+        exportButton = tk.Button(self, text="Export as JSON File", bg="white", width=25, pady=5,
+                            command=lambda: controller.show_frame(PageOne))
+        exportButton.place(relx=0.5, rely=0.3, anchor=CENTER)
+
+
+    def show_frame(self, new_frame_class):
+        if self.current_frame:
+            self.current_frame.destroy()
+
+        self.current_frame = new_frame_class(self.container, controller=self)
+        self.current_frame.pack(fill="both", expand=True)
 
 
 # Starting Page (Press to start the Navigation/ Exit)
@@ -384,8 +441,6 @@ class PageFour(tk.Frame):
         label3.place(relx=0.5, rely=0.25, anchor=CENTER)
         label4 = tk.Label(self, text="Assessment TP UEN: " + assessmentTpUen)
         label4.place(relx=0.5, rely=0.3, anchor=CENTER)
-
-
 
 
         def AddAssessment():
