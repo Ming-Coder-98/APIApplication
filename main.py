@@ -125,8 +125,10 @@ class APIProject(tk.Tk):
         frame.tkraise()
 
 
-# Starting Page (Press to start the Navigation/ Exit)
+# ViewCourseRun Page
 # 2 options for the user to choose from
+
+
 class viewCourseRunPage(tk.Frame):
 
     def __init__(self, parent, controller):
@@ -134,9 +136,6 @@ class viewCourseRunPage(tk.Frame):
 
         load = Image.open("SKFBGPage.JPG")
         render = ImageTk.PhotoImage(load)
-
-
-
 
         # labels can be text or images
         img2 = Label(self, image=render)
@@ -154,6 +153,7 @@ class viewCourseRunPage(tk.Frame):
 
         def courseRunViewer():
             courseRunID = entry_1.get()
+            global resp
             if (courseRunID != ""):
                 # Call a Get HTTP to see if runId exists
                 print("Searching Course Run Id: " + str(courseRunID))
@@ -161,16 +161,27 @@ class viewCourseRunPage(tk.Frame):
                 print(resp.status_code)
                 # Deletion
                 if (resp.status_code < 400):
-                    print(resp.json)
+                    print(resp.text)
+                    pyjsonviewer.view_data(json_data=resp.json())
                 else:
                     print("Run ID Does not exist ")
+                    messagebox.showerror("Invalid Response",
+                                         "Status Code: 404 \nCourse Run ID does not exist.")
+            else:
+                messagebox.showerror("Invalid Response",
+                                     "Please enter a Course Run ID")
+
 
         submitButton = tk.Button(self, text="Submit", bg="white", width=25, pady=5,
                             command=lambda: courseRunViewer())
         submitButton.place(relx=0.5, rely=0.25, anchor=CENTER)
         exportButton = tk.Button(self, text="Export as JSON File", bg="white", width=25, pady=5,
-                            command=lambda: controller.show_frame(PageOne))
+                            command=lambda: saveJsonFormat(resp.json(),"test.json"))
         exportButton.place(relx=0.5, rely=0.3, anchor=CENTER)
+        BackButton = tk.Button(self, text="Back", width=25, pady=5, bg="white",
+                               command=lambda: controller.show_frame(StartPage))
+        BackButton.place(relx=0.5, rely=0.35, anchor=CENTER)
+
 
 
     def show_frame(self, new_frame_class):
