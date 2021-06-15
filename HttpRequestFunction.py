@@ -15,7 +15,7 @@ def httpRequestInit():
 def getHttpRequest(request_url):
       httpRequestInit()
       response = requests.get(request_url, cert = (certPath,keyPath))
-      #printResponse(response)
+      printResponse(response)
       return response
       
 #payload must not be in Bytes
@@ -55,5 +55,3 @@ def printResponse(response):
       print(response.text)
 
 httpRequestInit()
-
-resp = getHttpRequest("")
