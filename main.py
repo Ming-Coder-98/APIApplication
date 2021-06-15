@@ -257,15 +257,27 @@ class deleteCourseRunPage(tk.Frame):
         def typing(event):
             CRN = entry_CRN.get()
             value = updateEmptyDeleteCourseRunPayLoad(CRN)
-            payloadLabel.configure(text = value)
+            payloadText.delete("1.0","end")
+            payloadText.insert(tk.END, value)
+            # payloadLabel.configure(text = value)
+            
         entry_CRN.bind('<KeyRelease>', typing)
 
         #Initialisation Configuration
-        payloadLabel = ttk.Label(tab1, text = getdeleteCourseRunPayLoad())
-        payloadLabel.grid()
-        response = ''
-        responseLabel = ttk.Label(tab2, text = response)
-        responseLabel.grid()
+        # payloadLabel = ttk.Label(tab1, text = getdeleteCourseRunPayLoad())
+        # payloadLabel.grid()
+        # response = ''
+        # responseLabel = ttk.Label(tab2, text = response)
+        # responseLabel.grid()
+
+        payloadText = Text(tab1)
+        payloadText.insert(tk.END, str(getdeleteCourseRunPayLoad()))
+        payloadText.place(height = 400, width = 400)
+        payloadText.bind("<Key>", lambda e: "break")
+        
+        responseText = Text(tab2)
+        responseText.place(height = 400, width = 400)
+        responseText.bind("<Key>", lambda e: "break")
 
         submitButton = tk.Button(self, text="Delete", bg="white", width=25, pady=5, command=lambda: deleteCallBack(entry_1.get()))
         submitButton.place(relx=0.5, rely=0.25, anchor=CENTER)
@@ -277,7 +289,7 @@ class deleteCourseRunPage(tk.Frame):
         def downloadFile(method):
 
             file = filedialog.asksaveasfile(defaultextension='.json')
-            filetext = str(payloadLabel.cget("text")) if method == "payload" else str(responseLabel.cget("text"))
+            filetext = str(payloadText.get("1.0",END)) if method == "payload" else str(responseText.get("1.0",END))
             file.write(filetext)
             file.close()
             messagebox.showinfo("Successful", "File has been downloaded")
@@ -290,7 +302,8 @@ class deleteCourseRunPage(tk.Frame):
             resp = deleteCourserun(runId)
             if (resp.status_code < 400):
                 messagebox.showinfo("Successful", "Successfully Delete Course Run: " + runId)
-                responseLabel.configure(text = resp.text)
+                responseText.delete("1.0","end")
+                responseText.insert(tk.END, resp.text)
 
 
 # Starting Page (Welcome Page)
