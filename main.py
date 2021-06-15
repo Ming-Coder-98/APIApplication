@@ -3,9 +3,9 @@ from configWindow import setConfigWindow, showConfigWindow
 from AssessmentFunction import addAssessment
 from EnrolmentFunction import addEnrolment, enrollmentInitialization
 from AttendanceFunction import uploadAttendance
-from courseRunFunctions import *
+from courseRunFunctions import deleteCourserun, getdeleteCourseRunPayLoad, updateEmptyDeleteCourseRunPayLoad
 
-from HttpRequestFunction import loadFile, saveJsonFormat
+from HttpRequestFunction import getHttpRequest, loadFile, saveJsonFormat
 import tkinter as tk
 from tkinter import *
 from tkinter import ttk
@@ -90,7 +90,7 @@ class APIProject(tk.Tk):
         container.grid_columnconfigure(0, weight=1)
 
         self.frames = {}
-        for F in (StartPage, viewCourseRunPage, deleteCourseRunPage):
+        for F in (viewCourseRunPage, deleteCourseRunPage, StartPage):
             frame = F(container, self)
 
             self.frames[F] = frame
@@ -227,44 +227,70 @@ class deleteCourseRunPage(tk.Frame):
         label_0.place(x=90, y=53)
 
         label_1 = Label(self, text="Course Run ID", width=20, font=("bold", 10))
-        label_1.place(x=80, y=130)
+        label_1.place(x=80, y=100)
 
         entry_1 = Entry(self)
-        entry_1.place(x=240, y=130)
+        entry_1.place(x=240, y=100)
 
+        label_CRN = Label(self, text="Course Reference Number", width=20, font=("bold", 10))
+        label_CRN.place(x=80, y=130)
+
+        entry_CRN = Entry(self)
+        entry_CRN.place(x=240, y=130)
+
+        #Expand label to fit window size
+        style = ttk.Style(self)
+        style.configure('TNotebook.Tab', width=self.winfo_screenwidth())
+
+        #Configuration for Notebook layout
         tabControl = ttk.Notebook(self)
   
         tab1 = ttk.Frame(tabControl)
         tab2 = ttk.Frame(tabControl)
-        #500 x 747
+        
+        #Adding of tabs
         tabControl.add(tab1, text ='Payload')
         tabControl.add(tab2, text ='Reponse')
         tabControl.place(width= 400, height= 450, x = 50, y = 222)
-        
-        ttk.Label(tab1, 
-                text ="Welcome to \
-                GeeksForGeeks").grid(column = 0, 
-                                    row = 0,
-                                    padx = 30,
-                                    pady = 30)  
-        ttk.Label(tab2,
-                text ="Lets dive into the\
-                world of computers").grid(column = 0,
-                                            row = 0, 
-                                            padx = 30,
-                                            pady = 30)
 
-        submitButton = tk.Button(self, text="Delete", bg="white", width=25, pady=5)
+        #This method is used to update the display information dynamically in "Payload" Tab whenever user key in a value
+        def typing(event):
+            CRN = entry_CRN.get()
+            value = updateEmptyDeleteCourseRunPayLoad(CRN)
+            payloadLabel.configure(text = value)
+        entry_CRN.bind('<KeyRelease>', typing)
+
+        #Initialisation Configuration
+        payloadLabel = ttk.Label(tab1, text = getdeleteCourseRunPayLoad())
+        payloadLabel.grid()
+        response = ''
+        responseLabel = ttk.Label(tab2, text = response)
+        responseLabel.grid()
+
+        submitButton = tk.Button(self, text="Delete", bg="white", width=25, pady=5, command=lambda: deleteCallBack(entry_1.get()))
         submitButton.place(relx=0.5, rely=0.25, anchor=CENTER)
-        exportButton = tk.Button(self, text="Export as JSON File", bg="white", width=25, pady=5, command=controller.show_frame(StartPage))
-        exportButton.place(relx=0.5, rely=0.95, anchor=CENTER)
+        exportButton1 = tk.Button(self, text="Export Payload", bg="white", width=15, pady=5, command = lambda: downloadFile("payload"))
+        exportButton1.place(relx=0.3, rely=0.95, anchor=CENTER)
+        exportButton2 = tk.Button(self, text="Export Response", bg="white", width=15, pady=5,command = lambda: downloadFile("response"))
+        exportButton2.place(relx=0.7, rely=0.95, anchor=CENTER)
 
-        def show_frame(self, new_frame_class):
-            if self.current_frame:
-                self.current_frame.destroy()
+        def downloadFile(method):
 
-            self.current_frame = new_frame_class(self.container, controller=self)
-            self.current_frame.pack(fill="both", expand=True)
+            file = filedialog.asksaveasfile(defaultextension='.json')
+            filetext = str(payloadLabel.cget("text")) if method == "payload" else str(responseLabel.cget("text"))
+            file.write(filetext)
+            file.close()
+            messagebox.showinfo("Successful", "File has been downloaded")
+
+
+        # This method activates two other methods.
+        # 1) this method calls the delete method in courseRunFunction and return the response
+        # 2) Based on the response, if a status 200 is received, it will display the response    
+        def deleteCallBack(runId):
+            resp = deleteCourserun(runId)
+            if (resp.status_code < 400):
+                messagebox.showinfo("Successful", "Successfully Delete Course Run: " + runId)
+                responseLabel.configure(text = resp.text)
 
 
 # Starting Page (Welcome Page)
