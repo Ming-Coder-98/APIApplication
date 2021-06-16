@@ -14,14 +14,16 @@ pathName = ''
 
 def displayFileLabel(window ,filePath, type):
     global pathName, certPemPath
-    label_2 = Label(window)
+    # label_2 = Label(window)
 
-    label_2.config(text=os.path.basename(filePath), fg="blue")
+    # label_2.config(text=os.path.basename(filePath), fg="blue")
     if (type == "cert"):
-        label_2.place(relx= 0.65, rely=0.275)
+        # label_2.place(relx= 0.65, rely=0.275)
+        entries[2].clear_text()
         entries[2].insert_text(filePath)
     else :
-        label_2.place(relx= 0.65, rely=0.425)
+        # label_2.place(relx= 0.65, rely=0.425)
+        entries[3].clear_text()
         entries[3].insert_text(filePath)
 
 
@@ -50,7 +52,7 @@ class setConfigWindow(Toplevel):
     def __init__(self, master = None):       
         super().__init__(master = master)
         self.title("Configuration Window")
-        self.geometry("600x250")
+        self.geometry("470x180")
         self.resizable(False,False)
 
         frame = tk.Frame(self)
@@ -73,7 +75,7 @@ class saveButtonFrame(tkinter.Frame):
     def __init__(self,parent):
         super().__init__(parent)
         self.pack(fill=tk.X)
-        okButton = Button(self, text="Save", command=lambda:storeAndsave_all())
+        okButton = Button(self, text="Save", command=lambda:storeAndsave_all(), width=60)
         okButton.pack(side=RIGHT,padx=5, pady=5)
 
 
@@ -94,7 +96,7 @@ class LabelEntry(tkinter.Frame):
             frame2 = tk.Frame(self)
             frame2.pack(side=tk.LEFT, expand=True)
 
-            self.entry = tk.Entry(frame2, width=30)
+            self.entry = tk.Entry(frame2, width=45)
             self.entry.pack(side=tk.LEFT, fill=tk.X, padx=5)
 
             button.pack(in_=frame2, side=tk.LEFT, padx=5, pady=5)
@@ -130,7 +132,7 @@ class showConfigWindow(Toplevel):
     def __init__(self, master = None):       
         super().__init__(master = master)
         self.title("Configuration Window")
-        self.geometry("600x250")
+        self.geometry("600x200")
         self.resizable(False,False)
         self.displayConfigInfo()
 
@@ -143,7 +145,7 @@ class showConfigWindow(Toplevel):
 
         #Display Config Information
         Fact = "UEN: " + configData["UEN"] + "\nKey: " + configData["key"] + "\nCert Path: " + configData["certPath"] + "\nKey Path: " + configData["keyPath"]
-        T = Text(frame, height = 7, width = 60)
+        T = Text(frame, height = 7, width = 70)
         l = Label(frame, text = "Configuration Information")
         l.config(font =("Courier", 12))
         l.pack(pady=10)  
