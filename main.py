@@ -4,6 +4,7 @@ from AssessmentFunction import addAssessment
 from EnrolmentFunction import addEnrolment, enrollmentInitialization
 from AttendanceFunction import uploadAttendance
 from courseRunFunctions import deleteCourserun, getdeleteCourseRunPayLoad, updateEmptyDeleteCourseRunPayLoad
+from AddCourseRun import addCourseRunPage, addCourseRunPageTwo, addCourseRunPageThree, addCourseRunPageFour, addCourseRunPagePreview, addCourseRunPageSelect
 
 from HttpRequestFunction import getHttpRequest, loadFile, saveJsonFormat
 import tkinter as tk
@@ -88,7 +89,7 @@ class APIProject(tk.Tk):
         container.grid_columnconfigure(0, weight=1)
 
         self.frames = {}
-        for F in (viewCourseRunPage, deleteCourseRunPage, StartPage):
+        for F in (addCourseRunPageSelect, addCourseRunPagePreview, addCourseRunPageFour, addCourseRunPageThree, addCourseRunPageTwo, addCourseRunPage, viewCourseRunPage, deleteCourseRunPage, StartPage):
             frame = F(container, self)
 
             self.frames[F] = frame
@@ -105,7 +106,7 @@ class APIProject(tk.Tk):
 
         courseMenu = Menu(menubar, tearoff=0)  
         courseMenu.add_command(label="View Course Run",command=lambda: self.show_frame(viewCourseRunPage))
-        courseMenu.add_command(label="Add Course Run")  
+        courseMenu.add_command(label="Add Course Run",command=lambda: self.show_frame(addCourseRunPageSelect))
         courseMenu.add_command(label="Delete Course Run",command=lambda: self.show_frame(deleteCourseRunPage)) 
         courseMenu.add_command(label="Update Course Run")  
         menubar.add_cascade(label="Course", menu=courseMenu)  

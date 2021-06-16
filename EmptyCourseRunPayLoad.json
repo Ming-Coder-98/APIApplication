@@ -1,0 +1,27 @@
+{
+    "course": {
+        "courseReferenceNumber": "TGS-2020001831",
+        "trainingProvider": {
+            "uen": "199900650G"
+        },
+        "runs": [
+            {
+                "sequenceNumber": "",
+                "registrationDates": {
+                    "opening": "",
+                    "closing": "",
+                },
+                "courseDates": {
+                    "start": "",
+                    "end": "",
+                },
+                "modeOfTraining": "",
+                "courseAdminEmail": "",
+                "courseVacancy": {
+                    "code": "",
+                    "description": ""
+                }
+}
+                    ]
+                  }
+                }
