@@ -90,6 +90,7 @@ class APIProject(tk.Tk):
 
         container.grid_rowconfigure(0, weight=1)
         container.grid_columnconfigure(0, weight=1)
+        
 
         self.frames = {}
         for F in (viewCourseRunPage, deleteCourseRunPage, StartPage):
@@ -399,6 +400,7 @@ class StartPage(tk.Frame):
 
 app = APIProject()
 app.geometry("500x747")
+app.resizable(0,0)
 app.mainloop()
 
 # Add course run into API

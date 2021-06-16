@@ -75,7 +75,7 @@ class saveButtonFrame(tkinter.Frame):
     def __init__(self,parent):
         super().__init__(parent)
         self.pack(fill=tk.X)
-        okButton = Button(self, text="Save", command=lambda:storeAndsave_all())
+        okButton = Button(self, text="Save", command=lambda:storeAndsave_all(), width=60)
         okButton.pack(side=RIGHT,padx=5, pady=5)
 
 
