@@ -41,7 +41,9 @@ def courseRunInitialization():
       except:
             print ("There is an Error reading the File - Initialization")
 
-
+def getCourseRun(runId):
+      resp = getHttpRequest("https://uat-api.ssg-wsg.sg/courses/runs/" + str(runId))
+      return resp
 
 def addCourserun():
       #Update the latest value
@@ -50,11 +52,6 @@ def addCourserun():
       #payload variable is obtained from CourseRunFunction.py
       response = postHttpRequest("https://uat-api.ssg-wsg.sg/courses/runs" , payload)
       saveCourseRunDetails(response)
-
-# Outdated deleteCourserun
-# def deleteCourserun(runId, crn, uen):
-#       deleteCourseRunPayload = "{\"course\":{\"courseReferenceNumber\":\"" + crn + "\",\"trainingProvider\":{\"uen\":\"" + uen + "\"},\"run\":{\"action\":\"delete\"}}}"
-#       postHttpRequest("https://uat-api.ssg-wsg.sg/courses/runs/" + str(runId), deleteCourseRunPayload)
 
 #Delete Method for deleteCourseRunPage 
 def deleteCourserun(runId):
@@ -82,6 +79,12 @@ def updateCourseRunPayload():
 #This method is to update the courserun payload dynamically for displaying purpose in deleteCourseRunPage 
 def updateEmptyDeleteCourseRunPayLoad(CRN):
       global deleteCourseRunPayLoad
+      
+      #Set UEN to payload
+      config = loadFile("config.json")
+      config = json.loads(config)
+      uen = config["UEN"]
+
       deleteCourseRunPayLoad = "{\n    \"course\": {\n        \"courseReferenceNumber\": \"" + CRN + "\",\n        \"trainingProvider\": {\n            \"uen\": \""+ uen + "\"\n        },\n        \"run\": {\n            \"action\": \"delete\"\n        }\n    }\n}"
       return deleteCourseRunPayLoad
 
@@ -94,10 +97,6 @@ def getdeleteCourseRunPayLoad():
 
       deleteCourseRunPayLoad = "{\n    \"course\": {\n        \"courseReferenceNumber\": \"\",\n        \"trainingProvider\": {\n            \"uen\": \"" + uen + "\"\n        },\n        \"run\": {\n            \"action\": \"delete\"\n        }\n    }\n}"
       return deleteCourseRunPayLoad
-#224769
+
 #addCourserun()
-#Manual Delete
-#payload = "{\"course\":{\"courseReferenceNumber\":\"TGS-2020000703\",\"trainingProvider\":{\"uen\":\"199900650G\"},\"run\":{\"action\":\"delete\"}}}"
-#postHttpRequest("https://uat-api.ssg-wsg.sg/courses/runs/224183", payload)
-#deleteCourserun(runId, crn, "199900650G")
 

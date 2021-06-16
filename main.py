@@ -1,9 +1,10 @@
 #Import course Run py Functions
+from tooltip import CreateToolTip
 from configWindow import setConfigWindow, showConfigWindow
 from AssessmentFunction import addAssessment
 from EnrolmentFunction import addEnrolment, enrollmentInitialization
 from AttendanceFunction import uploadAttendance
-from courseRunFunctions import deleteCourserun, getdeleteCourseRunPayLoad, updateEmptyDeleteCourseRunPayLoad
+from courseRunFunctions import deleteCourserun, getCourseRun, getdeleteCourseRunPayLoad, updateEmptyDeleteCourseRunPayLoad
 
 from HttpRequestFunction import getHttpRequest, loadFile, saveJsonFormat
 import tkinter as tk
@@ -17,6 +18,7 @@ from PIL import ImageTk, Image
 from tkinter import filedialog
 import pandas as pd
 import pyjsonviewer
+from tkinter import scrolledtext
 
 # Open the json file where the "courserun info" is being stored
 with open("CourseRunPayLoad.json") as f:
@@ -164,42 +166,94 @@ class viewCourseRunPage(tk.Frame):
 
         label_1 = Label(self, text="Course Run ID", width=20, font=("bold", 10))
         label_1.place(x=80, y=130)
-
+        label_1_ttp = CreateToolTip(label_1, \
+        'The Course Run Id is used as a URL for GET Request Call\n'
+        'Example: https://api.ssg-wsg.sg/courses/runs/{runId}')
         entry_1 = Entry(self)
         entry_1.place(x=240, y=130)
 
-        def courseRunViewer():
-            courseRunID = entry_1.get()
-            global resp
-            if (courseRunID != ""):
-                # Call a Get HTTP to see if runId exists
-                print("Searching Course Run Id: " + str(courseRunID))
-                resp = getHttpRequest("https://uat-api.ssg-wsg.sg/courses/runs/" + str(courseRunID))
-                print(resp.status_code)
-                # Deletion
-                if (resp.status_code < 400):
-                    print(resp.text)
-                    pyjsonviewer.view_data(json_data=resp.json())
-                else:
-                    print("Run ID Does not exist ")
-                    messagebox.showerror("Invalid Response",
-                                         "Status Code: 404 \nCourse Run ID does not exist.")
-            else:
-                messagebox.showerror("Invalid Response",
-                                     "Please enter a Course Run ID")
+        #Expand label to fit window size
+        style = ttk.Style(self)
+        style.configure('TNotebook.Tab', width=self.winfo_screenwidth())
+
+        #Configuration for Notebook layout
+        tabControl = ttk.Notebook(self)
+  
+        responseFrame = ttk.Frame(tabControl)
+        tabControl.add(responseFrame, text ='Reponse')
+
+        tabControl.place(width= 440, height= 450, x = 30, y = 222)
+        textw = scrolledtext.ScrolledText(responseFrame,width=70,height=30)
+        #textw.config(background="light grey", foreground="black", font='times 12 bold', wrap='word')
+        textw.place(height = 420, width = 440)
+
+        #adding of single line text box
+        edit = Entry(self, background="light gray") 
+
+        #positioning of text box
+        edit.place(x = 285, height= 22, y=223) 
+
+        #setting focus
+        edit.focus_set()
+
+        butt = Button(self, text='Find', command=lambda:find(), highlightthickness = 0, bd = 0, background="gray")  
+        butt.place(x = 410, y=223, height=22, width=60) 
+        
 
 
         submitButton = tk.Button(self, text="Submit", bg="white", width=25, pady=5,
-                            command=lambda: courseRunViewer())
+                            command=lambda: submitCallBack())
         submitButton.place(relx=0.5, rely=0.25, anchor=CENTER)
-        exportButton = tk.Button(self, text="Export as JSON File", bg="white", width=25, pady=5,
-                            command=lambda: controller.show_frame(StartPage))
-        exportButton.place(relx=0.5, rely=0.3, anchor=CENTER)
-        BackButton = tk.Button(self, text="Back", width=25, pady=5, bg="white",
-                               command=lambda: controller.show_frame(StartPage))
-        BackButton.place(relx=0.5, rely=0.35, anchor=CENTER)
+        exportButton = tk.Button(self, text="Export as JSON File", bg="white", width=25, pady=5, command = lambda: downloadFile())
+        exportButton.place(relx=0.5, rely=0.95, anchor=CENTER)
+
+        
+        # This method activates two other methods.
+        # 1) this method calls the get method in courseRunFunction and return the response
+        # 2) Based on the response, if a status 200 is received, it will display the response    
+        def submitCallBack():
+            textw.delete("1.0","end") 
+            courseRunID = entry_1.get()
+            resp = getCourseRun(courseRunID)
+            print(resp.status_code)
+            textPayload = StringVar(self, value = resp.text) 
+            textw.insert(INSERT, textPayload.get())
+        def downloadFile():
+            files = [('JSON', '*.json'), 
+                     ('Text Document', '*.txt')]
+            file = filedialog.asksaveasfile(filetypes = files, defaultextension='.json')
+            filetext = str(textw.get("1.0",END))
+            file.write(filetext)
+            file.close()
+            messagebox.showinfo("Successful", "File has been downloaded")
 
 
+        #This method is used to search the response text and highlight the searched word in red
+        def find():
+            #remove tag 'found' from index 1 to END
+            textw.tag_remove('found', '1.0', END) 
+            
+            #returns to widget currently in focus
+            s = edit.get() 
+            if s:
+                idx = '1.0'
+                while 1:
+                    #searches for desried string from index 1
+                    idx = textw.search(s, idx, nocase=1, 
+                                    stopindex=END) 
+                    if not idx: break
+                    
+                    #last index sum of current index and
+                    #length of text
+                    lastidx = '%s+%dc' % (idx, len(s)) 
+                    
+                    #overwrite 'Found' at idx
+                    textw.tag_add('found', idx, lastidx) 
+                    idx = lastidx
+                
+                #mark located string as red
+                textw.tag_config('found', foreground='red') 
+            edit.focus_set()
 
     def show_frame(self, new_frame_class):
         if self.current_frame:
@@ -222,21 +276,31 @@ class deleteCourseRunPage(tk.Frame):
         img2 = Label(self, image=render)
         img2.image = render
         img2.place(x=0, y=0, relwidth=1, relheight=1)
-
+        
+        #Title
         label_0 = Label(self, text="Delete Course Run", width=20, font=("bold", 20))
         label_0.place(x=90, y=53)
 
-        label_1 = Label(self, text="Course Run ID", width=20, font=("bold", 10))
+        #Course Run Id
+        label_1 = Label(self, text="Course Run ID: ", width=20, font=("bold", 10), anchor='w')
         label_1.place(x=80, y=100)
 
         entry_1 = Entry(self)
         entry_1.place(x=240, y=100)
+        label_1_ttp = CreateToolTip(label_1, \
+        'The Course Run Id is used to create URL for POST Request Call\n'
+        'Example: https://api.ssg-wsg.sg/courses/runs/{runId}')
 
-        label_CRN = Label(self, text="Course Reference Number", width=20, font=("bold", 10))
+        #Course Ref Number
+        label_CRN = Label(self, text="Course Reference Number", width=20, font=("bold", 10), anchor='w')
         label_CRN.place(x=80, y=130)
 
         entry_CRN = Entry(self)
         entry_CRN.place(x=240, y=130)
+
+        label_CRN_ttp = CreateToolTip(label_CRN, \
+        'Internal Course Reference Number is used as a parameter in the POST Request payload \n'
+        'Example of Course References Number: TGS-12345678')
 
         #Expand label to fit window size
         style = ttk.Style(self)
@@ -251,7 +315,7 @@ class deleteCourseRunPage(tk.Frame):
         #Adding of tabs
         tabControl.add(tab1, text ='Payload')
         tabControl.add(tab2, text ='Reponse')
-        tabControl.place(width= 400, height= 450, x = 50, y = 222)
+        tabControl.place(width= 440, height= 450, x = 30, y = 222)
 
         #This method is used to update the display information dynamically in "Payload" Tab whenever user key in a value
         def typing(event):
@@ -263,20 +327,13 @@ class deleteCourseRunPage(tk.Frame):
             
         entry_CRN.bind('<KeyRelease>', typing)
 
-        #Initialisation Configuration
-        # payloadLabel = ttk.Label(tab1, text = getdeleteCourseRunPayLoad())
-        # payloadLabel.grid()
-        # response = ''
-        # responseLabel = ttk.Label(tab2, text = response)
-        # responseLabel.grid()
-
         payloadText = Text(tab1)
         payloadText.insert(tk.END, str(getdeleteCourseRunPayLoad()))
-        payloadText.place(height = 400, width = 400)
+        payloadText.place(height = 420, width = 440)
         payloadText.bind("<Key>", lambda e: "break")
         
         responseText = Text(tab2)
-        responseText.place(height = 400, width = 400)
+        responseText.place(height = 420, width = 440)
         responseText.bind("<Key>", lambda e: "break")
 
         submitButton = tk.Button(self, text="Delete", bg="white", width=25, pady=5, command=lambda: deleteCallBack(entry_1.get()))
@@ -287,8 +344,9 @@ class deleteCourseRunPage(tk.Frame):
         exportButton2.place(relx=0.7, rely=0.95, anchor=CENTER)
 
         def downloadFile(method):
-
-            file = filedialog.asksaveasfile(defaultextension='.json')
+            files = [('JSON', '*.json'), 
+                     ('Text Document', '*.txt')]
+            file = filedialog.asksaveasfile(filetypes = files, defaultextension='.json')
             filetext = str(payloadText.get("1.0",END)) if method == "payload" else str(responseText.get("1.0",END))
             file.write(filetext)
             file.close()
@@ -302,8 +360,9 @@ class deleteCourseRunPage(tk.Frame):
             resp = deleteCourserun(runId)
             if (resp.status_code < 400):
                 messagebox.showinfo("Successful", "Successfully Delete Course Run: " + runId)
-                responseText.delete("1.0","end")
-                responseText.insert(tk.END, resp.text)
+            responseText.delete("1.0","end")
+            responseText.insert(tk.END, resp.text)
+                
 
 
 # Starting Page (Welcome Page)
