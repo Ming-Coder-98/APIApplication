@@ -51,11 +51,12 @@ class addCourseRunPageSelect(tk.Frame):
         label_0 = Label(self, text="Add Course Run", width=20, font=("bold", 20))
         label_0.place(x=90, y=53)
 
+
         self.var = IntVar()
         Radiobutton(self, text="Upload a Course Run JSON File", variable=self.var, value="1",command=lambda: controller.show_frame(addCourseRunPageForm)).place(x=158,y=100)
         Radiobutton(self, text="Fill in the basic mandate form", variable=self.var, value="2").place(x=158,y=130)
-        self.selection = tk.StringVar()
-        self.selection.set("2")
+        self.var.set(2)
+
 
         label_0 = Label(self, text="Basic Mandate Form", width=20, font=("bold", 15))
         label_0.place(x=137, y=185)
