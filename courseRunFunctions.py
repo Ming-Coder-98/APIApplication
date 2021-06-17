@@ -12,7 +12,6 @@ def saveCourseRunDetails(content):
       configInfo = loadFile("config.json")
       configInfo = json.loads(configInfo)
       configInfo["runId"] = (((content.json())["data"])["runs"])[0]["id"]
-      configInfo["UEN"] = ((json.loads(payload)["course"])["trainingProvider"])["uen"]
       configInfo["CourseRefNum"] =  ((json.loads(payload)["course"])["courseReferenceNumber"])
       configInfo["ExtCourseRefNum"] = ((json.loads(payload)["course"])["courseReferenceNumber"])
       saveJsonFormat(configInfo, "config.json")
@@ -52,6 +51,15 @@ def addCourserun():
       #payload variable is obtained from CourseRunFunction.py
       response = postHttpRequest("https://uat-api.ssg-wsg.sg/courses/runs" , payload)
       saveCourseRunDetails(response)
+
+
+#Create Method for AddCourserunPage
+def createCourserun(payload):
+      response = postHttpRequest("https://uat-api.ssg-wsg.sg/courses/runs" , payload)
+      if response.status_code < 400:
+            saveCourseRunDetails(response)
+      return response
+
 
 #Delete Method for deleteCourseRunPage 
 def deleteCourserun(runId):

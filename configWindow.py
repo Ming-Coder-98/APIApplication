@@ -111,6 +111,7 @@ class LabelEntry(tkinter.Frame):
 
     def insert_text(self,text):
         self.entry.insert(1, text)
+        
 def storeAndsave_all():
     global entries
     #load config File
