@@ -21,7 +21,6 @@ import pandas as pd
 
 from tooltip import CreateToolTip
 
-
 class addCourseRunPageForm(tk.Frame):
     global fileUploadEntry
 
