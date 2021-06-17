@@ -87,16 +87,14 @@ def updateEmptyDeleteCourseRunPayLoad(CRN):
 
       deleteCourseRunPayLoad = "{\n    \"course\": {\n        \"courseReferenceNumber\": \"" + CRN + "\",\n        \"trainingProvider\": {\n            \"uen\": \""+ uen + "\"\n        },\n        \"run\": {\n            \"action\": \"delete\"\n        }\n    }\n}"
       return deleteCourseRunPayLoad
+      
+#This method is to update the curl text dynamically for displaying purpose in deleteCourseRunPage 
+def curlPostRequest(text1, text2):
+      text = "curl -X GET \"https://uat-api.ssg-wsg.sg/courses/runs/" + text1 +"\" -H \"accept: application/json\" -H \"x-api-version: v1.3\" -d \"" + str(json.loads(updateEmptyDeleteCourseRunPayLoad(text2)))+"\""
+      return text
 
-def getdeleteCourseRunPayLoad():
-      global uen, deleteCourseRunPayLoad
-      #Set UEN to payload
-      config = loadFile("config.json")
-      config = json.loads(config)
-      uen = config["UEN"]
-
-      deleteCourseRunPayLoad = "{\n    \"course\": {\n        \"courseReferenceNumber\": \"\",\n        \"trainingProvider\": {\n            \"uen\": \"" + uen + "\"\n        },\n        \"run\": {\n            \"action\": \"delete\"\n        }\n    }\n}"
-      return deleteCourseRunPayLoad
-
+def curlGetRequest(text1):
+      text = "curl -X GET \"https://uat-api.ssg-wsg.sg/courses/runs/" + text1 +"\" -H \"accept: application/json\" -H \"x-api-version: v1.3\""
+      return text
 #addCourserun()
 

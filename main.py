@@ -4,7 +4,7 @@ from configWindow import setConfigWindow, showConfigWindow
 from AssessmentFunction import addAssessment
 from EnrolmentFunction import addEnrolment, enrollmentInitialization
 from AttendanceFunction import uploadAttendance
-from courseRunFunctions import deleteCourserun, getCourseRun, getdeleteCourseRunPayLoad, updateEmptyDeleteCourseRunPayLoad
+from courseRunFunctions import curlGetRequest, curlPostRequest, deleteCourserun, getCourseRun, updateEmptyDeleteCourseRunPayLoad
 
 from HttpRequestFunction import getHttpRequest, loadFile, saveJsonFormat
 import tkinter as tk
@@ -104,7 +104,7 @@ class APIProject(tk.Tk):
         menubar = Menu(self, background='#ff8000', foreground='black', activebackground='white', activeforeground='black')  
         
         config = Menu(menubar, tearoff=0)  
-        config.add_command(label="Set Configuration", command=lambda:setConfigWindow(self))
+        config.add_command(label="Set Configuration", command=lambda:setConfigCallback())
         config.add_command(label="Show Configuration", command=lambda:showConfigWindow(self))
         menubar.add_cascade(label="Setting", menu=config)
 
@@ -140,10 +140,16 @@ class APIProject(tk.Tk):
             
         self.config(menu=menubar)
 
+        #This method "blank" out the menubar to prevent duplicate opening of window for Setting 
+        def setConfigCallback():
+            top2 = setConfigWindow(self)
+            top2.transient(self)
+            top2.grab_set()
+            self.wait_window(top2)
+    
     def show_frame(self, cont):
         frame = self.frames[cont]
-        frame.tkraise()
-
+        frame.tkraise()   
 
 # ViewCourseRun Page
 # 2 options for the user to choose from
@@ -172,6 +178,13 @@ class viewCourseRunPage(tk.Frame):
         'Example: https://api.ssg-wsg.sg/courses/runs/{runId}')
         entry_1 = Entry(self)
         entry_1.place(x=240, y=130)
+        #This method is used to update the display information dynamically in "Payload" Tab whenever user key in a value
+        def typing(event):
+            value = curlGetRequest(entry_1.get())
+            curlText.delete("1.0","end")
+            curlText.insert(tk.END, value)
+
+        entry_1.bind('<KeyRelease>',typing)
 
         #Expand label to fit window size
         style = ttk.Style(self)
@@ -181,31 +194,44 @@ class viewCourseRunPage(tk.Frame):
         tabControl = ttk.Notebook(self)
   
         responseFrame = ttk.Frame(tabControl)
+        curlFrame = ttk.Frame(tabControl)
+
+        tabControl.add(curlFrame, text ='Curl')
         tabControl.add(responseFrame, text ='Reponse')
 
-        tabControl.place(width= 440, height= 450, x = 30, y = 222)
-        textw = scrolledtext.ScrolledText(responseFrame,width=70,height=30)
-        #textw.config(background="light grey", foreground="black", font='times 12 bold', wrap='word')
-        textw.place(height = 420, width = 440)
+        tabControl.place(width= 440, height= 460, x = 30, y = 222)
+
+        #Textbox for response Frame
+        responseText = scrolledtext.ScrolledText(responseFrame,width=70,height=30)
+        responseText.place(height = 405, width = 440,y=20)
+        responseText.bind("<Key>", lambda e: "break")
+
+        #Textbox for Curl Frame
+        curlText = scrolledtext.ScrolledText(curlFrame,width=70,height=30)
+        curlText.insert(tk.END, str(curlGetRequest("")))
+        curlText.place(height = 405, width = 440, y=20)
+        curlText.bind("<Key>", lambda e: "break")
 
         #adding of single line text box
         edit = Entry(self, background="light gray") 
 
         #positioning of text box
-        edit.place(x = 285, height= 22, y=223) 
+        edit.place(x = 285, height= 21, y=244) 
 
         #setting focus
         edit.focus_set()
 
-        butt = Button(self, text='Find', command=lambda:find(), highlightthickness = 0, bd = 0, background="gray")  
-        butt.place(x = 410, y=223, height=22, width=60) 
+        butt = Button(responseFrame, text='Find', command=lambda:find("resp"), highlightthickness = 0, bd = 0, background="gray")  
+        butt.place(x = 380, y=0, height=21, width=60) 
+        butt_curl = Button(curlFrame, text='Find', command=lambda:find("curl"), highlightthickness = 0, bd = 0, background="gray")  
+        butt_curl.place(x = 380, y=0, height=21, width=60) 
         
 
 
         submitButton = tk.Button(self, text="Submit", bg="white", width=25, pady=5,
                             command=lambda: submitCallBack())
         submitButton.place(relx=0.5, rely=0.25, anchor=CENTER)
-        exportButton = tk.Button(self, text="Export as JSON File", bg="white", width=25, pady=5, command = lambda: downloadFile())
+        exportButton = tk.Button(self, text="Export Response", bg="white", width=25, pady=5, command = lambda: downloadFile())
         exportButton.place(relx=0.5, rely=0.95, anchor=CENTER)
 
         
@@ -213,24 +239,28 @@ class viewCourseRunPage(tk.Frame):
         # 1) this method calls the get method in courseRunFunction and return the response
         # 2) Based on the response, if a status 200 is received, it will display the response    
         def submitCallBack():
-            textw.delete("1.0","end") 
+            responseText.delete("1.0","end") 
             courseRunID = entry_1.get()
             resp = getCourseRun(courseRunID)
             print(resp.status_code)
             textPayload = StringVar(self, value = resp.text) 
-            textw.insert(INSERT, textPayload.get())
+            responseText.insert(INSERT, textPayload.get())
         def downloadFile():
             files = [('JSON', '*.json'), 
                      ('Text Document', '*.txt')]
             file = filedialog.asksaveasfile(filetypes = files, defaultextension='.json')
-            filetext = str(textw.get("1.0",END))
+            filetext = str(responseText.get("1.0",END))
             file.write(filetext)
             file.close()
             messagebox.showinfo("Successful", "File has been downloaded")
 
 
         #This method is used to search the response text and highlight the searched word in red
-        def find():
+        def find(method):
+            if method == "resp":
+                textw = responseText
+            else:
+                textw = curlText
             #remove tag 'found' from index 1 to END
             textw.tag_remove('found', '1.0', END) 
             
@@ -251,9 +281,11 @@ class viewCourseRunPage(tk.Frame):
                     #overwrite 'Found' at idx
                     textw.tag_add('found', idx, lastidx) 
                     idx = lastidx
+                    # textw.see(idx)  # Once found, the scrollbar automatically scrolls to the text
                 
                 #mark located string as red
                 textw.tag_config('found', foreground='red') 
+               
             edit.focus_set()
 
     def show_frame(self, new_frame_class):
@@ -303,6 +335,20 @@ class deleteCourseRunPage(tk.Frame):
         'Internal Course Reference Number is used as a parameter in the POST Request payload \n'
         'Example of Course References Number: TGS-12345678')
 
+        #This method is used to update the display information dynamically in "Payload" Tab whenever user key in a value
+        def typing(type):
+            if type == "CRN":
+                value = updateEmptyDeleteCourseRunPayLoad(entry_CRN.get())
+                payloadText.delete("1.0","end")
+                payloadText.insert(tk.END, value)
+
+            value = curlPostRequest(entry_1.get(),entry_CRN.get())
+            curlText.delete("1.0","end")
+            curlText.insert(tk.END, value)
+            
+        entry_CRN.bind('<KeyRelease>', lambda a:typing("CRN"))
+        entry_1.bind('<KeyRelease>', lambda b:typing("runId"))
+
         #Expand label to fit window size
         style = ttk.Style(self)
         style.configure('TNotebook.Tab', width=self.winfo_screenwidth())
@@ -312,29 +358,26 @@ class deleteCourseRunPage(tk.Frame):
   
         tab1 = ttk.Frame(tabControl)
         tab2 = ttk.Frame(tabControl)
+        tab3 = ttk.Frame(tabControl)
         
         #Adding of tabs
-        tabControl.add(tab1, text ='Payload')
-        tabControl.add(tab2, text ='Reponse')
-        tabControl.place(width= 440, height= 450, x = 30, y = 222)
+        tabControl.add(tab1, text ='Request - Payload')
+        tabControl.add(tab2, text ='Curl')
+        tabControl.add(tab3, text ='Reponse')
+        tabControl.place(width= 440, height= 460, x = 30, y = 222)
 
-        #This method is used to update the display information dynamically in "Payload" Tab whenever user key in a value
-        def typing(event):
-            CRN = entry_CRN.get()
-            value = updateEmptyDeleteCourseRunPayLoad(CRN)
-            payloadText.delete("1.0","end")
-            payloadText.insert(tk.END, value)
-            # payloadLabel.configure(text = value)
-            
-        entry_CRN.bind('<KeyRelease>', typing)
-
-        payloadText = Text(tab1)
-        payloadText.insert(tk.END, str(getdeleteCourseRunPayLoad()))
-        payloadText.place(height = 420, width = 440)
+        payloadText = scrolledtext.ScrolledText(tab1,width=70,height=30)
+        payloadText.insert(tk.END, str(updateEmptyDeleteCourseRunPayLoad("")))
+        payloadText.place(height = 405, width = 440, y=20)
         payloadText.bind("<Key>", lambda e: "break")
+
+        curlText = scrolledtext.ScrolledText(tab2,width=70,height=30)
+        curlText.insert(tk.END, str(curlPostRequest("","")))
+        curlText.place(height = 405, width = 440, y=20)
+        curlText.bind("<Key>", lambda e: "break")
         
-        responseText = Text(tab2)
-        responseText.place(height = 420, width = 440)
+        responseText = scrolledtext.ScrolledText(tab3,width=70,height=30)
+        responseText.place(height = 405, width = 440, y=20)
         responseText.bind("<Key>", lambda e: "break")
 
         submitButton = tk.Button(self, text="Delete", bg="white", width=25, pady=5, command=lambda: deleteCallBack(entry_1.get()))
@@ -343,6 +386,56 @@ class deleteCourseRunPage(tk.Frame):
         exportButton1.place(relx=0.3, rely=0.95, anchor=CENTER)
         exportButton2 = tk.Button(self, text="Export Response", bg="white", width=15, pady=5,command = lambda: downloadFile("response"))
         exportButton2.place(relx=0.7, rely=0.95, anchor=CENTER)
+        
+        #adding of single line text box
+        edit = Entry(self, background="light gray") 
+
+        #positioning of text box
+        edit.place(x = 285, height= 21, y=244) 
+
+        #setting focus
+        edit.focus_set()
+
+        butt_request = Button(tab1, text='Find', command=lambda:find("payload"), highlightthickness = 0, bd = 0, background="gray")  
+        butt_request.place(x = 380, y=0, height=21, width=60) 
+        butt_resp = Button(tab2, text='Find', command=lambda:find("curl"), highlightthickness = 0, bd = 0, background="gray")  
+        butt_resp.place(x = 380, y=0, height=21, width=60) 
+        butt_resp = Button(tab3, text='Find', command=lambda:find("resp"), highlightthickness = 0, bd = 0, background="gray")  
+        butt_resp.place(x = 380, y=0, height=21, width=60) 
+
+        #This method is used to search the response text and highlight the searched word in red
+        def find(method):
+            if method == "resp":
+                textw = responseText
+            elif method == "payload":
+                textw = payloadText
+            else:
+                textw = curlText
+            textw.tag_remove('found', '1.0', END) 
+            
+            #returns to widget currently in focus
+            s = edit.get() 
+            if s:
+                idx = '1.0'
+                while 1:
+                    #searches for desried string from index 1
+                    idx = textw.search(s, idx, nocase=1, 
+                                    stopindex=END) 
+                    if not idx: break
+                    
+                    #last index sum of current index and
+                    #length of text
+                    lastidx = '%s+%dc' % (idx, len(s)) 
+                    
+                    #overwrite 'Found' at idx
+                    textw.tag_add('found', idx, lastidx) 
+                    idx = lastidx
+                    # textw.see(idx)  # Once found, the scrollbar automatically scrolls to the text
+                
+                #mark located string as red
+                textw.tag_config('found', foreground='red') 
+               
+            edit.focus_set()
 
         def downloadFile(method):
             files = [('JSON', '*.json'), 
@@ -352,7 +445,6 @@ class deleteCourseRunPage(tk.Frame):
             file.write(filetext)
             file.close()
             messagebox.showinfo("Successful", "File has been downloaded")
-
 
         # This method activates two other methods.
         # 1) this method calls the delete method in courseRunFunction and return the response
@@ -364,7 +456,6 @@ class deleteCourseRunPage(tk.Frame):
             responseText.delete("1.0","end")
             responseText.insert(tk.END, resp.text)
                 
-
 
 # Starting Page (Welcome Page)
 # 2 options for the user to choose from
