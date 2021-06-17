@@ -19,6 +19,22 @@ import pyjsonviewer
 
 from tooltip import CreateToolTip
 
+class addCourseRunPageForm(tk.Frame):
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+
+        load = Image.open("SKFBGPage.JPG")
+        render = ImageTk.PhotoImage(load)
+
+        # labels can be text or images
+        img2 = Label(self, image=render)
+        img2.image = render
+        img2.place(x=0, y=0, relwidth=1, relheight=1)
+
+        label_0 = Label(self, text="Add Course Run", width=20, font=("bold", 20))
+        label_0.place(x=90, y=53)
+
+
 
 class addCourseRunPageSelect(tk.Frame):
     def __init__(self, parent, controller):
@@ -35,10 +51,11 @@ class addCourseRunPageSelect(tk.Frame):
         label_0 = Label(self, text="Add Course Run", width=20, font=("bold", 20))
         label_0.place(x=90, y=53)
 
-
-        var = IntVar()
-        Radiobutton(self, text="Upload a Course Run JSON File", variable=var, value=1,command=lambda: controller.show_frame(addCourseRunPageForm)).place(x=158,y=100)
-        Radiobutton(self, text="Fill in the basic mandate form", variable=var, value=2).place(x=158,y=130)
+        self.var = IntVar()
+        Radiobutton(self, text="Upload a Course Run JSON File", variable=self.var, value="1",command=lambda: controller.show_frame(addCourseRunPageForm)).place(x=158,y=100)
+        Radiobutton(self, text="Fill in the basic mandate form", variable=self.var, value="2").place(x=158,y=130)
+        self.selection = tk.StringVar()
+        self.selection.set("2")
 
         label_0 = Label(self, text="Basic Mandate Form", width=20, font=("bold", 15))
         label_0.place(x=137, y=185)
@@ -158,48 +175,5 @@ class addCourseRunPageSelect(tk.Frame):
             # Save config File
             saveJsonFormat(configInfoJson, "EmptyCourseRunPayLoad.json")
 
-
-
-class addCourseRunPageForm(tk.Frame):
-    def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
-
-        load = Image.open("SKFBGPage.JPG")
-        render = ImageTk.PhotoImage(load)
-
-        # labels can be text or images
-        img2 = Label(self, image=render)
-        img2.image = render
-        img2.place(x=0, y=0, relwidth=1, relheight=1)
-
-        label_0 = Label(self, text="Add Course Run", width=20, font=("bold", 20))
-        label_0.place(x=90, y=53)
-
-        def viewSelected():
-            choice = var.get()
-            if choice == 1:
-                output = "You have selected to upload a JSON File"
-                print("upload")
-                label_0 = Label(self, text=output, width=40)
-                label_0.place(x=115, y=160)
-                uploadButton = tk.Button(self, text="Upload", bg="white", width=25, pady=5)
-                uploadButton.place(x=250, y=500, anchor=CENTER)
-
-            elif choice == 2:
-                output = "You have selected to fill in the basic mandate form"
-                print("form")
-                label_0 = Label(self, text=output, width=40)
-                label_0.place(x=115, y=160)
-
-        var = IntVar()
-        Radiobutton(self, text="Upload a Course Run JSON File", variable=var, value=1, command=viewSelected).place(x=158,y=100)
-        Radiobutton(self, text="Fill in the basic mandate form", variable=var, value=2, command=viewSelected).place(x=158,y=130)
-
-        label_0 = Label(self, text="Upload Course Run JSON File", width=20, font=("bold", 15))
-        label_0.place(x=137, y=185)
-
-        def show_frame(self, cont):
-            frame = self.frames[cont]
-            frame.tkraise()
 
 
