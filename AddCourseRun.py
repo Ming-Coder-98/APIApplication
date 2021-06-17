@@ -17,28 +17,10 @@ from tkinter import filedialog
 import pandas as pd
 import pyjsonviewer
 
+from tooltip import CreateToolTip
+
+
 class addCourseRunPageSelect(tk.Frame):
-    def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
-
-        load = Image.open("SKFBGPage.JPG")
-        render = ImageTk.PhotoImage(load)
-
-        # labels can be text or images
-        img2 = Label(self, image=render)
-        img2.image = render
-        img2.place(x=0, y=0, relwidth=1, relheight=1)
-
-        label_0 = Label(self, text="Add Course Run (Select Option)", width=30, font=("bold", 20))
-        label_0.place(x=5, y=53)
-
-        nextButton = tk.Button(self, text="Next", bg="white", width=25, pady=5,
-                               command =lambda: controller.show_frame(addCourseRunPage))
-        nextButton.place(relx=0.5, rely=0.25, anchor=CENTER)
-
-
-class addCourseRunPage(tk.Frame):
-
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
 
@@ -53,99 +35,118 @@ class addCourseRunPage(tk.Frame):
         label_0 = Label(self, text="Add Course Run", width=20, font=("bold", 20))
         label_0.place(x=90, y=53)
 
-        label_1 = Label(self, text="Course Run Reference Number:", width=30, font=("bold", 10))
-        label_1.place(x=25, y=130)
+
+        var = IntVar()
+        Radiobutton(self, text="Upload a Course Run JSON File", variable=var, value=1,command=lambda: controller.show_frame(addCourseRunPageForm)).place(x=158,y=100)
+        Radiobutton(self, text="Fill in the basic mandate form", variable=var, value=2).place(x=158,y=130)
+
+        label_0 = Label(self, text="Basic Mandate Form", width=20, font=("bold", 15))
+        label_0.place(x=137, y=185)
+
+        label_1 = Label(self, text="Course Reference Number:", width=20, font=("bold", 10))
+        label_1.place(x=80, y=220)
+
+        label_1_ttp = CreateToolTip(label_1, \
+        'Internal Course Reference Number is used as a parameter in the POST Request payload \n'
+        'Example of Course References Number: TGS-12345678')
 
         entry_1 = Entry(self)
-        entry_1.place(x=250, y=130)
+        entry_1.place(x=250, y=220)
 
-        nextButton = tk.Button(self, text="Next", bg="white", width=25, pady=5,
-                               command =lambda: controller.show_frame(addCourseRunPageTwo))
-        nextButton.place(relx=0.5, rely=0.25, anchor=CENTER)
+        label_2 = Label(self, text="Course Admin Email:", width=20, font=("bold", 10))
+        label_2.place(x=80, y=245)
 
-
-class addCourseRunPageTwo(tk.Frame):
-
-    def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
-
-        load = Image.open("SKFBGPage.JPG")
-        render = ImageTk.PhotoImage(load)
-
-        # labels can be text or images
-        img2 = Label(self, image=render)
-        img2.image = render
-        img2.place(x=0, y=0, relwidth=1, relheight=1)
-
-        label_0 = Label(self, text="Add Course Run(2)", width=20, font=("bold", 20))
-        label_0.place(x=90, y=53)
-
-        label_1 = Label(self, text="Sequence Number:", width=30, font=("bold", 10))
-        label_1.place(x=25, y=105)
-
-        entry_1 = Entry(self)
-        entry_1.place(x=250, y=105)
-
-        label_1 = Label(self, text="Course Admin Email:", width=30, font=("bold", 10))
-        label_1.place(x=25, y=130)
-
-        entry_1 = Entry(self)
-        entry_1.place(x=250, y=130)
-
-        label_2 = Label(self, text="Opening Registration Date:", width=30, font=("bold", 10))
-        label_2.place(x=25, y=155)
+        label_2_ttp = CreateToolTip(label_2, \
+        'Admin Email is used as a parameter in the POST Request payload \n'
+        'Example of Admin Email: test@gmail.com')
 
         entry_2 = Entry(self)
-        entry_2.place(x=250, y=155)
+        entry_2.place(x=250, y=245)
 
-        label_3 = Label(self, text="Closing Registration Date:", width=30, font=("bold", 10))
-        label_3.place(x=25, y=180)
+        label_3 = Label(self, text="Opening Registration Date:", width=20, font=("bold", 10))
+        label_3.place(x=80, y=270)
+
+        label_3_ttp = CreateToolTip(label_3, \
+        'Opening Registration Date (YYYYMMDD) is used as a parameter in the POST Request payload \n'
+        'Example: 20210617')
 
         entry_3 = Entry(self)
-        entry_3.place(x=250, y=180)
+        entry_3.place(x=250, y=270)
 
-        label_4 = Label(self, text="Course Start Date:", width=30, font=("bold", 10))
-        label_4.place(x=25, y=205)
+        label_4 = Label(self, text="Closing Registration Date:", width=20, font=("bold", 10))
+        label_4.place(x=80, y=295)
+
+        label_4_ttp = CreateToolTip(label_4, \
+        'Closing Registration Date (YYYYMMDD) is used as a parameter in the POST Request payload \n'
+        'Example: 20210621')
 
         entry_4 = Entry(self)
-        entry_4.place(x=250, y=205)
+        entry_4.place(x=250, y=295)
 
-        label_5 = Label(self, text="Course End Date:", width=30, font=("bold", 10))
-        label_5.place(x=25, y=230)
+        label_5 = Label(self, text="Course Start Date:", width=20, font=("bold", 10))
+        label_5.place(x=80, y=320)
+
+        label_5_ttp = CreateToolTip(label_5, \
+        'Course Start Date(YYYYMMDD) is used as a parameter in the POST Request payload \n'
+        'Course Start Date should be later than Opening/Closing Registration Date \n'
+        'Example: 20210628')
 
         entry_5 = Entry(self)
-        entry_5.place(x=250, y=230)
+        entry_5.place(x=250, y=320)
 
-        label_6 = Label(self, text="Course Code:", width=30, font=("bold", 10))
-        label_6.place(x=25, y=255)
+        label_6 = Label(self, text="Course End Date:", width=20, font=("bold", 10))
+        label_6.place(x=80, y=345)
+
+        label_6_ttp = CreateToolTip(label_6, \
+        'Course End Date(YYYYMMDD) is used as a parameter in the POST Request payload \n'
+        'Course End Date should be later than Opening/Closing Registration and Course Start Date \n'
+        'Example: 20210628')
 
         entry_6 = Entry(self)
-        entry_6.place(x=250, y=255)
+        entry_6.place(x=250, y=345)
 
-        label_7 = Label(self, text="Course Description:", width=30, font=("bold", 10))
-        label_7.place(x=25, y=280)
+        label_7 = Label(self, text="Course Code:", width=20, font=("bold", 10))
+        label_7.place(x=80, y=370)
+
+        label_7_ttp = CreateToolTip(label_7, \
+        'Course Code is used as a parameter in the POST Request payload \n'
+        'Example: 01')
 
         entry_7 = Entry(self)
-        entry_7.place(x=250, y=280)
+        entry_7.place(x=250, y=370)
 
-        label_8 = Label(self, text="Course Description:", width=30, font=("bold", 10))
-        label_8.place(x=25, y=280)
+        label_8 = Label(self, text="Course Description:", width=20, font=("bold", 10))
+        label_8.place(x=80, y=395)
+
+        label_8_ttp = CreateToolTip(label_8, \
+        'Course Description is used as a parameter in the POST Request payload \n'
+        'Example: Course is about...')
 
         entry_8 = Entry(self)
-        entry_8.place(x=250, y=280)
+        entry_8.place(x=250, y=395)
 
-        label_9 = Label(self, text="Mode of Training:", width=30, font=("bold", 10))
-        label_9.place(x=25, y=305)
+        label_9 = Label(self, text="Mode of Training:", width=20, font=("bold", 10))
+        label_9.place(x=80, y=420)
+
+        label_9_ttp = CreateToolTip(label_9, \
+        'Mode of Training (Integer) is used as a parameter in the POST Request payload \n'
+        'Example: 9')
 
         entry_9 = Entry(self)
-        entry_9.place(x=250, y=305)
+        entry_9.place(x=250, y=420)
+
+        previewButton = tk.Button(self, text="Preview", bg="white", width=25, pady=5)
+        previewButton.place(x=250, y=540, anchor=CENTER)
+
+        backButton = tk.Button(self, text="Back", bg="white", width=25, pady=5)
+        backButton.place(x=250, y=580, anchor=CENTER)
 
         def storeAndsave_all():
             # load config File
             configInfo = loadFile("EmptyCourseRunPayLoad.json")
             configInfoJson = json.loads(configInfo)
 
-            configInfoJson["course"]["runs"]["sequenceNumber"] = entry_1.get()
+            configInfoJson["course"]["courseReferenceNumber"] = entry_1.get()
             configInfoJson["course"]["runs"]["courseAdminEmail"] = entry_2.get()
             configInfoJson["course"]["runs"]["registrationDates"]["opening"] = entry_3.get()
             configInfoJson["course"]["runs"]["registrationDates"]["closing"] = entry_4.get()
@@ -154,16 +155,12 @@ class addCourseRunPageTwo(tk.Frame):
             configInfoJson["course"]["runs"]["courseVacancy"]["code"] = entry_7.get()
             configInfoJson["course"]["runs"]["courseVacancy"]["description"] = entry_8.get()
             configInfoJson["course"]["runs"]["modeOfTraining"] = entry_9.get()
-
             # Save config File
             saveJsonFormat(configInfoJson, "EmptyCourseRunPayLoad.json")
 
-        nextButton = tk.Button(self, text="Next", bg="white", width=25, pady=5,
-                               command =lambda: controller.show_frame(addCourseRunPageThree))
-        nextButton.place(relx=0.5, rely=0.65, anchor=CENTER)
 
-class addCourseRunPageThree(tk.Frame):
 
+class addCourseRunPageForm(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
 
@@ -175,53 +172,34 @@ class addCourseRunPageThree(tk.Frame):
         img2.image = render
         img2.place(x=0, y=0, relwidth=1, relheight=1)
 
-        label_0 = Label(self, text="Add Course Run(3)", width=20, font=("bold", 20))
+        label_0 = Label(self, text="Add Course Run", width=20, font=("bold", 20))
         label_0.place(x=90, y=53)
 
+        def viewSelected():
+            choice = var.get()
+            if choice == 1:
+                output = "You have selected to upload a JSON File"
+                print("upload")
+                label_0 = Label(self, text=output, width=40)
+                label_0.place(x=115, y=160)
+                uploadButton = tk.Button(self, text="Upload", bg="white", width=25, pady=5)
+                uploadButton.place(x=250, y=500, anchor=CENTER)
 
-        nextButton = tk.Button(self, text="Next", bg="white", width=25, pady=5,
-                               command =lambda: controller.show_frame(addCourseRunPageFour))
-        nextButton.place(relx=0.5, rely=0.25, anchor=CENTER)
+            elif choice == 2:
+                output = "You have selected to fill in the basic mandate form"
+                print("form")
+                label_0 = Label(self, text=output, width=40)
+                label_0.place(x=115, y=160)
 
+        var = IntVar()
+        Radiobutton(self, text="Upload a Course Run JSON File", variable=var, value=1, command=viewSelected).place(x=158,y=100)
+        Radiobutton(self, text="Fill in the basic mandate form", variable=var, value=2, command=viewSelected).place(x=158,y=130)
 
-class addCourseRunPageFour(tk.Frame):
+        label_0 = Label(self, text="Upload Course Run JSON File", width=20, font=("bold", 15))
+        label_0.place(x=137, y=185)
 
-    def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
-
-        load = Image.open("SKFBGPage.JPG")
-        render = ImageTk.PhotoImage(load)
-
-        # labels can be text or images
-        img2 = Label(self, image=render)
-        img2.image = render
-        img2.place(x=0, y=0, relwidth=1, relheight=1)
-
-        label_0 = Label(self, text="Add Course Run(4)", width=20, font=("bold", 20))
-        label_0.place(x=90, y=53)
-
-
-        createButton = tk.Button(self, text="Next", bg="white", width=25, pady=5,
-                               command =lambda: controller.show_frame(addCourseRunPagePreview))
-        createButton.place(relx=0.5, rely=0.25, anchor=CENTER)
-
-class addCourseRunPagePreview(tk.Frame):
-
-    def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
-
-        load = Image.open("SKFBGPage.JPG")
-        render = ImageTk.PhotoImage(load)
-
-        # labels can be text or images
-        img2 = Label(self, image=render)
-        img2.image = render
-        img2.place(x=0, y=0, relwidth=1, relheight=1)
-
-        label_0 = Label(self, text="Add Course Run(Preview)", width=20, font=("bold", 20))
-        label_0.place(x=90, y=53)
+        def show_frame(self, cont):
+            frame = self.frames[cont]
+            frame.tkraise()
 
 
-        nextButton = tk.Button(self, text="Next", bg="white", width=25, pady=5,
-                               command =lambda: controller.show_frame(addCourseRunPageTwo))
-        nextButton.place(relx=0.5, rely=0.25, anchor=CENTER)

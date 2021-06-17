@@ -5,6 +5,7 @@ from AssessmentFunction import addAssessment
 from EnrolmentFunction import addEnrolment, enrollmentInitialization
 from AttendanceFunction import uploadAttendance
 from courseRunFunctions import deleteCourserun, getCourseRun, getdeleteCourseRunPayLoad, updateEmptyDeleteCourseRunPayLoad
+from AddCourseRun import addCourseRunPageSelect
 
 from HttpRequestFunction import getHttpRequest, loadFile, saveJsonFormat
 import tkinter as tk
@@ -93,7 +94,7 @@ class APIProject(tk.Tk):
         
 
         self.frames = {}
-        for F in (viewCourseRunPage, deleteCourseRunPage, StartPage):
+        for F in (addCourseRunPageSelect, viewCourseRunPage, deleteCourseRunPage, StartPage):
             frame = F(container, self)
 
             self.frames[F] = frame
@@ -110,7 +111,7 @@ class APIProject(tk.Tk):
 
         courseMenu = Menu(menubar, tearoff=0)  
         courseMenu.add_command(label="View Course Run",command=lambda: self.show_frame(viewCourseRunPage))
-        courseMenu.add_command(label="Add Course Run")  
+        courseMenu.add_command(label="Add Course Run",command=lambda:self.show_frame(addCourseRunPageSelect))
         courseMenu.add_command(label="Delete Course Run",command=lambda: self.show_frame(deleteCourseRunPage)) 
         courseMenu.add_command(label="Update Course Run")  
         menubar.add_cascade(label="Course", menu=courseMenu)  
@@ -148,9 +149,7 @@ class APIProject(tk.Tk):
 # ViewCourseRun Page
 # 2 options for the user to choose from
 
-
 class viewCourseRunPage(tk.Frame):
-
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
 
@@ -227,7 +226,6 @@ class viewCourseRunPage(tk.Frame):
             file.write(filetext)
             file.close()
             messagebox.showinfo("Successful", "File has been downloaded")
-
 
         #This method is used to search the response text and highlight the searched word in red
         def find():
