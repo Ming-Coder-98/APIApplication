@@ -15,7 +15,6 @@ import datetime
 from PIL import ImageTk, Image
 from tkinter import filedialog
 import pandas as pd
-import pyjsonviewer
 
 from tooltip import CreateToolTip
 
@@ -52,10 +51,8 @@ class addCourseRunPageSelect(tk.Frame):
         label_0.place(x=90, y=53)
 
         self.var = IntVar()
-        Radiobutton(self, text="Upload a Course Run JSON File", variable=self.var, value="1",command=lambda: controller.show_frame(addCourseRunPageForm)).place(x=158,y=100)
-        Radiobutton(self, text="Fill in the basic mandate form", variable=self.var, value="2").place(x=158,y=130)
-        self.selection = tk.StringVar()
-        self.selection.set("2")
+        Radiobutton(self, text="Upload a Course Run JSON File", variable=self.var, value=1,command=lambda: controller.show_frame(addCourseRunPageForm)).place(x=158,y=100)
+        Radiobutton(self, text="Fill in the basic mandate form", variable=self.var, value=2).place(x=158,y=130)
 
         label_0 = Label(self, text="Basic Mandate Form", width=20, font=("bold", 15))
         label_0.place(x=137, y=185)
@@ -175,5 +172,7 @@ class addCourseRunPageSelect(tk.Frame):
             # Save config File
             saveJsonFormat(configInfoJson, "EmptyCourseRunPayLoad.json")
 
-
+    def show_frame(self, cont):
+        frame = self.frames[cont]
+        frame.tkraise()  
 
