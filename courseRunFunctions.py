@@ -137,7 +137,7 @@ def curlGetCourseSession(runId, CRN, sessionMonth):
             CRN = "&courseReferenceNumber=" + str(CRN)
       if (sessionMonth != ""):
             sessionMonth = "&sessionMonth=" + str(sessionMonth)
-      req = requests.Request('GET',"https://uat-api.ssg-wsg.sg/courses/runs/" + runId + "/sessions?" + uen + CRN +sessionMonth,headers={'accept':'application/json'}).prepare()
+      req = requests.Request('GET',"https://uat-api.ssg-wsg.sg/courses/runs/" + runId + "/sessions?uen=" + uen + CRN +sessionMonth,headers={'accept':'application/json'}).prepare()
       text =  '{}\n{}\r\n{}\r\n\r\n'.format(
             '----------------Request Information----------------',
             req.method + ' ' + req.url,

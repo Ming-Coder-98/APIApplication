@@ -8,20 +8,47 @@
             {
                 "sequenceNumber": "",
                 "registrationDates": {
-                    "opening": "",
-                    "closing": "",
+                    "opening": 20210620,
+                    "closing": 20210620
                 },
                 "courseDates": {
-                    "start": "",
-                    "end": "",
+                    "start": 20210621,
+                    "end": 20210621
                 },
-                "modeOfTraining": "",
-                "courseAdminEmail": "",
+                "modeOfTraining": "2",
+                "courseAdminEmail": "testing@gmail.com",
                 "courseVacancy": {
-                    "code": "",
-                    "description": ""
+                    "code": "L",
+                    "description": "TEST Limited"
+                },
+                "venue": {
+                    "room": "",
+                    "unit": "",
+                    "floor":"",
+                    "postalCode": ""
                 }
-}
-                    ]
+            }
+        ],
+        "sessions": [
+                    {
+                        "startDate": "",
+                        "endDate": "",
+                        "startTime": "",
+                        "endTime": "",
+                        "modeOfTraining": ""
+                    }
+            ],
+         "linkCourseRunTrainer": [
+             {
+                 "trainer": {
+                     "trainerType": {
+                         "code": "",
+                         "description": ""
+                     },
+                     "name": "",
+                     "email": ""
+                 }
+        }
+             ]
                   }
-                }
+                      }

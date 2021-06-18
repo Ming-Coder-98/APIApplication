@@ -7,7 +7,7 @@ from AssessmentFunction import addAssessment
 from EnrolmentFunction import addEnrolment, enrollmentInitialization
 from AttendanceFunction import uploadAttendance
 from courseRunFunctions import curlGetRequestViewCourseRun, curlPostRequest, deleteCourserun, getCourseRun, getDeleteCourseRunPayLoad
-from AddCourseRun import addCourseRunPageForm, addCourseRunPageFormFileUpload, addCourseRunPageSelect
+from AddCourseRun import addCourseRunPageForm, addCourseRunPageFormFileUpload, addCourseRunPageSelect, addCourseRunPageOptional
 
 from HttpRequestFunction import getHttpRequest, loadFile, saveJsonFormat
 import tkinter as tk
@@ -96,7 +96,7 @@ class APIProject(tk.Tk):
         
 
         self.frames = {}
-        for F in (getCourseSessionPage,updateCourseRunPageForm,updateCourseRunPageFormFileUpload,updateCourseRunPageSelect, addCourseRunPageFormFileUpload,addCourseRunPageForm, addCourseRunPageSelect, viewCourseRunPage, deleteCourseRunPage, StartPage):
+        for F in (getCourseSessionPage,updateCourseRunPageForm,updateCourseRunPageFormFileUpload,updateCourseRunPageSelect, addCourseRunPageFormFileUpload,addCourseRunPageForm,addCourseRunPageOptional, addCourseRunPageSelect, viewCourseRunPage, deleteCourseRunPage, StartPage):
             frame = F(container, self)
 
             self.frames[F] = frame
