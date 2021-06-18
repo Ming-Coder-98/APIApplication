@@ -19,14 +19,9 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="334dd218-34f3-4180-b43b-f82e69c63fb1" name="Default Changelist" comment="Attendance File Added">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_6_2021_8_55_AM_[Default_Changelist]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_6_2021_8_55_AM__Default_Changelist_.xml" beforeDir="false" />
+    <list default="true" id="334dd218-34f3-4180-b43b-f82e69c63fb1" name="Default Changelist" comment="addcourserun form">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/AddCourseRun.py" beforeDir="false" afterPath="$PROJECT_DIR$/AddCourseRun.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EmptyCourseRunPayLoad.json" beforeDir="false" afterPath="$PROJECT_DIR$/EmptyCourseRunPayLoad.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config.json" beforeDir="false" afterPath="$PROJECT_DIR$/config.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -210,7 +205,14 @@
       <option name="project" value="LOCAL" />
       <updated>1623040266810</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="addcourserun form">
+      <created>1624000651451</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1624000651451</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -227,6 +229,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Attendance File Added" />
-    <option name="LAST_COMMIT_MESSAGE" value="Attendance File Added" />
+    <MESSAGE value="addcourserun form" />
+    <option name="LAST_COMMIT_MESSAGE" value="addcourserun form" />
   </component>
 </project>

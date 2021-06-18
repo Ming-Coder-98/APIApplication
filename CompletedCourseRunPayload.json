@@ -1,0 +1,54 @@
+{
+    "course": {
+        "courseReferenceNumber": "",
+        "trainingProvider": {
+            "uen": "199900650G"
+        },
+        "runs": [
+            {
+                "sequenceNumber": "",
+                "registrationDates": {
+                    "opening": 0,
+                    "closing": 0
+                },
+                "courseDates": {
+                    "start": 0,
+                    "end": 0
+                },
+                "modeOfTraining": "",
+                "courseAdminEmail": "",
+                "courseVacancy": {
+                    "code": "",
+                    "description": ""
+                },
+                "venue": {
+                    "room": "",
+                    "unit": "",
+                    "floor": "",
+                    "postalCode": ""
+                }
+            }
+        ],
+        "sessions": [
+            {
+                "startDate": "",
+                "endDate": "",
+                "startTime": "",
+                "endTime": "",
+                "modeOfTraining": ""
+            }
+        ],
+        "linkCourseRunTrainer": [
+            {
+                "trainer": {
+                    "trainerType": {
+                        "code": "",
+                        "description": ""
+                    },
+                    "name": "",
+                    "email": ""
+                }
+            }
+        ]
+    }
+}

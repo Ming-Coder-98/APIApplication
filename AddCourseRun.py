@@ -301,7 +301,6 @@ class addCourseRunPageSelect(tk.Frame):
 
         # This method is used to update the display information dynamically in "Payload" Tab whenever user key in a value
 
-        '''
         def typing(event):
             storeAndsave_all()
 
@@ -322,10 +321,10 @@ class addCourseRunPageSelect(tk.Frame):
 
             configInfoJson["course"]["courseReferenceNumber"] = entry_1.get()
             configInfoJson["course"]["runs"][0]["courseAdminEmail"] = entry_2.get()
-            configInfoJson["course"]["runs"][0]["registrationDates"]["opening"] = int(entry_3.get())
-            configInfoJson["course"]["runs"][0]["registrationDates"]["closing"] = int(entry_4.get())
-            configInfoJson["course"]["runs"][0]["courseDates"]["start"] = int(entry_5.get())
-            configInfoJson["course"]["runs"][0]["courseDates"]["end"] = int(entry_6.get())
+            configInfoJson["course"]["runs"][0]["registrationDates"]["opening"] = int(entry_3.get()) if entry_3.get()!="" else 0
+            configInfoJson["course"]["runs"][0]["registrationDates"]["closing"] = int(entry_4.get()) if entry_4.get()!="" else 0
+            configInfoJson["course"]["runs"][0]["courseDates"]["start"] = int(entry_5.get()) if entry_5.get()!="" else 0
+            configInfoJson["course"]["runs"][0]["courseDates"]["end"] = int(entry_6.get()) if entry_6.get()!="" else 0
             configInfoJson["course"]["runs"][0]["courseVacancy"]["code"] = entry_7.get()
             configInfoJson["course"]["runs"][0]["courseVacancy"]["description"] = entry_8.get()
             configInfoJson["course"]["runs"][0]["modeOfTraining"] = entry_9.get()
@@ -334,9 +333,7 @@ class addCourseRunPageSelect(tk.Frame):
             configInfoJson["course"]["runs"][0]["venue"]["unit"] = entry_12.get()
             configInfoJson["course"]["runs"][0]["venue"]["postalCode"] = entry_13.get()
 
-            # Save config File
-            saveJsonFormat(configInfoJson, "EmptyCourseRunPayLoad.json")
-            '''
+            saveJsonFormat(configInfoJson,"CompletedCourseRunPayload.json")
 
 
 
@@ -369,49 +366,35 @@ class addCourseRunPageForm(tk.Frame):
         # Configuration for Notebook layout
         tabControl = ttk.Notebook(self)
 
-        tab1 = ttk.Frame(tabControl)
         tab2 = ttk.Frame(tabControl)
         tab3 = ttk.Frame(tabControl)
 
         # Adding of tabs
-        tabControl.add(tab1, text='Request - Payload')
-        tabControl.add(tab2, text='Curl')
+        tabControl.add(tab2, text='Request')
         tabControl.add(tab3, text='Reponse')
         tabControl.place(width=440, height=460, x=30, y=222)
 
-        payloadText = scrolledtext.ScrolledText(tab1, width=70, height=30)
-        payloadText.insert(tk.END, str(getDeleteCourseRunPayLoad("")))
-        payloadText.place(height=405, width=440, y=20)
-        payloadText.bind("<Key>", lambda e: "break")
-
+        configInfo = loadFile("CompletedCourseRunPayLoad.json")
         curlText = scrolledtext.ScrolledText(tab2, width=70, height=30)
+        curlText.insert(tk.END, str(curlPostRequest("", str(configInfo))))
         curlText.place(height=405, width=440, y=20)
         curlText.bind("<Key>", lambda e: "break")
 
         responseText = scrolledtext.ScrolledText(tab3, width=70, height=30)
         responseText.place(height=405, width=440, y=20)
-        responseText.bind("<Key>", lambda e: "break")
+        # responseText.bind("<Key>", lambda e: "break")
 
-        def submitCallBack():
-            addCourseRunInfo = loadFile("EmptyCourseRunPayLoad.json")
-            addCourseRunInfoJson = json.loads(addCourseRunInfo)
-            print(addCourseRunInfoJson)
-            resp = createCourserun(json.dumps(addCourseRunInfoJson))
-            print(resp.text)
 
-        createButton = tk.Button(self, text="Create", bg="white", width=25, pady=5,
-                                command = lambda: submitCallBack())
-        createButton.place(relx=0.5, rely=0.22, anchor=CENTER)
+        submitButton = tk.Button(self, text="Create", bg="white", width=25, pady=5, command=lambda: submitCallBack())
+        submitButton.place(relx=0.5, rely=0.25, anchor=CENTER)
         backButton = tk.Button(self, text="Back", bg="white", width=10, pady=5,
-                               command=lambda: controller.show_frame(addCourseRunPageSelect)
+                               command=lambda: controller.show_frame(addCourseRunPageSelect),
                                )
         backButton.place(relx=0.055, rely=0.021, anchor=CENTER)
-        exportButton1 = tk.Button(self, text="Export Payload", bg="white", width=15, pady=5,
-                                  command=lambda: downloadFile("payload"))
-        exportButton1.place(relx=0.3, rely=0.95, anchor=CENTER)
-        exportButton2 = tk.Button(self, text="Export Response", bg="white", width=15, pady=5,
-                                  command=lambda: downloadFile("response"))
-        exportButton2.place(relx=0.7, rely=0.95, anchor=CENTER)
+        # exportButton1 = tk.Button(self, text="Export Payload", bg="white", width=15, pady=5, command = lambda: downloadFile("payload"))
+        # exportButton1.place(relx=0.3, rely=0.95, anchor=CENTER)
+        # exportButton2 = tk.Button(self, text="Export Response", bg="white", width=15, pady=5,command = lambda: downloadFile("response"))
+        # exportButton2.place(relx=0.7, rely=0.95, anchor=CENTER)
 
         # adding of single line text box
         edit = Entry(self, background="light gray")
@@ -422,9 +405,6 @@ class addCourseRunPageForm(tk.Frame):
         # setting focus
         edit.focus_set()
 
-        butt_request = Button(tab1, text='Find', command=lambda: find("payload"), highlightthickness=0, bd=0,
-                              background="gray")
-        butt_request.place(x=380, y=0, height=21, width=60)
         butt_resp = Button(tab2, text='Find', command=lambda: find("curl"), highlightthickness=0, bd=0,
                            background="gray")
         butt_resp.place(x=380, y=0, height=21, width=60)
@@ -436,8 +416,6 @@ class addCourseRunPageForm(tk.Frame):
         def find(method):
             if method == "resp":
                 textw = responseText
-            elif method == "payload":
-                textw = payloadText
             else:
                 textw = curlText
             textw.tag_remove('found', '1.0', END)
@@ -464,9 +442,12 @@ class addCourseRunPageForm(tk.Frame):
                 # mark located string as red
                 textw.tag_config('found', foreground='red')
 
-            edit.focus_set()
+        edit.focus_set()
 
-        def downloadFile(method):
+
+
+
+    '''   def downloadFile(method):
             files = [('JSON', '*.json'),
                      ('Text Document', '*.txt')]
             file = filedialog.asksaveasfile(filetypes=files, defaultextension='.json')
@@ -475,17 +456,9 @@ class addCourseRunPageForm(tk.Frame):
             file.write(filetext)
             file.close()
             messagebox.showinfo("Successful", "File has been downloaded")
+            '''
 
-        # This method activates two other methods.
-        # 1) this method calls the delete method in courseRunFunction and return the response
-        # 2) Based on the response, if a status 200 is received, it will display the response
 
-        def deleteCallBack(runId):
-            resp = deleteCourserun(runId)
-            if (resp.status_code < 400):
-                messagebox.showinfo("Successful", "Successfully Delete Course Run: " + runId)
-            responseText.delete("1.0", "end")
-            responseText.insert(tk.END, resp.text)
 
 
 class addCourseRunPageFormFileUpload(tk.Frame):
