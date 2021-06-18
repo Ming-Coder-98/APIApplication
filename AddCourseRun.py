@@ -374,7 +374,7 @@ class addCourseRunPageForm(tk.Frame):
         tabControl.add(tab3, text='Reponse')
         tabControl.place(width=440, height=460, x=30, y=222)
 
-        configInfo = loadFile("CompletedCourseRunPayLoad.json")
+        configInfo = loadFile("EmptyCourseRunPayLoad.json")
         curlText = scrolledtext.ScrolledText(tab2, width=70, height=30)
         curlText.insert(tk.END, str(curlPostRequest("", str(configInfo))))
         curlText.place(height=405, width=440, y=20)
@@ -385,8 +385,17 @@ class addCourseRunPageForm(tk.Frame):
         # responseText.bind("<Key>", lambda e: "break")
 
 
+        def refreshPayload():
+            configInfo = loadFile("CompletedCourseRunPayLoad.json")
+            curlText = scrolledtext.ScrolledText(tab2, width=70, height=30)
+            curlText.insert(tk.END, str(curlPostRequest("", str(configInfo))))
+            curlText.place(height=405, width=440, y=20)
+            curlText.bind("<Key>", lambda e: "break")
+
         submitButton = tk.Button(self, text="Create", bg="white", width=25, pady=5, command=lambda: submitCallBack())
         submitButton.place(relx=0.5, rely=0.25, anchor=CENTER)
+        refreshButton = tk.Button(self, text="Refresh", bg="white", width=25, pady=5, command=lambda: refreshPayload())
+        refreshButton.place(relx=0.5, rely=0.2, anchor=CENTER)
         backButton = tk.Button(self, text="Back", bg="white", width=10, pady=5,
                                command=lambda: controller.show_frame(addCourseRunPageSelect),
                                )
