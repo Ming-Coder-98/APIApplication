@@ -1,4 +1,5 @@
 #Import course Run py Functions
+from CourseSession import getCourseSessionPage
 from UpdateCourseRun import updateCourseRunPageForm, updateCourseRunPageFormFileUpload, updateCourseRunPageSelect
 from tooltip import CreateToolTip
 from configWindow import setConfigWindow, showConfigWindow
@@ -95,7 +96,7 @@ class APIProject(tk.Tk):
         
 
         self.frames = {}
-        for F in (updateCourseRunPageForm,updateCourseRunPageFormFileUpload,updateCourseRunPageSelect, addCourseRunPageFormFileUpload,addCourseRunPageForm, addCourseRunPageSelect, viewCourseRunPage, deleteCourseRunPage, StartPage):
+        for F in (getCourseSessionPage,updateCourseRunPageForm,updateCourseRunPageFormFileUpload,updateCourseRunPageSelect, addCourseRunPageFormFileUpload,addCourseRunPageForm, addCourseRunPageSelect, viewCourseRunPage, deleteCourseRunPage, StartPage):
             frame = F(container, self)
 
             self.frames[F] = frame
@@ -115,6 +116,7 @@ class APIProject(tk.Tk):
         courseMenu.add_command(label="Add Course Run",command=lambda:self.show_frame(addCourseRunPageSelect))
         courseMenu.add_command(label="Delete Course Run",command=lambda: self.show_frame(deleteCourseRunPage)) 
         courseMenu.add_command(label="Update Course Run",command=lambda: self.show_frame(updateCourseRunPageSelect))  
+        courseMenu.add_command(label="Course Session",command=lambda: self.show_frame(getCourseSessionPage))   
         menubar.add_cascade(label="Course", menu=courseMenu)  
 
         

@@ -444,3 +444,6 @@ class updateCourseRunPageFormFileUpload(tk.Frame):
             textPayload = StringVar(self, value = resp.text) 
             responseText.insert(INSERT,textPayload.get())
             
+
+# resp = getHttpRequest("https://uat-api.ssg-wsg.sg/courses/runs/224925/sessions?uen=199900650G&courseReferenceNumber=TGS-2020001831&sessionMonth=062021")
+# print(resp.text)

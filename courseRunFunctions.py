@@ -127,5 +127,37 @@ def curlGetRequestViewCourseRun(text1):
             '\r\n'.join('{}: {}'.format(k, v) for k, v in req.headers.items()),
       )
       return text
+
+def curlGetCourseSession(runId, CRN, sessionMonth):
+      #Set UEN to payload
+      config = loadFile("config.json")
+      config = json.loads(config)
+      uen = config["UEN"]
+      if CRN != "":
+            CRN = "&courseReferenceNumber=" + str(CRN)
+      if (sessionMonth != ""):
+            sessionMonth = "&sessionMonth=" + str(sessionMonth)
+      req = requests.Request('GET',"https://uat-api.ssg-wsg.sg/courses/runs/" + runId + "/sessions?" + uen + CRN +sessionMonth,headers={'accept':'application/json'}).prepare()
+      text =  '{}\n{}\r\n{}\r\n\r\n'.format(
+            '----------------Request Information----------------',
+            req.method + ' ' + req.url,
+            '\r\n'.join('{}: {}'.format(k, v) for k, v in req.headers.items()),
+      )
+      return text
+def getCourseSession(runId, CRN, sessionMonth):
+      #Set UEN to payload
+      config = loadFile("config.json")
+      config = json.loads(config)
+      uen = config["UEN"]
+      print("getCourseSession")
+      if CRN != "":
+            CRN = "&courseReferenceNumber=" + str(CRN)
+      if (sessionMonth != ""):
+            sessionMonth = "&sessionMonth=" + str(sessionMonth)
+      resp = getHttpRequest("https://uat-api.ssg-wsg.sg/courses/runs/" + runId + "/sessions?uen=" + uen + CRN +sessionMonth)
+      print(resp.url)
+      return resp
+
+
 #addCourserun()
 
