@@ -44,20 +44,29 @@ def getCourseRun(runId):
       resp = getHttpRequest("https://uat-api.ssg-wsg.sg/courses/runs/" + str(runId))
       return resp
 
-def addCourserun():
-      #Update the latest value
-      updateCourseRunPayload()
+#Outdated add Method
+# def addCourserun():
+#       #Update the latest value
+#       updateCourseRunPayload()
 
-      #payload variable is obtained from CourseRunFunction.py
-      response = postHttpRequest("https://uat-api.ssg-wsg.sg/courses/runs" , payload)
-      saveCourseRunDetails(response)
+#       #payload variable is obtained from CourseRunFunction.py
+#       response = postHttpRequest("https://uat-api.ssg-wsg.sg/courses/runs" , payload)
+#       saveCourseRunDetails(response)
 
 
 #Create Method for AddCourserunPage
 def createCourserun(payload):
       response = postHttpRequest("https://uat-api.ssg-wsg.sg/courses/runs" , payload)
-      if response.status_code < 400:
-            saveCourseRunDetails(response)
+      return response
+
+def updateCourserun(runId, payload):
+      # # print(payload)
+      # print(json.dumps(payload))
+      # # load = json.loads(payload)
+      # # print(load)
+      response = postHttpRequest("https://uat-api.ssg-wsg.sg/courses/runs/" + str(runId), payload)
+      # if response.status_code < 400:
+      #       saveCourseRunDetails(response)
       return response
 
 
@@ -85,7 +94,7 @@ def updateCourseRunPayload():
       payload = loadFile("CourseRunPayLoad.json")
 
 #This method is to update the courserun payload dynamically for displaying purpose in deleteCourseRunPage 
-def updateEmptyDeleteCourseRunPayLoad(CRN):
+def getDeleteCourseRunPayLoad(CRN):
       global deleteCourseRunPayLoad
       
       #Set UEN to payload
@@ -97,12 +106,26 @@ def updateEmptyDeleteCourseRunPayLoad(CRN):
       return deleteCourseRunPayLoad
       
 #This method is to update the curl text dynamically for displaying purpose in deleteCourseRunPage 
-def curlPostRequest(text1, text2):
-      text = "curl -X GET \"https://uat-api.ssg-wsg.sg/courses/runs/" + text1 +"\" -H \"accept: application/json\" -H \"x-api-version: v1.3\" -d \"" + str(json.loads(updateEmptyDeleteCourseRunPayLoad(text2)))+"\""
+def curlPostRequest(text1, payload):
+      #text = "curl -X GET \"https://uat-api.ssg-wsg.sg/courses/runs/" + text1 +"\" -H \"accept: application/json\" -H \"x-api-version: v1.3\" -d \"" + str(json.loads(updateEmptyDeleteCourseRunPayLoad(text2)))+"\""
+      req = requests.Request('POST',"https://uat-api.ssg-wsg.sg/courses/runs/" + text1,headers={'accept':'application/json'},data=str(payload)).prepare()
+      text =  '{}\n{}\r\n{}\r\n\r\n{}\n{}'.format(
+            '----------------Request Information----------------',
+            req.method + ' ' + req.url,
+            '\r\n'.join('{}: {}'.format(k, v) for k, v in req.headers.items()),
+            '----------------Payload Information----------------',
+            req.body,
+      )
       return text
-
-def curlGetRequest(text1):
-      text = "curl -X GET \"https://uat-api.ssg-wsg.sg/courses/runs/" + text1 +"\" -H \"accept: application/json\" -H \"x-api-version: v1.3\""
+#This method is to update the curl text dynamically for displaying purpose in viewCourseRunPage 
+def curlGetRequestViewCourseRun(text1):
+      #text = "curl -X GET \"https://uat-api.ssg-wsg.sg/courses/runs/" + text1 +"\" -H \"accept: application/json\" -H \"x-api-version: v1.3\""
+      req = requests.Request('GET',"https://uat-api.ssg-wsg.sg/courses/runs/" + text1,headers={'accept':'application/json'}).prepare()
+      text =  '{}\n{}\r\n{}\r\n\r\n'.format(
+            '----------------Request Information----------------',
+            req.method + ' ' + req.url,
+            '\r\n'.join('{}: {}'.format(k, v) for k, v in req.headers.items()),
+      )
       return text
 #addCourserun()
 

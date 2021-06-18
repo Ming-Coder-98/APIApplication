@@ -1,10 +1,11 @@
 #Import course Run py Functions
+from UpdateCourseRun import updateCourseRunPageForm, updateCourseRunPageFormFileUpload, updateCourseRunPageSelect
 from tooltip import CreateToolTip
 from configWindow import setConfigWindow, showConfigWindow
 from AssessmentFunction import addAssessment
 from EnrolmentFunction import addEnrolment, enrollmentInitialization
 from AttendanceFunction import uploadAttendance
-from courseRunFunctions import curlGetRequest, curlPostRequest, deleteCourserun, getCourseRun, updateEmptyDeleteCourseRunPayLoad
+from courseRunFunctions import curlGetRequestViewCourseRun, curlPostRequest, deleteCourserun, getCourseRun, getDeleteCourseRunPayLoad
 from AddCourseRun import addCourseRunPageForm, addCourseRunPageFormFileUpload, addCourseRunPageSelect
 
 from HttpRequestFunction import getHttpRequest, loadFile, saveJsonFormat
@@ -94,7 +95,7 @@ class APIProject(tk.Tk):
         
 
         self.frames = {}
-        for F in (addCourseRunPageFormFileUpload,addCourseRunPageForm, addCourseRunPageSelect, viewCourseRunPage, deleteCourseRunPage, StartPage):
+        for F in (updateCourseRunPageForm,updateCourseRunPageFormFileUpload,updateCourseRunPageSelect, addCourseRunPageFormFileUpload,addCourseRunPageForm, addCourseRunPageSelect, viewCourseRunPage, deleteCourseRunPage, StartPage):
             frame = F(container, self)
 
             self.frames[F] = frame
@@ -113,7 +114,7 @@ class APIProject(tk.Tk):
         courseMenu.add_command(label="View Course Run",command=lambda: self.show_frame(viewCourseRunPage))
         courseMenu.add_command(label="Add Course Run",command=lambda:self.show_frame(addCourseRunPageSelect))
         courseMenu.add_command(label="Delete Course Run",command=lambda: self.show_frame(deleteCourseRunPage)) 
-        courseMenu.add_command(label="Update Course Run")  
+        courseMenu.add_command(label="Update Course Run",command=lambda: self.show_frame(updateCourseRunPageSelect))  
         menubar.add_cascade(label="Course", menu=courseMenu)  
 
         
@@ -179,7 +180,7 @@ class viewCourseRunPage(tk.Frame):
         entry_1.place(x=240, y=130)
         #This method is used to update the display information dynamically in "Payload" Tab whenever user key in a value
         def typing(event):
-            value = curlGetRequest(entry_1.get())
+            value = curlGetRequestViewCourseRun(entry_1.get())
             curlText.delete("1.0","end")
             curlText.insert(tk.END, value)
 
@@ -195,7 +196,7 @@ class viewCourseRunPage(tk.Frame):
         responseFrame = ttk.Frame(tabControl)
         curlFrame = ttk.Frame(tabControl)
 
-        tabControl.add(curlFrame, text ='Curl')
+        tabControl.add(curlFrame, text ='Request')
         tabControl.add(responseFrame, text ='Reponse')
 
         tabControl.place(width= 440, height= 460, x = 30, y = 222)
@@ -207,7 +208,7 @@ class viewCourseRunPage(tk.Frame):
 
         #Textbox for Curl Frame
         curlText = scrolledtext.ScrolledText(curlFrame,width=70,height=30)
-        curlText.insert(tk.END, str(curlGetRequest("")))
+        curlText.insert(tk.END, str(curlGetRequestViewCourseRun("")))
         curlText.place(height = 405, width = 440, y=20)
         curlText.bind("<Key>", lambda e: "break")
 
@@ -334,18 +335,13 @@ class deleteCourseRunPage(tk.Frame):
         'Example of Course References Number: TGS-12345678')
 
         #This method is used to update the display information dynamically in "Payload" Tab whenever user key in a value
-        def typing(type):
-            if type == "CRN":
-                value = updateEmptyDeleteCourseRunPayLoad(entry_CRN.get())
-                payloadText.delete("1.0","end")
-                payloadText.insert(tk.END, value)
-
-            value = curlPostRequest(entry_1.get(),entry_CRN.get())
+        def typing():
+            value = curlPostRequest(entry_1.get(),getDeleteCourseRunPayLoad(entry_CRN.get()))
             curlText.delete("1.0","end")
             curlText.insert(tk.END, value)
             
-        entry_CRN.bind('<KeyRelease>', lambda a:typing("CRN"))
-        entry_1.bind('<KeyRelease>', lambda b:typing("runId"))
+        entry_CRN.bind('<KeyRelease>', lambda a:typing())
+        entry_1.bind('<KeyRelease>', lambda b:typing())
 
         #Expand label to fit window size
         style = ttk.Style(self)
@@ -354,23 +350,16 @@ class deleteCourseRunPage(tk.Frame):
         #Configuration for Notebook layout
         tabControl = ttk.Notebook(self)
   
-        tab1 = ttk.Frame(tabControl)
         tab2 = ttk.Frame(tabControl)
         tab3 = ttk.Frame(tabControl)
         
         #Adding of tabs
-        tabControl.add(tab1, text ='Request - Payload')
-        tabControl.add(tab2, text ='Curl')
+        tabControl.add(tab2, text ='Request')
         tabControl.add(tab3, text ='Reponse')
         tabControl.place(width= 440, height= 460, x = 30, y = 222)
 
-        payloadText = scrolledtext.ScrolledText(tab1,width=70,height=30)
-        payloadText.insert(tk.END, str(updateEmptyDeleteCourseRunPayLoad("")))
-        payloadText.place(height = 405, width = 440, y=20)
-        payloadText.bind("<Key>", lambda e: "break")
-
         curlText = scrolledtext.ScrolledText(tab2,width=70,height=30)
-        curlText.insert(tk.END, str(curlPostRequest("","")))
+        curlText.insert(tk.END, str(curlPostRequest("",getDeleteCourseRunPayLoad(entry_CRN.get()))))
         curlText.place(height = 405, width = 440, y=20)
         curlText.bind("<Key>", lambda e: "break")
         
@@ -394,8 +383,6 @@ class deleteCourseRunPage(tk.Frame):
         #setting focus
         edit.focus_set()
 
-        butt_request = Button(tab1, text='Find', command=lambda:find("payload"), highlightthickness = 0, bd = 0, background="gray")  
-        butt_request.place(x = 380, y=0, height=21, width=60) 
         butt_resp = Button(tab2, text='Find', command=lambda:find("curl"), highlightthickness = 0, bd = 0, background="gray")  
         butt_resp.place(x = 380, y=0, height=21, width=60) 
         butt_resp = Button(tab3, text='Find', command=lambda:find("resp"), highlightthickness = 0, bd = 0, background="gray")  
@@ -405,8 +392,6 @@ class deleteCourseRunPage(tk.Frame):
         def find(method):
             if method == "resp":
                 textw = responseText
-            elif method == "payload":
-                textw = payloadText
             else:
                 textw = curlText
             textw.tag_remove('found', '1.0', END) 
@@ -439,7 +424,7 @@ class deleteCourseRunPage(tk.Frame):
             files = [('JSON', '*.json'), 
                      ('Text Document', '*.txt')]
             file = filedialog.asksaveasfile(filetypes = files, defaultextension='.json')
-            filetext = str(payloadText.get("1.0",END)) if method == "payload" else str(responseText.get("1.0",END))
+            filetext = str(getDeleteCourseRunPayLoad(entry_CRN.get())) if method == "payload" else str(responseText.get("1.0",END))
             file.write(filetext)
             file.close()
             messagebox.showinfo("Successful", "File has been downloaded")

@@ -6,7 +6,7 @@ from configWindow import getCertPemFile, setConfigWindow, showConfigWindow
 from AssessmentFunction import addAssessment
 from EnrolmentFunction import addEnrolment, enrollmentInitialization
 from AttendanceFunction import uploadAttendance
-from courseRunFunctions import createCourserun, curlPostRequest, deleteCourserun, getDeleteCourseRunPayLoad
+from courseRunFunctions import createCourserun, curlPostRequest, deleteCourserun, getDeleteCourseRunPayLoad, updateCourserun
 from HttpRequestFunction import getHttpRequest, loadFile, saveJsonFormat
 import tkinter as tk
 from tkinter import *
@@ -21,7 +21,7 @@ import pandas as pd
 
 from tooltip import CreateToolTip
 
-class addCourseRunPageSelect(tk.Frame):
+class updateCourseRunPageSelect(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
 
@@ -33,7 +33,7 @@ class addCourseRunPageSelect(tk.Frame):
         img2.image = render
         img2.place(x=0, y=0, relwidth=1, relheight=1)
 
-        label_0 = Label(self, text="Add Course Run", width=20, font=("bold", 20))
+        label_0 = Label(self, text="Update Course Run", width=20, font=("bold", 20))
         label_0.place(x=90, y=53)
 
         self.var = IntVar()
@@ -136,7 +136,7 @@ class addCourseRunPageSelect(tk.Frame):
         entry_9 = Entry(self)
         entry_9.place(x=250, y=420)
 
-        previewButton = tk.Button(self, text="Next", bg="white", width=25, pady=5, command=lambda: controller.show_frame(addCourseRunPageForm) if self.var.get() == 2 else controller.show_frame(addCourseRunPageFormFileUpload) )
+        previewButton = tk.Button(self, text="Next", bg="white", width=25, pady=5, command=lambda: controller.show_frame(updateCourseRunPageForm) if self.var.get() == 2 else controller.show_frame(updateCourseRunPageFormFileUpload) )
         previewButton.place(x=250, y=540, anchor=CENTER)
 
         backButton = tk.Button(self, text="Back", bg="white", width=25, pady=5)
@@ -163,7 +163,7 @@ class addCourseRunPageSelect(tk.Frame):
         frame = self.frames[cont]
         frame.tkraise()  
 
-class addCourseRunPageForm(tk.Frame):
+class updateCourseRunPageForm(tk.Frame):
 
     def __init__(self, parent, controller):
 
@@ -178,7 +178,7 @@ class addCourseRunPageForm(tk.Frame):
         img2.place(x=0, y=0, relwidth=1, relheight=1)
 
         # Title
-        label_0 = Label(self, text="Add Course Run", width=20, font=("bold", 20))
+        label_0 = Label(self, text="Update Course Run", width=20, font=("bold", 20))
         label_0.place(x=90, y=85)
 
         # Expand label to fit window size
@@ -215,7 +215,7 @@ class addCourseRunPageForm(tk.Frame):
                                 )
         createButton.place(relx=0.5, rely=0.22, anchor=CENTER)
         backButton = tk.Button(self, text="Back", bg="white", width=10, pady=5,
-                               command=lambda: controller.show_frame(addCourseRunPageSelect)
+                               command=lambda: controller.show_frame(updateCourseRunPageSelect)
                                )
         backButton.place(relx=0.055, rely=0.021, anchor=CENTER)
         exportButton1 = tk.Button(self, text="Export Payload", bg="white", width=15, pady=5,
@@ -299,8 +299,10 @@ class addCourseRunPageForm(tk.Frame):
             responseText.insert(tk.END, resp.text)
 
 
-class addCourseRunPageFormFileUpload(tk.Frame):
+class updateCourseRunPageFormFileUpload(tk.Frame):
     global fileUploadEntry
+    global contentInfo
+    contentInfo = ''
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
@@ -313,15 +315,36 @@ class addCourseRunPageFormFileUpload(tk.Frame):
         img2.image = render
         img2.place(x=0, y=0, relwidth=1, relheight=1)
 
-        label_0 = Label(self, text="Add Course Run", width=20, font=("bold", 20))
-        label_0.place(x=90, y=53)
+        label_0 = Label(self, text="Update Course Run", width=20, font=("bold", 20))
+        label_0.place(x=90, y=43)
+
+        
+        #Course Run Id
+        label_runId = Label(self, text="Course Run ID: ", width=20, font=("bold", 10), anchor='w')
+        label_runId.place(x=90, y=100)
+
+        entry_runId = Entry(self)
+        entry_runId.place(x=250, y=100)
+        label_1_ttp = CreateToolTip(label_runId, \
+        'The Course Run Id is used to create URL for POST Request Call\n'
+        'Example: https://api.ssg-wsg.sg/courses/runs/{runId}')
+
+        #This method is used to update the display information dynamically in "Payload" Tab whenever user key in a value
+        def typing():
+
+            value = curlPostRequest(entry_runId.get(),contentInfo)
+            curlText.delete("1.0","end")
+            curlText.insert(tk.END, value)
+
+        entry_runId.bind('<KeyRelease>', lambda b:typing())
+
         fileuploadframe = tk.Frame(self)
-        fileuploadframe.place(x=90, y=120)
+        fileuploadframe.place(x=90, y=130)
 
         fileUploadEntry = tk.Entry(fileuploadframe, width=45)
         fileUploadEntry.pack(side=tk.LEFT, fill=tk.X )
-        createButton = tk.Button(self,text="Browse", command=lambda:getCertPemFile(self))       
-        createButton.pack(in_=fileuploadframe, side=tk.LEFT)
+        fileUploadButton = tk.Button(self,text="Browse", command=lambda:getCertPemFile(self))       
+        fileUploadButton.pack(in_=fileuploadframe, side=tk.LEFT)
 
          #Configuration for Notebook layout
         tabControl = ttk.Notebook(self)
@@ -343,10 +366,10 @@ class addCourseRunPageFormFileUpload(tk.Frame):
         responseText.place(height = 405, width = 440, y=20)
         # responseText.bind("<Key>", lambda e: "break")
 
-        submitButton = tk.Button(self, text="Create", bg="white", width=25, pady=5, command=lambda: submitCallBack())
-        submitButton.place(relx=0.5, rely=0.25, anchor=CENTER)
+        updateButton = tk.Button(self, text="Update", bg="white", width=25, pady=5, command=lambda: updateCallBack(entry_runId.get()))
+        updateButton.place(relx=0.5, rely=0.25, anchor=CENTER)
         backButton = tk.Button(self, text="Back", bg="white", width=10, pady=5,
-                               command=lambda: controller.show_frame(addCourseRunPageSelect)
+                               command=lambda: controller.show_frame(updateCourseRunPageSelect)
                                )
         backButton.place(relx=0.055, rely=0.021, anchor=CENTER)
         # exportButton1 = tk.Button(self, text="Export Payload", bg="white", width=15, pady=5, command = lambda: downloadFile("payload"))
@@ -409,15 +432,15 @@ class addCourseRunPageFormFileUpload(tk.Frame):
             with open(filePath, 'r') as content:
                 contentInfo = content.read()
 
-            curlText.insert(tk.END, curlPostRequest("",contentInfo))
+            curlText.insert(tk.END, curlPostRequest(entry_runId.get(),contentInfo))
                 
 
-        def submitCallBack():
+        def updateCallBack(runId):
             responseText.delete("1.0","end")
             payload = contentInfo
             # payload = json.loads(payload)
             # print(payload)
-            resp = createCourserun(payload)
+            resp = updateCourserun(runId,payload)
             textPayload = StringVar(self, value = resp.text) 
             responseText.insert(INSERT,textPayload.get())
             

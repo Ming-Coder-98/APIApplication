@@ -15,6 +15,7 @@ def httpRequestInit():
 def getHttpRequest(request_url):
       httpRequestInit()
       response = requests.get(request_url, cert = (certPath,keyPath))
+      # print(response.request.headers)
       printResponse(response)
       return response
       
@@ -23,6 +24,8 @@ def postHttpRequest(request_url, payload):
       httpRequestInit()
       print("Post Http Request")
       response = requests.post(request_url, data = payload,cert = (certPath,keyPath))
+      # print(response.request.headers)
+      # print(response.request.body)
       # print(response.status_code)
       printResponse(response)
       return response
@@ -32,8 +35,9 @@ def postHttpRequest(request_url, payload):
 #Use this if Encryption is needed
 def postHttpRequestJson(request_url, payload):
       httpRequestInit()
-      print("Post Http Request")
+      print("Post Http Request Json")
       response = requests.post(request_url, json = payload,cert =  (certPath,keyPath))
+      # print(response.request.body)
       #printResponse(response)
       return response
 
