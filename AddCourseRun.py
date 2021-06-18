@@ -6,7 +6,7 @@ from configWindow import getCertPemFile, setConfigWindow, showConfigWindow
 from AssessmentFunction import addAssessment
 from EnrolmentFunction import addEnrolment, enrollmentInitialization
 from AttendanceFunction import uploadAttendance
-from courseRunFunctions import createCourserun, curlPostRequest, deleteCourserun, getDeleteCourseRunPayLoad
+from courseRunFunctions import createCourserun, curlPostRequest, deleteCourserun, getCourseRun, getDeleteCourseRunPayLoad
 from HttpRequestFunction import getHttpRequest, loadFile, saveJsonFormat
 import tkinter as tk
 from tkinter import *
@@ -136,13 +136,20 @@ class addCourseRunPageOptional(tk.Frame):
                                )
         backButton.place(relx=0.055, rely=0.021, anchor=CENTER)
 
+        def callback():
+            # print("test")
+            # print(controller.frames[addCourseRunPageForm].curlText.get('1.0', tk.END))
+            test=controller.frames[addCourseRunPageForm].curlText
+            addCourseRunPageForm.refresh(test)
+            controller.show_frame(addCourseRunPageForm)
 
-        previewButton = tk.Button(self, text="Next", bg="white", width=25, pady=5, command=lambda: controller.show_frame(addCourseRunPageForm))
+        previewButton = tk.Button(self, text="Next", bg="white", width=25, pady=5, command=lambda: callback())
         previewButton.place(x=250, y=440, anchor=CENTER)
 
 
 class addCourseRunPageSelect(tk.Frame):
     def __init__(self, parent, controller):
+        print("addCourseRun Init")
         tk.Frame.__init__(self, parent)
 
         load = Image.open("SKFBGPage.JPG")
@@ -342,6 +349,10 @@ class addCourseRunPageSelect(tk.Frame):
         frame.tkraise()  
 
 class addCourseRunPageForm(tk.Frame):
+    def refresh(text):
+        configInfo = loadFile("CompletedCourseRunPayLoad.json")
+        text.delete("1.0","end")
+        text.insert(tk.END, configInfo)
 
     def __init__(self, parent, controller):
 
@@ -374,28 +385,26 @@ class addCourseRunPageForm(tk.Frame):
         tabControl.add(tab3, text='Reponse')
         tabControl.place(width=440, height=460, x=30, y=222)
 
-        configInfo = loadFile("EmptyCourseRunPayLoad.json")
-        curlText = scrolledtext.ScrolledText(tab2, width=70, height=30)
-        curlText.insert(tk.END, str(curlPostRequest("", str(configInfo))))
-        curlText.place(height=405, width=440, y=20)
-        curlText.bind("<Key>", lambda e: "break")
+        configInfo = loadFile("CompletedCourseRunPayLoad.json")
+        self.curlText = scrolledtext.ScrolledText(tab2, width=70, height=30)
+        self.curlText.insert(tk.END, str(curlPostRequest("", str(configInfo))))
+        self.curlText.place(height=405, width=440, y=20)
+        self.curlText.bind("<Key>", lambda e: "break")
 
         responseText = scrolledtext.ScrolledText(tab3, width=70, height=30)
         responseText.place(height=405, width=440, y=20)
         # responseText.bind("<Key>", lambda e: "break")
 
-
-        def refreshPayload():
+        def submitCallBack():
+            responseText.delete("1.0","end") 
             configInfo = loadFile("CompletedCourseRunPayLoad.json")
-            curlText = scrolledtext.ScrolledText(tab2, width=70, height=30)
-            curlText.insert(tk.END, str(curlPostRequest("", str(configInfo))))
-            curlText.place(height=405, width=440, y=20)
-            curlText.bind("<Key>", lambda e: "break")
-
+            resp = createCourserun(configInfo)
+            print(resp.status_code)
+            textPayload = StringVar(self, value = resp.text) 
+            responseText.insert(INSERT, textPayload.get())
+            
         submitButton = tk.Button(self, text="Create", bg="white", width=25, pady=5, command=lambda: submitCallBack())
         submitButton.place(relx=0.5, rely=0.25, anchor=CENTER)
-        refreshButton = tk.Button(self, text="Refresh", bg="white", width=25, pady=5, command=lambda: refreshPayload())
-        refreshButton.place(relx=0.5, rely=0.2, anchor=CENTER)
         backButton = tk.Button(self, text="Back", bg="white", width=10, pady=5,
                                command=lambda: controller.show_frame(addCourseRunPageSelect),
                                )
@@ -426,7 +435,7 @@ class addCourseRunPageForm(tk.Frame):
             if method == "resp":
                 textw = responseText
             else:
-                textw = curlText
+                textw = self.curlText
             textw.tag_remove('found', '1.0', END)
 
             # returns to widget currently in focus

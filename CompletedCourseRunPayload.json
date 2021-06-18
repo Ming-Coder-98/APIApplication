@@ -8,18 +8,18 @@
             {
                 "sequenceNumber": "",
                 "registrationDates": {
-                    "opening": 20210621,
-                    "closing": 20210621
+                    "opening": 20210622,
+                    "closing": 20210622
                 },
                 "courseDates": {
                     "start": 20210622,
                     "end": 20210622
                 },
                 "modeOfTraining": "2",
-                "courseAdminEmail": "testing",
+                "courseAdminEmail": "test@gmail.com",
                 "courseVacancy": {
                     "code": "L",
-                    "description": "test"
+                    "description": "Limited"
                 },
                 "venue": {
                     "room": "",
