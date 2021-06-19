@@ -39,125 +39,125 @@ class addCourseRunPageOptional(tk.Frame):
         label_1 = Label(self, text="Sessions", width=20, font=("bold", 15))
         label_1.place(x=137, y=100)
 
-        label_2 = Label(self, text="Course Session Start Date:", width=20, font=("bold", 10))
-        label_2.place(x=80, y=135)
+        label_14 = Label(self, text="Course Session Start Date:", width=20, font=("bold", 10))
+        label_14.place(x=80, y=135)
 
-        label_2_ttp = CreateToolTip(label_2,
+        label_14_ttp = CreateToolTip(label_14,
         'Start Date (YYYYMMDD) can be used as a parameter in the POST Request payload \n'
         'Example: 20210616')
 
-        entry_2 = Entry(self)
-        entry_2.place(x=250, y=135)
+        entry_14 = Entry(self)
+        entry_14.place(x=250, y=135)
 
-        label_3 = Label(self, text="Course Session Start Time:", width=20, font=("bold", 10))
-        label_3.place(x=80, y=160)
+        label_15 = Label(self, text="Course Session Start Time:", width=20, font=("bold", 10))
+        label_15.place(x=80, y=160)
 
-        label_3_ttp = CreateToolTip(label_3,'Start time (HH:MM) can be used as a parameter in the POST Request payload \n'
+        label_15_ttp = CreateToolTip(label_15,'Start time (HH:MM) can be used as a parameter in the POST Request payload \n'
                                     'Example: 17:30')
 
-        entry_3 = Entry(self)
-        entry_3.place(x=250, y=160)
+        entry_15 = Entry(self)
+        entry_15.place(x=250, y=160)
 
-        label_4 = Label(self, text="Course Session End Date:", width=20, font=("bold", 10))
-        label_4.place(x=80, y=185)
+        label_16 = Label(self, text="Course Session End Date:", width=20, font=("bold", 10))
+        label_16.place(x=80, y=185)
 
-        label_4_ttp = CreateToolTip(label_4,'End Date (YYYYMMDD) can be used as a parameter in the POST Request payload \n'
+        label_16_ttp = CreateToolTip(label_16,'End Date (YYYYMMDD) can be used as a parameter in the POST Request payload \n'
                                     'Example: 20210621')
 
-        entry_4 = Entry(self)
-        entry_4.place(x=250, y=185)
+        entry_16 = Entry(self)
+        entry_16.place(x=250, y=185)
 
-        label_5 = Label(self, text="Course Session End Time:", width=20, font=("bold", 10))
-        label_5.place(x=80, y=210)
+        label_17 = Label(self, text="Course Session End Time:", width=20, font=("bold", 10))
+        label_17.place(x=80, y=210)
 
-        label_5_ttp = CreateToolTip(label_5, \
+        label_17_ttp = CreateToolTip(label_17, \
                                     'End time (HH:MM) can be used as a parameter in the POST Request payload \n'
                                     'Example: 18:30')
 
-        entry_5 = Entry(self)
-        entry_5.place(x=250, y=210)
+        entry_17 = Entry(self)
+        entry_17.place(x=250, y=210)
 
-        label_6 = Label(self, text="Mode of Training:", width=20, font=("bold", 10))
-        label_6.place(x=80, y=235)
+        label_18 = Label(self, text="Mode of Training:", width=20, font=("bold", 10))
+        label_18.place(x=80, y=235)
 
-        label_6_ttp = CreateToolTip(label_6,
+        label_18_ttp = CreateToolTip(label_18,
                                     'Mode of Training is used as a parameter in the POST Request payload \n'
                                     'Example: 9')
 
-        entry_6 = Entry(self)
-        entry_6.place(x=250, y=235)
+        entry_18 = Entry(self)
+        entry_18.place(x=250, y=235)
 
-        label_7 = Label(self, text="Trainers", width=20, font=("bold", 15))
-        label_7.place(x=137, y=270)
+        label_19 = Label(self, text="Trainers", width=20, font=("bold", 15))
+        label_19.place(x=137, y=270)
 
-        label_8 = Label(self, text="Trainer name:", width=20, font=("bold", 10))
-        label_8.place(x=80, y=305)
+        label_20 = Label(self, text="Trainer name:", width=20, font=("bold", 10))
+        label_20.place(x=80, y=305)
 
-        label_8_ttp = CreateToolTip(label_8, \
+        label_20_ttp = CreateToolTip(label_20, \
                                     'Name of the trainer can be used as a parameter in the POST Request payload \n'
                                     'Example: John')
 
-        entry_8 = Entry(self)
-        entry_8.place(x=250, y=305)
+        entry_20 = Entry(self)
+        entry_20.place(x=250, y=305)
 
-        label_9 = Label(self, text="Trainer Email:", width=20, font=("bold", 10))
-        label_9.place(x=80, y=330)
+        label_21 = Label(self, text="Trainer Email:", width=20, font=("bold", 10))
+        label_21.place(x=80, y=330)
 
-        label_9_ttp = CreateToolTip(label_9, \
+        label_21_ttp = CreateToolTip(label_21, \
                                     'Email of trainner canbe used as a parameter in the POST Request payload \n'
                                   'Example: tester@gmail.com')
 
-        entry_9 = Entry(self)
-        entry_9.place(x=250, y=330)
+        entry_21 = Entry(self)
+        entry_21.place(x=250, y=330)
 
-        label_10 = Label(self, text="Trainer Code:", width=20, font=("bold", 10))
-        label_10.place(x=80, y=355)
+        label_22 = Label(self, text="Trainer Code:", width=20, font=("bold", 10))
+        label_22.place(x=80, y=355)
 
-        label_10_ttp = CreateToolTip(label_10, \
+        label_22_ttp = CreateToolTip(label_22, \
                                      'Code of Trainer can be used as a parameter in the POST Request payload \n'
                                      '1 - Existing, 2 - New \n'
                                      'Example: 1')
 
-        entry_10 = Entry(self)
-        entry_10.place(x=250, y=355)
+        entry_22 = Entry(self)
+        entry_22.place(x=250, y=355)
 
-        label_11 = Label(self, text="Trainer description:", width=20, font=("bold", 10))
-        label_11.place(x=80, y=380)
+        label_23 = Label(self, text="Trainer description:", width=20, font=("bold", 10))
+        label_23.place(x=80, y=380)
 
-        label_11_ttp = CreateToolTip(label_11, \
+        label_23_ttp = CreateToolTip(label_23, \
                                      'Simple description of trainer can be used as a parameter in the POST Request payload \n'
                                      'Example: New Trainer')
 
-        entry_11 = Entry(self)
-        entry_11.place(x=250, y=380)
+        entry_23 = Entry(self)
+        entry_23.place(x=250, y=380)
 
         def typing(event):
             storeAndsave_all()
 
-        entry_2.bind('<KeyRelease>', typing)
-        entry_3.bind('<KeyRelease>', typing)
-        entry_4.bind('<KeyRelease>', typing)
-        entry_5.bind('<KeyRelease>', typing)
-        entry_6.bind('<KeyRelease>', typing)
-        entry_8.bind('<KeyRelease>', typing)
-        entry_9.bind('<KeyRelease>', typing)
-        entry_10.bind('<KeyRelease>', typing)
-        entry_11.bind('<KeyRelease>', typing)
+        entry_14.bind('<KeyRelease>', typing)
+        entry_15.bind('<KeyRelease>', typing)
+        entry_16.bind('<KeyRelease>', typing)
+        entry_17.bind('<KeyRelease>', typing)
+        entry_18.bind('<KeyRelease>', typing)
+        entry_20.bind('<KeyRelease>', typing)
+        entry_21.bind('<KeyRelease>', typing)
+        entry_22.bind('<KeyRelease>', typing)
+        entry_23.bind('<KeyRelease>', typing)
 
         def storeAndsave_all():
             # load config File
             courseRunInfo = loadFile("EmptyCourseRunPayLoad.json")
             courseRunInfoJson = json.loads(courseRunInfo)
 
-            courseRunInfoJson["course"]["sessions"][0]["startDate"] = entry_2.get()
-            courseRunInfoJson["course"]["sessions"][0]["endDate"] = entry_3.get()
-            courseRunInfoJson["course"]["sessions"][0]["startTime"] = entry_3.get()
-            courseRunInfoJson["course"]["sessions"][0]["endTime"] = entry_3.get()
-            courseRunInfoJson["course"]["sessions"][0]["modeOfTraining"] = entry_3.get()
-            courseRunInfoJson["course"]["linkCourseRunTrainer"][0]["trainer"]["trainerType"]["code"] = entry_3.get()
-            courseRunInfoJson["course"]["linkCourseRunTrainer"][0]["trainer"]["trainerType"]["description"]= entry_3.get()
-            courseRunInfoJson["course"]["linkCourseRunTrainer"][0]["trainer"]["name"] = entry_3.get()
-            courseRunInfoJson["course"]["linkCourseRunTrainer"][0]["trainer"]["email"] = entry_3.get()
+            courseRunInfoJson["course"]["sessions"][0]["startDate"] = entry_14.get()
+            courseRunInfoJson["course"]["sessions"][0]["startTime"] = entry_15.get()
+            courseRunInfoJson["course"]["sessions"][0]["endDate"] = entry_16.get()
+            courseRunInfoJson["course"]["sessions"][0]["endTime"] = entry_17.get()
+            courseRunInfoJson["course"]["sessions"][0]["modeOfTraining"] = entry_18.get()
+            courseRunInfoJson["course"]["linkCourseRunTrainer"][0]["trainer"]["name"] = entry_20.get()
+            courseRunInfoJson["course"]["linkCourseRunTrainer"][0]["trainer"]["email"] = entry_21.get()
+            courseRunInfoJson["course"]["linkCourseRunTrainer"][0]["trainer"]["trainerType"]["code"] = entry_22.get()
+            courseRunInfoJson["course"]["linkCourseRunTrainer"][0]["trainer"]["trainerType"]["description"]= entry_23.get()
 
             saveJsonFormat(courseRunInfoJson,"CompletedCourseRunPayload.json")
 
@@ -361,7 +361,7 @@ class addCourseRunPageSelect(tk.Frame):
             uen_Info = loadFile("config.json")
             config_uenJson = json.loads(uen_Info)
             uen_number = config_uenJson["UEN"]
-            courseRunInfoJson["course"]["trainingProvider"]["UEN"] = uen_number
+            courseRunInfoJson["course"]["trainingProvider"]["uen"] = uen_number
 
             courseRunInfoJson["course"]["courseReferenceNumber"] = entry_1.get()
             courseRunInfoJson["course"]["runs"][0]["courseAdminEmail"] = entry_2.get()

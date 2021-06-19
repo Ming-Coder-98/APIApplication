@@ -1,23 +1,22 @@
 {
     "course": {
-        "courseReferenceNumber": "asd",
+        "courseReferenceNumber": "",
         "trainingProvider": {
-            "uen": "",
-            "UEN": "199900650G"
+            "uen": ""
         },
         "runs": [
             {
                 "sequenceNumber": "",
                 "registrationDates": {
-                    "opening": 0,
-                    "closing": 0
+                    "opening": "",
+                    "closing": ""
                 },
                 "courseDates": {
-                    "start": 0,
-                    "end": 0
+                    "start": "",
+                    "end": ""
                 },
                 "modeOfTraining": "",
-                "courseAdminEmail": "asd@gmail.com",
+                "courseAdminEmail": "",
                 "courseVacancy": {
                     "code": "",
                     "description": ""
@@ -32,11 +31,11 @@
         ],
         "sessions": [
             {
-                "startDate": "",
-                "endDate": "",
-                "startTime": "",
-                "endTime": "",
-                "modeOfTraining": ""
+                "startDate": "20210702",
+                "endDate": "20210702",
+                "startTime": "20210702",
+                "endTime": "20210702",
+                "modeOfTraining": "2"
             }
         ],
         "linkCourseRunTrainer": [
@@ -46,7 +45,7 @@
                         "code": "",
                         "description": ""
                     },
-                    "name": "",
+                    "name": "test",
                     "email": ""
                 }
             }
