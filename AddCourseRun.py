@@ -131,6 +131,39 @@ class addCourseRunPageOptional(tk.Frame):
         entry_11 = Entry(self)
         entry_11.place(x=250, y=380)
 
+        def typing(event):
+            storeAndsave_all()
+
+        entry_2.bind('<KeyRelease>', typing)
+        entry_3.bind('<KeyRelease>', typing)
+        entry_4.bind('<KeyRelease>', typing)
+        entry_5.bind('<KeyRelease>', typing)
+        entry_6.bind('<KeyRelease>', typing)
+        entry_8.bind('<KeyRelease>', typing)
+        entry_9.bind('<KeyRelease>', typing)
+        entry_10.bind('<KeyRelease>', typing)
+        entry_11.bind('<KeyRelease>', typing)
+
+        def storeAndsave_all():
+            # load config File
+            courseRunInfo = loadFile("EmptyCourseRunPayLoad.json")
+            courseRunInfoJson = json.loads(courseRunInfo)
+
+            courseRunInfoJson["course"]["sessions"][0]["startDate"] = entry_2.get()
+            courseRunInfoJson["course"]["sessions"][0]["endDate"] = entry_3.get()
+            courseRunInfoJson["course"]["sessions"][0]["startTime"] = entry_3.get()
+            courseRunInfoJson["course"]["sessions"][0]["endTime"] = entry_3.get()
+            courseRunInfoJson["course"]["sessions"][0]["modeOfTraining"] = entry_3.get()
+            courseRunInfoJson["course"]["linkCourseRunTrainer"][0]["trainer"]["trainerType"]["code"] = entry_3.get()
+            courseRunInfoJson["course"]["linkCourseRunTrainer"][0]["trainer"]["trainerType"]["description"]= entry_3.get()
+            courseRunInfoJson["course"]["linkCourseRunTrainer"][0]["trainer"]["name"] = entry_3.get()
+            courseRunInfoJson["course"]["linkCourseRunTrainer"][0]["trainer"]["email"] = entry_3.get()
+
+            saveJsonFormat(courseRunInfoJson,"CompletedCourseRunPayload.json")
+
+
+
+
         backButton = tk.Button(self, text="Back", bg="white", width=10, pady=5,
                                command=lambda: controller.show_frame(addCourseRunPageSelect)
                                )
@@ -323,24 +356,28 @@ class addCourseRunPageSelect(tk.Frame):
 
         def storeAndsave_all():
             # load config File
-            configInfo = loadFile("EmptyCourseRunPayLoad.json")
-            configInfoJson = json.loads(configInfo)
+            courseRunInfo = loadFile("EmptyCourseRunPayLoad.json")
+            courseRunInfoJson = json.loads(courseRunInfo)
+            uen_Info = loadFile("config.json")
+            config_uenJson = json.loads(uen_Info)
+            uen_number = config_uenJson["UEN"]
+            courseRunInfoJson["course"]["trainingProvider"]["UEN"] = uen_number
 
-            configInfoJson["course"]["courseReferenceNumber"] = entry_1.get()
-            configInfoJson["course"]["runs"][0]["courseAdminEmail"] = entry_2.get()
-            configInfoJson["course"]["runs"][0]["registrationDates"]["opening"] = int(entry_3.get()) if entry_3.get()!="" else 0
-            configInfoJson["course"]["runs"][0]["registrationDates"]["closing"] = int(entry_4.get()) if entry_4.get()!="" else 0
-            configInfoJson["course"]["runs"][0]["courseDates"]["start"] = int(entry_5.get()) if entry_5.get()!="" else 0
-            configInfoJson["course"]["runs"][0]["courseDates"]["end"] = int(entry_6.get()) if entry_6.get()!="" else 0
-            configInfoJson["course"]["runs"][0]["courseVacancy"]["code"] = entry_7.get()
-            configInfoJson["course"]["runs"][0]["courseVacancy"]["description"] = entry_8.get()
-            configInfoJson["course"]["runs"][0]["modeOfTraining"] = entry_9.get()
-            configInfoJson["course"]["runs"][0]["venue"]["room"] = entry_10.get()
-            configInfoJson["course"]["runs"][0]["venue"]["floor"] = entry_11.get()
-            configInfoJson["course"]["runs"][0]["venue"]["unit"] = entry_12.get()
-            configInfoJson["course"]["runs"][0]["venue"]["postalCode"] = entry_13.get()
+            courseRunInfoJson["course"]["courseReferenceNumber"] = entry_1.get()
+            courseRunInfoJson["course"]["runs"][0]["courseAdminEmail"] = entry_2.get()
+            courseRunInfoJson["course"]["runs"][0]["registrationDates"]["opening"] = int(entry_3.get()) if entry_3.get()!="" else 0
+            courseRunInfoJson["course"]["runs"][0]["registrationDates"]["closing"] = int(entry_4.get()) if entry_4.get()!="" else 0
+            courseRunInfoJson["course"]["runs"][0]["courseDates"]["start"] = int(entry_5.get()) if entry_5.get()!="" else 0
+            courseRunInfoJson["course"]["runs"][0]["courseDates"]["end"] = int(entry_6.get()) if entry_6.get()!="" else 0
+            courseRunInfoJson["course"]["runs"][0]["courseVacancy"]["code"] = entry_7.get()
+            courseRunInfoJson["course"]["runs"][0]["courseVacancy"]["description"] = entry_8.get()
+            courseRunInfoJson["course"]["runs"][0]["modeOfTraining"] = entry_9.get()
+            courseRunInfoJson["course"]["runs"][0]["venue"]["room"] = entry_10.get()
+            courseRunInfoJson["course"]["runs"][0]["venue"]["floor"] = entry_11.get()
+            courseRunInfoJson["course"]["runs"][0]["venue"]["unit"] = entry_12.get()
+            courseRunInfoJson["course"]["runs"][0]["venue"]["postalCode"] = entry_13.get()
 
-            saveJsonFormat(configInfoJson,"CompletedCourseRunPayload.json")
+            saveJsonFormat(courseRunInfoJson,"CompletedCourseRunPayload.json")
 
 
 
@@ -350,9 +387,9 @@ class addCourseRunPageSelect(tk.Frame):
 
 class addCourseRunPageForm(tk.Frame):
     def refresh(text):
-        configInfo = loadFile("CompletedCourseRunPayLoad.json")
+        courseRunInfo = loadFile("CompletedCourseRunPayLoad.json")
         text.delete("1.0","end")
-        text.insert(tk.END, configInfo)
+        text.insert(tk.END, courseRunInfo)
 
     def __init__(self, parent, controller):
 
@@ -385,9 +422,9 @@ class addCourseRunPageForm(tk.Frame):
         tabControl.add(tab3, text='Reponse')
         tabControl.place(width=440, height=460, x=30, y=222)
 
-        configInfo = loadFile("CompletedCourseRunPayLoad.json")
+        courseRunInfo = loadFile("EmptyCourseRunPayLoad.json")
         self.curlText = scrolledtext.ScrolledText(tab2, width=70, height=30)
-        self.curlText.insert(tk.END, str(curlPostRequest("", str(configInfo))))
+        self.curlText.insert(tk.END, str(curlPostRequest("", str(courseRunInfo))))
         self.curlText.place(height=405, width=440, y=20)
         self.curlText.bind("<Key>", lambda e: "break")
 
@@ -397,8 +434,8 @@ class addCourseRunPageForm(tk.Frame):
 
         def submitCallBack():
             responseText.delete("1.0","end") 
-            configInfo = loadFile("CompletedCourseRunPayLoad.json")
-            resp = createCourserun(configInfo)
+            courseRunInfo = loadFile("CompletedCourseRunPayLoad.json")
+            resp = createCourserun(courseRunInfo)
             print(resp.status_code)
             textPayload = StringVar(self, value = resp.text) 
             responseText.insert(INSERT, textPayload.get())

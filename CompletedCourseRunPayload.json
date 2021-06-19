@@ -1,25 +1,26 @@
 {
     "course": {
-        "courseReferenceNumber": "TGS-2020001831",
+        "courseReferenceNumber": "asd",
         "trainingProvider": {
-            "uen": "199900650G"
+            "uen": "",
+            "UEN": "199900650G"
         },
         "runs": [
             {
                 "sequenceNumber": "",
                 "registrationDates": {
-                    "opening": 20210622,
-                    "closing": 20210622
+                    "opening": 0,
+                    "closing": 0
                 },
                 "courseDates": {
-                    "start": 20210622,
-                    "end": 20210622
+                    "start": 0,
+                    "end": 0
                 },
-                "modeOfTraining": "2",
-                "courseAdminEmail": "test@gmail.com",
+                "modeOfTraining": "",
+                "courseAdminEmail": "asd@gmail.com",
                 "courseVacancy": {
-                    "code": "L",
-                    "description": "Limited"
+                    "code": "",
+                    "description": ""
                 },
                 "venue": {
                     "room": "",
