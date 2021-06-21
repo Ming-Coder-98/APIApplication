@@ -28,6 +28,8 @@ with open("TooltipDescription.json") as f:
 
 
 class addCourseRunPageOptional(tk.Frame):
+
+
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
 
@@ -80,10 +82,29 @@ class addCourseRunPageOptional(tk.Frame):
         label_18 = Label(self, text="Mode of Training:", width=20, font=("bold", 10))
         label_18.place(x=80, y=235)
 
-        label_18_ttp = CreateToolTip(label_18,tooltipDescription["SessionModeOfTraining"])
+        label_18_ttp = CreateToolTip(label_18,
+                                    'Mode of Training is used as a parameter in the POST Request payload \n'
+                                    'Example: 9')
+        options_18 = ["1. Classroom",
+                     "2. Asynchronous eLearning",
+                     "3. In-house",
+                     "4. On-the-Job",
+                     "5. Practical/Practicum",
+                     "6. Supervised Field",
+                     "7. Traineeship",
+                     "8. Assessment",
+                     "9. Synchronous eLearning"]
 
-        entry_18 = Entry(self)
-        entry_18.place(x=250, y=235)
+        clicked18 = StringVar()
+        clicked18.set(options_18[1])
+
+        dropDown = OptionMenu(self, clicked18, *options_18)
+        dropDown.place(x=250, y=230)
+
+        def finalSelection18():
+            entry_18 = (clicked18.get())[0]
+            return entry_18
+
 
         label_19 = Label(self, text="Trainers", width=20, font=("bold", 15))
         label_19.place(x=137, y=270)
@@ -120,6 +141,9 @@ class addCourseRunPageOptional(tk.Frame):
         entry_23 = Entry(self)
         entry_23.place(x=250, y=380)
 
+
+
+
         def typing(event):
             storeAndsave_all()
 
@@ -127,30 +151,24 @@ class addCourseRunPageOptional(tk.Frame):
         entry_15.bind('<KeyRelease>', typing)
         entry_16.bind('<KeyRelease>', typing)
         entry_17.bind('<KeyRelease>', typing)
-        entry_18.bind('<KeyRelease>', typing)
         entry_20.bind('<KeyRelease>', typing)
         entry_21.bind('<KeyRelease>', typing)
         entry_22.bind('<KeyRelease>', typing)
         entry_23.bind('<KeyRelease>', typing)
 
         def storeAndsave_all():
-            # load config File
-            courseRunInfo = loadFile("EmptyCourseRunPayLoad.json")
-            courseRunInfoJson = json.loads(courseRunInfo)
 
-            courseRunInfoJson["course"]["sessions"][0]["startDate"] = entry_14.get()
-            courseRunInfoJson["course"]["sessions"][0]["startTime"] = entry_15.get()
-            courseRunInfoJson["course"]["sessions"][0]["endDate"] = entry_16.get()
-            courseRunInfoJson["course"]["sessions"][0]["endTime"] = entry_17.get()
-            courseRunInfoJson["course"]["sessions"][0]["modeOfTraining"] = entry_18.get()
-            courseRunInfoJson["course"]["linkCourseRunTrainer"][0]["trainer"]["name"] = entry_20.get()
-            courseRunInfoJson["course"]["linkCourseRunTrainer"][0]["trainer"]["email"] = entry_21.get()
-            courseRunInfoJson["course"]["linkCourseRunTrainer"][0]["trainer"]["trainerType"]["code"] = entry_22.get()
-            courseRunInfoJson["course"]["linkCourseRunTrainer"][0]["trainer"]["trainerType"]["description"]= entry_23.get()
-
-            saveJsonFormat(courseRunInfoJson,"CompletedCourseRunPayload.json")
-
-
+            page1 = json.loads(loadFile("CompletedCourseRunPayLoad.json"))
+            page1["course"]["sessions"][0]["startDate"] = entry_14.get()
+            page1["course"]["sessions"][0]["startTime"] = entry_15.get()
+            page1["course"]["sessions"][0]["endDate"] = entry_16.get()
+            page1["course"]["sessions"][0]["endTime"] = entry_17.get()
+            page1["course"]["sessions"][0]["modeOfTraining"] = finalSelection18()
+            page1["course"]["linkCourseRunTrainer"][0]["trainer"]["name"] = entry_20.get()
+            page1["course"]["linkCourseRunTrainer"][0]["trainer"]["email"] = entry_21.get()
+            page1["course"]["linkCourseRunTrainer"][0]["trainer"]["trainerType"]["code"] = entry_22.get()
+            page1["course"]["linkCourseRunTrainer"][0]["trainer"]["trainerType"]["description"]= entry_23.get()
+            saveJsonFormat(page1, "CompletedCourseRunPayload.json")
 
 
         backButton = tk.Button(self, text="Back", bg="white", width=10, pady=5,
@@ -240,15 +258,27 @@ class addCourseRunPageSelect(tk.Frame):
         entry_6 = Entry(self)
         entry_6.place(x=250, y=345)
 
-        label_7 = Label(self, text="Course Code:", width=20, font=("bold", 10))
+        label_7 = Label(self, text="Course Vacancy Code:", width=20, font=("bold", 10))
         label_7.place(x=80, y=370)
 
         label_7_ttp = CreateToolTip(label_7, tooltipDescription["CourseCode"])
 
-        entry_7 = Entry(self)
-        entry_7.place(x=250, y=370)
+        options_7 = ["L - Limited",
+                   "A - Available",
+                   "F - Full"
+                     ]
 
-        label_8 = Label(self, text="Course Description:", width=20, font=("bold", 10))
+        clicked7 = StringVar()
+        clicked7.set(options_7[0])
+
+        dropDown = OptionMenu(self, clicked7, *options_7)
+        dropDown.place(x=250, y= 365)
+
+        def finalSelection7():
+            entry_7 = (clicked7.get())[0]
+            return(entry_7)
+
+        label_8 = Label(self, text="Course Vacancy Description:", width=20, font=("bold", 10))
         label_8.place(x=80, y=395)
 
         label_8_ttp = CreateToolTip(label_8, tooltipDescription["CourseDescription"])
@@ -261,8 +291,27 @@ class addCourseRunPageSelect(tk.Frame):
 
         label_9_ttp = CreateToolTip(label_9, tooltipDescription["CourseModeOfTraining"])
 
-        entry_9 = Entry(self)
-        entry_9.place(x=250, y=420)
+        options_9 = ["1. Classroom",
+                   "2. Asynchronous eLearning",
+                   "3. In-house",
+                   "4. On-the-Job",
+                   "5. Practical/Practicum",
+                   "6. Supervised Field",
+                   "7. Traineeship",
+                   "8. Assessment",
+                   "9. Synchronous eLearning"]
+
+        clicked = StringVar()
+        clicked.set(options_9[1])
+
+        dropDown = OptionMenu(self, clicked, *options_9)
+        dropDown.place(x=250, y= 415)
+
+        def finalSelection9():
+            entry_9 = (clicked.get())[0]
+            return entry_9
+
+
 
         label_10 = Label(self, text="Course Run Room:", width=20, font=("bold", 10))
         label_10.place(x=80, y=445)
@@ -310,9 +359,8 @@ class addCourseRunPageSelect(tk.Frame):
         entry_4.bind('<KeyRelease>', typing)
         entry_5.bind('<KeyRelease>', typing)
         entry_6.bind('<KeyRelease>', typing)
-        entry_7.bind('<KeyRelease>', typing)
         entry_8.bind('<KeyRelease>', typing)
-        entry_9.bind('<KeyRelease>', typing)
+
 
         def storeAndsave_all():
             # load config File
@@ -329,9 +377,9 @@ class addCourseRunPageSelect(tk.Frame):
             courseRunInfoJson["course"]["runs"][0]["registrationDates"]["closing"] = int(entry_4.get()) if entry_4.get()!="" else 0
             courseRunInfoJson["course"]["runs"][0]["courseDates"]["start"] = int(entry_5.get()) if entry_5.get()!="" else 0
             courseRunInfoJson["course"]["runs"][0]["courseDates"]["end"] = int(entry_6.get()) if entry_6.get()!="" else 0
-            courseRunInfoJson["course"]["runs"][0]["courseVacancy"]["code"] = entry_7.get()
+            courseRunInfoJson["course"]["runs"][0]["courseVacancy"]["code"] = finalSelection7()
             courseRunInfoJson["course"]["runs"][0]["courseVacancy"]["description"] = entry_8.get()
-            courseRunInfoJson["course"]["runs"][0]["modeOfTraining"] = entry_9.get()
+            courseRunInfoJson["course"]["runs"][0]["modeOfTraining"] = finalSelection9()
             courseRunInfoJson["course"]["runs"][0]["venue"]["room"] = entry_10.get()
             courseRunInfoJson["course"]["runs"][0]["venue"]["floor"] = entry_11.get()
             courseRunInfoJson["course"]["runs"][0]["venue"]["unit"] = entry_12.get()
