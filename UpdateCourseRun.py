@@ -492,12 +492,12 @@ class updateCourseRunPagePage3(tk.Frame):
         self.entry_sessionId.place(x=170, y=0)
 
     def updateFrame(self,updateFrame):
-        self.addFrame(updateFrame)        
+        # self.addFrame(updateFrame)        
         self.label_sessionId= Label(updateFrame, text="Session Id*", width=20, font=("bold", 10))
-        self.label_sessionId.place(x=0, y=350)
+        self.label_sessionId.place(x=0, y=0)
         # label_CRN_ttp = CreateToolTip(label_courseVac, tooltipDescription["CourseReferenceNumber"])
-        self.entry_sessionId = Entry(updateFrame)
-        self.entry_sessionId.place(x=170, y=350)
+        self.entry_sessionIdUpdate = Entry(updateFrame)
+        self.entry_sessionIdUpdate.place(x=170, y=0)
 
 
     def addFrame(self,AddFrame):
@@ -630,9 +630,9 @@ class updateCourseRunPagePage3(tk.Frame):
                 deleteFrame.place_forget()
                 addFrame.place_forget()
             else:
-                updateFrame.place(width = 300, height = 400, x = 80, y = 200)
                 deleteFrame.place_forget()
-                addFrame.place_forget()
+                addFrame.place(width = 300, height = 350, x = 80, y = 200)
+                updateFrame.place(width = 300, height = 20, x = 80, y = 550)
 
         addFrame = tk.Frame()
         deleteFrame = tk.Frame()
@@ -662,14 +662,22 @@ class updateCourseRunPagePage3(tk.Frame):
         def addCallback():
             payloadToEdit = updateCourseRunPagePreview.payload
             payloadToEdit= json.loads(payloadToEdit)
+            
             priVenue = self.tkvar_PriVenue.get() if self.tkvar_PriVenue.get() != 'Select an Option' else ''
             wheelChair = self.tkvar_Wheelchair.get() if self.tkvar_PriVenue.get() != 'Select an Option' else ''
+
+            if self.tkvar.get() == 'Update':
+                sessionId = self.entry_sessionIdUpdate.get() 
+            elif self.tkvar.get() == 'Delete':
+                sessionId = self.entry_sessionId.get() 
+            else:
+                sessionId = ""
 
             sessionObjectTemplate = {
                 "action":self.tkvar.get(),
                 "endDate":self.entry_SessionEndDate.get(),
                 "endTime":self.entry_SessionEndTime.get(),
-                "sessionId":self.entry_sessionId.get(),
+                "sessionId":sessionId,
                 "startDate":self.entry_SessionStartDate.get(),
                 "startTime":self.entry_SessionStartTime.get(),
                 "modeOfTraining":self.entry_ModeOfTraining.get(),
@@ -686,10 +694,10 @@ class updateCourseRunPagePage3(tk.Frame):
                 }
             }
 
-            print(payloadToEdit['course']['run']['sessions'])
+            # print(payloadToEdit['course']['run']['sessions'])
             payloadToEdit['course']['run']['sessions'].append(sessionObjectTemplate)
             updateCourseRunPagePreview.payload = json.dumps(payloadToEdit, indent = 4)
-            print(updateCourseRunPagePreview.payload)
+            # print(updateCourseRunPagePreview.payload)
             tkinter.messagebox.showinfo(title="Success", message="Session successfully added")
             previewButton.place(relx=0.7, rely=0.95, anchor=CENTER)
             
