@@ -1,25 +1,25 @@
 {
     "course": {
-        "courseReferenceNumber": "TGS-2020001831",
+        "courseReferenceNumber": "",
         "trainingProvider": {
-            "uen": "199900650G"
+            "uen": ""
         },
         "runs": [
             {
                 "sequenceNumber": "",
                 "registrationDates": {
-                    "opening": 20210620,
-                    "closing": 20210620
+                    "opening": "",
+                    "closing": ""
                 },
                 "courseDates": {
-                    "start": 20210621,
-                    "end": 20210621
+                    "start": "",
+                    "end": ""
                 },
-                "modeOfTraining": "2",
-                "courseAdminEmail": "testing@gmail.com",
+                "modeOfTraining": "",
+                "courseAdminEmail": "",
                 "courseVacancy": {
-                    "code": "L",
-                    "description": "TEST Limited"
+                    "code": "",
+                    "description": ""
                 },
                 "venue": {
                     "room": "",

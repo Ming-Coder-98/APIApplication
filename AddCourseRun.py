@@ -21,6 +21,12 @@ import pandas as pd
 
 from tooltip import CreateToolTip
 
+
+#Load Tooltip Json object as ttDescription
+with open("TooltipDescription.json") as f:
+    tooltipDescription = json.load(f)
+
+
 class addCourseRunPageOptional(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
@@ -39,97 +45,113 @@ class addCourseRunPageOptional(tk.Frame):
         label_1 = Label(self, text="Sessions", width=20, font=("bold", 15))
         label_1.place(x=137, y=100)
 
-        label_2 = Label(self, text="Course Session Start Date:", width=20, font=("bold", 10))
-        label_2.place(x=80, y=135)
+        label_14 = Label(self, text="Course Session Start Date:", width=20, font=("bold", 10))
+        label_14.place(x=80, y=135)
 
-        label_2_ttp = CreateToolTip(label_2,
-        'Start Date (YYYYMMDD) can be used as a parameter in the POST Request payload \n'
-        'Example: 20210616')
+        label_14_ttp = CreateToolTip(label_14,tooltipDescription["SessionStartDate"])
 
-        entry_2 = Entry(self)
-        entry_2.place(x=250, y=135)
+        entry_14 = Entry(self)
+        entry_14.place(x=250, y=135)
 
-        label_3 = Label(self, text="Course Session Start Time:", width=20, font=("bold", 10))
-        label_3.place(x=80, y=160)
+        label_15 = Label(self, text="Course Session Start Time:", width=20, font=("bold", 10))
+        label_15.place(x=80, y=160)
 
-        label_3_ttp = CreateToolTip(label_3,'Start time (HH:MM) can be used as a parameter in the POST Request payload \n'
-                                    'Example: 17:30')
+        label_15_ttp = CreateToolTip(label_15,tooltipDescription["SessionStartTime"])
 
-        entry_3 = Entry(self)
-        entry_3.place(x=250, y=160)
+        entry_15 = Entry(self)
+        entry_15.place(x=250, y=160)
 
-        label_4 = Label(self, text="Course Session End Date:", width=20, font=("bold", 10))
-        label_4.place(x=80, y=185)
+        label_16 = Label(self, text="Course Session End Date:", width=20, font=("bold", 10))
+        label_16.place(x=80, y=185)
 
-        label_4_ttp = CreateToolTip(label_4,'End Date (YYYYMMDD) can be used as a parameter in the POST Request payload \n'
-                                    'Example: 20210621')
+        label_16_ttp = CreateToolTip(label_16,tooltipDescription["SessionEndDate"])
 
-        entry_4 = Entry(self)
-        entry_4.place(x=250, y=185)
+        entry_16 = Entry(self)
+        entry_16.place(x=250, y=185)
 
-        label_5 = Label(self, text="Course Session End Time:", width=20, font=("bold", 10))
-        label_5.place(x=80, y=210)
+        label_17 = Label(self, text="Course Session End Time:", width=20, font=("bold", 10))
+        label_17.place(x=80, y=210)
 
-        label_5_ttp = CreateToolTip(label_5, \
-                                    'End time (HH:MM) can be used as a parameter in the POST Request payload \n'
-                                    'Example: 18:30')
+        label_17_ttp = CreateToolTip(label_17, tooltipDescription["SessionEndTime"])
 
-        entry_5 = Entry(self)
-        entry_5.place(x=250, y=210)
+        entry_17 = Entry(self)
+        entry_17.place(x=250, y=210)
 
-        label_6 = Label(self, text="Mode of Training:", width=20, font=("bold", 10))
-        label_6.place(x=80, y=235)
+        label_18 = Label(self, text="Mode of Training:", width=20, font=("bold", 10))
+        label_18.place(x=80, y=235)
 
-        label_6_ttp = CreateToolTip(label_6,
-                                    'Mode of Training is used as a parameter in the POST Request payload \n'
-                                    'Example: 9')
+        label_18_ttp = CreateToolTip(label_18,tooltipDescription["SessionModeOfTraining"])
 
-        entry_6 = Entry(self)
-        entry_6.place(x=250, y=235)
+        entry_18 = Entry(self)
+        entry_18.place(x=250, y=235)
 
-        label_7 = Label(self, text="Trainers", width=20, font=("bold", 15))
-        label_7.place(x=137, y=270)
+        label_19 = Label(self, text="Trainers", width=20, font=("bold", 15))
+        label_19.place(x=137, y=270)
 
-        label_8 = Label(self, text="Trainer name:", width=20, font=("bold", 10))
-        label_8.place(x=80, y=305)
+        label_20 = Label(self, text="Trainer name:", width=20, font=("bold", 10))
+        label_20.place(x=80, y=305)
 
-        label_8_ttp = CreateToolTip(label_8, \
-                                    'Name of the trainer can be used as a parameter in the POST Request payload \n'
-                                    'Example: John')
+        label_20_ttp = CreateToolTip(label_20, tooltipDescription["TrainerName"])
 
-        entry_8 = Entry(self)
-        entry_8.place(x=250, y=305)
+        entry_20 = Entry(self)
+        entry_20.place(x=250, y=305)
 
-        label_9 = Label(self, text="Trainer Email:", width=20, font=("bold", 10))
-        label_9.place(x=80, y=330)
+        label_21 = Label(self, text="Trainer Email:", width=20, font=("bold", 10))
+        label_21.place(x=80, y=330)
 
-        label_9_ttp = CreateToolTip(label_9, \
-                                    'Email of trainner canbe used as a parameter in the POST Request payload \n'
-                                  'Example: tester@gmail.com')
+        label_21_ttp = CreateToolTip(label_21,tooltipDescription["TrainerEmail"])
 
-        entry_9 = Entry(self)
-        entry_9.place(x=250, y=330)
+        entry_21 = Entry(self)
+        entry_21.place(x=250, y=330)
 
-        label_10 = Label(self, text="Trainer Code:", width=20, font=("bold", 10))
-        label_10.place(x=80, y=355)
+        label_22 = Label(self, text="Trainer Code:", width=20, font=("bold", 10))
+        label_22.place(x=80, y=355)
 
-        label_10_ttp = CreateToolTip(label_10, \
-                                     'Code of Trainer can be used as a parameter in the POST Request payload \n'
-                                     '1 - Existing, 2 - New \n'
-                                     'Example: 1')
+        label_22_ttp = CreateToolTip(label_22, tooltipDescription["TrainerCode"])
 
-        entry_10 = Entry(self)
-        entry_10.place(x=250, y=355)
+        entry_22 = Entry(self)
+        entry_22.place(x=250, y=355)
 
-        label_11 = Label(self, text="Trainer description:", width=20, font=("bold", 10))
-        label_11.place(x=80, y=380)
+        label_23 = Label(self, text="Trainer description:", width=20, font=("bold", 10))
+        label_23.place(x=80, y=380)
 
-        label_11_ttp = CreateToolTip(label_11, \
-                                     'Simple description of trainer can be used as a parameter in the POST Request payload \n'
-                                     'Example: New Trainer')
+        label_23_ttp = CreateToolTip(label_23, tooltipDescription["TrainerDescription"])
 
-        entry_11 = Entry(self)
-        entry_11.place(x=250, y=380)
+        entry_23 = Entry(self)
+        entry_23.place(x=250, y=380)
+
+        def typing(event):
+            storeAndsave_all()
+
+        entry_14.bind('<KeyRelease>', typing)
+        entry_15.bind('<KeyRelease>', typing)
+        entry_16.bind('<KeyRelease>', typing)
+        entry_17.bind('<KeyRelease>', typing)
+        entry_18.bind('<KeyRelease>', typing)
+        entry_20.bind('<KeyRelease>', typing)
+        entry_21.bind('<KeyRelease>', typing)
+        entry_22.bind('<KeyRelease>', typing)
+        entry_23.bind('<KeyRelease>', typing)
+
+        def storeAndsave_all():
+            # load config File
+            courseRunInfo = loadFile("EmptyCourseRunPayLoad.json")
+            courseRunInfoJson = json.loads(courseRunInfo)
+
+            courseRunInfoJson["course"]["sessions"][0]["startDate"] = entry_14.get()
+            courseRunInfoJson["course"]["sessions"][0]["startTime"] = entry_15.get()
+            courseRunInfoJson["course"]["sessions"][0]["endDate"] = entry_16.get()
+            courseRunInfoJson["course"]["sessions"][0]["endTime"] = entry_17.get()
+            courseRunInfoJson["course"]["sessions"][0]["modeOfTraining"] = entry_18.get()
+            courseRunInfoJson["course"]["linkCourseRunTrainer"][0]["trainer"]["name"] = entry_20.get()
+            courseRunInfoJson["course"]["linkCourseRunTrainer"][0]["trainer"]["email"] = entry_21.get()
+            courseRunInfoJson["course"]["linkCourseRunTrainer"][0]["trainer"]["trainerType"]["code"] = entry_22.get()
+            courseRunInfoJson["course"]["linkCourseRunTrainer"][0]["trainer"]["trainerType"]["description"]= entry_23.get()
+
+            saveJsonFormat(courseRunInfoJson,"CompletedCourseRunPayload.json")
+
+
+
 
         backButton = tk.Button(self, text="Back", bg="white", width=10, pady=5,
                                command=lambda: controller.show_frame(addCourseRunPageSelect)
@@ -149,7 +171,6 @@ class addCourseRunPageOptional(tk.Frame):
 
 class addCourseRunPageSelect(tk.Frame):
     def __init__(self, parent, controller):
-        print("addCourseRun Init")
         tk.Frame.__init__(self, parent)
 
         load = Image.open("SKFBGPage.JPG")
@@ -174,9 +195,7 @@ class addCourseRunPageSelect(tk.Frame):
         label_1 = Label(self, text="Course Reference Number:", width=20, font=("bold", 10))
         label_1.place(x=80, y=220)
 
-        label_1_ttp = CreateToolTip(label_1, \
-        'Internal Course Reference Number is used as a parameter in the POST Request payload \n'
-        'Example of Course References Number: TGS-12345678')
+        label_1_ttp = CreateToolTip(label_1, tooltipDescription["CourseReferenceNumber"])
 
         entry_1 = Entry(self)
         entry_1.place(x=250, y=220)
@@ -184,9 +203,7 @@ class addCourseRunPageSelect(tk.Frame):
         label_2 = Label(self, text="Course Admin Email:", width=20, font=("bold", 10))
         label_2.place(x=80, y=245)
 
-        label_2_ttp = CreateToolTip(label_2, \
-        'Admin Email is used as a parameter in the POST Request payload \n'
-        'Example of Admin Email: test@gmail.com')
+        label_2_ttp = CreateToolTip(label_2, tooltipDescription["CourseAdminEmail"])
 
         entry_2 = Entry(self)
         entry_2.place(x=250, y=245)
@@ -194,9 +211,7 @@ class addCourseRunPageSelect(tk.Frame):
         label_3 = Label(self, text="Opening Registration Date:", width=20, font=("bold", 10))
         label_3.place(x=80, y=270)
 
-        label_3_ttp = CreateToolTip(label_3, \
-        'Opening Registration Date (YYYYMMDD) is used as a parameter in the POST Request payload \n'
-        'Example: 20210617')
+        label_3_ttp = CreateToolTip(label_3, tooltipDescription["CourseRegistrationDateOpen"])
 
         entry_3 = Entry(self)
         entry_3.place(x=250, y=270)
@@ -204,9 +219,7 @@ class addCourseRunPageSelect(tk.Frame):
         label_4 = Label(self, text="Closing Registration Date:", width=20, font=("bold", 10))
         label_4.place(x=80, y=295)
 
-        label_4_ttp = CreateToolTip(label_4, \
-        'Closing Registration Date (YYYYMMDD) is used as a parameter in the POST Request payload \n'
-        'Example: 20210621')
+        label_4_ttp = CreateToolTip(label_4, tooltipDescription["CourseRegistrationDateClose"])
 
         entry_4 = Entry(self)
         entry_4.place(x=250, y=295)
@@ -214,10 +227,7 @@ class addCourseRunPageSelect(tk.Frame):
         label_5 = Label(self, text="Course Start Date:", width=20, font=("bold", 10))
         label_5.place(x=80, y=320)
 
-        label_5_ttp = CreateToolTip(label_5, \
-        'Course Start Date(YYYYMMDD) is used as a parameter in the POST Request payload \n'
-        'Course Start Date should be later than Opening/Closing Registration Date \n'
-        'Example: 20210628')
+        label_5_ttp = CreateToolTip(label_5, tooltipDescription["CourseStartDate"])
 
         entry_5 = Entry(self)
         entry_5.place(x=250, y=320)
@@ -225,10 +235,7 @@ class addCourseRunPageSelect(tk.Frame):
         label_6 = Label(self, text="Course End Date:", width=20, font=("bold", 10))
         label_6.place(x=80, y=345)
 
-        label_6_ttp = CreateToolTip(label_6, \
-        'Course End Date(YYYYMMDD) is used as a parameter in the POST Request payload \n'
-        'Course End Date should be later than Opening/Closing Registration and Course Start Date \n'
-        'Example: 20210628')
+        label_6_ttp = CreateToolTip(label_6, tooltipDescription["CourseEndDate"])
 
         entry_6 = Entry(self)
         entry_6.place(x=250, y=345)
@@ -236,9 +243,7 @@ class addCourseRunPageSelect(tk.Frame):
         label_7 = Label(self, text="Course Code:", width=20, font=("bold", 10))
         label_7.place(x=80, y=370)
 
-        label_7_ttp = CreateToolTip(label_7, \
-        'Course Code is used as a parameter in the POST Request payload \n'
-        'Example: 01')
+        label_7_ttp = CreateToolTip(label_7, tooltipDescription["CourseCode"])
 
         entry_7 = Entry(self)
         entry_7.place(x=250, y=370)
@@ -246,9 +251,7 @@ class addCourseRunPageSelect(tk.Frame):
         label_8 = Label(self, text="Course Description:", width=20, font=("bold", 10))
         label_8.place(x=80, y=395)
 
-        label_8_ttp = CreateToolTip(label_8, \
-        'Course Description is used as a parameter in the POST Request payload \n'
-        'Example: Course is about...')
+        label_8_ttp = CreateToolTip(label_8, tooltipDescription["CourseDescription"])
 
         entry_8 = Entry(self)
         entry_8.place(x=250, y=395)
@@ -256,9 +259,7 @@ class addCourseRunPageSelect(tk.Frame):
         label_9 = Label(self, text="Mode of Training:", width=20, font=("bold", 10))
         label_9.place(x=80, y=420)
 
-        label_9_ttp = CreateToolTip(label_9, \
-        'Mode of Training is used as a parameter in the POST Request payload \n'
-        'Example: 9')
+        label_9_ttp = CreateToolTip(label_9, tooltipDescription["CourseModeOfTraining"])
 
         entry_9 = Entry(self)
         entry_9.place(x=250, y=420)
@@ -266,9 +267,7 @@ class addCourseRunPageSelect(tk.Frame):
         label_10 = Label(self, text="Course Run Room:", width=20, font=("bold", 10))
         label_10.place(x=80, y=445)
 
-        label_10_ttp = CreateToolTip(label_10, \
-        'Course Run Room Number  is used as a parameter in the POST Request payload \n'
-        'Example: 9')
+        label_10_ttp = CreateToolTip(label_10, tooltipDescription["CourseRunRoom"])
 
         entry_10 = Entry(self)
         entry_10.place(x=250, y=445)
@@ -276,9 +275,7 @@ class addCourseRunPageSelect(tk.Frame):
         label_11 = Label(self, text="Course Run Room Floor:", width=20, font=("bold", 10))
         label_11.place(x=80, y=470)
 
-        label_11_ttp = CreateToolTip(label_11, \
-        'The level of the Course Run room is used as a parameter in the POST Request payload \n'
-        'Example: 9')
+        label_11_ttp = CreateToolTip(label_11, tooltipDescription["CourseRunFloor"])
 
         entry_11 = Entry(self)
         entry_11.place(x=250, y=470)
@@ -286,9 +283,7 @@ class addCourseRunPageSelect(tk.Frame):
         label_12 = Label(self, text="Course run Room Unit:", width=20, font=("bold", 10))
         label_12.place(x=80, y=495)
 
-        label_12_ttp = CreateToolTip(label_12, \
-        'The unit of the Course Run room is used as a parameter in the POST Request payload \n'
-        'Example: 12')
+        label_12_ttp = CreateToolTip(label_12,tooltipDescription["CourseRunUnit"])
 
         entry_12 = Entry(self)
         entry_12.place(x=250, y=495)
@@ -296,9 +291,7 @@ class addCourseRunPageSelect(tk.Frame):
         label_13 = Label(self, text="Course run Postal Code:", width=20, font=("bold", 10))
         label_13.place(x=80, y=495)
 
-        label_13_ttp = CreateToolTip(label_13, \
-        'The postal code of the Course Run Venue is used as a parameter in the POST Request payload \n'
-        'Example: 12345')
+        label_13_ttp = CreateToolTip(label_13,tooltipDescription["CourseRunPostalCode"])
 
         entry_13 = Entry(self)
         entry_13.place(x=250, y=495)
@@ -323,24 +316,28 @@ class addCourseRunPageSelect(tk.Frame):
 
         def storeAndsave_all():
             # load config File
-            configInfo = loadFile("EmptyCourseRunPayLoad.json")
-            configInfoJson = json.loads(configInfo)
+            courseRunInfo = loadFile("EmptyCourseRunPayLoad.json")
+            courseRunInfoJson = json.loads(courseRunInfo)
+            uen_Info = loadFile("config.json")
+            config_uenJson = json.loads(uen_Info)
+            uen_number = config_uenJson["UEN"]
+            courseRunInfoJson["course"]["trainingProvider"]["uen"] = uen_number
 
-            configInfoJson["course"]["courseReferenceNumber"] = entry_1.get()
-            configInfoJson["course"]["runs"][0]["courseAdminEmail"] = entry_2.get()
-            configInfoJson["course"]["runs"][0]["registrationDates"]["opening"] = int(entry_3.get()) if entry_3.get()!="" else 0
-            configInfoJson["course"]["runs"][0]["registrationDates"]["closing"] = int(entry_4.get()) if entry_4.get()!="" else 0
-            configInfoJson["course"]["runs"][0]["courseDates"]["start"] = int(entry_5.get()) if entry_5.get()!="" else 0
-            configInfoJson["course"]["runs"][0]["courseDates"]["end"] = int(entry_6.get()) if entry_6.get()!="" else 0
-            configInfoJson["course"]["runs"][0]["courseVacancy"]["code"] = entry_7.get()
-            configInfoJson["course"]["runs"][0]["courseVacancy"]["description"] = entry_8.get()
-            configInfoJson["course"]["runs"][0]["modeOfTraining"] = entry_9.get()
-            configInfoJson["course"]["runs"][0]["venue"]["room"] = entry_10.get()
-            configInfoJson["course"]["runs"][0]["venue"]["floor"] = entry_11.get()
-            configInfoJson["course"]["runs"][0]["venue"]["unit"] = entry_12.get()
-            configInfoJson["course"]["runs"][0]["venue"]["postalCode"] = entry_13.get()
+            courseRunInfoJson["course"]["courseReferenceNumber"] = entry_1.get()
+            courseRunInfoJson["course"]["runs"][0]["courseAdminEmail"] = entry_2.get()
+            courseRunInfoJson["course"]["runs"][0]["registrationDates"]["opening"] = int(entry_3.get()) if entry_3.get()!="" else 0
+            courseRunInfoJson["course"]["runs"][0]["registrationDates"]["closing"] = int(entry_4.get()) if entry_4.get()!="" else 0
+            courseRunInfoJson["course"]["runs"][0]["courseDates"]["start"] = int(entry_5.get()) if entry_5.get()!="" else 0
+            courseRunInfoJson["course"]["runs"][0]["courseDates"]["end"] = int(entry_6.get()) if entry_6.get()!="" else 0
+            courseRunInfoJson["course"]["runs"][0]["courseVacancy"]["code"] = entry_7.get()
+            courseRunInfoJson["course"]["runs"][0]["courseVacancy"]["description"] = entry_8.get()
+            courseRunInfoJson["course"]["runs"][0]["modeOfTraining"] = entry_9.get()
+            courseRunInfoJson["course"]["runs"][0]["venue"]["room"] = entry_10.get()
+            courseRunInfoJson["course"]["runs"][0]["venue"]["floor"] = entry_11.get()
+            courseRunInfoJson["course"]["runs"][0]["venue"]["unit"] = entry_12.get()
+            courseRunInfoJson["course"]["runs"][0]["venue"]["postalCode"] = entry_13.get()
 
-            saveJsonFormat(configInfoJson,"CompletedCourseRunPayload.json")
+            saveJsonFormat(courseRunInfoJson,"CompletedCourseRunPayload.json")
 
 
 
@@ -350,9 +347,9 @@ class addCourseRunPageSelect(tk.Frame):
 
 class addCourseRunPageForm(tk.Frame):
     def refresh(text):
-        configInfo = loadFile("CompletedCourseRunPayLoad.json")
+        courseRunInfo = loadFile("CompletedCourseRunPayLoad.json")
         text.delete("1.0","end")
-        text.insert(tk.END, configInfo)
+        text.insert(tk.END, courseRunInfo)
 
     def __init__(self, parent, controller):
 
@@ -385,9 +382,9 @@ class addCourseRunPageForm(tk.Frame):
         tabControl.add(tab3, text='Reponse')
         tabControl.place(width=440, height=460, x=30, y=222)
 
-        configInfo = loadFile("CompletedCourseRunPayLoad.json")
+        courseRunInfo = loadFile("EmptyCourseRunPayLoad.json")
         self.curlText = scrolledtext.ScrolledText(tab2, width=70, height=30)
-        self.curlText.insert(tk.END, str(curlPostRequest("", str(configInfo))))
+        self.curlText.insert(tk.END, str(curlPostRequest("", str(courseRunInfo))))
         self.curlText.place(height=405, width=440, y=20)
         self.curlText.bind("<Key>", lambda e: "break")
 
@@ -397,8 +394,8 @@ class addCourseRunPageForm(tk.Frame):
 
         def submitCallBack():
             responseText.delete("1.0","end") 
-            configInfo = loadFile("CompletedCourseRunPayLoad.json")
-            resp = createCourserun(configInfo)
+            courseRunInfo = loadFile("CompletedCourseRunPayLoad.json")
+            resp = createCourserun(courseRunInfo)
             print(resp.status_code)
             textPayload = StringVar(self, value = resp.text) 
             responseText.insert(INSERT, textPayload.get())

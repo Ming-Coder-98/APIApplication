@@ -8,12 +8,12 @@
             {
                 "sequenceNumber": "",
                 "registrationDates": {
-                    "opening": 0,
-                    "closing": 0
+                    "opening": 123,
+                    "closing": 123
                 },
                 "courseDates": {
-                    "start": 123,
-                    "end": 213
+                    "start": 0,
+                    "end": 0
                 },
                 "modeOfTraining": "",
                 "courseAdminEmail": "",
@@ -45,7 +45,7 @@
                         "code": "",
                         "description": ""
                     },
-                    "name": "",
+                    "name": "asdasd",
                     "email": ""
                 }
             }

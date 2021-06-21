@@ -1,6 +1,6 @@
 #Import course Run py Functions
 from CourseSession import getCourseSessionPage
-from UpdateCourseRun import updateCourseRunPageForm, updateCourseRunPageFormFileUpload, updateCourseRunPageSelect
+from UpdateCourseRun import updateCourseRunPageFormFileUpload, updateCourseRunPagePage2, updateCourseRunPagePage3, updateCourseRunPagePreview, updateCourseRunPageSelect
 from tooltip import CreateToolTip
 from configWindow import setConfigWindow, showConfigWindow
 from AssessmentFunction import addAssessment
@@ -77,6 +77,12 @@ assessmentRefNo = assessmentData["assessment"]["course"]["referenceNumber"]
 assessmentTpUen = assessmentData["assessment"]["trainingPartner"]["uen"]
 
 
+
+#Load Tooltip Json object as ttDescription
+with open("TooltipDescription.json") as f:
+    ttDescription = json.load(f)
+
+
 # Quit Program
 def quit_program():
     quit()
@@ -96,7 +102,7 @@ class APIProject(tk.Tk):
         
 
         self.frames = {}
-        for F in (getCourseSessionPage,updateCourseRunPageForm,updateCourseRunPageFormFileUpload,updateCourseRunPageSelect, addCourseRunPageFormFileUpload,addCourseRunPageForm,addCourseRunPageOptional, addCourseRunPageSelect, viewCourseRunPage, deleteCourseRunPage, StartPage):
+        for F in (getCourseSessionPage, updateCourseRunPagePreview,updateCourseRunPagePage2,updateCourseRunPagePage3,updateCourseRunPageFormFileUpload, updateCourseRunPageSelect, addCourseRunPageFormFileUpload,addCourseRunPageForm,addCourseRunPageOptional, addCourseRunPageSelect, viewCourseRunPage, deleteCourseRunPage, StartPage):
             frame = F(container, self)
 
             self.frames[F] = frame
@@ -175,9 +181,7 @@ class viewCourseRunPage(tk.Frame):
 
         label_1 = Label(self, text="Course Run ID", width=20, font=("bold", 10))
         label_1.place(x=80, y=130)
-        label_1_ttp = CreateToolTip(label_1, \
-        'The Course Run Id is used as a URL for GET Request Call\n'
-        'Example: https://api.ssg-wsg.sg/courses/runs/{runId}')
+        label_1_ttp = CreateToolTip(label_1, ttDescription["CourseRunId"])
         entry_1 = Entry(self)
         entry_1.place(x=240, y=130)
         #This method is used to update the display information dynamically in "Payload" Tab whenever user key in a value
@@ -237,7 +241,7 @@ class viewCourseRunPage(tk.Frame):
         exportButton.place(relx=0.5, rely=0.95, anchor=CENTER)
 
         
-        # This method activates two other methods.
+        # This call back method activates two other methods.
         # 1) this method calls the get method in courseRunFunction and return the response
         # 2) Based on the response, if a status 200 is received, it will display the response    
         def submitCallBack():
@@ -247,6 +251,7 @@ class viewCourseRunPage(tk.Frame):
             print(resp.status_code)
             textPayload = StringVar(self, value = resp.text) 
             responseText.insert(INSERT, textPayload.get())
+
         def downloadFile():
             files = [('JSON', '*.json'), 
                      ('Text Document', '*.txt')]
@@ -321,9 +326,7 @@ class deleteCourseRunPage(tk.Frame):
 
         entry_1 = Entry(self)
         entry_1.place(x=240, y=100)
-        label_1_ttp = CreateToolTip(label_1, \
-        'The Course Run Id is used to create URL for POST Request Call\n'
-        'Example: https://api.ssg-wsg.sg/courses/runs/{runId}')
+        label_1_ttp = CreateToolTip(label_1, ttDescription["CourseRunId"])
 
         #Course Ref Number
         label_CRN = Label(self, text="Course Reference Number", width=20, font=("bold", 10), anchor='w')
@@ -332,9 +335,7 @@ class deleteCourseRunPage(tk.Frame):
         entry_CRN = Entry(self)
         entry_CRN.place(x=240, y=130)
 
-        label_CRN_ttp = CreateToolTip(label_CRN, \
-        'Internal Course Reference Number is used as a parameter in the POST Request payload \n'
-        'Example of Course References Number: TGS-12345678')
+        label_CRN_ttp = CreateToolTip(label_CRN, ttDescription["CourseReferenceNumber"])
 
         #This method is used to update the display information dynamically in "Payload" Tab whenever user key in a value
         def typing():

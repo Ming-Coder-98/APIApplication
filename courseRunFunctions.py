@@ -2,7 +2,7 @@ from EncryptAndDecryptFunction import pprintJsonFormat
 import requests
 import json
 from HttpRequestFunction import *
-
+import re
 
 baseurl = "https://uat-api.ssg-wsg.sg/courses/runs"
 payload = loadFile("CourseRunPayLoad.json")
@@ -44,29 +44,14 @@ def getCourseRun(runId):
       resp = getHttpRequest("https://uat-api.ssg-wsg.sg/courses/runs/" + str(runId))
       return resp
 
-#Outdated add Method
-# def addCourserun():
-#       #Update the latest value
-#       updateCourseRunPayload()
-
-#       #payload variable is obtained from CourseRunFunction.py
-#       response = postHttpRequest("https://uat-api.ssg-wsg.sg/courses/runs" , payload)
-#       saveCourseRunDetails(response)
-
-
 #Create Method for AddCourserunPage
 def createCourserun(payload):
       response = postHttpRequest("https://uat-api.ssg-wsg.sg/courses/runs" , payload)
       return response
 
 def updateCourserun(runId, payload):
-      # # print(payload)
-      # print(json.dumps(payload))
-      # # load = json.loads(payload)
-      # # print(load)
+      print("update")
       response = postHttpRequest("https://uat-api.ssg-wsg.sg/courses/runs/" + str(runId), payload)
-      # if response.status_code < 400:
-      #       saveCourseRunDetails(response)
       return response
 
 
@@ -106,20 +91,20 @@ def getDeleteCourseRunPayLoad(CRN):
       return deleteCourseRunPayLoad
       
 #This method is to update the curl text dynamically for displaying purpose in deleteCourseRunPage 
-def curlPostRequest(text1, payload):
-      #text = "curl -X GET \"https://uat-api.ssg-wsg.sg/courses/runs/" + text1 +"\" -H \"accept: application/json\" -H \"x-api-version: v1.3\" -d \"" + str(json.loads(updateEmptyDeleteCourseRunPayLoad(text2)))+"\""
-      req = requests.Request('POST',"https://uat-api.ssg-wsg.sg/courses/runs/" + text1,headers={'accept':'application/json'},data=str(payload)).prepare()
+def curlPostRequest(text1, payloadToDisplay):
+      #Remove Whitespacing new line and tabs for accurate content length
+      payloadToSend = re.sub(r"[\n\t\s]*", "", payloadToDisplay)
+      req = requests.Request('POST',"https://uat-api.ssg-wsg.sg/courses/runs/" + text1,headers={'accept':'application/json'},data=str(payloadToSend)).prepare()
       text =  '{}\n{}\r\n{}\r\n\r\n{}\n{}'.format(
             '----------------Request Information----------------',
             req.method + ' ' + req.url,
             '\r\n'.join('{}: {}'.format(k, v) for k, v in req.headers.items()),
             '----------------Payload Information----------------',
-            req.body,
+            payloadToDisplay,
       )
       return text
 #This method is to update the curl text dynamically for displaying purpose in viewCourseRunPage 
 def curlGetRequestViewCourseRun(text1):
-      #text = "curl -X GET \"https://uat-api.ssg-wsg.sg/courses/runs/" + text1 +"\" -H \"accept: application/json\" -H \"x-api-version: v1.3\""
       req = requests.Request('GET',"https://uat-api.ssg-wsg.sg/courses/runs/" + text1,headers={'accept':'application/json'}).prepare()
       text =  '{}\n{}\r\n{}\r\n\r\n'.format(
             '----------------Request Information----------------',
@@ -144,6 +129,7 @@ def curlGetCourseSession(runId, CRN, sessionMonth):
             '\r\n'.join('{}: {}'.format(k, v) for k, v in req.headers.items()),
       )
       return text
+      
 def getCourseSession(runId, CRN, sessionMonth):
       #Set UEN to payload
       config = loadFile("config.json")
