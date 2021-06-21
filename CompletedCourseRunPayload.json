@@ -1,6 +1,6 @@
 {
     "course": {
-        "courseReferenceNumber": "TGS-2020001831",
+        "courseReferenceNumber": "",
         "trainingProvider": {
             "uen": "199900650G"
         },
@@ -8,18 +8,18 @@
             {
                 "sequenceNumber": "",
                 "registrationDates": {
-                    "opening": 20210622,
-                    "closing": 20210622
+                    "opening": 0,
+                    "closing": 0
                 },
                 "courseDates": {
-                    "start": 20210622,
-                    "end": 20210622
+                    "start": 123,
+                    "end": 213
                 },
-                "modeOfTraining": "2",
-                "courseAdminEmail": "test@gmail.com",
+                "modeOfTraining": "",
+                "courseAdminEmail": "",
                 "courseVacancy": {
-                    "code": "L",
-                    "description": "Limited"
+                    "code": "",
+                    "description": ""
                 },
                 "venue": {
                     "room": "",
