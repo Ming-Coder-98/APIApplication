@@ -1,0 +1,29 @@
+{
+    "CourseAdminEmail":"Admin Email is used as a parameter in the POST Request payload \nExample of Admin Email: test@gmail.com",
+    "CourseCode":"Course Code is used as a parameter in the POST Request payload \nExample: 01",
+    "CourseDescription":"Course Description is used as a parameter in the POST Request payload \nExample: Course is about...",
+    "CourseReferenceNumber": "Internal Course Reference Number is used as a parameter in the POST Request payload\nExample of Course References Number: TGS-12345678",
+    "CourseRegistrationDateClose":"Closing Registration Date (YYYYMMDD) is used as a parameter in the POST Request payload \nExample: 20210621",
+    "CourseRegistrationDateOpen":"Opening Registration Date (YYYYMMDD) is used as a parameter in the POST Request payload \nExample: 20210617",
+    "CourseRunId": "'The Course Run Id is used as a URL for GET Request Call\nExample: https://api.ssg-wsg.sg/courses/runs/{runId}'",
+    "CourseStartDate":"Course Start Date(YYYYMMDD) is used as a parameter in the POST Request payload \nCourse Start Date should be later than Opening/Closing Registration Date \nExample: 20210628",
+    "CourseEndDate":"Course End Date(YYYYMMDD) is used as a parameter in the POST Request payload \nCourse End Date should be later than Opening/Closing Registration and Course Start Date \nExample: 20210628",
+    "CourseModeOfTraining":"Mode of Training is used as a parameter in the POST Request payload \nExample: 9",
+    "CourseRunRoom":"Course Run Room Number  is used as a parameter in the POST Request payload \nExample: 9",
+    "CourseRunFloor":"The level of the Course Run room is used as a parameter in the POST Request payload \nExample: 9",
+    "CourseRunUnit":"The unit of the Course Run room is used as a parameter in the POST Request payload \nExample: 12",
+    "CourseRunPostalCode":"The postal code of the Course Run Venue is used as a parameter in the POST Request payload \nExample: 12345",
+
+    "SessionModeOfTraining":"Mode of Training is used as a parameter in the POST Request payload \nExample: 9",
+    "SessionEndDate":"End Date (YYYYMMDD) can be used as a parameter in the POST Request payload \nExample: 20210621",
+    "SessionEndTime":"End time (HH:MM) can be used as a parameter in the POST Request payload \nExample: 18:30",
+    "SessionStartDate":"Start Date (YYYYMMDD) can be used as a parameter in the POST Request payload \nExample: 20210616",
+    "SessionStartTime":"Start time (HH:MM) can be used as a parameter in the POST Request payload \nExample: 17:30",
+    
+    "TrainerCode":"Code of Trainer can be used as a parameter in the POST Request payload \n1 - Existing, 2 - New \nExample: 1",
+    "TrainerDescription":"Simple description of trainer can be used as a parameter in the POST Request payload \nExample: New Trainer",
+    "TrainerEmail":"Email of trainner canbe used as a parameter in the POST Request payload \nExample: tester@gmail.com",
+    "TrainerName":"Name of the trainer can be used as a parameter in the POST Request payload \nExample: John"
+
+
+}
