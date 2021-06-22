@@ -8,7 +8,7 @@ from configWindow import getCertPemFile, setConfigWindow, showConfigWindow
 from AssessmentFunction import addAssessment
 from EnrolmentFunction import addEnrolment, enrollmentInitialization
 from AttendanceFunction import uploadAttendance
-from courseRunFunctions import createCourserun, curlPostRequest, deleteCourserun, getDeleteCourseRunPayLoad, updateCourserun
+from courseRunFunctions import createCourserun, curlPostRequest, deleteCourserun, getCourseRun, getDeleteCourseRunPayLoad, updateCourserun
 from HttpRequestFunction import getHttpRequest, loadFile, saveJsonFormat
 import tkinter as tk
 from tkinter import *
@@ -33,7 +33,7 @@ class updateCourseRunPagePreview(tk.Frame):
     
     def refresh(controllerCurlText):
         controllerCurlText.delete("1.0","end")
-        controllerCurlText.insert(tk.END, str(curlPostRequest("",updateCourseRunPagePreview.payload)))
+        controllerCurlText.insert(tk.END, str(curlPostRequest(updateCourseRunPagePreview.runIdEntered,updateCourseRunPagePreview.payload)))
 
     def __init__(self, parent, controller):
 
@@ -51,23 +51,6 @@ class updateCourseRunPagePreview(tk.Frame):
         label_0 = Label(self, text="Update Course Run", width=20, font=("bold", 20))
         label_0.place(x=90, y=43)
 
-        #Course Run Id
-        label_runId = Label(self, text="Course Run ID: ", width=20, font=("bold", 10), anchor='w')
-        label_runId.place(x=90, y=100)
-
-        entry_runId = Entry(self)
-        entry_runId.place(x=250, y=100)
-        label_1_ttp = CreateToolTip(label_runId, tooltipDescription["CourseRunId"])
-
-        #This method is used to update the display information dynamically in "Payload" Tab whenever user key in a value
-        def typing():
-            contentInfo = updateCourseRunPagePreview.payload
-            value = curlPostRequest(entry_runId.get(),contentInfo)
-            self.curlText.delete("1.0","end")
-            self.curlText.insert(tk.END, value)
-
-        entry_runId.bind('<KeyRelease>', lambda b:typing())
-
         # Expand label to fit window size
         style = ttk.Style(self)
         style.configure('TNotebook.Tab', width=self.winfo_screenwidth())
@@ -81,9 +64,10 @@ class updateCourseRunPagePreview(tk.Frame):
         # Adding of tabs
         tabControl.add(tab2, text='Request')
         tabControl.add(tab3, text='Reponse')
-        tabControl.place(width=440, height=460, x=30, y=222)
+        tabControl.place(width=440, height=460, x=30, y=182)
 
-        self.payload = loadFile("EmptyUpdateCourseRunPayLoad.json")
+        self.payload = '{}'
+        self.runIdEntered = 0
         self.curlText = scrolledtext.ScrolledText(tab2, width=70, height=30)
         self.curlText.insert(tk.END,  str(curlPostRequest("","")))
         self.curlText.place(height=405, width=440, y=20)
@@ -94,12 +78,17 @@ class updateCourseRunPagePreview(tk.Frame):
         # responseText.bind("<Key>", lambda e: "break")
 
         def submitCallBack():
-            print("Do Nothing")
+            responseText.delete("1.0","end")
+            print(updateCourseRunPagePreview.payload)
+            print(updateCourseRunPagePreview.runIdEntered)
+            resp = updateCourserun(updateCourseRunPagePreview.runIdEntered,updateCourseRunPagePreview.payload)
+            textPayload = StringVar(self, value = resp.text) 
+            responseText.insert(INSERT,textPayload.get())
             
         submitButton = tk.Button(self, text="Update", bg="white", width=25, pady=5, command=lambda: submitCallBack())
-        submitButton.place(relx=0.5, rely=0.25, anchor=CENTER)
+        submitButton.place(relx=0.5, rely=0.17, anchor=CENTER)
         backButton = tk.Button(self, text="Back", bg="white", width=10, pady=5,
-                               command=lambda: controller.show_frame(updateCourseRunPagePage3),
+                               command=lambda: controller.show_frame(updateCourseRunPagePage4),
                                )
         backButton.place(relx=0.055, rely=0.021, anchor=CENTER)
         # exportButton1 = tk.Button(self, text="Export Payload", bg="white", width=15, pady=5, command = lambda: downloadFile("payload"))
@@ -111,7 +100,7 @@ class updateCourseRunPagePreview(tk.Frame):
         edit = Entry(self, background="light gray")
 
         # positioning of text box
-        edit.place(x=285, height=21, y=244)
+        edit.place(x=285, height=21, y=204)
 
         # setting focus
         edit.focus_set()
@@ -194,136 +183,222 @@ class updateCourseRunPageSelect(tk.Frame):
         label_0 = Label(self, text="Basic Mandate Form", width=20, font=("bold", 15))
         label_0.place(x=137, y=185)
 
+        self.label_runId = Label(self, text="Course Run Id*", width=20, font=("bold", 10))
+        self.label_runId.place(x=80, y=220)
+
+        label_runId_ttp = CreateToolTip(self.label_runId, tooltipDescription["CourseRunId"])
+
+        self.entry_runId = Entry(self)
+        self.entry_runId.place(x=250, y=220)
+
         label_CRN = Label(self, text="Course Reference Number*", width=20, font=("bold", 10))
-        label_CRN.place(x=80, y=220)
+        label_CRN.place(x=80, y=245)
 
         label_CRN_ttp = CreateToolTip(label_CRN, tooltipDescription["CourseReferenceNumber"])
 
         entry_CRN = Entry(self)
-        entry_CRN.place(x=250, y=220)
+        entry_CRN.place(x=250, y=245)
 
 
         label_runTitle = Label(self, text="Run", width=20, font=("bold", 15))
-        label_runTitle.place(x=137, y=250)
+        label_runTitle.place(x=137, y=270)
 
         label_openRegDate = Label(self, text="Opening Registration Dates*", width=20, font=("bold", 10))
-        label_openRegDate.place(x=80, y=285)
+        label_openRegDate.place(x=80, y=310)
 
         label_openRegDate_ttp = CreateToolTip(label_openRegDate, tooltipDescription["CourseRegistrationDateOpen"])
 
         entry_openRegDate = Entry(self)
-        entry_openRegDate.place(x=250, y=285)
+        entry_openRegDate.place(x=250, y=310)
 
         label_closeRegDate = Label(self, text="Closing Registration Dates*", width=20, font=("bold", 10))
-        label_closeRegDate.place(x=80, y=310)
+        label_closeRegDate.place(x=80, y=335)
 
         label_closeRegDate_ttp = CreateToolTip(label_closeRegDate, tooltipDescription["CourseRegistrationDateClose"])
 
         entry_closeRegDate = Entry(self)
-        entry_closeRegDate.place(x=250, y=310)
+        entry_closeRegDate.place(x=250, y=335)
 
         label_CourseStartDate = Label(self, text="Course Start Date*", width=20, font=("bold", 10))
-        label_CourseStartDate.place(x=80, y=335)
+        label_CourseStartDate.place(x=80, y=360)
 
         label_CourseStartDate_ttp = CreateToolTip(label_CourseStartDate, tooltipDescription["CourseStartDate"])
 
         entry_CourseStartDate = Entry(self)
-        entry_CourseStartDate.place(x=250, y=335)
+        entry_CourseStartDate.place(x=250, y=360)
 
         label_CourseEndDate = Label(self, text="Course End Date*", width=20, font=("bold", 10))
-        label_CourseEndDate.place(x=80, y=360)
+        label_CourseEndDate.place(x=80, y=385)
 
         label_CourseEndDate_ttp = CreateToolTip(label_CourseEndDate, tooltipDescription["CourseEndDate"])
 
         entry_CourseEndDate = Entry(self)
-        entry_CourseEndDate.place(x=250, y=360)
+        entry_CourseEndDate.place(x=250, y=385)
         
         label_scheduleInfoType = Label(self, text="InfoType*", width=20, font=("bold", 10))
-        label_scheduleInfoType.place(x=80, y=385)
+        label_scheduleInfoType.place(x=80, y=410)
 
         # label_CourseEndDate_ttp = CreateToolTip(label_CourseEndDate, tooltipDescription["CourseEndDate"])
 
         entry_scheduleInfoType = Entry(self)
-        entry_scheduleInfoType.place(x=250, y=385)
+        entry_scheduleInfoType.place(x=250, y=410)
 
         label_scheduleInfoTypeDescription = Label(self, text="InfoType Description", width=20, font=("bold", 10))
-        label_scheduleInfoTypeDescription.place(x=80, y=410)
+        label_scheduleInfoTypeDescription.place(x=80, y=435)
 
         # label_CourseEndDate_ttp = CreateToolTip(label_CourseEndDate, tooltipDescription["CourseEndDate"])
 
         entry_scheduleInfoTypeDescription = Entry(self)
-        entry_scheduleInfoTypeDescription.place(x=250, y=410)
+        entry_scheduleInfoTypeDescription.place(x=250, y=435)
 
         label_CourseModeOfTraining = Label(self, text="Mode Of Training", width=20, font=("bold", 10))
-        label_CourseModeOfTraining.place(x=80, y=435)
+        label_CourseModeOfTraining.place(x=80, y=460)
 
         # label_CourseEndDate_ttp = CreateToolTip(label_CourseEndDate, tooltipDescription["CourseEndDate"])
-
-        entry_CourseModeOfTraining = Entry(self)
-        entry_CourseModeOfTraining.place(x=250, y=435)
+        modeOfTraining = ttk.Combobox(self, width = 27,state="readonly")
+        modeOfTraining['values'] = ["Select An Option",
+                     "1. Classroom",
+                     "2. Asynchronous eLearning",
+                     "3. In-house",
+                     "4. On-the-Job",
+                     "5. Practical/Practicum",
+                     "6. Supervised Field",
+                     "7. Traineeship",
+                     "8. Assessment",
+                     "9. Synchronous eLearning"]
+        modeOfTraining.current(0)
+        modeOfTraining.place(x=250, y=460)
+        # entry_CourseModeOfTraining = Entry(self)
+        # entry_CourseModeOfTraining.place(x=250, y=435)
 
         label_adminEmail = Label(self, text="Course Admin Email", width=20, font=("bold", 10))
-        label_adminEmail.place(x=80, y=460)
+        label_adminEmail.place(x=80, y=485)
 
         # label_CourseEndDate_ttp = CreateToolTip(label_CourseEndDate, tooltipDescription["CourseEndDate"])
 
         entry_adminEmail = Entry(self)
-        entry_adminEmail.place(x=250, y=460)
+        entry_adminEmail.place(x=250, y=485)
 
         label_threshold = Label(self, text="Threshold", width=20, font=("bold", 10))
-        label_threshold.place(x=80, y=485)
+        label_threshold.place(x=80, y=510)
 
         # label_CourseEndDate_ttp = CreateToolTip(label_CourseEndDate, tooltipDescription["CourseEndDate"])
 
         entry_threshold = Entry(self)
-        entry_threshold.place(x=250, y=485)
+        entry_threshold.place(x=250, y=510)
 
         label_intakeSize = Label(self, text="Intake Size", width=20, font=("bold", 10))
-        label_intakeSize.place(x=80, y=510)
+        label_intakeSize.place(x=80, y=535)
 
         # label_CourseEndDate_ttp = CreateToolTip(label_CourseEndDate, tooltipDescription["CourseEndDate"])
 
         entry_intakeSize = Entry(self)
-        entry_intakeSize.place(x=250, y=510)
+        entry_intakeSize.place(x=250, y=535)
 
         label_RegUserCount = Label(self, text="Registered User Count", width=20, font=("bold", 10))
-        label_RegUserCount.place(x=80, y=535)
+        label_RegUserCount.place(x=80, y=560)
 
         # label_CourseEndDate_ttp = CreateToolTip(label_CourseEndDate, tooltipDescription["CourseEndDate"])
 
         entry_RegUserCount = Entry(self)
-        entry_RegUserCount.place(x=250, y=535)
+        entry_RegUserCount.place(x=250, y=560)
 
 
         previewButton = tk.Button(self, text="Next", bg="white", width=25, pady=5, command=lambda: previewCallBack() if self.var.get() == 2 else controller.show_frame(updateCourseRunPageFormFileUpload) )
-        previewButton.place(x=250, y=640, anchor=CENTER)
+        previewButton.place(x=250, y=675, anchor=CENTER)
+        retrieveButton = tk.Button(self, text="Retrieve required fields", bg="white", width=25, pady=5, command=lambda:retrieveCallBack())
+        retrieveButton.place(x=250, y=640, anchor=CENTER)
+
+        def retrieveCallBack():
+            if (self.entry_runId.get() != ''):
+                resp = getCourseRun(self.entry_runId.get())
+                
+                if (resp.status_code<400):
+                    respObject = resp.json()
+                    entry_CRN.delete("0","end")
+                    entry_CRN.insert(tk.END, respObject['data']['course']['referenceNumber'])
+
+                    entry_CourseStartDate.delete("0","end")
+                    entry_CourseStartDate.insert(tk.END, respObject['data']['course']['run']['courseStartDate'])
+
+                    entry_CourseEndDate.delete("0","end")
+                    entry_CourseEndDate.insert(tk.END, respObject['data']['course']['run']['courseEndDate'])
+
+                    entry_closeRegDate.delete("0","end")
+                    entry_closeRegDate.insert(tk.END, respObject['data']['course']['run']['registrationClosingDate'])
+
+                    entry_openRegDate.delete("0","end")
+                    entry_openRegDate.insert(tk.END, respObject['data']['course']['run']['registrationOpeningDate'])
+
+                    entry_scheduleInfoType.delete("0","end")
+                    entry_scheduleInfoType.insert(tk.END, respObject['data']['course']['run']['scheduleInfoType']['code'])
+
+                    controller.frames[updateCourseRunPagePage2].entry_courseVacCode.delete("0","end")
+                    controller.frames[updateCourseRunPagePage2].entry_courseVacCode.insert(tk.END, respObject['data']['course']['run']['courseVacancy']['code'])
+
+                    controller.frames[updateCourseRunPagePage2].entry_venueFloor.delete("0","end")
+                    controller.frames[updateCourseRunPagePage2].entry_venueFloor.insert(tk.END, respObject['data']['course']['run']['venue']['floor'])
+
+                    controller.frames[updateCourseRunPagePage2].entry_venueRoom.delete("0","end")
+                    controller.frames[updateCourseRunPagePage2].entry_venueRoom.insert(tk.END, respObject['data']['course']['run']['venue']['room'])
+
+                    controller.frames[updateCourseRunPagePage2].entry_venueUnit.delete("0","end")
+                    controller.frames[updateCourseRunPagePage2].entry_venueUnit.insert(tk.END, respObject['data']['course']['run']['venue']['unit'])
+                    
+                    controller.frames[updateCourseRunPagePage2].entry_venuePostalCode.delete("0","end")
+                    controller.frames[updateCourseRunPagePage2].entry_venuePostalCode.insert(tk.END, respObject['data']['course']['run']['venue']['postalCode'])
+
+                    # print(respObject['data']['course']['referenceNumber'])
+                else:
+                    messagebox.showerror(title="Error", message="Unable to retrieve Information - Invalid Run Id")
+            else:
+                messagebox.showerror(title="Error", message="Unable to retrieve Information - Run Id cannot be empty")
 
 
         #Initialies the file and object first in order to prevent clearing of data
-        updateCourseRunPagePreview.payload = loadFile("EmptyUpdateCourseRunPayLoad.json")
-
+        # updateCourseRunPagePreview.payload = loadFile("EmptyUpdateCourseRunPayLoad.json")
+        updateCourseRunPagePreview.payload = "{}"
         def storeAndsave_all():
-            self.courseRunInfoPythonObject= json.loads(updateCourseRunPagePreview.payload)
             # load config File
             uen_Info = loadFile("config.json")
             config_uenJson = json.loads(uen_Info)
             uen_number = config_uenJson["UEN"]
-            self.courseRunInfoPythonObject["course"]["trainingProvider"]["uen"] = uen_number
+            # self.courseRunInfoPythonObject["course"]["trainingProvider"]["uen"] = uen_number
+            self.payload = json.loads(updateCourseRunPagePreview.payload)
 
-            self.courseRunInfoPythonObject["course"]["courseReferenceNumber"] = entry_CRN.get()
-            self.courseRunInfoPythonObject["course"]["run"]["registrationDates"]["opening"] = entry_openRegDate.get()
-            self.courseRunInfoPythonObject["course"]["run"]["registrationDates"]["closing"] = entry_closeRegDate.get()
-            self.courseRunInfoPythonObject["course"]["run"]["courseDates"]["start"] = entry_CourseStartDate.get()
-            self.courseRunInfoPythonObject["course"]["run"]["courseDates"]["end"] = entry_CourseEndDate.get()
-            self.courseRunInfoPythonObject["course"]["run"]["scheduleInfoType"]["code"] = entry_scheduleInfoType.get()
-            self.courseRunInfoPythonObject["course"]["run"]["scheduleInfoType"]["description"] = entry_scheduleInfoTypeDescription.get()
-            self.courseRunInfoPythonObject["course"]["run"]["modeOfTraining"] = entry_CourseModeOfTraining.get()
-            self.courseRunInfoPythonObject["course"]["run"]["courseAdminEmail"] = entry_adminEmail.get()
-            self.courseRunInfoPythonObject["course"]["run"]["threshold"] = entry_threshold.get()
-            self.courseRunInfoPythonObject["course"]["run"]["intakeSize"] = entry_intakeSize.get()
-            self.courseRunInfoPythonObject["course"]["run"]["registeredUserCount"] = entry_RegUserCount.get()
+            #Create the required field
+            self.payload["course"] = {}
+            self.payload["course"]["trainingProvider"] = {}
+            self.payload["course"]["run"] = {}
+            self.payload["course"]["run"]["registrationDates"] = {}
+            self.payload["course"]["run"]["courseDates"] = {}
+            self.payload["course"]["run"]["scheduleInfoType"] = {}
 
-            return str(json.dumps(self.courseRunInfoPythonObject,indent=4))
+
+            self.payload["course"]["trainingProvider"]["uen"] = uen_number
+            self.payload["course"]["courseReferenceNumber"] = entry_CRN.get()
+            self.payload["course"]["run"]["registrationDates"]["opening"] = entry_openRegDate.get()
+            self.payload["course"]["run"]["registrationDates"]["closing"] = entry_closeRegDate.get()
+            self.payload["course"]["run"]["courseDates"]["start"] = entry_CourseStartDate.get()
+            self.payload["course"]["run"]["courseDates"]["end"] = entry_CourseEndDate.get()
+            self.payload["course"]["run"]["scheduleInfoType"]["code"] = entry_scheduleInfoType.get()
+
+            if entry_scheduleInfoTypeDescription.get() != '':
+                self.payload["course"]["run"]["scheduleInfoType"]["description"] = entry_scheduleInfoTypeDescription.get()
+            if modeOfTraining.get() != 'Select An Option':
+                self.payload["course"]["run"]["modeOfTraining"] = modeOfTraining.get()[0]
+            if entry_adminEmail.get() != '':
+                self.payload["course"]["run"]["courseAdminEmail"] = entry_adminEmail.get()
+            if entry_threshold.get() != '':
+                self.payload["course"]["run"]["threshold"] = entry_threshold.get()
+            if entry_intakeSize.get() != '':
+                self.payload["course"]["run"]["intakeSize"] = entry_intakeSize.get()
+            if entry_RegUserCount.get() != '':
+                self.payload["course"]["run"]["registeredUserCount"] = entry_RegUserCount.get()
+
+            updateCourseRunPagePreview.runIdEntered = self.entry_runId.get()
+
+            return str(json.dumps(self.payload,indent=4))
         def previewCallBack():
             updateCourseRunPagePreview.payload = storeAndsave_all()
             controller.show_frame(updateCourseRunPagePage2)
@@ -353,8 +428,8 @@ class updateCourseRunPagePage2(tk.Frame):
 
         # label_CRN_ttp = CreateToolTip(label_courseVac, tooltipDescription["CourseReferenceNumber"])
 
-        entry_courseVacCode = Entry(self)
-        entry_courseVacCode.place(x=250, y=140)
+        self.entry_courseVacCode = Entry(self)
+        self.entry_courseVacCode.place(x=250, y=140)
 
         label_courseVacDescription = Label(self, text="Course Vacancy Description", width=20, font=("bold", 10))
         label_courseVacDescription.place(x=80, y=165)
@@ -377,24 +452,24 @@ class updateCourseRunPagePage2(tk.Frame):
 
         # label_CRN_ttp = CreateToolTip(label_courseVac, tooltipDescription["CourseReferenceNumber"])
 
-        entry_venueRoom = Entry(self)
-        entry_venueRoom.place(x=250, y=215)
+        self.entry_venueRoom = Entry(self)
+        self.entry_venueRoom.place(x=250, y=215)
 
         label_venueUnit = Label(self, text="Venue - Unit*", width=20, font=("bold", 10))
         label_venueUnit.place(x=80, y=240)
 
         # label_CRN_ttp = CreateToolTip(label_courseVac, tooltipDescription["CourseReferenceNumber"])
 
-        entry_venueUnit = Entry(self)
-        entry_venueUnit.place(x=250, y=240)
+        self.entry_venueUnit = Entry(self)
+        self.entry_venueUnit.place(x=250, y=240)
 
         label_venueFloor = Label(self, text="Venue - Floor*", width=20, font=("bold", 10))
         label_venueFloor.place(x=80, y=265)
 
         # label_CRN_ttp = CreateToolTip(label_courseVac, tooltipDescription["CourseReferenceNumber"])
 
-        entry_venueFloor = Entry(self)
-        entry_venueFloor.place(x=250, y=265)
+        self.entry_venueFloor = Entry(self)
+        self.entry_venueFloor.place(x=250, y=265)
 
         label_venueBlock = Label(self, text="Venue - Block", width=20, font=("bold", 10))
         label_venueBlock.place(x=80, y=290)
@@ -425,35 +500,46 @@ class updateCourseRunPagePage2(tk.Frame):
 
         # label_CRN_ttp = CreateToolTip(label_courseVac, tooltipDescription["CourseReferenceNumber"])
 
-        entry_venuePostalCode = Entry(self)
-        entry_venuePostalCode.place(x=250, y=365)
+        self.entry_venuePostalCode = Entry(self)
+        self.entry_venuePostalCode.place(x=250, y=365)
 
         label_venueWheelchair = Label(self, text="Venue - Wheelchair Access", width=20, font=("bold", 10))
         label_venueWheelchair.place(x=80, y=390)
 
         # label_CRN_ttp = CreateToolTip(label_courseVac, tooltipDescription["CourseReferenceNumber"])
-        tkvar = StringVar(self)
-        choices = { 'False','True'}
-        tkvar.set("Select an Option")
-        options_Wheelchair = OptionMenu(self, tkvar, *choices)
-        options_Wheelchair.place(x=250, y=390, width=125)
 
-
+        options_Wheelchair = ttk.Combobox(self, width = 27,state="readonly")
+        options_Wheelchair['values'] = ["Select An Option",
+                     "True",
+                     "False"]
+        options_Wheelchair.current(0)
+        options_Wheelchair.place(x=250, y=390)
         def storeAndsave_all():
             print("store and save")
             payloadToEdit = updateCourseRunPagePreview.payload
             payloadToEdit= json.loads(payloadToEdit)
-            payloadToEdit['course']['run']['courseVacancy']['code'] = entry_courseVacCode.get()
-            payloadToEdit['course']['run']['courseVacancy']['description'] = entry_courseVacDescription.get()
-            payloadToEdit['course']['run']['scheduleInfo'] = entry_scheduleInfo.get()
-            payloadToEdit['course']['run']['venue']['floor'] = entry_venueFloor.get()
-            payloadToEdit['course']['run']['venue']['unit'] = entry_venueUnit.get()
-            payloadToEdit['course']['run']['venue']['room'] = entry_venueRoom.get()
-            payloadToEdit['course']['run']['venue']['building'] = entry_venueBuilding.get()
-            payloadToEdit['course']['run']['venue']['block'] = entry_venueBlock.get()
-            payloadToEdit['course']['run']['venue']['postalCode'] = entry_venuePostalCode.get()
-            payloadToEdit['course']['run']['venue']['street'] = entry_venueStreet.get()
-            payloadToEdit['course']['run']['venue']['wheelChairAccess'] = tkvar.get() if tkvar.get() != 'Select an Option' else ''
+
+            payloadToEdit['course']['run']['courseVacancy'] = {}
+            payloadToEdit['course']['run']['venue'] = {}
+
+            payloadToEdit['course']['run']['courseVacancy']['code'] = self.entry_courseVacCode.get()
+            payloadToEdit['course']['run']['venue']['floor'] = self.entry_venueFloor.get()
+            payloadToEdit['course']['run']['venue']['unit'] = self.entry_venueUnit.get()
+            payloadToEdit['course']['run']['venue']['room'] = self.entry_venueRoom.get()
+            payloadToEdit['course']['run']['venue']['postalCode'] = self.entry_venuePostalCode.get()
+            
+            if entry_courseVacDescription.get() != '':
+                payloadToEdit['course']['run']['courseVacancy']['description'] = entry_courseVacDescription.get()
+            if entry_scheduleInfo.get() != '':
+                payloadToEdit['course']['run']['scheduleInfo'] = entry_scheduleInfo.get()
+            if entry_venueBuilding.get() != '':
+                payloadToEdit['course']['run']['venue']['building'] = entry_venueBuilding.get()
+            if  entry_venueBlock.get() != '':
+                payloadToEdit['course']['run']['venue']['block'] = entry_venueBlock.get()
+            if entry_venueStreet.get() != '':
+                payloadToEdit['course']['run']['venue']['street'] = entry_venueStreet.get()
+            if options_Wheelchair.get() != 'Select An Option':
+                payloadToEdit['course']['run']['venue']['wheelChairAccess'] = True if options_Wheelchair.get() == 'True' else False
 
             # print(payloadToEdit)
             return str(json.dumps(payloadToEdit,indent=4))
@@ -466,6 +552,7 @@ class updateCourseRunPagePage2(tk.Frame):
         def callback():
 
             updateCourseRunPagePreview.payload = storeAndsave_all()
+            # print(updateCourseRunPagePreview.payload)
             # updateCourseRunPageSelect.updateCourseRunInfo = storeAndsave_all()
             # updateCourseRunPagePreview.refresh(controller.frames[updateCourseRunPagePreview].curlText)
             controller.show_frame(updateCourseRunPagePage3)
@@ -583,6 +670,9 @@ class updateCourseRunPagePage3(tk.Frame):
         self.entry_SessionVenuePostalCode = Entry(AddFrame)
         self.entry_SessionVenuePostalCode.place(x=170, y=275)
 
+
+
+
         self.tkvar_Wheelchair = StringVar(self)
         self.tkvar_PriVenue = StringVar(self)
         choices = { 'False','True'}
@@ -592,14 +682,23 @@ class updateCourseRunPagePage3(tk.Frame):
         self.label_SessionVenuePostalCode= Label(AddFrame, text="Venue Primary Venue", width=20, font=("bold", 10))
         self.label_SessionVenuePostalCode.place(x=0, y=300)
         # label_CRN_ttp = CreateToolTip(label_courseVac, tooltipDescription["CourseReferenceNumber"])
-        options_PrimaryVenue = OptionMenu(AddFrame, self.tkvar_PriVenue, *choices)
-        options_PrimaryVenue.place(x=170, y=300, width=125)
+        self.options_PrimaryVenue = ttk.Combobox(AddFrame, width = 17,state="readonly")
+        self.options_PrimaryVenue['values'] = ["Select An Option",
+                     "True",
+                     "False"]
+        self.options_PrimaryVenue.current(0)
+        self.options_PrimaryVenue.place(x=170, y=300)
 
         self.label_SessionVenuePostalCode= Label(AddFrame, text="Venue Wheelchair Access", width=20, font=("bold", 10))
         self.label_SessionVenuePostalCode.place(x=0, y=325)
         # label_CRN_ttp = CreateToolTip(label_courseVac, tooltipDescription["CourseReferenceNumber"])
-        options_Wheelchair = OptionMenu(AddFrame, self.tkvar_Wheelchair, *choices)
-        options_Wheelchair.place(x=170, y=325, width=125)
+        self.options_Wheelchair = ttk.Combobox(AddFrame, width = 17,state="readonly")
+        self.options_Wheelchair['values'] = ["Select An Option",
+                     "True",
+                     "False"]
+        self.options_Wheelchair.current(0)
+        self.options_Wheelchair.place(x=170, y=325)
+
 
 
     def __init__(self, parent, controller):
@@ -625,36 +724,257 @@ class updateCourseRunPagePage3(tk.Frame):
                 deleteFrame.place_forget()
                 addFrame.place(width = 300, height = 400, x = 80, y = 200)
                 updateFrame.place_forget()
-            elif choice == 'All':
-                updateFrame.place_forget()
-                deleteFrame.place_forget()
-                addFrame.place_forget()
-            else:
+            elif choice == 'Update':
                 deleteFrame.place_forget()
                 addFrame.place(width = 300, height = 350, x = 80, y = 200)
                 updateFrame.place(width = 300, height = 20, x = 80, y = 550)
+            else:
+                updateFrame.place_forget()
+                deleteFrame.place_forget()
+                addFrame.place_forget()
 
-        addFrame = tk.Frame()
-        deleteFrame = tk.Frame()
-        updateFrame = tk.Frame()
+
+        addFrame = tk.Frame(self)
+        deleteFrame = tk.Frame(self)
+        updateFrame = tk.Frame(self)
+        self.options_Session_Action = ttk.Combobox(self, width = 27,state="readonly")
+        self.options_Session_Action['values'] = ["Select an option",
+                     "Add",
+                     "Update",
+                     "Delete"]
+        self.options_Session_Action.place(x=250, y=140)
+        self.options_Session_Action.current(0)
+        self.options_Session_Action.bind("<<ComboboxSelected>>", lambda x: hide(self.options_Session_Action.get()))
 
         self.addFrame(addFrame)
         self.updateFrame(updateFrame)
         self.deleteFrameInit(deleteFrame)
-        self.tkvar = StringVar(self)
-        choices = {'Add','Delete', 'Update'}
-        self.tkvar.set("Select an Option")
-        options_Session_Action= OptionMenu(self, self.tkvar, *choices, command=lambda x: hide(self.tkvar.get()))
-        options_Session_Action.place(x=250, y=140, width=125)
 
         label_1 = Label(self, text="Sessions", width=20, font=("bold", 15))
         label_1.place(x=137, y=100)
 
-        label_courseVacCode = Label(self, text="Action*", width=20, font=("bold", 10))
+        label_courseVacCode = Label(self, text="Action", width=20, font=("bold", 10))
         label_courseVacCode.place(x=80, y=140)
 
         def callback():
             hide('All')
+            # print(updateCourseRunPagePreview.payload)
+            # updateCourseRunPagePreview.refresh(controller.frames[updateCourseRunPagePreview].curlText)
+            controller.show_frame(updateCourseRunPagePage4)
+        
+        def addCallback():
+            payloadToEdit = updateCourseRunPagePreview.payload
+            payloadToEdit= json.loads(payloadToEdit)
+            
+            priVenue = self.options_PrimaryVenue.get() if self.options_PrimaryVenue.get() != 'Select an Option' else ''
+            wheelChair = self.options_Wheelchair.get() if self.options_Wheelchair.get() != 'Select an Option' else ''
+            try:
+                sessionList = payloadToEdit["course"]["run"]["sessions"]
+            except:
+                sessionList = []
+                
+
+            if self.options_Session_Action.get() == 'Delete':
+                sessionObjectTemplate = {
+                "action":self.options_Session_Action.get(),
+                "sessionId": self.entry_sessionId.get()
+                }
+            else:
+                sessionObjectTemplate = {
+                    "action":self.options_Session_Action.get(),
+                    "startTime":self.entry_SessionStartDate.get(),
+                    "endTime":self.entry_SessionEndTime.get(),
+                    "startDate":self.entry_SessionStartDate.get(),
+                    "startTime":self.entry_SessionStartTime.get(),
+                    "modeOfTraining": self.entry_ModeOfTraining.get(),
+                    "venue":{
+                        "room": self.entry_SessionVenueRoom.get(),
+                        "floor":self.entry_SessionVenueFloor.get(),
+                        "unit": self.entry_SessionVenueUnit.get(),
+                        "postalCode": self.entry_SessionVenuePostalCode.get()
+                        }
+                }
+                if self.entry_SessionVenueBlock.get() != '':
+                    sessionObjectTemplate["venue"]["block"] = self.entry_SessionVenueBlock.get()
+                if self.entry_SessionVenueStreet.get() != '':
+                    sessionObjectTemplate["venue"]["street"] = self.entry_SessionVenueStreet.get()
+                if self.entry_SessionVenueBuilding.get() != '':
+                    sessionObjectTemplate["venue"]["building"] = self.entry_SessionVenueBuilding.get()
+                if priVenue != '':
+                    sessionObjectTemplate["venue"]["primaryVenue"] = True if priVenue == 'True' else False
+                if wheelChair != '':
+                    sessionObjectTemplate["venue"]["wheelChairAccess"] = True if wheelChair == 'True' else False          
+
+            # print(payloadToEdit['course']['run']['sessions'])
+            sessionList.append(sessionObjectTemplate)
+            payloadToEdit['course']['run']['sessions'] = sessionList
+            updateCourseRunPagePreview.payload = json.dumps(payloadToEdit, indent = 4)
+            # print(updateCourseRunPagePreview.payload)
+            tkinter.messagebox.showinfo(title="Success", message="Session successfully added")
+            
+            
+        def backcallback():
+            hide('All')
+            controller.show_frame(updateCourseRunPagePage2)
+
+        backButton = tk.Button(self, text="Back", bg="white", width=10, pady=5,
+                               command=lambda: backcallback()
+                               )
+        backButton.place(relx=0.055, rely=0.021, anchor=CENTER)
+        addButton = tk.Button(self, text="Add", bg="white", width=15, pady=5, command=lambda: addCallback())
+        addButton.place(relx=0.3, rely=0.85, anchor=CENTER)
+        previewButton = tk.Button(self, text="Next", bg="white", width=15, pady=5, command=lambda: callback())
+        previewButton.place(relx=0.7, rely=0.85, anchor=CENTER)
+
+#Page 3 for Update Course Run - Sessions
+class updateCourseRunPagePage4(tk.Frame):
+
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+
+        load = Image.open("SKFBGPage.JPG")
+        render = ImageTk.PhotoImage(load)
+
+        # labels can be text or images
+        img2 = Label(self, image=render)
+        img2.image = render
+        img2.place(x=0, y=0, relwidth=1, relheight=1)
+
+
+        label_1 = Label(self, text="Trainers", width=20, font=("bold", 15))
+        label_1.place(x=137, y=100)
+
+        self.label_trainerTypeCode = Label(self, text="Trainer Type Code*", width=20, font=("bold", 10))
+        self.label_trainerTypeCode.place(x=80, y=140)
+
+        self.index = 0
+        self.ssecList = []
+
+        # label_CRN_ttp = CreateToolTip(label_courseVac, tooltipDescription["CourseReferenceNumber"])
+
+        self.entry_trainerTypeCode = Entry(self)
+        self.entry_trainerTypeCode.place(x=250, y=140)
+
+        self.label_trainerTypeDescription = Label(self, text="Trainer Type Description*", width=20, font=("bold", 10))
+        self.label_trainerTypeDescription.place(x=80, y=165)
+
+
+        # label_CRN_ttp = CreateToolTip(label_courseVac, tooltipDescription["CourseReferenceNumber"])
+
+        self.entry_trainerTypeDescription = Entry(self)
+        self.entry_trainerTypeDescription.place(x=250, y=165)
+
+        self.label_trainerId = Label(self, text="Trainer Id*", width=20, font=("bold", 10))
+        self.label_trainerId.place(x=80, y=190)
+
+
+        # label_CRN_ttp = CreateToolTip(label_courseVac, tooltipDescription["CourseReferenceNumber"])
+
+        self.entry_trainerId = Entry(self)
+        self.entry_trainerId.place(x=250, y=190)
+
+        self.label_trainerName = Label(self, text="Trainer Name", width=20, font=("bold", 10))
+        self.label_trainerName.place(x=80, y=215)
+
+        # label_CRN_ttp = CreateToolTip(label_courseVac, tooltipDescription["CourseReferenceNumber"])
+
+        self.entry_trainerName = Entry(self)
+        self.entry_trainerName.place(x=250, y=215)
+
+        self.label_trainerEmail = Label(self, text="Trainer Email", width=20, font=("bold", 10))
+        self.label_trainerEmail.place(x=80, y=240)
+
+        # label_CRN_ttp = CreateToolTip(label_courseVac, tooltipDescription["CourseReferenceNumber"])
+
+        self.entry_trainerEmail = Entry(self)
+        self.entry_trainerEmail.place(x=250, y=240)
+
+        self.label_trainerExperience = Label(self, text="Trainer Experience", width=20, font=("bold", 10))
+        self.label_trainerExperience.place(x=80, y=265)
+
+        # label_CRN_ttp = CreateToolTip(label_courseVac, tooltipDescription["CourseReferenceNumber"])
+
+        self.entry_trainerExperience = Entry(self)
+        self.entry_trainerExperience.place(x=250, y=265)
+
+        self.label_trainerlinkedInUrl = Label(self, text="Trainer linkedInUrl", width=20, font=("bold", 10))
+        self.label_trainerlinkedInUrl.place(x=80, y=290)
+
+        # label_CRN_ttp = CreateToolTip(label_courseVac, tooltipDescription["CourseReferenceNumber"])
+
+        self.entry_trainerlinkedInUrl = Entry(self)
+        self.entry_trainerlinkedInUrl.place(x=250, y=290)
+    
+        self.label_trainersalutationId = Label(self, text="Trainer salutationId", width=20, font=("bold", 10))
+        self.label_trainersalutationId.place(x=80, y=315)
+
+        # label_CRN_ttp = CreateToolTip(label_courseVac, tooltipDescription["CourseReferenceNumber"])
+
+        self.entry_trainersalutationId = Entry(self)
+        self.entry_trainersalutationId.place(x=250, y=315)
+
+        self.label_trainerdomainAreaOfPractice = Label(self, text="Trainer AreaOfPractice", width=20, font=("bold", 10))
+        self.label_trainerdomainAreaOfPractice.place(x=80, y=340)
+
+        # label_CRN_ttp = CreateToolTip(label_courseVac, tooltipDescription["CourseReferenceNumber"])
+
+        self.entry_trainerdomainAreaOfPractice = Entry(self)
+        self.entry_trainerdomainAreaOfPractice.place(x=250, y=340)
+
+        self.label_trainerinTrainingProviderProfile = Label(self, text="inTrainingProviderProfile", width=20, font=("bold", 10))
+        self.label_trainerinTrainingProviderProfile.place(x=80, y=365)
+
+        # label_CRN_ttp = CreateToolTip(label_courseVac, tooltipDescription["CourseReferenceNumber"])
+
+        self.tkvar_inTrainingProviderProfile= StringVar(self)
+        choices = {'False','True'}
+        self.tkvar_inTrainingProviderProfile.set("Select an Option")
+        options_inTrainingProviderProfile = OptionMenu(self, self.tkvar_inTrainingProviderProfile, *choices)
+        options_inTrainingProviderProfile.place(x=250, y=365, width=125)
+
+
+        
+        label_1 = Label(self, text="Trainers - SsecEQAs", width=20, font=("bold", 15))
+        label_1.place(x=137, y=410)
+
+        self.label_trainerssecEQA = Label(self, text="Trainer ssecEQA", width=20, font=("bold", 10))
+        self.label_trainerssecEQA.place(x=80, y=450)
+
+        # label_CRN_ttp = CreateToolTip(label_courseVac, tooltipDescription["CourseReferenceNumber"])
+
+        self.entry_trainerssecEQA = Entry(self)
+        self.entry_trainerssecEQA.place(x=250, y=450)
+
+
+        self.label_trainerssecEQAdescription = Label(self, text="Trainer description", width=20, font=("bold", 10))
+        self.label_trainerssecEQAdescription.place(x=80, y=475)
+
+        # label_CRN_ttp = CreateToolTip(label_courseVac, tooltipDescription["CourseReferenceNumber"])
+
+        self.entry_trainerssecEQAdescription = Entry(self)
+        self.entry_trainerssecEQAdescription.place(x=250, y=475)
+
+        addssecEqasButton = tk.Button(self, text="add ssecEQA", bg="white", width=10, pady=5,
+                               command=lambda: addssecCallback()
+                               )
+        addssecEqasButton.place(relx=0.5, rely=0.70, anchor=CENTER)
+
+        def addssecCallback():
+            payloadToEdit = updateCourseRunPagePreview.payload
+            payloadToEdit= json.loads(payloadToEdit)
+            ssecEQAtemplate = {
+                "code":self.entry_trainerssecEQA.get(),
+                "description":self.entry_trainerssecEQAdescription.get()
+            }
+            
+            self.ssecList.append(ssecEQAtemplate)
+            updateCourseRunPagePreview.payload = json.dumps(payloadToEdit, indent = 4)
+            self.entry_trainerssecEQA.delete(0, 'end')
+            self.entry_trainerssecEQAdescription.delete(0, 'end')
+            print(self.ssecList)
+
+
+        def callback():
             
             updateCourseRunPagePreview.refresh(controller.frames[updateCourseRunPagePreview].curlText)
             controller.show_frame(updateCourseRunPagePreview)
@@ -662,52 +982,60 @@ class updateCourseRunPagePage3(tk.Frame):
         def addCallback():
             payloadToEdit = updateCourseRunPagePreview.payload
             payloadToEdit= json.loads(payloadToEdit)
-            
-            priVenue = self.tkvar_PriVenue.get() if self.tkvar_PriVenue.get() != 'Select an Option' else ''
-            wheelChair = self.tkvar_Wheelchair.get() if self.tkvar_PriVenue.get() != 'Select an Option' else ''
-
-            if self.tkvar.get() == 'Update':
-                sessionId = self.entry_sessionIdUpdate.get() 
-            elif self.tkvar.get() == 'Delete':
-                sessionId = self.entry_sessionId.get() 
+            if self.tkvar_inTrainingProviderProfile.get() == 'Select an Option':
+                result = ''
             else:
-                sessionId = ""
+                result = self.tkvar_inTrainingProviderProfile.get()
 
-            sessionObjectTemplate = {
-                "action":self.tkvar.get(),
-                "endDate":self.entry_SessionEndDate.get(),
-                "endTime":self.entry_SessionEndTime.get(),
-                "sessionId":sessionId,
-                "startDate":self.entry_SessionStartDate.get(),
-                "startTime":self.entry_SessionStartTime.get(),
-                "modeOfTraining":self.entry_ModeOfTraining.get(),
-                "venue":{
-                    "room":self.entry_SessionVenueRoom.get(),
-                    "unit":self.entry_SessionVenueUnit.get(),
-                    "block":self.entry_SessionVenueBlock.get(),
-                    "floor":self.entry_SessionVenueFloor.get(),
-                    "street":self.entry_SessionVenueStreet.get(),
-                    "building":self.entry_SessionVenueBuilding.get(),
-                    "postalCode":self.entry_SessionVenuePostalCode.get(),
-                    "primaryVenue":priVenue,
-                    "wheelChairAccess":wheelChair
+            try:
+                trainerList = payloadToEdit["course"]['run']["linkCourseRunTrainer"]
+            except:
+                trainerList = []
+
+            trainerObjectTemplate = {
+                "trainer": {
+                "name": self.entry_trainerName.get(),
+                "email": self.entry_trainerEmail.get(),
+                "indexNumber": self.index,
+                "trainerType": {
+                    "code": self.entry_trainerTypeCode.get(),
+                    "description": self.entry_trainerTypeDescription.get()
+                    }
                 }
             }
 
-            # print(payloadToEdit['course']['run']['sessions'])
-            payloadToEdit['course']['run']['sessions'].append(sessionObjectTemplate)
+            if (self.entry_trainerId.get() != ''):
+                trainerObjectTemplate["trainer"]["id"] = self.entry_trainerId.get()
+            if (self.entry_trainerExperience.get() != ''):
+                trainerObjectTemplate["trainer"]["experience"] = self.entry_trainerExperience.get()
+            if (self.entry_trainerlinkedInUrl.get() != ''):
+                trainerObjectTemplate["trainer"]["linkedInURL"] = self.entry_trainerlinkedInUrl.get()
+            if (self.entry_trainerdomainAreaOfPractice.get() != ''):
+                trainerObjectTemplate["trainer"]["domainAreaOfPractice"] = self.entry_trainerdomainAreaOfPractice.get()
+            if (self.entry_trainersalutationId.get() != ''):
+                trainerObjectTemplate["trainer"]["salutationId"] = self.entry_trainersalutationId.get()
+            if (result != ''):
+                trainerObjectTemplate["trainer"]["inTrainingProviderProfile"] = result
+            if (self.ssecList != []):
+                trainerObjectTemplate["trainer"]["linkedSsecEQAs"] = self.ssecList
+
+            # print(trainerObjectTemplate)
+            trainerList.append(trainerObjectTemplate)
+            payloadToEdit['course']['run']['linkCourseRunTrainer'] = trainerList
             updateCourseRunPagePreview.payload = json.dumps(payloadToEdit, indent = 4)
             # print(updateCourseRunPagePreview.payload)
             tkinter.messagebox.showinfo(title="Success", message="Session successfully added")
-            previewButton.place(relx=0.7, rely=0.95, anchor=CENTER)
+            self.ssecList = []
+            self.index = self.index + 1
             
         backButton = tk.Button(self, text="Back", bg="white", width=10, pady=5,
-                               command=lambda: controller.show_frame(updateCourseRunPagePage2)
+                               command=lambda: controller.show_frame(updateCourseRunPagePage3)
                                )
         backButton.place(relx=0.055, rely=0.021, anchor=CENTER)
         addButton = tk.Button(self, text="Add", bg="white", width=15, pady=5, command=lambda: addCallback())
-        addButton.place(relx=0.3, rely=0.95, anchor=CENTER)
+        addButton.place(relx=0.3, rely=0.85, anchor=CENTER)
         previewButton = tk.Button(self, text="Next", bg="white", width=15, pady=5, command=lambda: callback())
+        previewButton.place(relx=0.7, rely=0.85, anchor=CENTER)
         
 
 
