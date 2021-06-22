@@ -93,17 +93,19 @@ class APIProject(tk.Tk):
 
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, *kwargs)
-        container = tk.Frame(self)
+        self.container = tk.Frame(self)
 
-        container.pack(side="top", fill="both", expand=True)
+        self.container.pack(side="top", fill="both", expand=True)
 
-        container.grid_rowconfigure(0, weight=1)
-        container.grid_columnconfigure(0, weight=1)
+        self.container.grid_rowconfigure(0, weight=1)
+        self.container.grid_columnconfigure(0, weight=1)
         
 
         self.frames = {}
-        for F in (getCourseSessionPage, updateCourseRunPagePreview,updateCourseRunPagePage2,updateCourseRunPagePage3,updateCourseRunPagePage4,updateCourseRunPageFormFileUpload, updateCourseRunPageSelect, addCourseRunPageFormFileUpload,addCourseRunPageForm,addCourseRunPageOptional, addCourseRunPageSelect, viewCourseRunPage, deleteCourseRunPage, StartPage):
-            frame = F(container, self)
+        self.frameList = [getCourseSessionPage, updateCourseRunPagePreview,updateCourseRunPagePage2,updateCourseRunPagePage3,updateCourseRunPagePage4,updateCourseRunPageFormFileUpload, updateCourseRunPageSelect, addCourseRunPageFormFileUpload,addCourseRunPageForm,addCourseRunPageOptional, addCourseRunPageSelect, viewCourseRunPage, deleteCourseRunPage, StartPage]
+        for F in self.frameList:
+            # print(F)
+            frame = F(self.container, self)
 
             self.frames[F] = frame
 
@@ -156,10 +158,21 @@ class APIProject(tk.Tk):
             top2.transient(self)
             top2.grab_set()
             self.wait_window(top2)
+
+        def recreateFrame(classObject):
+            frame = classObject(self.container, self)
+            self.frames[classObject] = frame
+            frame.grid(row=0, column=0, sticky="nsew")
+        def reInitialiseFrame(FrameName):
+            recreateFrame(FrameName)
+            self.show_frame(FrameName)
+            
+
     
     def show_frame(self, cont):
         frame = self.frames[cont]
         frame.tkraise()   
+
 
 
 # ViewCourseRun Page
@@ -180,11 +193,11 @@ class viewCourseRunPage(tk.Frame):
         label_0 = Label(self, text="View Course Run", width=20, font=("bold", 20))
         label_0.place(x=90, y=53)
 
-        label_1 = Label(self, text="Course Run ID", width=20, font=("bold", 10))
-        label_1.place(x=80, y=130)
+        label_1 = Label(self, text="Course Run ID", width=20, font=("bold", 10), anchor='w')
+        label_1.place(x=105, y=130)
         label_1_ttp = CreateToolTip(label_1, ttDescription["CourseRunId"])
         entry_1 = Entry(self)
-        entry_1.place(x=240, y=130)
+        entry_1.place(x=275, y=130)
         #This method is used to update the display information dynamically in "Payload" Tab whenever user key in a value
         def typing(event):
             value = curlGetRequestViewCourseRun(entry_1.get())
@@ -322,19 +335,19 @@ class deleteCourseRunPage(tk.Frame):
         label_0.place(x=90, y=53)
 
         #Course Run Id
-        label_1 = Label(self, text="Course Run ID: ", width=20, font=("bold", 10), anchor='w')
-        label_1.place(x=80, y=100)
+        label_1 = Label(self, text="Course Run ID ", width=20, font=("bold", 10), anchor='w')
+        label_1.place(x=105, y=100)
 
         entry_1 = Entry(self)
-        entry_1.place(x=240, y=100)
+        entry_1.place(x=275, y=100)
         label_1_ttp = CreateToolTip(label_1, ttDescription["CourseRunId"])
 
         #Course Ref Number
         label_CRN = Label(self, text="Course Reference Number", width=20, font=("bold", 10), anchor='w')
-        label_CRN.place(x=80, y=130)
+        label_CRN.place(x=105, y=130)
 
         entry_CRN = Entry(self)
-        entry_CRN.place(x=240, y=130)
+        entry_CRN.place(x=275, y=130)
 
         label_CRN_ttp = CreateToolTip(label_CRN, ttDescription["CourseReferenceNumber"])
 
