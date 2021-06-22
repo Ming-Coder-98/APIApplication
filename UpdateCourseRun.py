@@ -826,7 +826,7 @@ class updateCourseRunPagePage3(tk.Frame):
         previewButton = tk.Button(self, text="Next", bg="white", width=15, pady=5, command=lambda: callback())
         previewButton.place(relx=0.7, rely=0.85, anchor=CENTER)
 
-#Page 3 for Update Course Run - Sessions
+#Page 3 for Update Course Run - Trainers
 class updateCourseRunPagePage4(tk.Frame):
 
     def __init__(self, parent, controller):

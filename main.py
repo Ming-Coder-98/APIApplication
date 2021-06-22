@@ -7,7 +7,7 @@ from AssessmentFunction import addAssessment
 from EnrolmentFunction import addEnrolment, enrollmentInitialization
 from AttendanceFunction import uploadAttendance
 from courseRunFunctions import curlGetRequestViewCourseRun, curlPostRequest, deleteCourserun, getCourseRun, getDeleteCourseRunPayLoad
-from AddCourseRun import addCourseRunPageForm, addCourseRunPageFormFileUpload, addCourseRunPageSelect, addCourseRunPageOptional
+from AddCourseRun import addCourseRunPageForm, addCourseRunPageFormFileUpload, addCourseRunPage1, addCourseRunPage2, addCourseRunPage3, addCourseRunPage4
 
 from HttpRequestFunction import getHttpRequest, loadFile, saveJsonFormat
 import tkinter as tk
@@ -102,7 +102,7 @@ class APIProject(tk.Tk):
         
 
         self.frames = {}
-        for F in (getCourseSessionPage, updateCourseRunPagePreview,updateCourseRunPagePage2,updateCourseRunPagePage3,updateCourseRunPagePage4,updateCourseRunPageFormFileUpload, updateCourseRunPageSelect, addCourseRunPageFormFileUpload,addCourseRunPageForm,addCourseRunPageOptional, addCourseRunPageSelect, viewCourseRunPage, deleteCourseRunPage, StartPage):
+        for F in (getCourseSessionPage, updateCourseRunPagePreview,updateCourseRunPagePage2,updateCourseRunPagePage3,updateCourseRunPagePage4,updateCourseRunPageFormFileUpload, updateCourseRunPageSelect, addCourseRunPageFormFileUpload,addCourseRunPageForm,addCourseRunPage4,addCourseRunPage3,addCourseRunPage2, addCourseRunPage1, viewCourseRunPage, deleteCourseRunPage, StartPage):
             frame = F(container, self)
 
             self.frames[F] = frame
@@ -119,7 +119,7 @@ class APIProject(tk.Tk):
 
         courseMenu = Menu(menubar, tearoff=0)  
         courseMenu.add_command(label="View Course Run",command=lambda: self.show_frame(viewCourseRunPage))
-        courseMenu.add_command(label="Add Course Run",command=lambda:self.show_frame(addCourseRunPageSelect))
+        courseMenu.add_command(label="Add Course Run",command=lambda:self.show_frame(addCourseRunPage1))
         courseMenu.add_command(label="Delete Course Run",command=lambda: self.show_frame(deleteCourseRunPage)) 
         courseMenu.add_command(label="Update Course Run",command=lambda: self.show_frame(updateCourseRunPageSelect))  
         courseMenu.add_command(label="Course Session",command=lambda: self.show_frame(getCourseSessionPage))   
