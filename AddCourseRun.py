@@ -1112,9 +1112,10 @@ class addCourseRunPage4(tk.Frame):
             payloadToEdit = addCourseRunPageForm.payload
             payloadToEdit = json.loads(payloadToEdit)
             del(payloadToEdit["course"]["runs"][0]["linkCourseRunTrainer"])
-            #print(payloadToEdit)
+            ##print(payloadToEdit)
             addCourseRunPageForm.payload = json.dumps(payloadToEdit, indent=4)
             tkinter.messagebox.showinfo(title="Success", message="All trainers successfully cleared")
+
 
 
         backButton = tk.Button(self, text="Back", bg="white", width=15, pady=5,
