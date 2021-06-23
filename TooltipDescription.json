@@ -24,7 +24,7 @@
     "PostalCode": "Information of Postal Code is required if Mode of training is 2 or 4.\nExample: 123455",
     "WheelChairAccess": "Indication if the course run location is wheel chair accessible\nExample: true",
 
-
+    "SessionId":"",
     "SessionStartDate":"Start Date should not be later than End Date \nExample: 20210616(YYYYMMDD) ",
     "SessionStartTime":"Start time should not be later than End Time if session is on the same day.\nExample: 17:30 (HH:MM)",
     "SessionEndDate":"End Date should not be earlier than Start Date \nExample: 20210621(YYYYMMDD) ",
