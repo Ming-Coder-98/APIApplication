@@ -964,7 +964,7 @@ class addCourseRunPage3(tk.Frame):
             priVenue = self.options_PrimaryVenue.get() if self.options_PrimaryVenue.get() != 'Select an Option' else ''
             wheelChair = self.options_Wheelchair.get() if self.options_Wheelchair.get() != 'Select an Option' else ''
             try:
-                sessionList = payloadToEdit["course"]["run"]["sessions"]
+                sessionList = payloadToEdit["course"]["run"][0]["sessions"]
             except:
                 sessionList = []
 
