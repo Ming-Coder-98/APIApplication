@@ -31,7 +31,7 @@ with open("TooltipDescription.json") as f:
 class addCourseRunPageForm(tk.Frame):
     def refresh(text):
         text.delete("1.0","end")
-        text.insert(tk.END, addCourseRunPageForm.payload)
+        text.insert(tk.END, str(curlPostRequest("",addCourseRunPageForm.payload)))
 
     def __init__(self, parent, controller):
 
@@ -66,7 +66,7 @@ class addCourseRunPageForm(tk.Frame):
         tabControl.place(width=440, height=460, x=30, y=222)
 
         self.curlText = scrolledtext.ScrolledText(tab2, width=70, height=30)
-        self.curlText.insert(tk.END, str(curlPostRequest("", "")))
+        # self.curlText.insert(tk.END, str(curlPostRequest("", "")))
         self.curlText.place(height=405, width=440, y=20)
         self.curlText.bind("<Key>", lambda e: "break")
 

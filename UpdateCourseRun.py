@@ -75,7 +75,7 @@ class updateCourseRunPagePreview(tk.Frame):
 
         responseText = scrolledtext.ScrolledText(tab3, width=70, height=30)
         responseText.place(height=405, width=440, y=20)
-        # responseText.bind("<Key>", lambda e: "break")
+        responseText.bind("<Key>", lambda e: "break")
             
         submitButton = tk.Button(self, text="Update", bg="white", width=25, pady=5, command=lambda: submitCallBack())
         submitButton.place(relx=0.5, rely=0.17, anchor=CENTER)
@@ -106,19 +106,9 @@ class updateCourseRunPagePreview(tk.Frame):
 
         def submitCallBack():
             responseText.delete("1.0","end")
-            print(updateCourseRunPagePreview.payload)
-            print(updateCourseRunPagePreview.runIdEntered)
             resp = updateCourserun(updateCourseRunPagePreview.runIdEntered,updateCourseRunPagePreview.payload)
             textPayload = StringVar(self, value = resp.text) 
             responseText.insert(INSERT,textPayload.get())
-            # if (not resp.status_code <400):
-            #     updateCourseRunPagePreview.payload = {}
-            #     updateCourseRunPagePreview.payload["course"] = {}
-            #     updateCourseRunPagePreview.payload["course"]["trainingProvider"] = {}
-            #     updateCourseRunPagePreview.payload["course"]["run"] = {}
-            #     updateCourseRunPagePreview.payload["course"]["run"]["registrationDates"] = {}
-            #     updateCourseRunPagePreview.payload["course"]["run"]["courseDates"] = {}
-            #     updateCourseRunPagePreview.payload["course"]["run"]["scheduleInfoType"] = {}
 
         # This method is used to search the response text and highlight the searched word in red
         def find(method):
@@ -315,9 +305,7 @@ class updateCourseRunPageSelect(tk.Frame):
         def retrieveCallBack():
             if (self.entry_runId.get() != ''):
                 resp = getCourseRun(self.entry_runId.get())
-                print("test")
                 if (resp.status_code<400):
-                    print("test2")
                     respObject = resp.json()
                     entry_CRN.delete("0","end")
                     entry_CRN.insert(tk.END, respObject['data']['course']['referenceNumber'])
@@ -362,7 +350,6 @@ class updateCourseRunPageSelect(tk.Frame):
                         controller.frames[updateCourseRunPagePage2].entry_venuePostalCode.delete("0","end")
                         controller.frames[updateCourseRunPagePage2].entry_venuePostalCode.insert(tk.END, respObject['data']['course']['run']['venue']['postalCode'])
                     else:
-                        print("test2")
                         controller.frames[updateCourseRunPagePage2].label_venueRoom['text'] = "Venue - Room"
                         controller.frames[updateCourseRunPagePage2].label_venueUnit['text'] = "Venue - Unit"
                         controller.frames[updateCourseRunPagePage2].label_venueFloor['text'] = "Venue - Floor"
@@ -386,15 +373,18 @@ class updateCourseRunPageSelect(tk.Frame):
             uen_number = config_uenJson["UEN"]
             # self.courseRunInfoPythonObject["course"]["trainingProvider"]["uen"] = uen_number
             self.payload = json.loads(updateCourseRunPagePreview.payload)
+            print(updateCourseRunPagePreview.payload)
             # self.payload = updateCourseRunPagePreview.payload
 
-            #Create the required field
-            self.payload["course"] = {}
+            #Check if the Key-Value Pair exists, if not create a new object
+            try:
+                self.payload["course"]
+            except:
+                self.payload["course"] = {}
+                self.payload["course"]["run"] = {}
+
             self.payload["course"]["trainingProvider"] = {}
-            self.payload["course"]["run"] = {}
             self.payload["course"]["trainingProvider"]["uen"] = uen_number
-            
-            
 
             if modeOfTraining.get() != 'Select An Option':
                 self.payload["course"]["run"]["modeOfTraining"] = modeOfTraining.get()[0]
@@ -561,9 +551,10 @@ class updateCourseRunPagePage2(tk.Frame):
         options_Wheelchair.place(x=270, y=390)
         def storeAndsave_all():
 
-
+            print(updateCourseRunPagePreview.payload)
             payloadToEdit = updateCourseRunPagePreview.payload
             payloadToEdit= json.loads(payloadToEdit)
+            
 
             if self.courseVacCode.get() != 'Select An Option' or self.entry_courseVacDescription.get() != '':
                 payloadToEdit['course']['run']['courseVacancy'] = {}
