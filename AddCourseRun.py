@@ -808,7 +808,6 @@ class addCourseRunPage3(tk.Frame):
         def addCallback():
             payloadToEdit = addCourseRunPageForm.payload
             payloadToEdit = json.loads(payloadToEdit)
-
             priVenue = self.options_PrimaryVenue.get() if self.options_PrimaryVenue.get() != 'Select an Option' else ''
             wheelChair = self.options_Wheelchair.get() if self.options_Wheelchair.get() != 'Select an Option' else ''
             try:
@@ -822,7 +821,6 @@ class addCourseRunPage3(tk.Frame):
                 "endTime": self.entry_SessionEndTime.get(),
                 "endDate": self.entry_SessionEndDate.get(),
                 "startTime": self.entry_SessionStartTime.get(),
-                "modeOfTraining": self.modeOfTraining.get()[0],
                 "venue": {
                     "room": self.entry_SessionVenueRoom.get(),
                     "floor": self.entry_SessionVenueFloor.get(),
@@ -840,6 +838,8 @@ class addCourseRunPage3(tk.Frame):
                 sessionObjectTemplate["venue"]["primaryVenue"] = True if priVenue == 'True' else False
             if wheelChair != '':
                 sessionObjectTemplate["venue"]["wheelChairAccess"] = True if wheelChair == 'True' else False
+            if self.modeOfTraining.get() != 'Select An Option':
+                sessionObjectTemplate["modeOfTraining"] = self.modeOfTraining.get()[0]
 
                 # print(payloadToEdit['course']['run']['sessions'])
             sessionList.append(sessionObjectTemplate)
@@ -869,9 +869,19 @@ class addCourseRunPage3(tk.Frame):
         def backcallback():
             controller.show_frame(addCourseRunPage2)
 
+        def resetSessions():
+            payloadToEdit = addCourseRunPageForm.payload
+            payloadToEdit = json.loads(payloadToEdit)
+            del(payloadToEdit["course"]["runs"][0]["sessions"])
+            #print(payloadToEdit)
+            addCourseRunPageForm.payload = json.dumps(payloadToEdit, indent=4)
+            tkinter.messagebox.showinfo(title="Success", message="All sessions successfully cleared")
+
 
         backButton = tk.Button(self, text="Back", bg="white", width=15, pady=5,command=lambda: backcallback())
         backButton.place(relx=0.35, rely=0.86, anchor=CENTER)
+        resetButton = tk.Button(self, text="Reset", bg="white", width=15, pady=5,command=lambda: resetSessions())
+        resetButton.place(relx=0.5, rely=0.92, anchor=CENTER)
         addButton = tk.Button(self, text="Add Sessions", bg="white", width=15, pady=5, command=lambda: addCallback())
         addButton.place(relx=0.5, rely=0.80, anchor=CENTER)
         previewButton = tk.Button(self, text="Next", bg="white", width=15, pady=5, command=lambda: callback())
@@ -1098,9 +1108,21 @@ class addCourseRunPage4(tk.Frame):
             trainersalutationId.current(0)
             inTrainingProviderProfile.current(0)
 
+        def resetTrainers():
+            payloadToEdit = addCourseRunPageForm.payload
+            payloadToEdit = json.loads(payloadToEdit)
+            del(payloadToEdit["course"]["runs"][0]["linkCourseRunTrainer"])
+            ##print(payloadToEdit)
+            addCourseRunPageForm.payload = json.dumps(payloadToEdit, indent=4)
+            tkinter.messagebox.showinfo(title="Success", message="All trainers successfully cleared")
+
+
+
         backButton = tk.Button(self, text="Back", bg="white", width=15, pady=5,
                                command=lambda: controller.show_frame(addCourseRunPage3))
         backButton.place(relx=0.35, rely=0.86, anchor=CENTER)
+        resetButton = tk.Button(self, text="Reset", bg="white", width=15, pady=5,command=lambda: resetTrainers())
+        resetButton.place(relx=0.5, rely=0.92, anchor=CENTER)
         addButton = tk.Button(self, text="Add Trainers", bg="white", width=15, pady=5, command=lambda: addCallback())
         addButton.place(relx=0.5, rely=0.80, anchor=CENTER)
         previewButton = tk.Button(self, text="Next", bg="white", width=15, pady=5, command=lambda: callback())
