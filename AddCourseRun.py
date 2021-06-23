@@ -915,7 +915,7 @@ class addCourseRunPage3(tk.Frame):
         self.label_SessionVenuePostalCode.place(x=0, y=300)
         # label_CRN_ttp = CreateToolTip(label_courseVac, tooltipDescription["CourseReferenceNumber"])
         self.options_PrimaryVenue = ttk.Combobox(AddFrame, width=17, state="readonly")
-        self.options_PrimaryVenue['values'] = ["Select An Option",
+        self.options_PrimaryVenue['values'] = ["Select an Option",
                                                "True",
                                                "False"]
         self.options_PrimaryVenue.current(0)
@@ -925,7 +925,7 @@ class addCourseRunPage3(tk.Frame):
         self.label_SessionVenuePostalCode.place(x=0, y=325)
         # label_CRN_ttp = CreateToolTip(label_courseVac, tooltipDescription["CourseReferenceNumber"])
         self.options_Wheelchair = ttk.Combobox(AddFrame, width=17, state="readonly")
-        self.options_Wheelchair['values'] = ["Select An Option",
+        self.options_Wheelchair['values'] = ["Select an Option",
                                              "True",
                                              "False"]
         self.options_Wheelchair.current(0)

@@ -21,20 +21,20 @@ class getCourseSessionPage(tk.Frame):
         label_0 = Label(self, text="View Course Sessions", width=20, font=("bold", 20))
         label_0.place(x=90, y=23)
 
-        label_runId = Label(self, text="Course Run ID", width=20, font=("bold", 10))
-        label_runId.place(x=90, y=90)
+        label_runId = Label(self, text="Course Run ID", width=20, font=("bold", 10), anchor='w')
+        label_runId.place(x=105, y=90)
         entry_runId = Entry(self)
-        entry_runId.place(x=260, y=90)
+        entry_runId.place(x=275, y=90)
 
-        label_CRN = Label(self, text="Course References Number", width=20, font=("bold", 10))
-        label_CRN.place(x=90, y=120)
+        label_CRN = Label(self, text="Course References Number", width=20, font=("bold", 10), anchor='w')
+        label_CRN.place(x=105, y=120)
         entry_CRN = Entry(self)
-        entry_CRN.place(x=260, y=120)
+        entry_CRN.place(x=275, y=120)
 
-        label_sessionMonth = Label(self, text="Session Month (Optional)", width=20, font=("bold", 10))
-        label_sessionMonth.place(x=90, y=150)
+        label_sessionMonth = Label(self, text="Session Month (Optional)", width=20, font=("bold", 10), anchor='w')
+        label_sessionMonth.place(x=105, y=150)
         entry_sessionMonth = Entry(self)
-        entry_sessionMonth.place(x=260, y=150)
+        entry_sessionMonth.place(x=275, y=150)
 
         #This method is used to update the display information dynamically in "Payload" Tab whenever user key in a value
         def typing(event):
