@@ -76,14 +76,6 @@ class updateCourseRunPagePreview(tk.Frame):
         responseText = scrolledtext.ScrolledText(tab3, width=70, height=30)
         responseText.place(height=405, width=440, y=20)
         # responseText.bind("<Key>", lambda e: "break")
-
-        def submitCallBack():
-            responseText.delete("1.0","end")
-            print(updateCourseRunPagePreview.payload)
-            print(updateCourseRunPagePreview.runIdEntered)
-            resp = updateCourserun(updateCourseRunPagePreview.runIdEntered,updateCourseRunPagePreview.payload)
-            textPayload = StringVar(self, value = resp.text) 
-            responseText.insert(INSERT,textPayload.get())
             
         submitButton = tk.Button(self, text="Update", bg="white", width=25, pady=5, command=lambda: submitCallBack())
         submitButton.place(relx=0.5, rely=0.17, anchor=CENTER)
@@ -111,6 +103,22 @@ class updateCourseRunPagePreview(tk.Frame):
         butt_resp = Button(tab3, text='Find', command=lambda: find("resp"), highlightthickness=0, bd=0,
                            background="gray")
         butt_resp.place(x=380, y=0, height=21, width=60)
+
+        def submitCallBack():
+            responseText.delete("1.0","end")
+            print(updateCourseRunPagePreview.payload)
+            print(updateCourseRunPagePreview.runIdEntered)
+            resp = updateCourserun(updateCourseRunPagePreview.runIdEntered,updateCourseRunPagePreview.payload)
+            textPayload = StringVar(self, value = resp.text) 
+            responseText.insert(INSERT,textPayload.get())
+            # if (not resp.status_code <400):
+            #     updateCourseRunPagePreview.payload = {}
+            #     updateCourseRunPagePreview.payload["course"] = {}
+            #     updateCourseRunPagePreview.payload["course"]["trainingProvider"] = {}
+            #     updateCourseRunPagePreview.payload["course"]["run"] = {}
+            #     updateCourseRunPagePreview.payload["course"]["run"]["registrationDates"] = {}
+            #     updateCourseRunPagePreview.payload["course"]["run"]["courseDates"] = {}
+            #     updateCourseRunPagePreview.payload["course"]["run"]["scheduleInfoType"] = {}
 
         # This method is used to search the response text and highlight the searched word in red
         def find(method):
@@ -252,7 +260,7 @@ class updateCourseRunPageSelect(tk.Frame):
         label_CourseModeOfTraining.place(x=100, y=460)
 
         # label_CourseEndDate_ttp = CreateToolTip(label_CourseEndDate, tooltipDescription["CourseEndDate"])
-        modeOfTraining = ttk.Combobox(self, width = 17,state="readonly")
+        modeOfTraining = ttk.Combobox(self, width = 21,state="readonly")
         modeOfTraining['values'] = ["Select An Option",
                      "1. Classroom",
                      "2. Asynchronous eLearning",
@@ -307,8 +315,9 @@ class updateCourseRunPageSelect(tk.Frame):
         def retrieveCallBack():
             if (self.entry_runId.get() != ''):
                 resp = getCourseRun(self.entry_runId.get())
-                
+                print("test")
                 if (resp.status_code<400):
+                    print("test2")
                     respObject = resp.json()
                     entry_CRN.delete("0","end")
                     entry_CRN.insert(tk.END, respObject['data']['course']['referenceNumber'])
@@ -361,9 +370,8 @@ class updateCourseRunPageSelect(tk.Frame):
                 messagebox.showerror(title="Error", message="Unable to retrieve Information - Run Id cannot be empty")
 
 
-        #Initialies the file and object first in order to prevent clearing of data
-        # updateCourseRunPagePreview.payload = loadFile("EmptyUpdateCourseRunPayLoad.json")
-        updateCourseRunPagePreview.payload = "{}"
+        #Initialies the empty payload first in order to prevent clearing of data
+        # updateCourseRunPagePreview.payload = '{}'
         def storeAndsave_all():
             # load config File
             uen_Info = loadFile("config.json")
@@ -371,6 +379,7 @@ class updateCourseRunPageSelect(tk.Frame):
             uen_number = config_uenJson["UEN"]
             # self.courseRunInfoPythonObject["course"]["trainingProvider"]["uen"] = uen_number
             self.payload = json.loads(updateCourseRunPagePreview.payload)
+            # self.payload = updateCourseRunPagePreview.payload
 
             #Create the required field
             self.payload["course"] = {}
@@ -553,10 +562,10 @@ class updateCourseRunPagePage2(tk.Frame):
             # print(payloadToEdit)
             return str(json.dumps(payloadToEdit,indent=4))
 
-        backButton = tk.Button(self, text="Back", bg="white", width=10, pady=5,
+        backButton = tk.Button(self, text="Back", bg="white", width=15, pady=5,
                                command=lambda: controller.show_frame(updateCourseRunPageSelect)
                                )
-        backButton.place(relx=0.055, rely=0.021, anchor=CENTER)
+        backButton.place(relx=0.35, rely=0.86, anchor=CENTER)
 
         def callback():
 
@@ -566,11 +575,12 @@ class updateCourseRunPagePage2(tk.Frame):
             # updateCourseRunPagePreview.refresh(controller.frames[updateCourseRunPagePreview].curlText)
             controller.show_frame(updateCourseRunPagePage3)
 
-        previewButton = tk.Button(self, text="Next", bg="white", width=25, pady=5, command=lambda: callback())
-        previewButton.place(x=250, y=640, anchor=CENTER)
+        nextButton = tk.Button(self, text="Next", bg="white", width=15, pady=5, command=lambda: callback())
+        nextButton.place(relx=0.65, rely=0.86, anchor=CENTER)
 
 #Page 3 for Update Course Run - Sessions
 class updateCourseRunPagePage3(tk.Frame):
+    sessionSeqNumber = 0
     def deleteFrameInit(self, deleteFrame):
 
         load = Image.open("SKFBGPage.JPG")
@@ -581,7 +591,7 @@ class updateCourseRunPagePage3(tk.Frame):
         img2.image = render
         img2.place(x=0, y=0, relwidth=1, relheight=1)
 
-        self.label_sessionId = Label(deleteFrame, text="Session Id*", width=20, font=("bold", 10))
+        self.label_sessionId = Label(deleteFrame, text="Session Id*", width=20, font=("bold", 10), anchor='w')
         self.label_sessionId.place(x=0, y=0)
 
         self.entry_sessionId = Entry(deleteFrame)
@@ -589,7 +599,7 @@ class updateCourseRunPagePage3(tk.Frame):
 
     def updateFrame(self,updateFrame):
         # self.addFrame(updateFrame)        
-        self.label_sessionId= Label(updateFrame, text="Session Id*", width=20, font=("bold", 10))
+        self.label_sessionId= Label(updateFrame, text="Session Id*", width=20, font=("bold", 10), anchor='w')
         self.label_sessionId.place(x=0, y=0)
         # label_CRN_ttp = CreateToolTip(label_courseVac, tooltipDescription["CourseReferenceNumber"])
         self.entry_sessionIdUpdate = Entry(updateFrame)
@@ -606,11 +616,11 @@ class updateCourseRunPagePage3(tk.Frame):
         img2.image = render
         img2.place(x=0, y=0, relwidth=1, relheight=1)
 
-        label_ModeOfTraining = Label(AddFrame, text="Mode of Training*", width=20, font=("bold", 10))
+        label_ModeOfTraining = Label(AddFrame, text="Mode of Training*", width=20, font=("bold", 10), anchor='w')
         label_ModeOfTraining.place(x=0, y=0)
         # label_CRN_ttp = CreateToolTip(label_courseVac, tooltipDescription["CourseReferenceNumber"])
 
-        self.modeOfTraining = ttk.Combobox(AddFrame, width = 17,state="readonly")
+        self.modeOfTraining = ttk.Combobox(AddFrame, width = 21,state="readonly")
         self.modeOfTraining['values'] = ["Select An Option",
                      "1. Classroom",
                      "2. Asynchronous eLearning",
@@ -624,84 +634,74 @@ class updateCourseRunPagePage3(tk.Frame):
         self.modeOfTraining.current(0)
         self.modeOfTraining.place(x=170, y=0)
 
-
-        self.label_SessionStartDate = Label(AddFrame, text="Session Start Date*", width=20, font=("bold", 10))
+        self.label_SessionStartDate = Label(AddFrame, text="Session Start Date*", width=20, font=("bold", 10), anchor='w')
         self.label_SessionStartDate.place(x=0, y=25)
         # label_CRN_ttp = CreateToolTip(label_courseVac, tooltipDescription["CourseReferenceNumber"])
         self.entry_SessionStartDate = Entry(AddFrame)
         self.entry_SessionStartDate.place(x=170, y=25)
 
-        self.label_SessionEndDate = Label(AddFrame, text="Session End Date*", width=20, font=("bold", 10))
+        self.label_SessionEndDate = Label(AddFrame, text="Session End Date*", width=20, font=("bold", 10), anchor='w')
         self.label_SessionEndDate.place(x=0, y=50)
         # label_CRN_ttp = CreateToolTip(label_courseVac, tooltipDescription["CourseReferenceNumber"])
         self.entry_SessionEndDate = Entry(AddFrame)
         self.entry_SessionEndDate.place(x=170, y=50)
 
-        self.label_SessionStartTime = Label(AddFrame, text="Session Start Time*", width=20, font=("bold", 10))
+        self.label_SessionStartTime = Label(AddFrame, text="Session Start Time*", width=20, font=("bold", 10), anchor='w')
         self.label_SessionStartTime.place(x=0, y=75)
         # label_CRN_ttp = CreateToolTip(label_courseVac, tooltipDescription["CourseReferenceNumber"])
         self.entry_SessionStartTime = Entry(AddFrame)
         self.entry_SessionStartTime.place(x=170, y=75)
 
-        self.label_SessionEndTime = Label(AddFrame, text="Session End Time*", width=20, font=("bold", 10))
+        self.label_SessionEndTime = Label(AddFrame, text="Session End Time*", width=20, font=("bold", 10), anchor='w')
         self.label_SessionEndTime.place(x=0, y=100)
         # label_CRN_ttp = CreateToolTip(label_courseVac, tooltipDescription["CourseReferenceNumber"])
         self.entry_SessionEndTime = Entry(AddFrame)
         self.entry_SessionEndTime.place(x=170, y=100)
 
-        self.label_SessionVenueRoom = Label(AddFrame, text="Venue Room*", width=20, font=("bold", 10))
+        self.label_SessionVenueRoom = Label(AddFrame, text="Venue Room*", width=20, font=("bold", 10), anchor='w')
         self.label_SessionVenueRoom.place(x=0, y=125)
         # label_CRN_ttp = CreateToolTip(label_courseVac, tooltipDescription["CourseReferenceNumber"])
         self.entry_SessionVenueRoom = Entry(AddFrame)
         self.entry_SessionVenueRoom.place(x=170, y=125)
 
-        self.label_SessionVenueUnit= Label(AddFrame, text="Venue Unit*", width=20, font=("bold", 10))
+        self.label_SessionVenueUnit= Label(AddFrame, text="Venue Unit*", width=20, font=("bold", 10), anchor='w')
         self.label_SessionVenueUnit.place(x=0, y=150)
         # label_CRN_ttp = CreateToolTip(label_courseVac, tooltipDescription["CourseReferenceNumber"])
         self.entry_SessionVenueUnit = Entry(AddFrame)
         self.entry_SessionVenueUnit.place(x=170, y=150)
 
-        self.label_SessionVenueFloor= Label(AddFrame, text="Venue Floor*", width=20, font=("bold", 10))
+        self.label_SessionVenueFloor= Label(AddFrame, text="Venue Floor*", width=20, font=("bold", 10), anchor='w')
         self.label_SessionVenueFloor.place(x=0, y=175)
         # label_CRN_ttp = CreateToolTip(label_courseVac, tooltipDescription["CourseReferenceNumber"])
         self.entry_SessionVenueFloor = Entry(AddFrame)
         self.entry_SessionVenueFloor.place(x=170, y=175)
 
-        self.label_SessionVenueBuilding= Label(AddFrame, text="Venue Building", width=20, font=("bold", 10))
+        self.label_SessionVenueBuilding= Label(AddFrame, text="Venue Building", width=20, font=("bold", 10), anchor='w')
         self.label_SessionVenueBuilding.place(x=0, y=200)
         # label_CRN_ttp = CreateToolTip(label_courseVac, tooltipDescription["CourseReferenceNumber"])
         self.entry_SessionVenueBuilding = Entry(AddFrame)
         self.entry_SessionVenueBuilding.place(x=170, y=200)
 
-        self.label_SessionVenueBlock= Label(AddFrame, text="Venue Block", width=20, font=("bold", 10))
+        self.label_SessionVenueBlock= Label(AddFrame, text="Venue Block", width=20, font=("bold", 10), anchor='w')
         self.label_SessionVenueBlock.place(x=0, y=225)
         # label_CRN_ttp = CreateToolTip(label_courseVac, tooltipDescription["CourseReferenceNumber"])
         self.entry_SessionVenueBlock = Entry(AddFrame)
         self.entry_SessionVenueBlock.place(x=170, y=225)
 
-        self.label_SessionVenueStreet= Label(AddFrame, text="Venue Street", width=20, font=("bold", 10))
+        self.label_SessionVenueStreet= Label(AddFrame, text="Venue Street", width=20, font=("bold", 10), anchor='w')
         self.label_SessionVenueStreet.place(x=0, y=250)
         # label_CRN_ttp = CreateToolTip(label_courseVac, tooltipDescription["CourseReferenceNumber"])
         self.entry_SessionVenueStreet = Entry(AddFrame)
         self.entry_SessionVenueStreet.place(x=170, y=250)
 
-        self.label_SessionVenuePostalCode= Label(AddFrame, text="Venue Postal Code*", width=20, font=("bold", 10))
+        self.label_SessionVenuePostalCode= Label(AddFrame, text="Venue Postal Code*", width=20, font=("bold", 10), anchor='w')
         self.label_SessionVenuePostalCode.place(x=0, y=275)
         # label_CRN_ttp = CreateToolTip(label_courseVac, tooltipDescription["CourseReferenceNumber"])
         self.entry_SessionVenuePostalCode = Entry(AddFrame)
         self.entry_SessionVenuePostalCode.place(x=170, y=275)
 
-
-
-
-        self.tkvar_Wheelchair = StringVar(self)
-        self.tkvar_PriVenue = StringVar(self)
-        choices = { 'False','True'}
-        self.tkvar_Wheelchair.set("Select an Option")
-        self.tkvar_PriVenue.set("Select an Option")
-
-        self.label_SessionVenuePostalCode= Label(AddFrame, text="Venue Primary Venue", width=20, font=("bold", 10))
-        self.label_SessionVenuePostalCode.place(x=0, y=300)
+        self.label_SessionVenuePrimary= Label(AddFrame, text="Venue Primary Venue", width=20, font=("bold", 10), anchor='w')
+        self.label_SessionVenuePrimary.place(x=0, y=300)
         # label_CRN_ttp = CreateToolTip(label_courseVac, tooltipDescription["CourseReferenceNumber"])
         self.options_PrimaryVenue = ttk.Combobox(AddFrame, width = 17,state="readonly")
         self.options_PrimaryVenue['values'] = ["Select An Option",
@@ -710,8 +710,8 @@ class updateCourseRunPagePage3(tk.Frame):
         self.options_PrimaryVenue.current(0)
         self.options_PrimaryVenue.place(x=170, y=300)
 
-        self.label_SessionVenuePostalCode= Label(AddFrame, text="Venue Wheelchair Access", width=20, font=("bold", 10))
-        self.label_SessionVenuePostalCode.place(x=0, y=325)
+        self.label_SessionVenueWheelchair= Label(AddFrame, text="Venue Wheelchair Access", width=20, font=("bold", 10), anchor='w')
+        self.label_SessionVenueWheelchair.place(x=0, y=325)
         # label_CRN_ttp = CreateToolTip(label_courseVac, tooltipDescription["CourseReferenceNumber"])
         self.options_Wheelchair = ttk.Combobox(AddFrame, width = 17,state="readonly")
         self.options_Wheelchair['values'] = ["Select An Option",
@@ -719,8 +719,14 @@ class updateCourseRunPagePage3(tk.Frame):
                      "False"]
         self.options_Wheelchair.current(0)
         self.options_Wheelchair.place(x=170, y=325)
-
-
+        #Change the label for venue to reflect the accuracy when selecting mode 2 and 4
+        def changeLabel():
+            if str(self.modeOfTraining.get()[0]) == '2' or str(self.modeOfTraining.get()[0]) == '4':
+                self.label_SessionVenueRoom.configure(text="Venue Room")
+                self.label_SessionVenueUnit.configure(text="Venue Unit")
+                self.label_SessionVenueFloor.configure(text="Venue Floor")
+                self.label_SessionVenuePostalCode.configure(text="Venue Postal code")
+        self.modeOfTraining.bind('<<ComboboxSelected>>', lambda x: changeLabel())
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
@@ -743,12 +749,12 @@ class updateCourseRunPagePage3(tk.Frame):
             elif choice == 'Add':
                 print('Add')
                 deleteFrame.place_forget()
-                addFrame.place(width = 300, height = 400, x = 100, y = 200)
+                addFrame.place(width = 320, height = 400, x = 100, y = 200)
                 updateFrame.place_forget()
             elif choice == 'Update':
                 deleteFrame.place_forget()
-                addFrame.place(width = 300, height = 350, x = 100, y = 200)
-                updateFrame.place(width = 300, height = 20, x = 100, y = 550)
+                addFrame.place(width = 320, height = 350, x = 100, y = 200)
+                updateFrame.place(width = 295, height = 20, x = 100, y = 550)
             else:
                 updateFrame.place_forget()
                 deleteFrame.place_forget()
@@ -776,6 +782,15 @@ class updateCourseRunPagePage3(tk.Frame):
 
         label_courseVacCode = Label(self, text="Action", width=20, font=("bold", 10))
         label_courseVacCode.place(x=100, y=140)
+        
+        backButton = tk.Button(self, text="Back", bg="white", width=15, pady=5,
+                               command=lambda: backcallback()
+                               )
+        backButton.place(relx=0.35, rely=0.86, anchor=CENTER)
+        addButton = tk.Button(self, text="Add", bg="white", width=15, pady=5, command=lambda: addCallback())
+        addButton.place(relx=0.5, rely=0.8, anchor=CENTER)
+        previewButton = tk.Button(self, text="Next", bg="white", width=15, pady=5, command=lambda: callback())
+        previewButton.place(relx=0.65, rely=0.86, anchor=CENTER)
 
         def callback():
             hide('All')
@@ -785,8 +800,8 @@ class updateCourseRunPagePage3(tk.Frame):
             payloadToEdit = updateCourseRunPagePreview.payload
             payloadToEdit= json.loads(payloadToEdit)
             
-            priVenue = self.options_PrimaryVenue.get() if self.options_PrimaryVenue.get() != 'Select an Option' else ''
-            wheelChair = self.options_Wheelchair.get() if self.options_Wheelchair.get() != 'Select an Option' else ''
+            priVenue = self.options_PrimaryVenue.get() if self.options_PrimaryVenue.get() != 'Select An Option' else ''
+            wheelChair = self.options_Wheelchair.get() if self.options_Wheelchair.get() != 'Select An Option' else ''
             try:
                 sessionList = payloadToEdit["course"]["run"]["sessions"]
             except:
@@ -801,11 +816,11 @@ class updateCourseRunPagePage3(tk.Frame):
             else:
                 sessionObjectTemplate = {
                     "action":self.options_Session_Action.get(),
-                    "startTime":self.entry_SessionStartDate.get(),
-                    "endTime":self.entry_SessionEndTime.get(),
                     "startDate":self.entry_SessionStartDate.get(),
+                    "endDate":self.entry_SessionEndDate.get(),
                     "startTime":self.entry_SessionStartTime.get(),
-                    "modeOfTraining": self.modeOfTraining.get(),
+                    "endTime":self.entry_SessionEndTime.get(),
+                    "modeOfTraining": self.modeOfTraining.get()[0],
                     "venue":{
                         "room": self.entry_SessionVenueRoom.get(),
                         "floor":self.entry_SessionVenueFloor.get(),
@@ -851,15 +866,6 @@ class updateCourseRunPagePage3(tk.Frame):
         def backcallback():
             hide('All')
             controller.show_frame(updateCourseRunPagePage2)
-
-        backButton = tk.Button(self, text="Back", bg="white", width=10, pady=5,
-                               command=lambda: backcallback()
-                               )
-        backButton.place(relx=0.055, rely=0.021, anchor=CENTER)
-        addButton = tk.Button(self, text="Add", bg="white", width=15, pady=5, command=lambda: addCallback())
-        addButton.place(relx=0.3, rely=0.85, anchor=CENTER)
-        previewButton = tk.Button(self, text="Next", bg="white", width=15, pady=5, command=lambda: callback())
-        previewButton.place(relx=0.7, rely=0.85, anchor=CENTER)
 
 #Page 4 for Update Course Run - Trainer
 class updateCourseRunPagePage4(tk.Frame):
@@ -969,7 +975,7 @@ class updateCourseRunPagePage4(tk.Frame):
         self.options_inTrainingProviderProfile.place(x=270, y=365)
 
         
-        label_1 = Label(self, text="Trainers - SsecEQAs", width=20, font=("bold", 15))
+        label_1 = Label(self, text="Trainers - ssecEQAs", width=20, font=("bold", 15))
         label_1.place(x=137, y=410)
 
         self.label_trainerssecEQA = Label(self, text="Trainer ssecEQA", width=20, font=("bold", 10), anchor='w')
@@ -989,10 +995,7 @@ class updateCourseRunPagePage4(tk.Frame):
         self.entry_trainerssecEQAdescription = Entry(self)
         self.entry_trainerssecEQAdescription.place(x=270, y=475)
 
-        addssecEqasButton = tk.Button(self, text="add ssecEQA", bg="white", width=10, pady=5,
-                               command=lambda: addssecCallback()
-                               )
-        addssecEqasButton.place(relx=0.5, rely=0.70, anchor=CENTER)
+
 
         def addssecCallback():
             payloadToEdit = updateCourseRunPagePreview.payload
@@ -1063,14 +1066,15 @@ class updateCourseRunPagePage4(tk.Frame):
             self.ssecList = []
             self.index = self.index + 1
             
-        backButton = tk.Button(self, text="Back", bg="white", width=10, pady=5,
-                               command=lambda: controller.show_frame(updateCourseRunPagePage3)
-                               )
-        backButton.place(relx=0.055, rely=0.021, anchor=CENTER)
-        addButton = tk.Button(self, text="Add", bg="white", width=15, pady=5, command=lambda: addCallback())
-        addButton.place(relx=0.3, rely=0.85, anchor=CENTER)
+
+        addssecEqasButton = tk.Button(self, text="add ssecEQA", bg="white", width=15, pady=5,command=lambda: addssecCallback())
+        addssecEqasButton.place(relx=0.5, rely=0.70, anchor=CENTER)
+        backButton = tk.Button(self, text="Back", bg="white", width=15, pady=5,command=lambda: controller.show_frame(updateCourseRunPagePage3))
+        backButton.place(relx=0.35, rely=0.86, anchor=CENTER)
+        addButton = tk.Button(self, text="Add Trainer", bg="white", width=15, pady=5, command=lambda: addCallback())
+        addButton.place(relx=0.5, rely=0.80, anchor=CENTER)
         previewButton = tk.Button(self, text="Next", bg="white", width=15, pady=5, command=lambda: callback())
-        previewButton.place(relx=0.7, rely=0.85, anchor=CENTER)
+        previewButton.place(relx=0.65, rely=0.86, anchor=CENTER)
         
 
 

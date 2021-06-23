@@ -1,12 +1,10 @@
 {
     "course": {
-        "courseReferenceNumber": "TGS-2020001831",
         "trainingProvider": {
             "uen": "199900650G"
         },
-        "runs": [
+        "run": [
             {
-                "sequenceNumber": "",
                 "registrationDates": {
                     "opening": 20210722,
                     "closing": 20210722
@@ -15,40 +13,22 @@
                     "start": 20210722,
                     "end": 20210722
                 },
+                "scheduleInfoType": {
+                    "code": "01"
+                },
                 "modeOfTraining": "2",
-                "courseAdminEmail": "test@gmail.com",
                 "courseVacancy": {
-                    "code": "A",
-                    "description": "A"
+                    "code": "L"
                 },
                 "venue": {
-                    "room": "",
-                    "unit": "",
                     "floor": "",
+                    "unit": "",
+                    "room": "",
                     "postalCode": ""
-                }
+                },
+                "sequenceNumber": 0
             }
         ],
-        "sessions": [
-            {
-                "startDate": "20210722",
-                "endDate": "20210722",
-                "startTime": "20210722",
-                "endTime": "20210722",
-                "modeOfTraining": "2"
-            }
-        ],
-        "linkCourseRunTrainer": [
-            {
-                "trainer": {
-                    "trainerType": {
-                        "code": "",
-                        "description": ""
-                    },
-                    "name": "",
-                    "email": ""
-                }
-            }
-        ]
+        "courseReferenceNumber": "TGS-2020001831"
     }
 }
