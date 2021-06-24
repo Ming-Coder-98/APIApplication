@@ -78,11 +78,11 @@ class updateCourseRunPagePreview(tk.Frame):
         responseText.bind("<Key>", lambda e: "break")
             
         submitButton = tk.Button(self, text="Update", bg="white", width=25, pady=5, command=lambda: submitCallBack())
-        submitButton.place(relx=0.5, rely=0.17, anchor=CENTER)
+        submitButton.place(relx=0.5, rely=0.15, anchor=CENTER)
         backButton = tk.Button(self, text="Back", bg="white", width=10, pady=5,
                                command=lambda: controller.show_frame(updateCourseRunPagePage4),
                                )
-        backButton.place(relx=0.055, rely=0.021, anchor=CENTER)
+        backButton.place(relx=0.5, rely=0.2, anchor=CENTER)
         exportButton1 = tk.Button(self, text="Export Payload", bg="white", width=15, pady=5, command = lambda: downloadFile("payload"))
         exportButton1.place(relx=0.3, rely=0.90, anchor=CENTER)
         exportButton2 = tk.Button(self, text="Export Response", bg="white", width=15, pady=5,command = lambda: downloadFile("response"))
@@ -825,11 +825,18 @@ class updateCourseRunPagePage3(tk.Frame):
         addButton.place(relx=0.5, rely=0.8, anchor=CENTER)
         previewButton = tk.Button(self, text="Next", bg="white", width=15, pady=5, command=lambda: callback())
         previewButton.place(relx=0.65, rely=0.86, anchor=CENTER)
+        resetButton = tk.Button(self, text="Reset", bg="white", width=15, pady=5,command=lambda: resetSessions())
+        resetButton.place(relx=0.5, rely=0.92, anchor=CENTER)
 
         def callback():
             hide('All')
             controller.show_frame(updateCourseRunPagePage4)
-        
+        def resetSessions():
+            payloadToEdit = updateCourseRunPagePreview.payload
+            payloadToEdit = json.loads(payloadToEdit)
+            del(payloadToEdit["course"]["run"]["sessions"])
+            updateCourseRunPagePreview.payload = json.dumps(payloadToEdit, indent=4)
+            tkinter.messagebox.showinfo(title="Success", message="All sessions successfully cleared")
         def addCallback():
             payloadToEdit = updateCourseRunPagePreview.payload
             payloadToEdit= json.loads(payloadToEdit)
@@ -885,7 +892,7 @@ class updateCourseRunPagePage3(tk.Frame):
                 except:
                     sessionObjectTemplate['venue'] = {}
                     sessionVenueLoop() 
-            
+
             sessionList.append(sessionObjectTemplate)
             payloadToEdit['course']['run']['sessions'] = sessionList
             updateCourseRunPagePreview.payload = json.dumps(payloadToEdit, indent = 4)
@@ -1073,6 +1080,12 @@ class updateCourseRunPagePage4(tk.Frame):
             self.entry_trainerssecEQAdescription.delete(0, 'end')
             print(self.ssecList)
 
+        def resetTrainers():
+            payloadToEdit = updateCourseRunPagePreview.payload
+            payloadToEdit = json.loads(payloadToEdit)
+            del(payloadToEdit["course"]["run"]["linkCourseRunTrainer"])
+            updateCourseRunPagePreview.payload = json.dumps(payloadToEdit, indent=4)
+            tkinter.messagebox.showinfo(title="Success", message="All trainers successfully cleared")
 
         def callback():
             
@@ -1159,7 +1172,8 @@ class updateCourseRunPagePage4(tk.Frame):
         addButton.place(relx=0.5, rely=0.80, anchor=CENTER)
         previewButton = tk.Button(self, text="Next", bg="white", width=15, pady=5, command=lambda: callback())
         previewButton.place(relx=0.65, rely=0.86, anchor=CENTER)
-        
+        resetButton = tk.Button(self, text="Reset", bg="white", width=15, pady=5,command=lambda: resetTrainers())
+        resetButton.place(relx=0.5, rely=0.92, anchor=CENTER)
 
 
 
