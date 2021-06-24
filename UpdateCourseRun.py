@@ -821,12 +821,12 @@ class updateCourseRunPagePage3(tk.Frame):
                                command=lambda: backcallback()
                                )
         backButton.place(relx=0.35, rely=0.86, anchor=CENTER)
-        addButton = tk.Button(self, text="Add", bg="white", width=15, pady=5, command=lambda: addCallback())
-        addButton.place(relx=0.5, rely=0.8, anchor=CENTER)
+        addButton = tk.Button(self, text="Clear Sessions", bg="white", width=15, pady=5, command=lambda: addCallback())
+        addButton.place(relx=0.65, rely=0.8, anchor=CENTER)
         previewButton = tk.Button(self, text="Next", bg="white", width=15, pady=5, command=lambda: callback())
         previewButton.place(relx=0.65, rely=0.86, anchor=CENTER)
         resetButton = tk.Button(self, text="Reset", bg="white", width=15, pady=5,command=lambda: resetSessions())
-        resetButton.place(relx=0.5, rely=0.92, anchor=CENTER)
+        resetButton.place(relx=0.35, rely=0.8, anchor=CENTER)
 
         def callback():
             hide('All')
@@ -1169,11 +1169,11 @@ class updateCourseRunPagePage4(tk.Frame):
         backButton = tk.Button(self, text="Back", bg="white", width=15, pady=5,command=lambda: controller.show_frame(updateCourseRunPagePage3))
         backButton.place(relx=0.35, rely=0.86, anchor=CENTER)
         addButton = tk.Button(self, text="Add Trainer", bg="white", width=15, pady=5, command=lambda: addCallback())
-        addButton.place(relx=0.5, rely=0.80, anchor=CENTER)
-        previewButton = tk.Button(self, text="Next", bg="white", width=15, pady=5, command=lambda: callback())
+        addButton.place(relx=0.65, rely=0.80, anchor=CENTER)
+        previewButton = tk.Button(self, text="Preview", bg="white", width=15, pady=5, command=lambda: callback())
         previewButton.place(relx=0.65, rely=0.86, anchor=CENTER)
-        resetButton = tk.Button(self, text="Reset", bg="white", width=15, pady=5,command=lambda: resetTrainers())
-        resetButton.place(relx=0.5, rely=0.92, anchor=CENTER)
+        resetButton = tk.Button(self, text="Clear Trainer", bg="white", width=15, pady=5,command=lambda: resetTrainers())
+        resetButton.place(relx=0.35, rely=0.8, anchor=CENTER)
 
 
 
@@ -1195,15 +1195,15 @@ class updateCourseRunPageFormFileUpload(tk.Frame):
         img2.place(x=0, y=0, relwidth=1, relheight=1)
 
         label_0 = Label(self, text="Update Course Run", width=20, font=("bold", 20))
-        label_0.place(x=90, y=43)
+        label_0.place(x=90, y=33)
 
         
         #Course Run Id
         label_runId = Label(self, text="Course Run ID: ", width=20, font=("bold", 10), anchor='w')
-        label_runId.place(x=90, y=100)
+        label_runId.place(x=100, y=90)
 
         entry_runId = Entry(self)
-        entry_runId.place(x=250, y=100)
+        entry_runId.place(x=270, y=90)
         label_1_ttp = CreateToolTip(label_runId, tooltipDescription["CourseRunId"])
 
         #This method is used to update the display information dynamically in "Payload" Tab whenever user key in a value
@@ -1216,7 +1216,7 @@ class updateCourseRunPageFormFileUpload(tk.Frame):
         entry_runId.bind('<KeyRelease>', lambda b:typing())
 
         fileuploadframe = tk.Frame(self)
-        fileuploadframe.place(x=90, y=130)
+        fileuploadframe.place(x=100, y=123)
 
         fileUploadEntry = tk.Entry(fileuploadframe, width=45)
         fileUploadEntry.pack(side=tk.LEFT, fill=tk.X )
@@ -1243,12 +1243,12 @@ class updateCourseRunPageFormFileUpload(tk.Frame):
         responseText.place(height = 405, width = 440, y=20)
         # responseText.bind("<Key>", lambda e: "break")
 
-        updateButton = tk.Button(self, text="Update", bg="white", width=25, pady=5, command=lambda: updateCallBack(entry_runId.get()))
-        updateButton.place(relx=0.5, rely=0.25, anchor=CENTER)
-        backButton = tk.Button(self, text="Back", bg="white", width=10, pady=5,
-                               command=lambda: controller.show_frame(updateCourseRunPageSelect)
+        updateButton = tk.Button(self, text="Update", bg="white", width=25, pady=4, command=lambda: updateCallBack(entry_runId.get()))
+        updateButton.place(relx=0.5, rely=0.223, anchor=CENTER)
+        backButton = tk.Button(self, text="Back", bg="white", width=10, pady=4,
+                               command=lambda: controller.show_frame(updateCourseRunPageSelect),
                                )
-        backButton.place(relx=0.055, rely=0.021, anchor=CENTER)
+        backButton.place(relx=0.5, rely=0.27, anchor=CENTER)
         # exportButton1 = tk.Button(self, text="Export Payload", bg="white", width=15, pady=5, command = lambda: downloadFile("payload"))
         # exportButton1.place(relx=0.3, rely=0.95, anchor=CENTER)
         # exportButton2 = tk.Button(self, text="Export Response", bg="white", width=15, pady=5,command = lambda: downloadFile("response"))

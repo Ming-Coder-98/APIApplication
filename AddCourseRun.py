@@ -175,12 +175,11 @@ class addCourseRunPageFormFileUpload(tk.Frame):
         label_0 = Label(self, text="Add Course Run", width=20, font=("bold", 20))
         label_0.place(x=90, y=53)
         fileuploadframe = tk.Frame(self)
-        fileuploadframe.place(x=90, y=120)
+        fileuploadframe.place(x=90, y=110)
 
         fileUploadEntry = tk.Entry(fileuploadframe, width=45)
         fileUploadEntry.pack(side=tk.LEFT, fill=tk.X )
-        createButton = tk.Button(self,text="Browse", command=lambda:getCertPemFile(self))       
-        createButton.pack(in_=fileuploadframe, side=tk.LEFT)
+
 
          #Configuration for Notebook layout
         tabControl = ttk.Notebook(self)
@@ -202,12 +201,16 @@ class addCourseRunPageFormFileUpload(tk.Frame):
         responseText.place(height = 405, width = 440, y=20)
         # responseText.bind("<Key>", lambda e: "break")
 
-        submitButton = tk.Button(self, text="Create", bg="white", width=25, pady=5, command=lambda: submitCallBack())
-        submitButton.place(relx=0.5, rely=0.25, anchor=CENTER)
-        backButton = tk.Button(self, text="Back", bg="white", width=10, pady=5,
-                               command=lambda: controller.show_frame(addCourseRunPage4)
+
+        browseButton = tk.Button(self,text="Browse", command=lambda:getCertPemFile(self))       
+        browseButton.pack(in_=fileuploadframe, side=tk.LEFT)
+        submitButton = tk.Button(self, text="Create", bg="white", width=25, pady=4, command=lambda: submitCallBack())
+        submitButton.place(relx=0.5, rely=0.21, anchor=CENTER)
+        backButton = tk.Button(self, text="Back", bg="white", width=10, pady=4,
+                               command=lambda: controller.show_frame(addCourseRunPage1),
                                )
-        backButton.place(relx=0.055, rely=0.021, anchor=CENTER)
+        backButton.place(relx=0.5, rely=0.26, anchor=CENTER)
+
         exportButton1 = tk.Button(self, text="Export Payload", bg="white", width=15, pady=5, command = lambda: downloadFile("payload"))
         exportButton1.place(relx=0.3, rely=0.95, anchor=CENTER)
         exportButton2 = tk.Button(self, text="Export Response", bg="white", width=15, pady=5,command = lambda: downloadFile("response"))
@@ -880,10 +883,10 @@ class addCourseRunPage3(tk.Frame):
 
         backButton = tk.Button(self, text="Back", bg="white", width=15, pady=5,command=lambda: backcallback())
         backButton.place(relx=0.35, rely=0.86, anchor=CENTER)
-        resetButton = tk.Button(self, text="Reset", bg="white", width=15, pady=5,command=lambda: resetSessions())
-        resetButton.place(relx=0.5, rely=0.92, anchor=CENTER)
+        resetButton = tk.Button(self, text="Clear Sessions", bg="white", width=15, pady=5,command=lambda: resetSessions())
+        resetButton.place(relx=0.35, rely=0.80, anchor=CENTER)
         addButton = tk.Button(self, text="Add Sessions", bg="white", width=15, pady=5, command=lambda: addCallback())
-        addButton.place(relx=0.5, rely=0.80, anchor=CENTER)
+        addButton.place(relx=0.65, rely=0.80, anchor=CENTER)
         previewButton = tk.Button(self, text="Next", bg="white", width=15, pady=5, command=lambda: callback())
         previewButton.place(relx=0.65, rely=0.86, anchor=CENTER)
 
@@ -1121,9 +1124,9 @@ class addCourseRunPage4(tk.Frame):
         backButton = tk.Button(self, text="Back", bg="white", width=15, pady=5,
                                command=lambda: controller.show_frame(addCourseRunPage3))
         backButton.place(relx=0.35, rely=0.86, anchor=CENTER)
-        resetButton = tk.Button(self, text="Reset", bg="white", width=15, pady=5,command=lambda: resetTrainers())
-        resetButton.place(relx=0.5, rely=0.92, anchor=CENTER)
+        resetButton = tk.Button(self, text="Clear Trainers", bg="white", width=15, pady=5,command=lambda: resetTrainers())
+        resetButton.place(relx=0.35, rely=0.80, anchor=CENTER)
         addButton = tk.Button(self, text="Add Trainers", bg="white", width=15, pady=5, command=lambda: addCallback())
-        addButton.place(relx=0.5, rely=0.80, anchor=CENTER)
-        previewButton = tk.Button(self, text="Next", bg="white", width=15, pady=5, command=lambda: callback())
+        addButton.place(relx=0.65, rely=0.80, anchor=CENTER)
+        previewButton = tk.Button(self, text="Preview", bg="white", width=15, pady=5, command=lambda: callback())
         previewButton.place(relx=0.65, rely=0.86, anchor=CENTER)
