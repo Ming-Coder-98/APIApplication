@@ -1,6 +1,7 @@
 #Import course Run py Functions
 from CourseSession import getCourseSessionPage
 from UpdateCourseRun import updateCourseRunPageFormFileUpload, updateCourseRunPagePage2, updateCourseRunPagePage3, updateCourseRunPagePage4, updateCourseRunPagePreview, updateCourseRunPageSelect
+from ViewEnrolment import viewEnrolmentPage, deleteEnrolmentPage
 from tooltip import CreateToolTip
 from configWindow import setConfigWindow, showConfigWindow
 from AssessmentFunction import addAssessment
@@ -8,6 +9,7 @@ from EnrolmentFunction import addEnrolment, enrollmentInitialization
 from AttendanceFunction import uploadAttendance
 from courseRunFunctions import curlGetRequestViewCourseRun, curlPostRequest, deleteCourserun, getCourseRun, getDeleteCourseRunPayLoad
 from AddCourseRun import addCourseRunPageForm, addCourseRunPageFormFileUpload, addCourseRunPage1, addCourseRunPage2, addCourseRunPage3, addCourseRunPage4
+
 
 from HttpRequestFunction import getHttpRequest, loadFile, saveJsonFormat
 import tkinter as tk
@@ -102,7 +104,7 @@ class APIProject(tk.Tk):
         
 
         self.frames = {}
-        for F in (getCourseSessionPage, updateCourseRunPagePreview,updateCourseRunPagePage2,updateCourseRunPagePage3,updateCourseRunPagePage4,updateCourseRunPageFormFileUpload, updateCourseRunPageSelect, addCourseRunPageFormFileUpload,addCourseRunPageForm,addCourseRunPage4,addCourseRunPage3,addCourseRunPage2, addCourseRunPage1, viewCourseRunPage, deleteCourseRunPage, StartPage):
+        for F in (deleteEnrolmentPage, viewEnrolmentPage, getCourseSessionPage, updateCourseRunPagePreview,updateCourseRunPagePage2,updateCourseRunPagePage3,updateCourseRunPagePage4,updateCourseRunPageFormFileUpload, updateCourseRunPageSelect, addCourseRunPageFormFileUpload,addCourseRunPageForm,addCourseRunPage4,addCourseRunPage3,addCourseRunPage2, addCourseRunPage1, viewCourseRunPage, deleteCourseRunPage, StartPage):
             frame = F(self.container, self)
 
             self.frames[F] = frame
@@ -128,9 +130,10 @@ class APIProject(tk.Tk):
         
         enrolmentMenu = Menu(menubar, tearoff=0)  
         enrolmentMenu.add_command(label="Create Enrolment")
-        enrolmentMenu.add_command(label="Update/Cancel Enrolment")  
+        enrolmentMenu.add_command(label="Update Enrolment")
+        enrolmentMenu.add_command(label="Delete Enrolment",command=lambda: self.show_frame(deleteEnrolmentPage))
         enrolmentMenu.add_command(label="Search Enrolment")  
-        enrolmentMenu.add_command(label="View Enrolment")  
+        enrolmentMenu.add_command(label="View Enrolment",command=lambda: self.show_frame(viewEnrolmentPage))
         enrolmentMenu.add_command(label="Update Enrolment Fee Collection")  
         menubar.add_cascade(label="Enrolment", menu=enrolmentMenu)  
 
