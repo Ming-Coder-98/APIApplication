@@ -46,5 +46,14 @@
     "TrainerssecDescription": "Indication of the description of the linked ssec-EQA\nExample: EQA test 4" ,
 
 
-    "CourseRunId": "'The Course Run Id is used as a URL for GET Request Call\nExample: https://api.ssg-wsg.sg/courses/runs/{runId}'"
+    "CourseRunId": "'The Course Run Id is used as a URL for GET Request Call\nExample: https://api.ssg-wsg.sg/courses/runs/{runId}'",
+    "UEN": "UEN of the training partner organisation conducting the course for which the trainee is enrolled",
+    "TpCode":"Code for the training partner conducting the course for which the trainee is enrolle",
+    "TraineeIdType":"Trainee's ID type",
+    "TraineeId":"Trainee's government-issued ID number\n Example S1234567H",
+    "DOB":"Trainee's date of birth \nExample: 1950-10-16",
+    "Phone":"Country Code - Area Code - Phone Number",
+    "SponsorshipType":"Sponsorship type for the course enrolment",
+    "collectionStatus":"Status of the trainee's or employer's payment of the course fees to the training partner",
+    "discountAmount":"Amount of discount the training partner is deducting from course fees"
 }

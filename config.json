@@ -3,12 +3,5 @@
     "certPath": "C:/Users/User/Desktop/app/APIApplication/cert.pem",
     "keyPath": "C:/Users/User/Desktop/app/APIApplication/key.pem",
     "IV": "SSGAPIInitVector",
-    "UEN": "199900650G",
-    "CourseRefNum": "TGS-2020001831",
-    "ExtCourseRefNum": "TGS-2020001831",
-    "runId": 224922,
-    "enrollRefNum": "",
-    "code": "",
-    "SesId": "",
-    "AssessmentRefNum": ""
+    "UEN": "199900650G"
 }

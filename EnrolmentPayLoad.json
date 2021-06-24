@@ -5,17 +5,17 @@
             "uen": "199900650G"
         },
         "course": {
-            "referenceNumber": "TGS-2020000703",
+            "referenceNumber": "TGS-2020001831",
             "run": {
-                "id": "224596"
+                "id": "225249"
             }
         },
         "trainee": {
             "idType": {
                 "type": "NRIC"
             },
-            "id": "S8194046J",
-            "dateOfBirth": "1981-07-12",
+            "id": "S8195288D",
+            "dateOfBirth": "1981-01-10",
             "fullName": "Aileen Chong",
             "contactNumber": {
                 "countryCode": "+65",

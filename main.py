@@ -1,4 +1,5 @@
 #Import course Run py Functions
+from AddEnrolment import AddEnrolmentMainPage, AddEnrolmentPage2, AddEnrolmentPreviewPage, addEnrolmentPageFileUpload
 from CourseSession import getCourseSessionPage
 from UpdateCourseRun import updateCourseRunPageFormFileUpload, updateCourseRunPagePage2, updateCourseRunPagePage3, updateCourseRunPagePage4, updateCourseRunPagePreview, updateCourseRunPageSelect
 from tooltip import CreateToolTip
@@ -102,7 +103,7 @@ class APIProject(tk.Tk):
         
 
         self.frames = {}
-        for F in (getCourseSessionPage, updateCourseRunPagePreview,updateCourseRunPagePage2,updateCourseRunPagePage3,updateCourseRunPagePage4,updateCourseRunPageFormFileUpload, updateCourseRunPageSelect, addCourseRunPageFormFileUpload,addCourseRunPageForm,addCourseRunPage4,addCourseRunPage3,addCourseRunPage2, addCourseRunPage1, viewCourseRunPage, deleteCourseRunPage, StartPage):
+        for F in (addEnrolmentPageFileUpload,AddEnrolmentPage2, AddEnrolmentPreviewPage ,AddEnrolmentMainPage, getCourseSessionPage, updateCourseRunPagePreview,updateCourseRunPagePage2,updateCourseRunPagePage3,updateCourseRunPagePage4,updateCourseRunPageFormFileUpload, updateCourseRunPageSelect, addCourseRunPageFormFileUpload,addCourseRunPageForm,addCourseRunPage4,addCourseRunPage3,addCourseRunPage2, addCourseRunPage1, viewCourseRunPage, deleteCourseRunPage, StartPage):
             frame = F(self.container, self)
 
             self.frames[F] = frame
@@ -127,7 +128,7 @@ class APIProject(tk.Tk):
 
         
         enrolmentMenu = Menu(menubar, tearoff=0)  
-        enrolmentMenu.add_command(label="Create Enrolment")
+        enrolmentMenu.add_command(label="Create Enrolment", command=lambda: self.show_frame(AddEnrolmentMainPage))
         enrolmentMenu.add_command(label="Update/Cancel Enrolment")  
         enrolmentMenu.add_command(label="Search Enrolment")  
         enrolmentMenu.add_command(label="View Enrolment")  
