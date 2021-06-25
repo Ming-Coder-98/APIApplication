@@ -6,7 +6,7 @@ from requests.api import delete, request
 from requests.sessions import session
 from configWindow import getCertPemFile, setConfigWindow, showConfigWindow
 from AssessmentFunction import addAssessment
-from EnrolmentFunction import addEnrolment, enrollmentInitialization
+from EnrolmentFunction import addEnrolment
 from AttendanceFunction import uploadAttendance
 from courseRunFunctions import createCourserun, curlPostRequest, deleteCourserun, getCourseRun, getDeleteCourseRunPayLoad, updateCourserun
 from HttpRequestFunction import getHttpRequest, loadFile, saveJsonFormat
@@ -109,6 +109,8 @@ class updateCourseRunPagePreview(tk.Frame):
             resp = updateCourserun(updateCourseRunPagePreview.runIdEntered,updateCourseRunPagePreview.payload)
             textPayload = StringVar(self, value = resp.text) 
             responseText.insert(INSERT,textPayload.get())
+            tabControl.select(tab3)
+
 
         # This method is used to search the response text and highlight the searched word in red
         def find(method):
@@ -1320,6 +1322,8 @@ class updateCourseRunPageFormFileUpload(tk.Frame):
             resp = updateCourserun(runId,payload)
             textPayload = StringVar(self, value = resp.text) 
             responseText.insert(INSERT,textPayload.get())
+            tabControl.select(tab3)
+
             
 
 # resp = getHttpRequest("https://uat-api.ssg-wsg.sg/courses/runs/224925/sessions?uen=199900650G&courseReferenceNumber=TGS-2020001831&sessionMonth=062021")

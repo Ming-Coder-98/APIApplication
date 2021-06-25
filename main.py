@@ -1,81 +1,19 @@
 #Import course Run py Functions
+from tkinter.constants import CENTER, END, INSERT
 from AddEnrolment import AddEnrolmentMainPage, AddEnrolmentPage2, AddEnrolmentPreviewPage, addEnrolmentPageFileUpload
 from CourseSession import getCourseSessionPage
 from UpdateCourseRun import updateCourseRunPageFormFileUpload, updateCourseRunPagePage2, updateCourseRunPagePage3, updateCourseRunPagePage4, updateCourseRunPagePreview, updateCourseRunPageSelect
+from ViewEnrolment import viewEnrolmentPage, deleteEnrolmentPage
 from tooltip import CreateToolTip
 from configWindow import setConfigWindow, showConfigWindow
-from AssessmentFunction import addAssessment
-from EnrolmentFunction import addEnrolment, enrollmentInitialization
-from AttendanceFunction import uploadAttendance
 from courseRunFunctions import curlGetRequestViewCourseRun, curlPostRequest, deleteCourserun, getCourseRun, getDeleteCourseRunPayLoad
 from AddCourseRun import addCourseRunPageForm, addCourseRunPageFormFileUpload, addCourseRunPage1, addCourseRunPage2, addCourseRunPage3, addCourseRunPage4
 
-from HttpRequestFunction import getHttpRequest, loadFile, saveJsonFormat
 import tkinter as tk
-from tkinter import *
-from tkinter import ttk
-from tkinter import simpledialog
-from tkinter import messagebox
+from tkinter import Button, Entry, Label, Menu, StringVar, ttk, filedialog, messagebox, scrolledtext
 import json
-import datetime
 from PIL import ImageTk, Image
-from tkinter import filedialog
-import pandas as pd
-import pyjsonviewer
-from tkinter import scrolledtext
 
-# Open the json file where the "courserun info" is being stored
-with open("CourseRunPayLoad.json") as f:
-    # Load the json file data into local variable "data"
-    data = json.load(f)
-# Store the list of data into local variable "courseTPinfo & courseRuninfo"
-courseTPinfo = data["course"]
-courseRuninfo = data["course"]["runs"]
-courseTPUEN = courseTPinfo["trainingProvider"]["uen"]
-courseRefNumber = courseTPinfo["courseReferenceNumber"]
-courseAdminEmail = courseRuninfo[0]["courseAdminEmail"]
-
-def load_json_config():
-    # Open the json file where the "config info" is being stored
-    with open("config.json") as f:
-        # Load the json file data into local variable "data"
-        data = json.load(f)
-        return data
-    
-def load_json_demoConfig():
-    # Open the json file where the "config info" is being stored
-    with open("demoConfig.json") as f:
-        # Load the json file data into local variable "data"
-        data = json.load(f)
-        return data
-
-# Open the json file where the "enrolment info" is being stored
-with open("EnrolmentPayLoad.json") as f:
-    # Load the json file data into local variable "data"
-    data2 = json.load(f)
-# Store the list of data into local variable enrolmentinfo"
-courseEnrolmentInfo = data2["enrolment"]
-enrolmentCourseId = courseEnrolmentInfo["course"]["run"]["id"]
-enrolmentRefNo = courseEnrolmentInfo["course"]["referenceNumber"]
-enrolmentTpUen = courseEnrolmentInfo["trainingPartner"]["uen"]
-
-# Open the json file where the "attendance info" is being stored
-with open("AttendancePayLoad.json") as f:
-    # Load the json file data into local variable "data"
-    attendanceData = json.load(f)
-# Store the list of data into local variable enrolmentinfo"
-attendanceSessionId = attendanceData["course"]["sessionID"]
-attendanceRefNo = attendanceData["course"]["referenceNumber"]
-attendanceTpUen = attendanceData["uen"]
-
-# Open the json file where the "Assessment info" is being stored
-with open("AssessmentPayLoad.json") as f:
-    # Load the json file data into local variable "data"
-    assessmentData = json.load(f)
-# Store the list of data into local variable enrolmentinfo"
-assessmentRunId = assessmentData["assessment"]["course"]["run"]["id"]
-assessmentRefNo = assessmentData["assessment"]["course"]["referenceNumber"]
-assessmentTpUen = assessmentData["assessment"]["trainingPartner"]["uen"]
 
 
 
@@ -84,10 +22,10 @@ with open("TooltipDescription.json") as f:
     ttDescription = json.load(f)
 
 
+
 # Quit Program
 def quit_program():
     quit()
-
 
 
 class APIProject(tk.Tk):
@@ -103,7 +41,7 @@ class APIProject(tk.Tk):
         
 
         self.frames = {}
-        for F in (addEnrolmentPageFileUpload,AddEnrolmentPage2, AddEnrolmentPreviewPage ,AddEnrolmentMainPage, getCourseSessionPage, updateCourseRunPagePreview,updateCourseRunPagePage2,updateCourseRunPagePage3,updateCourseRunPagePage4,updateCourseRunPageFormFileUpload, updateCourseRunPageSelect, addCourseRunPageFormFileUpload,addCourseRunPageForm,addCourseRunPage4,addCourseRunPage3,addCourseRunPage2, addCourseRunPage1, viewCourseRunPage, deleteCourseRunPage, StartPage):
+        for F in (AddEnrolmentPage2,AddEnrolmentPreviewPage,addEnrolmentPageFileUpload,AddEnrolmentMainPage ,deleteEnrolmentPage, viewEnrolmentPage, getCourseSessionPage, updateCourseRunPagePreview,updateCourseRunPagePage2,updateCourseRunPagePage3,updateCourseRunPagePage4,updateCourseRunPageFormFileUpload, updateCourseRunPageSelect, addCourseRunPageFormFileUpload,addCourseRunPageForm,addCourseRunPage4,addCourseRunPage3,addCourseRunPage2, addCourseRunPage1, viewCourseRunPage, deleteCourseRunPage, StartPage):
             frame = F(self.container, self)
 
             self.frames[F] = frame
@@ -129,9 +67,10 @@ class APIProject(tk.Tk):
         
         enrolmentMenu = Menu(menubar, tearoff=0)  
         enrolmentMenu.add_command(label="Create Enrolment", command=lambda: self.show_frame(AddEnrolmentMainPage))
-        enrolmentMenu.add_command(label="Update/Cancel Enrolment")  
+        enrolmentMenu.add_command(label="Update Enrolment")
+        enrolmentMenu.add_command(label="Delete Enrolment",command=lambda: self.show_frame(deleteEnrolmentPage))
         enrolmentMenu.add_command(label="Search Enrolment")  
-        enrolmentMenu.add_command(label="View Enrolment")  
+        enrolmentMenu.add_command(label="View Enrolment",command=lambda: self.show_frame(viewEnrolmentPage))
         enrolmentMenu.add_command(label="Update Enrolment Fee Collection")  
         menubar.add_cascade(label="Enrolment", menu=enrolmentMenu)  
 
@@ -264,6 +203,7 @@ class viewCourseRunPage(tk.Frame):
             print(resp.status_code)
             textPayload = StringVar(self, value = resp.text) 
             responseText.insert(INSERT, textPayload.get())
+            tabControl.select(responseFrame)
 
         def downloadFile():
             files = [('JSON', '*.json'), 
@@ -454,6 +394,8 @@ class deleteCourseRunPage(tk.Frame):
                 messagebox.showinfo("Successful", "Successfully Delete Course Run: " + runId)
             responseText.delete("1.0","end")
             responseText.insert(tk.END, resp.text)
+            tabControl.select(tab3)
+
                 
 
 # Starting Page (Welcome Page)

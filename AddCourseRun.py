@@ -1,27 +1,16 @@
 #Import course Run py Functions
-import tkinter
-from tkinter import scrolledtext
-
-from requests.api import request
-from configWindow import getCertPemFile, setConfigWindow, showConfigWindow
-from AssessmentFunction import addAssessment
-from EnrolmentFunction import addEnrolment, enrollmentInitialization
-from AttendanceFunction import uploadAttendance
-from courseRunFunctions import createCourserun, curlPostRequest, deleteCourserun, getCourseRun, getDeleteCourseRunPayLoad
-from HttpRequestFunction import getHttpRequest, loadFile, saveJsonFormat
-import tkinter as tk
-from tkinter import *
-from tkinter import ttk
-from tkinter import simpledialog
-from tkinter import messagebox
 import json
-import datetime
-from PIL import ImageTk, Image
-from tkinter import filedialog
+import tkinter
+import tkinter as tk
+from tkinter import Button, Entry, IntVar, Label, Radiobutton, StringVar, filedialog, messagebox, scrolledtext, ttk
+from tkinter.constants import CENTER, END, INSERT
+
 import pandas as pd
+from PIL import Image, ImageTk
 
+from courseRunFunctions import (createCourserun, curlPostRequest)
+from HttpRequestFunction import loadFile
 from tooltip import CreateToolTip
-
 
 #Load Tooltip Json object as ttDescription
 with open("TooltipDescription.json") as f:
@@ -84,6 +73,7 @@ class addCourseRunPageForm(tk.Frame):
             print(resp.status_code)
             textPayload = StringVar(self, value = resp.text) 
             self.responseText.insert(INSERT, textPayload.get())
+            tabControl.select(tab3)
 
 
             
@@ -202,18 +192,18 @@ class addCourseRunPageFormFileUpload(tk.Frame):
         # responseText.bind("<Key>", lambda e: "break")
 
 
-        browseButton = tk.Button(self,text="Browse", command=lambda:getCertPemFile(self))       
+        browseButton = Button(self,text="Browse", command=lambda:getCertPemFile(self))       
         browseButton.pack(in_=fileuploadframe, side=tk.LEFT)
-        submitButton = tk.Button(self, text="Create", bg="white", width=25, pady=4, command=lambda: submitCallBack())
+        submitButton = Button(self, text="Create", bg="white", width=25, pady=4, command=lambda: submitCallBack())
         submitButton.place(relx=0.5, rely=0.21, anchor=CENTER)
-        backButton = tk.Button(self, text="Back", bg="white", width=10, pady=4,
+        backButton = Button(self, text="Back", bg="white", width=10, pady=4,
                                command=lambda: controller.show_frame(addCourseRunPage1),
                                )
         backButton.place(relx=0.5, rely=0.26, anchor=CENTER)
 
-        exportButton1 = tk.Button(self, text="Export Payload", bg="white", width=15, pady=5, command = lambda: downloadFile("payload"))
+        exportButton1 = Button(self, text="Export Payload", bg="white", width=15, pady=5, command = lambda: downloadFile("payload"))
         exportButton1.place(relx=0.3, rely=0.95, anchor=CENTER)
-        exportButton2 = tk.Button(self, text="Export Response", bg="white", width=15, pady=5,command = lambda: downloadFile("response"))
+        exportButton2 = Button(self, text="Export Response", bg="white", width=15, pady=5,command = lambda: downloadFile("response"))
         exportButton2.place(relx=0.7, rely=0.95, anchor=CENTER)
         
         #adding of single line text box
@@ -282,6 +272,7 @@ class addCourseRunPageFormFileUpload(tk.Frame):
             resp = createCourserun(payload)
             textPayload = StringVar(self, value = resp.text) 
             responseText.insert(INSERT,textPayload.get())
+            tabControl.select(tab3)
 
 
         def downloadFile(method):
