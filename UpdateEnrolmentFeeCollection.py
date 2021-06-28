@@ -1,3 +1,4 @@
+from EncryptAndDecryptFunction import doEncryption
 import tkinter as tk
 from tkinter import *
 from tkinter import ttk, scrolledtext
@@ -26,7 +27,8 @@ class updateEnrolFeePage(tk.Frame):
 
         load = Image.open("SKFBGPage.JPG")
         render = ImageTk.PhotoImage(load)
-
+        #Variables
+        self.textPayload = ''
         # labels can be text or images
         img2 = Label(self, image=render)
         img2.image = render
@@ -40,8 +42,8 @@ class updateEnrolFeePage(tk.Frame):
         label_ERN = Label(self, text="Enrolment Reference Number", width=22, font=("bold", 10), anchor='w')
         label_ERN.place(x=100, y=110)
 
-        entry_ERN = Entry(self)
-        entry_ERN.place(x=275, y=110)
+        self.entry_ERN = Entry(self)
+        self.entry_ERN.place(x=275, y=110)
 
         label_ERN_ttp = CreateToolTip(label_ERN, tooltipDescription["CourseReferenceNumber"])
 
@@ -62,11 +64,12 @@ class updateEnrolFeePage(tk.Frame):
 
         # This method is used to update the display information dynamically in "Payload" Tab whenever user key in a value
         def typing():
-            value = curlPostRequestUpdateEnrolmentFee(entry_ERN.get(), getUpdateEnrolmentFeePayLoad(self.statusCollection.get()))
+            value = curlPostRequestUpdateEnrolmentFee(self.entry_ERN.get(), getUpdateEnrolmentFeePayLoad(self.statusCollection.get()))
             curlText.delete("1.0", "end")
             curlText.insert(tk.END, value)
+            self.varPayload.set(1)
 
-        entry_ERN.bind('<KeyRelease>', lambda a: typing())
+        self.entry_ERN.bind('<KeyRelease>', lambda a: typing())
         self.statusCollection.bind("<<ComboboxSelected>>",lambda a: typing())
 
 
@@ -96,7 +99,7 @@ class updateEnrolFeePage(tk.Frame):
         responseText.bind("<Key>", lambda e: "break")
 
         submitButton = tk.Button(self, text="Update", bg="white", width=25, pady=5,
-                                 command=lambda: updateFeeCallBack(entry_ERN.get()))
+                                 command=lambda: updateFeeCallBack(self.entry_ERN.get()))
         submitButton.place(relx=0.5, rely=0.25, anchor=CENTER)
         exportButton1 = tk.Button(self, text="Export Payload", bg="white", width=15, pady=5,
                                   command=lambda: downloadFile("payload"))
@@ -105,6 +108,15 @@ class updateEnrolFeePage(tk.Frame):
                                   command=lambda: downloadFile("response"))
         exportButton2.place(relx=0.7, rely=0.95, anchor=CENTER)
 
+        self.varPayload = IntVar()
+        Radiobutton(tab2, text="Decrypt", variable=self.varPayload, value=1, width=12, anchor='w', command = lambda:displayPayload("decrypt")).place(x=0,y=-5)
+        Radiobutton(tab2, text="Encrypt", variable=self.varPayload, value=2,width=12, anchor='w',command = lambda:displayPayload("encrypt")).place(x=130,y=-5)
+        self.varPayload.set(1)
+
+        self.varResp = IntVar()
+        Radiobutton(tab3, text="Decrypt", variable=self.varResp, value=1, width=12, anchor='w', command = lambda:displayResp("decrypt")).place(x=0,y=-5)
+        Radiobutton(tab3, text="Encrypt", variable=self.varResp, value=2,width=12, anchor='w',command = lambda:displayResp("encrypt")).place(x=130,y=-5)
+        self.varResp.set(1)
         # adding of single line text box
         edit = Entry(self, background="light gray")
 
@@ -121,6 +133,31 @@ class updateEnrolFeePage(tk.Frame):
                            background="gray")
         butt_resp.place(x=380, y=0, height=21, width=60)
 
+        def displayResp(method):
+            if method != 'encrypt':
+                try:
+                    display = updateEnrolFeePage.textPayload.get()
+                except:
+                    display = ''
+                responseText.delete("1.0","end")
+                responseText.insert(INSERT,display)
+            else:
+                try:
+                    display = doEncryption(str(updateEnrolFeePage.textPayload.get()).encode())
+                except:
+                    display = b''
+                responseText.delete("1.0","end")
+                responseText.insert(tk.END, display.decode())
+                
+        def displayPayload(method):
+            if method != 'decrypt':
+                payloadToDisplay = doEncryption(str(getUpdateEnrolmentFeePayLoad(self.statusCollection.get())).encode()).decode()
+                curlText.delete("1.0","end")
+                curlText.insert(tk.END, str(curlPostRequestUpdateEnrolmentFee(self.entry_ERN.get(),payloadToDisplay)))
+            else:
+                curlText.delete("1.0","end")
+                curlText.insert(tk.END, curlPostRequestUpdateEnrolmentFee(self.entry_ERN.get(), getUpdateEnrolmentFeePayLoad(self.statusCollection.get())))        
+        
         # This method is used to search the response text and highlight the searched word in red
         def find(method):
             if method == "resp":
@@ -169,5 +206,6 @@ class updateEnrolFeePage(tk.Frame):
         def updateFeeCallBack(enrolRefNum):
             resp = updateEnrolmentFee(enrolRefNum)
             responseText.delete("1.0", "end")
-            responseText.insert(tk.END, resp)
+            updateEnrolFeePage.textPayload = StringVar(self, value=resp)
+            responseText.insert(tk.END, updateEnrolFeePage.textPayload.get())
             tabControl.select(tab3)

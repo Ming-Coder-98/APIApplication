@@ -20,10 +20,15 @@ def cancelEnrolment(enrolmentId):
     cancelPayloadEncrypt = doEncryption(cancelPayload.encode())
     resp = postHttpRequestJson(cancelPayloadurl, cancelPayloadEncrypt.decode())
     plainText = doDecryption(resp.text)
-    # pprintJsonFormat(plainText)
     json_load = json.loads(plainText.decode())
     text = json.dumps(json_load, indent=4)
     return text
+
+def updateEnrolment(referenceNumber, payload):
+    url = "https://uat-api.ssg-wsg.sg/tpg/enrolments/details/" + str(referenceNumber)
+    payloadEncrypted = doEncryption(payload.encode())
+    resp = postHttpRequestJson(url, payloadEncrypted.decode())
+    return resp.text 
 
 
 def getEnrolment(enrolmentRefNo):
@@ -50,10 +55,11 @@ def curlPostRequest(text1, payloadToDisplay):
       #Remove Whitespacing new line and tabs for accurate content length
       payloadToSend = re.sub(r"[\n\t\s]*", "", payloadToDisplay)
       req = requests.Request('POST',"https://uat-api.ssg-wsg.sg/tpg/enrolments/details/" + text1,headers={'accept':'application/json'},data=str(payloadToSend)).prepare()
-      text =  '{}\n{}\r\n{}\r\n\r\n{}\n{}'.format(
+      text =  '{}\n{}\r\n{}\n{}\r\n\r\n{}\n{}'.format(
             '----------------Request Information----------------',
             req.method + ' ' + req.url,
             '\r\n'.join('{}: {}'.format(k, v) for k, v in req.headers.items()),
+            'Encryption: Required\nDecryption: Required',
             '----------------Payload Information----------------',
             payloadToDisplay,
       )
@@ -63,24 +69,24 @@ def curlPostRequest(text1, payloadToDisplay):
 # This method is to update the courserun payload dynamically for displaying purpose in deleteEnrolmentPage
 def getDeleteEnrolmentPayLoad():
     global deleteEnrolmentPayLoad
-
     deleteEnrolmentPayLoad = "{\n    \"enrolment\": {\n        \"action\": \"" + "Cancel" + "\"\n    }   \n}"
     return deleteEnrolmentPayLoad
 
 
 #This method is to update the curl text dynamically for displaying purpose in AddEnrolment Page 
-def displayPostRequestEnrolment(payloadToDisplay):
+def displayPostRequestEnrolment(refnumber, payloadToDisplay):
       #Remove Whitespacing new line and tabs for accurate content length
     try:
         payloadToSend = re.sub(r"[\n\t\s]*", "", payloadToDisplay)
     except :
         payloadToSend = payloadToDisplay
     
-    req = requests.Request('POST',"https://uat-api.ssg-wsg.sg/tpg/enrolments",headers={'accept':'application/json'},data=str(payloadToSend)).prepare()
-    text =  '{}\n{}\r\n{}\r\n\r\n{}\n{}'.format(
+    req = requests.Request('POST',"https://uat-api.ssg-wsg.sg/tpg/enrolments/" + refnumber,headers={'accept':'application/json'},data=str(payloadToSend)).prepare()
+    text =  '{}\n{}\r\n{}\n{}\r\n\r\n{}\n{}'.format(
         '----------------Request Information----------------',
         req.method + ' ' + req.url,
         '\r\n'.join('{}: {}'.format(k, v) for k, v in req.headers.items()),
+        'Encryption: Required\nDecryption: Required',
         '----------------Payload Information----------------',
         payloadToDisplay,
     )
@@ -102,10 +108,11 @@ def curlPostRequestUpdateEnrolmentFee(text1, payloadToDisplay):
       #Remove Whitespacing new line and tabs for accurate content length
       payloadToSend = re.sub(r"[\n\t\s]*", "", payloadToDisplay)
       req = requests.Request('POST',"https://uat-api.ssg-wsg.sg/tpg/enrolments/feeCollections/" + text1,headers={'accept':'application/json'},data=str(payloadToSend)).prepare()
-      text =  '{}\n{}\r\n{}\r\n\r\n{}\n{}'.format(
+      text =  '{}\n{}\r\n{}\n{}\r\n\r\n{}\n{}'.format(
             '----------------Request Information----------------',
             req.method + ' ' + req.url,
             '\r\n'.join('{}: {}'.format(k, v) for k, v in req.headers.items()),
+            'Encryption: Required\nDecryption: Required',
             '----------------Payload Information----------------',
             payloadToDisplay,
       )
@@ -115,12 +122,14 @@ def curlPostRequestUpdateEnrolmentFee(text1, payloadToDisplay):
 #This method is to update the curl text dynamically for displaying purpose in viewEnrolmentPage
 def curlGetRequestViewEnrolment(text1):
       req = requests.Request('GET',"https://uat-api.ssg-wsg.sg/tpg/enrolments/details/" + text1,headers={'accept':'application/json'}).prepare()
-      text =  '{}\n{}\r\n{}\r\n\r\n'.format(
+      text =  '{}\n{}\r\n{}\n{}\r\n\r\n'.format(
             '----------------Request Information----------------',
             req.method + ' ' + req.url,
             '\r\n'.join('{}: {}'.format(k, v) for k, v in req.headers.items()),
+            'Decryption: Required'
       )
       return text
+
 
 
 #enrollmentInitialization()

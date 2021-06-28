@@ -388,7 +388,7 @@ class AddEnrolmentPage2(tk.Frame):
 class AddEnrolmentPreviewPage(tk.Frame):
     def refresh(controllerCurlText):
         controllerCurlText.delete("1.0","end")
-        controllerCurlText.insert(tk.END, str(displayPostRequestEnrolment(AddEnrolmentPreviewPage.payload)))
+        controllerCurlText.insert(tk.END, str(displayPostRequestEnrolment("",AddEnrolmentPreviewPage.payload)))
 
     def __init__(self, parent, controller):
 
@@ -404,6 +404,10 @@ class AddEnrolmentPreviewPage(tk.Frame):
 
         #Variable
         self.payload = '{}'
+        self.textPayload = ''
+        self.contentInfo = ''
+        self.runIdEntered = 0
+
         # Title
         label_0 = Label(self, text="Add Enrolment", width=20, font=("bold", 20))
         label_0.place(x=90, y=43)
@@ -422,11 +426,9 @@ class AddEnrolmentPreviewPage(tk.Frame):
         tabControl.add(tab2, text='Request')
         tabControl.add(tab3, text='Reponse')
         tabControl.place(width=440, height=460, x=30, y=182)
-
-        self.payload = '{}'
-        self.runIdEntered = 0
+        
         self.curlText = scrolledtext.ScrolledText(tab2, width=70, height=30)
-        self.curlText.insert(tk.END,  str(displayPostRequestEnrolment("")))
+        self.curlText.insert(tk.END, str(displayPostRequestEnrolment("","")))
         self.curlText.place(height=405, width=440, y=20)
         self.curlText.bind("<Key>", lambda e: txtEvent(e))
 
@@ -440,10 +442,10 @@ class AddEnrolmentPreviewPage(tk.Frame):
                                command=lambda: controller.show_frame(AddEnrolmentPage2),
                                )
         backButton.place(relx=0.5, rely=0.2, anchor=CENTER)
-        # exportButton1 = tk.Button(self, text="Export Payload", bg="white", width=15, pady=5, command = lambda: downloadFile("payload"))
-        # exportButton1.place(relx=0.3, rely=0.90, anchor=CENTER)
-        # exportButton2 = tk.Button(self, text="Export Response", bg="white", width=15, pady=5,command = lambda: downloadFile("response"))
-        # exportButton2.place(relx=0.7, rely=0.90, anchor=CENTER)
+        exportButton1 = tk.Button(self, text="Export Decrypted Payload", bg="white", width=20, pady=3, command = lambda: downloadFile("payload"))
+        exportButton1.place(relx=0.3, rely=0.90, anchor=CENTER)
+        exportButton2 = tk.Button(self, text="Export Decrypted Response", bg="white", width=20, pady=3,command = lambda: downloadFile("response"))
+        exportButton2.place(relx=0.7, rely=0.90, anchor=CENTER)
         
         
         self.varPayload = IntVar()
@@ -451,7 +453,6 @@ class AddEnrolmentPreviewPage(tk.Frame):
         Radiobutton(tab2, text="Encrypt", variable=self.varPayload, value=2,width=12, anchor='w',command = lambda:displayPayload("encrypt")).place(x=130,y=-5)
         self.varPayload.set(1)
 
-        self.textPayload = ''
         self.varResp = IntVar()
         Radiobutton(tab3, text="Decrypt", variable=self.varResp, value=1, width=12, anchor='w', command = lambda:displayResp("decrypt")).place(x=0,y=-5)
         Radiobutton(tab3, text="Encrypt", variable=self.varResp, value=2,width=12, anchor='w',command = lambda:displayResp("encrypt")).place(x=130,y=-5)
@@ -474,21 +475,12 @@ class AddEnrolmentPreviewPage(tk.Frame):
         
         def displayPayload(method):
             if method != 'decrypt':
-                payloadToDisplay = ''
-                try:
-                    if self.contentInfo != '':
-                        payloadToDisplay = doEncryption(str(self.contentInfo).encode()).decode()
-                except:
-                    payloadToDisplay = ''
+                payloadToDisplay = doEncryption(str(AddEnrolmentPreviewPage.payload).encode()).decode()
                 self.curlText.delete("1.0","end")
-                self.curlText.insert(tk.END, str(displayPostRequestEnrolment(payloadToDisplay)))
+                self.curlText.insert(tk.END, str(displayPostRequestEnrolment("",payloadToDisplay)))
             else:
-                try:
-                    self.contentInfo != ''
-                except:
-                    self.contentInfo = ''
                 self.curlText.delete("1.0","end")
-                self.curlText.insert(tk.END, str(displayPostRequestEnrolment(self.contentInfo)))
+                self.curlText.insert(tk.END, str(displayPostRequestEnrolment("",AddEnrolmentPreviewPage.payload)))
 
         def displayResp(method):
             if method != 'encrypt':
@@ -551,15 +543,15 @@ class AddEnrolmentPreviewPage(tk.Frame):
 
         edit.focus_set()
 
-        # def downloadFile(method):
-        #     files = [('JSON', '*.json'),
-        #                 ('Text Document', '*.txt')]
-        #     file = filedialog.asksaveasfile(filetypes=files, defaultextension='.json')
-        #     filetext = str(updateCourseRunPagePreview.payload) if method == "payload" else str(
-        #         responseText.get("1.0", END))
-        #     file.write(filetext)
-        #     file.close()
-        #     messagebox.showinfo("Successful", "File has been downloaded")
+        def downloadFile(method):
+            files = [('JSON', '*.json'),
+                        ('Text Document', '*.txt')]
+            file = filedialog.asksaveasfile(filetypes=files, defaultextension='.json')
+            filetext = str(AddEnrolmentPreviewPage.payload) if method == "payload" else str(
+                responseText.get("1.0", END))
+            file.write(filetext)
+            file.close()
+            messagebox.showinfo("Successful", "File has been downloaded")
             
 class addEnrolmentPageFileUpload(tk.Frame):
     global fileUploadEntry
@@ -569,6 +561,9 @@ class addEnrolmentPageFileUpload(tk.Frame):
 
         load = Image.open("SKFBGPage.JPG")
         render = ImageTk.PhotoImage(load)
+        #Variable
+        self.textPayload = ''
+        self.contentInfo = ''
 
         # labels can be text or images
         img2 = Label(self, image=render)
@@ -596,7 +591,7 @@ class addEnrolmentPageFileUpload(tk.Frame):
         tabControl.place(width= 440, height= 460, x = 30, y = 222)
 
         self.curlText = scrolledtext.ScrolledText(tab2,width=70,height=30)
-        self.curlText.insert(tk.END, str(displayPostRequestEnrolment("")))
+        self.curlText.insert(tk.END, str(displayPostRequestEnrolment("","")))
         self.curlText.place(height = 405, width = 440, y=20)
         
         responseText = scrolledtext.ScrolledText(tab3,width=70,height=30)
@@ -624,7 +619,6 @@ class addEnrolmentPageFileUpload(tk.Frame):
         Radiobutton(tab2, text="Encrypt", variable=self.varPayload, value=2,width=12, anchor='w',command = lambda:displayPayload("encrypt")).place(x=130,y=-5)
         self.varPayload.set(1)
 
-        self.textPayload = ''
         self.varResp = IntVar()
         Radiobutton(tab3, text="Decrypt", variable=self.varResp, value=1, width=12, anchor='w', command = lambda:displayResp("decrypt")).place(x=0,y=-5)
         Radiobutton(tab3, text="Encrypt", variable=self.varResp, value=2,width=12, anchor='w',command = lambda:displayResp("encrypt")).place(x=130,y=-5)
@@ -640,14 +634,14 @@ class addEnrolmentPageFileUpload(tk.Frame):
                 except:
                     payloadToDisplay = ''
                 self.curlText.delete("1.0","end")
-                self.curlText.insert(tk.END, str(displayPostRequestEnrolment(payloadToDisplay)))
+                self.curlText.insert(tk.END, str(displayPostRequestEnrolment("",payloadToDisplay)))
             else:
                 try:
                     self.contentInfo != ''
                 except:
                     self.contentInfo = ''
                 self.curlText.delete("1.0","end")
-                self.curlText.insert(tk.END, str(displayPostRequestEnrolment(self.contentInfo)))
+                self.curlText.insert(tk.END, str(displayPostRequestEnrolment("",self.contentInfo)))
         def displayResp(method):
             if method != 'encrypt':
                 try:
@@ -715,26 +709,26 @@ class addEnrolmentPageFileUpload(tk.Frame):
             filePath=filedialog.askopenfilename(filetypes=[('JSON', '*.json')])
             fileUploadEntry.delete(0, 'end')
             fileUploadEntry.insert(1, filePath)
-            global contentInfo
             with open(filePath, 'r') as content:
                 self.contentInfo = content.read()
 
-            self.curlText.insert(tk.END, curlPostRequest("",self.contentInfo))
+            self.curlText.insert(tk.END, displayPostRequestEnrolment("",self.contentInfo))
                 
 
         def submitCallBack():
             responseText.delete("1.0","end")
             payload = self.contentInfo
-            # payload = json.loads(payload)
-            # print(payload)
-            responseText.delete("1.0","end")
-            resp = addEnrolment(payload)
-            resp = doDecryption(resp)
-            resp = json.loads(resp.decode())
-            addEnrolmentPageFileUpload.textPayload = StringVar(self, value = str(json.dumps(resp,indent=4))) 
-            responseText.insert(INSERT,addEnrolmentPageFileUpload.textPayload.get())
-            self.varResp.set(1)
-            tabControl.select(tab3)
+            if (payload != ''):
+                responseText.delete("1.0","end")
+                resp = addEnrolment(payload)
+                resp = doDecryption(resp)
+                resp = json.loads(resp.decode())
+                addEnrolmentPageFileUpload.textPayload = StringVar(self, value = str(json.dumps(resp,indent=4))) 
+                responseText.insert(INSERT,addEnrolmentPageFileUpload.textPayload.get())
+                self.varResp.set(1)
+                tabControl.select(tab3)
+            else:
+                print("empty payload")
 
 
         def downloadFile():
