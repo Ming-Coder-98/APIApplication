@@ -1,0 +1,19 @@
+{
+    "enrolment": {
+	"action":"Update",
+        "course": {
+            "run": {
+                "id": "225249"
+            }
+        },
+        "trainee": {
+            "fullName": "Aileen Chong",
+            "contactNumber": {
+                "countryCode": "+65",
+                "areaCode": "",
+                "phoneNumber": "88889999"
+            },
+            "emailAddress": "abc123@abc.com"
+        }
+    }
+}
