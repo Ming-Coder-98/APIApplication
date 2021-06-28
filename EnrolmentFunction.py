@@ -26,6 +26,25 @@ def cancelEnrolment(enrolmentId):
     return text
 
 
+def getEnrolment(enrolmentRefNo):
+    resp = getHttpRequest("https://uat-api.ssg-wsg.sg/tpg/enrolments/details/" + str(enrolmentRefNo))
+    plainText = doDecryption(resp.text)
+    json_load = json.loads(plainText.decode())
+    text = json.dumps(json_load, indent = 4)
+    return text
+
+
+def updateEnrolmentFee(enrolmentRefNo):
+    updateEnrolmentFeeURL = ("https://uat-api.ssg-wsg.sg/tpg/enrolments/feeCollections/" + str(enrolmentRefNo))
+
+    UpdateEnrolmentFeeEncrypt = doEncryption(updateEnrolmentFeePayLoad.encode())
+    resp = postHttpRequestJson(updateEnrolmentFeeURL, UpdateEnrolmentFeeEncrypt.decode())
+    plainText = doDecryption(resp.text)
+    json_load = json.loads(plainText.decode())
+    text = json.dumps(json_load, indent = 4)
+    return text
+
+
 #This method is to update the curl text dynamically for displaying purpose in deleteEnrolmentPage
 def curlPostRequest(text1, payloadToDisplay):
       #Remove Whitespacing new line and tabs for accurate content length
@@ -41,7 +60,7 @@ def curlPostRequest(text1, payloadToDisplay):
       return text
 
 
-# This method is to update the courserun payload dynamically for displaying purpose in deleteCourseRunPage
+# This method is to update the courserun payload dynamically for displaying purpose in deleteEnrolmentPage
 def getDeleteEnrolmentPayLoad():
     global deleteEnrolmentPayLoad
 
@@ -67,12 +86,30 @@ def displayPostRequestEnrolment(payloadToDisplay):
     )
     return text
 
-def getEnrolment(enrolmentRefNo):
-    resp = getHttpRequest("https://uat-api.ssg-wsg.sg/tpg/enrolments/details/" + str(enrolmentRefNo))
-    plainText = doDecryption(resp.text)
-    json_load = json.loads(plainText.decode())
-    text = json.dumps(json_load, indent = 4)
-    return text
+
+
+# This method is to update the courserun payload dynamically for displaying purpose in deleteEnrolmentPage
+def getUpdateEnrolmentFeePayLoad(status):
+    global updateEnrolmentFeePayLoad
+
+    updateEnrolmentFeePayLoad = "{\n    \"enrolment\": {\n        \"fees\": " + "{" + "\n          \"collectionStatus\": \"" + status + "\" \n        } \n     }   \n }"
+    return updateEnrolmentFeePayLoad
+
+
+
+#This method is to update the curl text dynamically for displaying purpose in UpdateEnrolmentFee
+def curlPostRequestUpdateEnrolmentFee(text1, payloadToDisplay):
+      #Remove Whitespacing new line and tabs for accurate content length
+      payloadToSend = re.sub(r"[\n\t\s]*", "", payloadToDisplay)
+      req = requests.Request('POST',"https://uat-api.ssg-wsg.sg/tpg/enrolments/feeCollections/" + text1,headers={'accept':'application/json'},data=str(payloadToSend)).prepare()
+      text =  '{}\n{}\r\n{}\r\n\r\n{}\n{}'.format(
+            '----------------Request Information----------------',
+            req.method + ' ' + req.url,
+            '\r\n'.join('{}: {}'.format(k, v) for k, v in req.headers.items()),
+            '----------------Payload Information----------------',
+            payloadToDisplay,
+      )
+      return text
 
 
 #This method is to update the curl text dynamically for displaying purpose in viewEnrolmentPage
