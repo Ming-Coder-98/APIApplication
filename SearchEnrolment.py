@@ -1,0 +1,392 @@
+import json
+import tkinter
+import tkinter as tk
+from tkinter import Button, Entry, IntVar, Label, Radiobutton, StringVar, filedialog, messagebox, scrolledtext, ttk
+from tkinter.constants import CENTER, END, INSERT
+
+import pandas as pd
+from PIL import Image, ImageTk
+
+from EnrolmentFunction import curlPostRequestUpdateEnrolmentFee, getUpdateEnrolmentFeePayLoad, updateEnrolmentFee
+from courseRunFunctions import (createCourserun, curlPostRequest)
+from HttpRequestFunction import loadFile
+from tooltip import CreateToolTip
+
+from tkinter import Button, Entry, IntVar, Label, Radiobutton, StringVar,scrolledtext,filedialog, ttk, messagebox
+import tkinter as tk
+from tkinter.constants import CENTER, DISABLED, END, INSERT
+from tooltip import CreateToolTip
+from PIL import ImageTk, Image
+import json
+
+#Load Tooltip Json object as ttDescription
+with open("TooltipDescription.json") as f:
+    tooltipDescription = json.load(f)
+
+with open("config.json") as file:
+    config = json.load(file)
+
+
+# Frame for Page 1 - Add Course Run
+class searchEnrolmentPage1(tk.Frame):
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+
+        load = Image.open("SKFBGPage.JPG")
+        render = ImageTk.PhotoImage(load)
+
+        # labels can be text or images
+        img2 = Label(self, image=render)
+        img2.image = render
+        img2.place(x=0, y=0, relwidth=1, relheight=1)
+
+        label_0 = Label(self, text="Search Enrolment", width=20, font=("bold", 20))
+        label_0.place(x=90, y=53)
+
+        label_filterTitle = Label(self, text="Filter Details:", width=20, font=("bold", 15))
+        label_filterTitle.place(x=137, y=100)
+
+        label_updateFromDate = Label(self, text="Last Update Dates From*", width=20, font=("bold", 10))
+        label_updateFromDate.place(x=80, y=135)
+
+        #label_openRegDate_ttp = CreateToolTip(label_openRegDate, tooltipDescription["CourseRegistrationDateOpen"])
+
+        entry_updateFromDate = Entry(self)
+        entry_updateFromDate.place(x=250, y=135)
+
+        label_updateToDate = Label(self, text="Last Update Dates To*", width=20, font=("bold", 10))
+        label_updateToDate.place(x=80, y=160)
+
+        #label_closeRegDate_ttp = CreateToolTip(label_closeRegDate, tooltipDescription["CourseRegistrationDateClose"])
+
+        entry_updateToDate = Entry(self)
+        entry_updateToDate.place(x=250, y=160)
+
+        label_sortTitle = Label(self, text="Sort by Details:", width=20, font=("bold", 15))
+        label_sortTitle.place(x=137, y=190)
+
+        label_field = Label(self, text="Field", width=20, font=("bold", 10))
+        label_field.place(x=80, y=225)
+
+        #label_CourseModeOfTraining_ttp = CreateToolTip(label_CourseModeOfTraining, tooltipDescription["ModeOfTraining"])
+
+        field = ttk.Combobox(self, width=27, state="readonly")
+        field['values'] = ["updatedOn",
+                           "createdOn"]
+        field.current(0)
+        field.place(x=250, y=225)
+
+        label_order = Label(self, text="Order", width=20, font=("bold", 10))
+        label_order.place(x=80, y=250)
+
+        #label_CourseModeOfTraining_ttp = CreateToolTip(label_CourseModeOfTraining, tooltipDescription["ModeOfTraining"])
+
+        order = ttk.Combobox(self, width=27, state="readonly")
+        order['values'] = ["asc - Ascending",
+                           "desc - Descending"]
+        order.current(0)
+        order.place(x=250, y=250)
+
+        label_sortTitle = Label(self, text="Enrolment Details:", width=20, font=("bold", 15))
+        label_sortTitle.place(x=137, y=280)
+
+
+        label_runId = Label(self, text="Course Run Id*", width=20, font=("bold", 10))
+        label_runId.place(x=80, y=315)
+
+        #label_runId_ttp = CreateToolTip(self.label_runId, tooltipDescription["CourseRunId"])
+
+        entry_runId = Entry(self)
+        entry_runId.place(x=250, y=315)
+
+        label_CRN = Label(self, text="Course Reference Number*", width=20, font=("bold", 10))
+        label_CRN.place(x=80, y=340)
+
+        label_CRN_ttp = CreateToolTip(label_CRN, tooltipDescription["CourseReferenceNumber"])
+
+        entry_CRN = Entry(self)
+        entry_CRN.place(x=250, y=340)
+
+        label_status = Label(self, text="Enrolment Status", width=20, font=("bold", 10))
+        label_status.place(x=80, y=365)
+
+        #label_CourseModeOfTraining_ttp = CreateToolTip(label_CourseModeOfTraining, tooltipDescription["ModeOfTraining"])
+
+        status = ttk.Combobox(self, width=27, state="readonly")
+        status['values'] = ["Confirmed",
+                           "Cancelled"]
+        status.current(0)
+        status.place(x=250, y=365)
+
+        label_traineeId = Label(self, text="Trainee Id", width=20, font=("bold", 10))
+        label_traineeId.place(x=80, y=390)
+
+        #label_runId_ttp = CreateToolTip(self.label_runId, tooltipDescription["CourseRunId"])
+
+        entry_traineeId = Entry(self)
+        entry_traineeId.place(x=250, y=390)
+
+
+        label_statusCollection = Label(self, text="Fee Status Collection*", width=20, font=("bold", 10))
+        label_statusCollection.place(x=80, y=415)
+
+        # label_statusCollection_ttp = CreateToolTip(label_statusCollection, tooltipDescription["CourseVacCode"])
+
+        statusCollection = ttk.Combobox(self, width=27, state="readonly")
+        statusCollection['values'] = ["Full Payment",
+                                           "Pending Payment",
+                                           "Partial Payment",
+                                           "Cancelled"
+                                           ]
+        statusCollection.current(0)
+        statusCollection.place(x=250, y=415)
+
+        label_idType = Label(self, text="ID Type", width=20, font=("bold", 10))
+        label_idType.place(x=80, y=440)
+
+        #label_CourseModeOfTraining_ttp = CreateToolTip(label_CourseModeOfTraining, tooltipDescription["ModeOfTraining"])
+
+        idType = ttk.Combobox(self, width=27, state="readonly")
+        idType['values'] = ["NRIC",
+                           "FIN",
+                            "Others"]
+        idType.current(0)
+        idType.place(x=250, y=440)
+
+        label_employerUEN = Label(self, text="Employer UEN", width=20, font=("bold", 10))
+        label_employerUEN.place(x=80, y=465)
+
+        #label_runId_ttp = CreateToolTip(self.label_runId, tooltipDescription["CourseRunId"])
+
+        entry_employerUEN = Entry(self)
+        entry_employerUEN.place(x=250, y=465)
+
+        label_enrolmentDate = Label(self, text="Enrolment Date", width=20, font=("bold", 10))
+        label_enrolmentDate.place(x=80, y=490)
+
+        #label_closeRegDate_ttp = CreateToolTip(label_closeRegDate, tooltipDescription["CourseRegistrationDateClose"])
+
+        entry_enrolmentDate = Entry(self)
+        entry_enrolmentDate.place(x=250, y=490)
+
+
+        label_sponsorshipType = Label(self, text="ID Type", width=20, font=("bold", 10))
+        label_sponsorshipType.place(x=80, y=515)
+
+        #label_CourseModeOfTraining_ttp = CreateToolTip(label_CourseModeOfTraining, tooltipDescription["ModeOfTraining"])
+
+        sponsorshipType = ttk.Combobox(self, width=27, state="readonly")
+        sponsorshipType['values'] = ["EMPLOYER",
+                                     "INDIVIDUAL"
+                                     ]
+        sponsorshipType.current(0)
+        sponsorshipType.place(x=250, y=515)
+
+        label_TpUEN = Label(self, text="Training Partner - UEN", width=20, font=("bold", 10))
+        label_TpUEN.place(x=80, y=540)
+
+        label_UEN_ttp = CreateToolTip(label_TpUEN, tooltipDescription["UEN"])
+        uenReadOnly = StringVar()
+        uenReadOnly.set(config["UEN"])
+        entry_TpUEN = Entry(self, state=DISABLED, textvariable=uenReadOnly)
+        entry_TpUEN.place(x=250, y=542)
+
+        label_tpCode = Label(self, text="TP Code", width=20, font=("bold", 10))
+        label_tpCode.place(x=80, y=565)
+
+        #label_runId_ttp = CreateToolTip(self.label_runId, tooltipDescription["CourseRunId"])
+
+        entry_tpCode = Entry(self)
+        entry_tpCode.place(x=250, y=565)
+
+        previewButton = tk.Button(self, text="Next", bg="white", width=25, pady=5,
+                                  command= lambda: controller.show_frame(searchEnrolmentPage2))
+        previewButton.place(x=250, y=610, anchor=CENTER)
+
+        # Initialies the file and object first in order to prevent clearing of data
+        # addCourseRunPagePreview.payload = loadFile("EmptyaddCourseRunPayLoad.json")
+        #addCourseRunPageForm.payload = "{}"
+
+        #def previewCallBack():
+            #addCourseRunPageForm.payload = storeAndsave_all()
+            #print(addCourseRunPageForm.payload)
+            #controller.show_frame(addCourseRunPage2)
+
+    def show_frame(self, cont):
+        frame = self.frames[cont]
+        frame.tkraise()
+
+
+
+# Search Enrolment Page
+class searchEnrolmentPage2(tk.Frame):
+
+    def __init__(self, parent, controller):
+
+        tk.Frame.__init__(self, parent)
+
+        load = Image.open("SKFBGPage.JPG")
+        render = ImageTk.PhotoImage(load)
+
+        # labels can be text or images
+        img2 = Label(self, image=render)
+        img2.image = render
+        img2.place(x=0, y=0, relwidth=1, relheight=1)
+
+        # Title
+        label_0 = Label(self, text="Search Enrolment", width=20, font=("bold", 20))
+        label_0.place(x=90, y=53)
+
+        # Enrolment Ref Number
+        label_ERN = Label(self, text="Enrolment Reference Number", width=22, font=("bold", 10), anchor='w')
+        label_ERN.place(x=100, y=110)
+
+        entry_ERN = Entry(self)
+        entry_ERN.place(x=275, y=110)
+
+        #label_statusCollection_ttp = CreateToolTip(label_statusCollection, tooltipDescription["CourseVacCode"])
+
+        self.statusCollection = ttk.Combobox(self, width=27, state="readonly")
+        self.statusCollection['values'] = ["Full Payment",
+                                           "Pending Payment",
+                                           "Partial Payment",
+                                           "Cancelled"
+                                           ]
+        self.statusCollection.current(0)
+        self.statusCollection.place(x=272, y=140)
+
+
+        label_ERN_ttp = CreateToolTip(label_ERN, tooltipDescription["CourseReferenceNumber"])
+
+        label_page = Label(self, text="Number of Pages", width=20, font=("bold", 10))
+        label_page.place(x=100, y=130)
+
+        #label_runId_ttp = CreateToolTip(self.label_runId, tooltipDescription["CourseRunId"])
+
+        entry_page = Entry(self)
+        entry_page.place(x=250, y=130)
+
+        label_pageSize = Label(self, text="Page Sizes", width=20, font=("bold", 10))
+        label_pageSize.place(x=100, y=155)
+
+        #label_runId_ttp = CreateToolTip(self.label_runId, tooltipDescription["CourseRunId"])
+
+        entry_pageSize = Entry(self)
+        entry_pageSize.place(x=250, y=155)
+
+
+
+
+
+
+        # This method is used to update the display information dynamically in "Payload" Tab whenever user key in a value
+        def typing():
+            value = curlPostRequestUpdateEnrolmentFee(entry_ERN.get(), getUpdateEnrolmentFeePayLoad(self.statusCollection.get()))
+            curlText.delete("1.0", "end")
+            curlText.insert(tk.END, value)
+
+        entry_ERN.bind('<KeyRelease>', lambda a: typing())
+        self.statusCollection.bind("<<ComboboxSelected>>",lambda a: typing())
+
+
+        # Expand label to fit window size
+        style = ttk.Style(self)
+        style.configure('TNotebook.Tab', width=self.winfo_screenwidth())
+
+        # Configuration for Notebook layout
+        tabControl = ttk.Notebook(self)
+
+        tab2 = ttk.Frame(tabControl)
+        tab3 = ttk.Frame(tabControl)
+
+        # Adding of tabs
+        tabControl.add(tab2, text='Request')
+        tabControl.add(tab3, text='Response')
+        tabControl.place(width=440, height=460, x=30, y=222)
+
+        curlText = scrolledtext.ScrolledText(tab2, width=70, height=30)
+        curlText.insert(tk.END,
+                        str(curlPostRequestUpdateEnrolmentFee("", getUpdateEnrolmentFeePayLoad(self.statusCollection.get()))))
+        curlText.place(height=405, width=440, y=20)
+        curlText.bind("<Key>", lambda e: "break")
+
+        responseText = scrolledtext.ScrolledText(tab3, width=70, height=30)
+        responseText.place(height=405, width=440, y=20)
+        responseText.bind("<Key>", lambda e: "break")
+
+        submitButton = tk.Button(self, text="Update", bg="white", width=25, pady=5,
+                                 command=lambda: updateFeeCallBack(entry_ERN.get()))
+        submitButton.place(relx=0.5, rely=0.25, anchor=CENTER)
+        exportButton1 = tk.Button(self, text="Export Payload", bg="white", width=15, pady=5,
+                                  command=lambda: downloadFile("payload"))
+        exportButton1.place(relx=0.3, rely=0.95, anchor=CENTER)
+        exportButton2 = tk.Button(self, text="Export Response", bg="white", width=15, pady=5,
+                                  command=lambda: downloadFile("response"))
+        exportButton2.place(relx=0.7, rely=0.95, anchor=CENTER)
+
+        # adding of single line text box
+        edit = Entry(self, background="light gray")
+
+        # positioning of text box
+        edit.place(x=285, height=21, y=244)
+
+        # setting focus
+        edit.focus_set()
+
+        butt_resp = Button(tab2, text='Find', command=lambda: find("curl"), highlightthickness=0, bd=0,
+                           background="gray")
+        butt_resp.place(x=380, y=0, height=21, width=60)
+        butt_resp = Button(tab3, text='Find', command=lambda: find("resp"), highlightthickness=0, bd=0,
+                           background="gray")
+        butt_resp.place(x=380, y=0, height=21, width=60)
+
+        # This method is used to search the response text and highlight the searched word in red
+        def find(method):
+            if method == "resp":
+                textw = responseText
+            else:
+                textw = curlText
+            textw.tag_remove('found', '1.0', END)
+
+            # returns to widget currently in focus
+            s = edit.get()
+            if s:
+                idx = '1.0'
+                while 1:
+                    # searches for desried string from index 1
+                    idx = textw.search(s, idx, nocase=1,
+                                       stopindex=END)
+                    if not idx: break
+
+                    # last index sum of current index and
+                    # length of text
+                    lastidx = '%s+%dc' % (idx, len(s))
+
+                    # overwrite 'Found' at idx
+                    textw.tag_add('found', idx, lastidx)
+                    idx = lastidx
+                    # textw.see(idx)  # Once found, the scrollbar automatically scrolls to the text
+
+                # mark located string as red
+                textw.tag_config('found', foreground='red')
+
+            edit.focus_set()
+
+        def downloadFile(method):
+            files = [('JSON', '*.json'),
+                     ('Text Document', '*.txt')]
+            file = filedialog.asksaveasfile(filetypes=files, defaultextension='.json')
+            filetext = str(getUpdateEnrolmentFeePayLoad(entry_ERN.get())) if method == "payload" else str(
+                responseText.get("1.0", END))
+            file.write(filetext)
+            file.close()
+            messagebox.showinfo("Successful", "File has been downloaded")
+
+        # This method activates two other methods.
+        # 1) this method calls the delete method in courseRunFunction and return the response
+        # 2) Based on the response, if a status 200 is received, it will display the response
+        def updateFeeCallBack(enrolRefNum):
+            resp = updateEnrolmentFee(enrolRefNum)
+            responseText.delete("1.0", "end")
+            responseText.insert(tk.END, resp)
+            tabControl.select(tab3)

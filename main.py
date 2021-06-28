@@ -2,6 +2,7 @@
 from tkinter.constants import CENTER, END, INSERT
 from AddEnrolment import AddEnrolmentMainPage, AddEnrolmentPage2, AddEnrolmentPreviewPage, addEnrolmentPageFileUpload
 from CourseSession import getCourseSessionPage
+from SearchEnrolment import searchEnrolmentPage1, searchEnrolmentPage2
 from UpdateCourseRun import updateCourseRunPageFormFileUpload, updateCourseRunPagePage2, updateCourseRunPagePage3, updateCourseRunPagePage4, updateCourseRunPagePreview, updateCourseRunPageSelect
 from UpdateEnrolmentFeeCollection import updateEnrolFeePage
 from ViewEnrolment import viewEnrolmentPage, deleteEnrolmentPage
@@ -42,7 +43,7 @@ class APIProject(tk.Tk):
         
 
         self.frames = {}
-        for F in (AddEnrolmentPage2,AddEnrolmentPreviewPage,addEnrolmentPageFileUpload,AddEnrolmentMainPage ,deleteEnrolmentPage, viewEnrolmentPage,updateEnrolFeePage, getCourseSessionPage, updateCourseRunPagePreview,updateCourseRunPagePage2,updateCourseRunPagePage3,updateCourseRunPagePage4,updateCourseRunPageFormFileUpload, updateCourseRunPageSelect, addCourseRunPageFormFileUpload,addCourseRunPageForm,addCourseRunPage4,addCourseRunPage3,addCourseRunPage2, addCourseRunPage1, viewCourseRunPage, deleteCourseRunPage, StartPage):
+        for F in (AddEnrolmentPage2,AddEnrolmentPreviewPage,addEnrolmentPageFileUpload,AddEnrolmentMainPage,searchEnrolmentPage1,searchEnrolmentPage2,deleteEnrolmentPage, viewEnrolmentPage,updateEnrolFeePage, getCourseSessionPage, updateCourseRunPagePreview,updateCourseRunPagePage2,updateCourseRunPagePage3,updateCourseRunPagePage4,updateCourseRunPageFormFileUpload, updateCourseRunPageSelect, addCourseRunPageFormFileUpload,addCourseRunPageForm,addCourseRunPage4,addCourseRunPage3,addCourseRunPage2, addCourseRunPage1, viewCourseRunPage, deleteCourseRunPage, StartPage):
             frame = F(self.container, self)
 
             self.frames[F] = frame
@@ -70,7 +71,7 @@ class APIProject(tk.Tk):
         enrolmentMenu.add_command(label="Create Enrolment", command=lambda: self.show_frame(AddEnrolmentMainPage))
         enrolmentMenu.add_command(label="Update Enrolment")
         enrolmentMenu.add_command(label="Delete Enrolment",command=lambda: self.show_frame(deleteEnrolmentPage))
-        enrolmentMenu.add_command(label="Search Enrolment")
+        enrolmentMenu.add_command(label="Search Enrolment",command=lambda:self.show_frame(searchEnrolmentPage1))
         enrolmentMenu.add_command(label="View Enrolment",command=lambda: self.show_frame(viewEnrolmentPage))
         enrolmentMenu.add_command(label="Update Enrolment Fee Collection",command=lambda: self.show_frame(updateEnrolFeePage))
         menubar.add_cascade(label="Enrolment", menu=enrolmentMenu)  
