@@ -39,6 +39,7 @@ from UpdateCourseRun import (updateCourseRunPageFormFileUpload,
                              updateCourseRunPagePreview,
                              updateCourseRunPageSelect)
 from ViewEnrolment import deleteEnrolmentPage, viewEnrolmentPage
+from SearchEnrolment import searchEnrolmentPage1, searchEnrolmentPage2
 
 #Load Tooltip Json object as ttDescription
 with open("TooltipDescription.json") as f:
@@ -69,7 +70,8 @@ class APIProject(tk.Tk):
             AddEnrolmentPage2,AddEnrolmentPreviewPage,addEnrolmentPageFileUpload,AddEnrolmentMainPage ,
             deleteEnrolmentPage, viewEnrolmentPage, getCourseSessionPage, updateCourseRunPagePreview,updateCourseRunPagePage2,updateCourseRunPagePage3,
             updateCourseRunPagePage4,updateCourseRunPageFormFileUpload, updateCourseRunPageSelect, addCourseRunPageFormFileUpload,addCourseRunPageForm,addCourseRunPage4,
-            addCourseRunPage3,addCourseRunPage2, addCourseRunPage1, viewCourseRunPage, deleteCourseRunPage, StartPage):
+            addCourseRunPage3,addCourseRunPage2, addCourseRunPage1, viewCourseRunPage, deleteCourseRunPage,
+            searchEnrolmentPage1, searchEnrolmentPage2,StartPage):
             frame = F(self.container, self)
 
             self.frames[F] = frame
@@ -97,7 +99,7 @@ class APIProject(tk.Tk):
         enrolmentMenu.add_command(label="Create Enrolment", command=lambda: self.show_frame(AddEnrolmentMainPage))
         enrolmentMenu.add_command(label="Update Enrolment", command = lambda: self.show_frame(UpdateEnrolmentMainPage))
         enrolmentMenu.add_command(label="Delete Enrolment",command=lambda: self.show_frame(deleteEnrolmentPage))
-        enrolmentMenu.add_command(label="Search Enrolment")
+        enrolmentMenu.add_command(label="Search Enrolment",command=lambda: self.show_frame(searchEnrolmentPage1))
         enrolmentMenu.add_command(label="View Enrolment",command=lambda: self.show_frame(viewEnrolmentPage))
         enrolmentMenu.add_command(label="Update Enrolment Fee Collection",command=lambda: self.show_frame(updateEnrolFeePage))
         menubar.add_cascade(label="Enrolment", menu=enrolmentMenu)  

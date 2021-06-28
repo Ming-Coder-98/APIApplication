@@ -7,7 +7,8 @@ from tkinter.constants import CENTER, END, INSERT
 import pandas as pd
 from PIL import Image, ImageTk
 
-from EnrolmentFunction import curlPostRequestUpdateEnrolmentFee, getUpdateEnrolmentFeePayLoad, updateEnrolmentFee
+from EnrolmentFunction import curlPostRequestUpdateEnrolmentFee, getUpdateEnrolmentFeePayLoad, updateEnrolmentFee, \
+    curlRequestSearchEnrolment, searchEnrolment, displayPostRequestEnrolment
 from courseRunFunctions import (createCourserun, curlPostRequest)
 from HttpRequestFunction import loadFile
 from tooltip import CreateToolTip
@@ -71,7 +72,8 @@ class searchEnrolmentPage1(tk.Frame):
         #label_CourseModeOfTraining_ttp = CreateToolTip(label_CourseModeOfTraining, tooltipDescription["ModeOfTraining"])
 
         field = ttk.Combobox(self, width=27, state="readonly")
-        field['values'] = ["updatedOn",
+        field['values'] = ["Select an Option",
+                           "updatedOn",
                            "createdOn"]
         field.current(0)
         field.place(x=250, y=225)
@@ -82,8 +84,9 @@ class searchEnrolmentPage1(tk.Frame):
         #label_CourseModeOfTraining_ttp = CreateToolTip(label_CourseModeOfTraining, tooltipDescription["ModeOfTraining"])
 
         order = ttk.Combobox(self, width=27, state="readonly")
-        order['values'] = ["asc - Ascending",
-                           "desc - Descending"]
+        order['values'] = ["Select an Option",
+                           "asc",
+                           "desc"]
         order.current(0)
         order.place(x=250, y=250)
 
@@ -113,7 +116,8 @@ class searchEnrolmentPage1(tk.Frame):
         #label_CourseModeOfTraining_ttp = CreateToolTip(label_CourseModeOfTraining, tooltipDescription["ModeOfTraining"])
 
         status = ttk.Combobox(self, width=27, state="readonly")
-        status['values'] = ["Confirmed",
+        status['values'] = ["Select an Option",
+                            "Confirmed",
                            "Cancelled"]
         status.current(0)
         status.place(x=250, y=365)
@@ -133,7 +137,8 @@ class searchEnrolmentPage1(tk.Frame):
         # label_statusCollection_ttp = CreateToolTip(label_statusCollection, tooltipDescription["CourseVacCode"])
 
         statusCollection = ttk.Combobox(self, width=27, state="readonly")
-        statusCollection['values'] = ["Full Payment",
+        statusCollection['values'] = ["Select an Option",
+                                      "Full Payment",
                                            "Pending Payment",
                                            "Partial Payment",
                                            "Cancelled"
@@ -147,7 +152,8 @@ class searchEnrolmentPage1(tk.Frame):
         #label_CourseModeOfTraining_ttp = CreateToolTip(label_CourseModeOfTraining, tooltipDescription["ModeOfTraining"])
 
         idType = ttk.Combobox(self, width=27, state="readonly")
-        idType['values'] = ["NRIC",
+        idType['values'] = ["Select an Option",
+                            "NRIC",
                            "FIN",
                             "Others"]
         idType.current(0)
@@ -170,13 +176,14 @@ class searchEnrolmentPage1(tk.Frame):
         entry_enrolmentDate.place(x=250, y=490)
 
 
-        label_sponsorshipType = Label(self, text="ID Type", width=20, font=("bold", 10))
+        label_sponsorshipType = Label(self, text="Sponsorship Type", width=20, font=("bold", 10))
         label_sponsorshipType.place(x=80, y=515)
 
         #label_CourseModeOfTraining_ttp = CreateToolTip(label_CourseModeOfTraining, tooltipDescription["ModeOfTraining"])
 
         sponsorshipType = ttk.Combobox(self, width=27, state="readonly")
-        sponsorshipType['values'] = ["EMPLOYER",
+        sponsorshipType['values'] = ["Select an Option",
+                                     "EMPLOYER",
                                      "INDIVIDUAL"
                                      ]
         sponsorshipType.current(0)
@@ -200,8 +207,74 @@ class searchEnrolmentPage1(tk.Frame):
         entry_tpCode.place(x=250, y=565)
 
         previewButton = tk.Button(self, text="Next", bg="white", width=25, pady=5,
-                                  command= lambda: controller.show_frame(searchEnrolmentPage2))
+                                  command= lambda: NextCallBack())
         previewButton.place(x=250, y=610, anchor=CENTER)
+
+        def NextCallBack():
+            searchEnrolmentPage2.payload = StoreAndSave()
+            searchEnrolmentPage2.refresh(controller.frames[searchEnrolmentPage2].curlText)
+            controller.show_frame(searchEnrolmentPage2)
+
+        def StoreAndSave():
+            try:
+                payload = json.loads(searchEnrolmentPage2.payload)
+            except:
+                payload = {}
+
+            if field.get()  != 'Select an Option' or order.get() != 'Select an Option':
+                payload['sortBy'] = {}
+                if field.get() != 'Select an Option':
+                    payload['sortBy']['field']= field.get()
+                if order.get() != 'Select an Option':
+                    payload['sortBy']['order'] = (order.get())
+
+            if entry_updateFromDate.get() != '' or entry_updateToDate.get() != '':
+                payload['meta'] = {}
+                if entry_updateFromDate.get() != '':
+                    payload['meta']['lastUpdateDateFrom']= entry_updateFromDate.get()
+                if entry_updateToDate.get() != '':
+                    payload['meta']['lastUpdateDateTo'] = entry_updateToDate.get()
+
+            if entry_CRN.get() or entry_runId.get() or entry_traineeId or entry_employerUEN or entry_enrolmentDate or entry_tpCode!= '':
+                payload['enrolment'] = {}
+                if entry_runId.get() != '':
+                    payload['enrolment']['course'] = {}
+                    payload['enrolment']['course']['run'] = {}
+                    payload['enrolment']['course']['run']['id']= entry_runId.get()
+                if entry_CRN.get() != '':
+                    payload['enrolment']['course'] = {}
+                    payload['enrolment']['course']['referenceNumber'] = entry_CRN.get()
+                if entry_traineeId.get() != '':
+                    payload['enrolment']['trainee'] = {}
+                    payload['enrolment']['trainee']['id'] = entry_traineeId.get()
+                if entry_employerUEN.get() != '':
+                    payload['enrolment']['employer'] = {}
+                    payload['enrolment']['employer']['uen'] = entry_employerUEN.get()
+                if entry_enrolmentDate.get() != '':
+                    payload['enrolment']['enrolmentDate'] = entry_enrolmentDate.get()
+                if entry_TpUEN.get() != '':
+                    payload['enrolment']['trainingPartner'] = {}
+                    payload['enrolment']['trainingPartner']['uen'] = entry_TpUEN.get()
+                if entry_tpCode.get() != '':
+                    payload['enrolment']['trainingPartner']['code'] = entry_tpCode.get()
+                if status.get() != 'Select an Option':
+                    payload['enrolment']['status']= status.get()
+                if statusCollection.get() != 'Select an Option':
+                    payload['enrolment']['fee'] = {}
+                    payload['enrolment']['fee']['feeCollectionStatus'] = statusCollection.get()
+                if idType.get() != 'Select an Option':
+                    payload['enrolment']['idType'] = {}
+                    payload['enrolment']['idType']['type'] = idType.get()
+                if sponsorshipType.get() != 'Select an Option':
+                    payload['enrolment']['sponsorshipType'] = sponsorshipType.get()
+
+
+
+
+
+
+            print(json.dumps(payload, indent=4))
+            return str(json.dumps(payload, indent=4))
 
         # Initialies the file and object first in order to prevent clearing of data
         # addCourseRunPagePreview.payload = loadFile("EmptyaddCourseRunPayLoad.json")
@@ -217,9 +290,12 @@ class searchEnrolmentPage1(tk.Frame):
         frame.tkraise()
 
 
-
 # Search Enrolment Page
 class searchEnrolmentPage2(tk.Frame):
+
+    def refresh(controllerCurlText):
+        controllerCurlText.delete("1.0","end")
+        controllerCurlText.insert(tk.END, str(curlRequestSearchEnrolment(searchEnrolmentPage2.payload)))
 
     def __init__(self, parent, controller):
 
@@ -233,60 +309,55 @@ class searchEnrolmentPage2(tk.Frame):
         img2.image = render
         img2.place(x=0, y=0, relwidth=1, relheight=1)
 
+        #Variable
+        self.payload = '{}'
+        self.textPayload = ''
+        self.contentInfo = ''
+
         # Title
         label_0 = Label(self, text="Search Enrolment", width=20, font=("bold", 20))
-        label_0.place(x=90, y=53)
-
-        # Enrolment Ref Number
-        label_ERN = Label(self, text="Enrolment Reference Number", width=22, font=("bold", 10), anchor='w')
-        label_ERN.place(x=100, y=110)
-
-        entry_ERN = Entry(self)
-        entry_ERN.place(x=275, y=110)
-
-        #label_statusCollection_ttp = CreateToolTip(label_statusCollection, tooltipDescription["CourseVacCode"])
-
-        self.statusCollection = ttk.Combobox(self, width=27, state="readonly")
-        self.statusCollection['values'] = ["Full Payment",
-                                           "Pending Payment",
-                                           "Partial Payment",
-                                           "Cancelled"
-                                           ]
-        self.statusCollection.current(0)
-        self.statusCollection.place(x=272, y=140)
-
-
-        label_ERN_ttp = CreateToolTip(label_ERN, tooltipDescription["CourseReferenceNumber"])
+        label_0.place(x=90, y=50)
 
         label_page = Label(self, text="Number of Pages", width=20, font=("bold", 10))
-        label_page.place(x=100, y=130)
+        label_page.place(x=100, y=95)
 
         #label_runId_ttp = CreateToolTip(self.label_runId, tooltipDescription["CourseRunId"])
 
         entry_page = Entry(self)
-        entry_page.place(x=250, y=130)
+        entry_page.place(x=250, y=95)
 
         label_pageSize = Label(self, text="Page Sizes", width=20, font=("bold", 10))
-        label_pageSize.place(x=100, y=155)
+        label_pageSize.place(x=100, y=120)
 
         #label_runId_ttp = CreateToolTip(self.label_runId, tooltipDescription["CourseRunId"])
 
         entry_pageSize = Entry(self)
-        entry_pageSize.place(x=250, y=155)
-
-
-
-
+        entry_pageSize.place(x=250, y=120)
 
 
         # This method is used to update the display information dynamically in "Payload" Tab whenever user key in a value
         def typing():
-            value = curlPostRequestUpdateEnrolmentFee(entry_ERN.get(), getUpdateEnrolmentFeePayLoad(self.statusCollection.get()))
-            curlText.delete("1.0", "end")
-            curlText.insert(tk.END, value)
+            searchEnrolmentPage2.payload = storeAndSave()
+            value = curlRequestSearchEnrolment(searchEnrolmentPage2.payload)
+            self.curlText.delete("1.0", "end")
+            self.curlText.insert(tk.END, value)
 
-        entry_ERN.bind('<KeyRelease>', lambda a: typing())
-        self.statusCollection.bind("<<ComboboxSelected>>",lambda a: typing())
+        entry_page.bind('<KeyRelease>', lambda a: typing())
+        entry_pageSize.bind('<KeyRelease>', lambda a: typing())
+
+        def storeAndSave():
+            temp = searchEnrolmentPage2.payload
+            print(temp)
+            temp = json.loads(temp)
+            if entry_page.get()!= '' or entry_pageSize.get() != '':
+                temp['parameters'] = {}
+                temp['parameters']['page'] = entry_page.get()
+                temp['parameters']['pageSize'] = entry_pageSize.get()
+
+            print(json.dumps(temp, indent=4))
+            return str(json.dumps(temp, indent=4))
+
+
 
 
         # Expand label to fit window size
@@ -304,19 +375,22 @@ class searchEnrolmentPage2(tk.Frame):
         tabControl.add(tab3, text='Response')
         tabControl.place(width=440, height=460, x=30, y=222)
 
-        curlText = scrolledtext.ScrolledText(tab2, width=70, height=30)
-        curlText.insert(tk.END,
-                        str(curlPostRequestUpdateEnrolmentFee("", getUpdateEnrolmentFeePayLoad(self.statusCollection.get()))))
-        curlText.place(height=405, width=440, y=20)
-        curlText.bind("<Key>", lambda e: "break")
+        self.curlText = scrolledtext.ScrolledText(tab2, width=70, height=30)
+        self.curlText.insert(tk.END,
+                        str(curlRequestSearchEnrolment("")))
+        self.curlText.place(height=405, width=440, y=20)
+        self.curlText.bind("<Key>", lambda e: "break")
 
         responseText = scrolledtext.ScrolledText(tab3, width=70, height=30)
         responseText.place(height=405, width=440, y=20)
         responseText.bind("<Key>", lambda e: "break")
 
-        submitButton = tk.Button(self, text="Update", bg="white", width=25, pady=5,
-                                 command=lambda: updateFeeCallBack(entry_ERN.get()))
-        submitButton.place(relx=0.5, rely=0.25, anchor=CENTER)
+        submitButton = tk.Button(self, text="Search", bg="white", width=25, pady=5,
+                                 command=lambda: searchEnrolmentCallBack(searchEnrolmentPage2.payload))
+        submitButton.place(relx=0.5, rely=0.22, anchor=CENTER)
+        backButton = tk.Button(self, text="Back", bg="white", width=25, pady=5,
+                                 command=lambda:controller.show_frame(searchEnrolmentPage1))
+        backButton.place(relx=0.5, rely=0.27, anchor=CENTER)
         exportButton1 = tk.Button(self, text="Export Payload", bg="white", width=15, pady=5,
                                   command=lambda: downloadFile("payload"))
         exportButton1.place(relx=0.3, rely=0.95, anchor=CENTER)
@@ -345,7 +419,7 @@ class searchEnrolmentPage2(tk.Frame):
             if method == "resp":
                 textw = responseText
             else:
-                textw = curlText
+                textw = self.curlText
             textw.tag_remove('found', '1.0', END)
 
             # returns to widget currently in focus
@@ -376,7 +450,7 @@ class searchEnrolmentPage2(tk.Frame):
             files = [('JSON', '*.json'),
                      ('Text Document', '*.txt')]
             file = filedialog.asksaveasfile(filetypes=files, defaultextension='.json')
-            filetext = str(getUpdateEnrolmentFeePayLoad(entry_ERN.get())) if method == "payload" else str(
+            filetext = str(searchEnrolmentPage2.payload) if method == "payload" else str(
                 responseText.get("1.0", END))
             file.write(filetext)
             file.close()
@@ -385,8 +459,8 @@ class searchEnrolmentPage2(tk.Frame):
         # This method activates two other methods.
         # 1) this method calls the delete method in courseRunFunction and return the response
         # 2) Based on the response, if a status 200 is received, it will display the response
-        def updateFeeCallBack(enrolRefNum):
-            resp = updateEnrolmentFee(enrolRefNum)
+        def searchEnrolmentCallBack(searchEnrolmentPayload):
+            resp = searchEnrolment(searchEnrolmentPayload)
             responseText.delete("1.0", "end")
             responseText.insert(tk.END, resp)
             tabControl.select(tab3)
