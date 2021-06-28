@@ -1,3 +1,4 @@
+from EncryptAndDecryptFunction import doEncryption
 import tkinter as tk
 from tkinter import *
 from tkinter import ttk, scrolledtext
@@ -29,6 +30,8 @@ class viewEnrolmentPage(tk.Frame):
 
         load = Image.open("SKFBGPage.JPG")
         render = ImageTk.PhotoImage(load)
+        #Setting of Variable
+        self.textPayload = ''
 
         # labels can be text or images
         img2 = Label(self, image=render)
@@ -78,6 +81,11 @@ class viewEnrolmentPage(tk.Frame):
         curlText.place(height=405, width=440, y=20)
         # curlText.bind("<Key>", lambda e: "break")
 
+        self.varResp = IntVar()
+        Radiobutton(responseFrame, text="Decrypt", variable=self.varResp, value=1, width=12, anchor='w', command = lambda:displayResp("decrypt")).place(x=0,y=-5)
+        Radiobutton(responseFrame, text="Encrypt", variable=self.varResp, value=2,width=12, anchor='w',command = lambda:displayResp("encrypt")).place(x=130,y=-5)
+        self.varResp.set(1)
+
         # adding of single line text box
         edit = Entry(self, background="light gray")
 
@@ -101,6 +109,23 @@ class viewEnrolmentPage(tk.Frame):
                                  command=lambda: downloadFile())
         exportButton.place(relx=0.5, rely=0.95, anchor=CENTER)
 
+
+        def displayResp(method):
+            if method != 'encrypt':
+                try:
+                    display = viewEnrolmentPage.textPayload.get()
+                except:
+                    display = ''
+                responseText.delete("1.0","end")
+                responseText.insert(INSERT,display)
+            else:
+                try:
+                    display = doEncryption(str(viewEnrolmentPage.textPayload.get()).encode())
+                except:
+                    display = b''
+                responseText.delete("1.0","end")
+                responseText.insert(tk.END, display.decode())
+
         # This call back method activates two other methods.
         # 1) this method calls the get method in courseRunFunction and return the response
         # 2) Based on the response, if a status 200 is received, it will display the response
@@ -108,8 +133,8 @@ class viewEnrolmentPage(tk.Frame):
             responseText.delete("1.0", "end")
             enrolmentRefNo = entry_1.get()
             resp = getEnrolment(enrolmentRefNo)
-            textPayload = StringVar(self, value=resp)
-            responseText.insert(INSERT, textPayload.get())
+            viewEnrolmentPage.textPayload = StringVar(self, value=resp)
+            responseText.insert(INSERT, viewEnrolmentPage.textPayload.get())
             tabControl.select(responseFrame)
 
         def downloadFile():
@@ -171,7 +196,8 @@ class deleteEnrolmentPage(tk.Frame):
 
         load = Image.open("SKFBGPage.JPG")
         render = ImageTk.PhotoImage(load)
-
+        #variable
+        self.textPayload = ''
         # labels can be text or images
         img2 = Label(self, image=render)
         img2.image = render
@@ -195,6 +221,8 @@ class deleteEnrolmentPage(tk.Frame):
             value = curlPostRequest(entry_ERN.get(), getDeleteEnrolmentPayLoad())
             curlText.delete("1.0", "end")
             curlText.insert(tk.END, value)
+            self.varPayload.set(1)
+            
 
         entry_ERN.bind('<KeyRelease>', lambda a: typing())
 
@@ -232,7 +260,18 @@ class deleteEnrolmentPage(tk.Frame):
         exportButton2 = tk.Button(self, text="Export Response", bg="white", width=15, pady=5,
                                   command=lambda: downloadFile("response"))
         exportButton2.place(relx=0.7, rely=0.95, anchor=CENTER)
-
+        #Radio button for Request
+        self.varPayload = IntVar()
+        Radiobutton(tab2, text="Decrypt", variable=self.varPayload, value=1, width=12, anchor='w', command = lambda:displayPayload("decrypt")).place(x=0,y=-5)
+        Radiobutton(tab2, text="Encrypt", variable=self.varPayload, value=2,width=12, anchor='w',command = lambda:displayPayload("encrypt")).place(x=130,y=-5)
+        self.varPayload.set(1)
+        
+        #Radio button for Response
+        self.varResp = IntVar()
+        Radiobutton(tab3, text="Decrypt", variable=self.varResp, value=1, width=12, anchor='w', command = lambda:displayResp("decrypt")).place(x=0,y=-5)
+        Radiobutton(tab3, text="Encrypt", variable=self.varResp, value=2,width=12, anchor='w',command = lambda:displayResp("encrypt")).place(x=130,y=-5)
+        self.varResp.set(1)
+        
         # adding of single line text box
         edit = Entry(self, background="light gray")
 
@@ -248,6 +287,30 @@ class deleteEnrolmentPage(tk.Frame):
         butt_resp = Button(tab3, text='Find', command=lambda: find("resp"), highlightthickness=0, bd=0,
                            background="gray")
         butt_resp.place(x=380, y=0, height=21, width=60)
+
+        def displayResp(method):
+            if method != 'encrypt':
+                try:
+                    display = deleteEnrolmentPage.textPayload.get()
+                except:
+                    display = ''
+                responseText.delete("1.0","end")
+                responseText.insert(INSERT,display)
+            else:
+                try:
+                    display = doEncryption(str(deleteEnrolmentPage.textPayload.get()).encode())
+                except:
+                    display = b''
+                responseText.delete("1.0","end")
+                responseText.insert(tk.END, display.decode())
+        def displayPayload(method):
+            if method == 'decrypt':
+                getDeleteEnrolmentPayLoad()
+                curlText.delete("1.0","end")
+                curlText.insert(tk.END,curlPostRequest("",getDeleteEnrolmentPayLoad()))
+            else:
+                curlText.delete("1.0","end")
+                curlText.insert(tk.END, curlPostRequest("", str(doEncryption(getDeleteEnrolmentPayLoad().encode()).decode())))
 
         # This method is used to search the response text and highlight the searched word in red
         def find(method):
@@ -297,5 +360,6 @@ class deleteEnrolmentPage(tk.Frame):
         def deleteCallBack(enrolRefNum):
             resp = cancelEnrolment(enrolRefNum)
             responseText.delete("1.0", "end")
-            responseText.insert(tk.END, resp)
+            deleteEnrolmentPage.textPayload = StringVar(self, value=resp)
+            responseText.insert(tk.END, deleteEnrolmentPage.textPayload.get())
             tabControl.select(tab3)

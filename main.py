@@ -1,21 +1,31 @@
 #Import course Run py Functions
-from tkinter.constants import CENTER, END, INSERT
-from AddEnrolment import AddEnrolmentMainPage, AddEnrolmentPage2, AddEnrolmentPreviewPage, addEnrolmentPageFileUpload
-from CourseSession import getCourseSessionPage
-from UpdateCourseRun import updateCourseRunPageFormFileUpload, updateCourseRunPagePage2, updateCourseRunPagePage3, updateCourseRunPagePage4, updateCourseRunPagePreview, updateCourseRunPageSelect
-from ViewEnrolment import viewEnrolmentPage, deleteEnrolmentPage
-from tooltip import CreateToolTip
-from configWindow import setConfigWindow, showConfigWindow
-from courseRunFunctions import curlGetRequestViewCourseRun, curlPostRequest, deleteCourserun, getCourseRun, getDeleteCourseRunPayLoad
-from AddCourseRun import addCourseRunPageForm, addCourseRunPageFormFileUpload, addCourseRunPage1, addCourseRunPage2, addCourseRunPage3, addCourseRunPage4
-
-import tkinter as tk
-from tkinter import Button, Entry, Label, Menu, StringVar, ttk, filedialog, messagebox, scrolledtext
+from UpdateEnrolment import UpdateEnrolmentMainPage, UpdateEnrolmentPageFileUploadPage, UpdateEnrolmentPreviewPage
 import json
-from PIL import ImageTk, Image
+import tkinter as tk
+from tkinter import (Button, Entry, Label, Menu, StringVar, filedialog,
+                     messagebox, scrolledtext, ttk)
+from tkinter.constants import CENTER, END, INSERT
 
+from PIL import Image, ImageTk
 
-
+from AddCourseRun import (addCourseRunPage1, addCourseRunPage2,
+                          addCourseRunPage3, addCourseRunPage4,
+                          addCourseRunPageForm, addCourseRunPageFormFileUpload)
+from AddEnrolment import (AddEnrolmentMainPage, AddEnrolmentPage2,
+                          AddEnrolmentPreviewPage, addEnrolmentPageFileUpload)
+from configWindow import setConfigWindow, showConfigWindow
+from courseRunFunctions import (curlGetRequestViewCourseRun, curlPostRequest,
+                                deleteCourserun, getCourseRun,
+                                getDeleteCourseRunPayLoad)
+from CourseSession import getCourseSessionPage
+from tooltip import CreateToolTip
+from UpdateCourseRun import (updateCourseRunPageFormFileUpload,
+                             updateCourseRunPagePage2,
+                             updateCourseRunPagePage3,
+                             updateCourseRunPagePage4,
+                             updateCourseRunPagePreview,
+                             updateCourseRunPageSelect)
+from ViewEnrolment import deleteEnrolmentPage, viewEnrolmentPage
 
 #Load Tooltip Json object as ttDescription
 with open("TooltipDescription.json") as f:
@@ -41,7 +51,11 @@ class APIProject(tk.Tk):
         
 
         self.frames = {}
-        for F in (AddEnrolmentPage2,AddEnrolmentPreviewPage,addEnrolmentPageFileUpload,AddEnrolmentMainPage ,deleteEnrolmentPage, viewEnrolmentPage, getCourseSessionPage, updateCourseRunPagePreview,updateCourseRunPagePage2,updateCourseRunPagePage3,updateCourseRunPagePage4,updateCourseRunPageFormFileUpload, updateCourseRunPageSelect, addCourseRunPageFormFileUpload,addCourseRunPageForm,addCourseRunPage4,addCourseRunPage3,addCourseRunPage2, addCourseRunPage1, viewCourseRunPage, deleteCourseRunPage, StartPage):
+        for F in (UpdateEnrolmentMainPage, UpdateEnrolmentPageFileUploadPage, UpdateEnrolmentPreviewPage,
+            AddEnrolmentPage2,AddEnrolmentPreviewPage,addEnrolmentPageFileUpload,AddEnrolmentMainPage ,
+            deleteEnrolmentPage, viewEnrolmentPage, getCourseSessionPage, updateCourseRunPagePreview,updateCourseRunPagePage2,updateCourseRunPagePage3,
+            updateCourseRunPagePage4,updateCourseRunPageFormFileUpload, updateCourseRunPageSelect, addCourseRunPageFormFileUpload,addCourseRunPageForm,addCourseRunPage4,
+            addCourseRunPage3,addCourseRunPage2, addCourseRunPage1, viewCourseRunPage, deleteCourseRunPage, StartPage):
             frame = F(self.container, self)
 
             self.frames[F] = frame
@@ -67,7 +81,7 @@ class APIProject(tk.Tk):
         
         enrolmentMenu = Menu(menubar, tearoff=0)  
         enrolmentMenu.add_command(label="Create Enrolment", command=lambda: self.show_frame(AddEnrolmentMainPage))
-        enrolmentMenu.add_command(label="Update Enrolment")
+        enrolmentMenu.add_command(label="Update Enrolment", command = lambda: self.show_frame(UpdateEnrolmentMainPage))
         enrolmentMenu.add_command(label="Delete Enrolment",command=lambda: self.show_frame(deleteEnrolmentPage))
         enrolmentMenu.add_command(label="Search Enrolment")  
         enrolmentMenu.add_command(label="View Enrolment",command=lambda: self.show_frame(viewEnrolmentPage))
@@ -429,5 +443,6 @@ class StartPage(tk.Frame):
 
 app = APIProject()
 app.geometry("500x747")
+app.winfo_toplevel().title("SSG-WSG API Application")
 app.resizable(0,0)
 app.mainloop()
