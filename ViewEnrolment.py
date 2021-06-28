@@ -260,6 +260,7 @@ class deleteEnrolmentPage(tk.Frame):
         exportButton2 = tk.Button(self, text="Export Response", bg="white", width=15, pady=5,
                                   command=lambda: downloadFile("response"))
         exportButton2.place(relx=0.7, rely=0.95, anchor=CENTER)
+
         #Radio button for Request
         self.varPayload = IntVar()
         Radiobutton(tab2, text="Decrypt", variable=self.varPayload, value=1, width=12, anchor='w', command = lambda:displayPayload("decrypt")).place(x=0,y=-5)
@@ -303,6 +304,7 @@ class deleteEnrolmentPage(tk.Frame):
                     display = b''
                 responseText.delete("1.0","end")
                 responseText.insert(tk.END, display.decode())
+                
         def displayPayload(method):
             if method == 'decrypt':
                 getDeleteEnrolmentPayLoad()
