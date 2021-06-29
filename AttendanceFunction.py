@@ -2,6 +2,7 @@ from EncryptAndDecryptFunction import *
 from HttpRequestFunction import *
 import requests
 import json
+import re
 
 fileName = "demoConfig.json"
 
@@ -42,7 +43,6 @@ def retrieveAttendance():
 
 
 def uploadAttendance():
-
     saveSesIdDetails(retrieveSesId())   
     updateAttendancePayload()
 
@@ -77,3 +77,31 @@ def updateAttendancePayload():
     attendancePayload["uen"] = configInfoJson["UEN"]
 
     saveJsonFormat(attendancePayload, "AttendancePayLoad.json")
+
+
+#This method is to update the curl text dynamically for displaying purpose in AddAttendancePage
+def curlRequestUploadAttendance(runId, payloadToDisplay):
+     # Remove Whitespacing new line and tabs for accurate content length
+      payloadToSend = re.sub(r"[\n\t\s]*", "", payloadToDisplay)
+      req = requests.Request('POST',"https://uat-api.ssg-wsg.sg/courses/runs/" +  str(runId) + "/sessions/attendance" ,headers={'accept':'application/json'},data=str(payloadToSend)).prepare()
+      text =  '{}\n{}\r\n{}\n{}\r\n\r\n{}\n{}'.format(
+            '----------------Request Information----------------',
+          req.method + ' ' + req.url,
+          '\r\n'.join('{}: {}'.format(k, v) for k, v in req.headers.items()),
+          'Encryption: Required\nDecryption: Required',
+          '----------------Payload Information----------------',
+          payloadToDisplay,
+      )
+      return text
+
+
+def uploadAttendanceFn(runId, attendancePayload):
+    baseAttendanceURL = "https://uat-api.ssg-wsg.sg/courses/runs/" + str(runId) + "/sessions/attendance"
+    ciptertext = doEncryption(attendancePayload.encode())
+    response = postHttpRequestJson(baseAttendanceURL, ciptertext.decode())
+    #print(response.text)
+    return response.text
+
+
+
+

@@ -1,5 +1,5 @@
 #Import course Run py Functions
-from UpdateEnrolment import UpdateEnrolmentMainPage, UpdateEnrolmentPageFileUploadPage, UpdateEnrolmentPreviewPage
+
 from tkinter.constants import CENTER, END, INSERT
 from AddEnrolment import AddEnrolmentMainPage, AddEnrolmentPage2, AddEnrolmentPreviewPage, addEnrolmentPageFileUpload
 from CourseSession import getCourseSessionPage
@@ -21,6 +21,8 @@ from tkinter.constants import CENTER, END, INSERT
 
 from PIL import Image, ImageTk
 
+from AddAttendance import addAttendancePage1, addAttendancePage2
+from UpdateEnrolment import UpdateEnrolmentMainPage, UpdateEnrolmentPageFileUploadPage, UpdateEnrolmentPreviewPage
 from AddCourseRun import (addCourseRunPage1, addCourseRunPage2,
                           addCourseRunPage3, addCourseRunPage4,
                           addCourseRunPageForm, addCourseRunPageFormFileUpload)
@@ -71,7 +73,8 @@ class APIProject(tk.Tk):
             deleteEnrolmentPage, viewEnrolmentPage, getCourseSessionPage, updateCourseRunPagePreview,updateCourseRunPagePage2,updateCourseRunPagePage3,
             updateCourseRunPagePage4,updateCourseRunPageFormFileUpload, updateCourseRunPageSelect, addCourseRunPageFormFileUpload,addCourseRunPageForm,addCourseRunPage4,
             addCourseRunPage3,addCourseRunPage2, addCourseRunPage1, viewCourseRunPage, deleteCourseRunPage,
-            searchEnrolmentPage1, searchEnrolmentPage2,StartPage):
+            searchEnrolmentPage1, searchEnrolmentPage2,
+            addAttendancePage1, addAttendancePage2, StartPage):
             frame = F(self.container, self)
 
             self.frames[F] = frame
@@ -107,7 +110,7 @@ class APIProject(tk.Tk):
         
         attendanceMenu = Menu(menubar, tearoff=0)  
         attendanceMenu.add_command(label="Course Session Attendance")
-        attendanceMenu.add_command(label="Upload Course Session Attendance")   
+        attendanceMenu.add_command(label="Upload Course Session Attendance",command=lambda: self.show_frame(addAttendancePage1))
         menubar.add_cascade(label="Attendance", menu=attendanceMenu)  
 
         
@@ -134,9 +137,7 @@ class APIProject(tk.Tk):
         def reInitialiseFrame(FrameName):
             recreateFrame(FrameName)
             self.show_frame(FrameName)
-            
 
-    
     def show_frame(self, cont):
         frame = self.frames[cont]
         frame.tkraise()   

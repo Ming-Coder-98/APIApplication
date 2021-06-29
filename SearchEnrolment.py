@@ -1,21 +1,7 @@
-import json
-import tkinter
+from EnrolmentFunction import curlRequestSearchEnrolment, searchEnrolment
+from tkinter import Button, Entry, Label, StringVar,scrolledtext,filedialog, ttk, messagebox
 import tkinter as tk
-from tkinter import Button, Entry, IntVar, Label, Radiobutton, StringVar, filedialog, messagebox, scrolledtext, ttk
-from tkinter.constants import CENTER, END, INSERT
-
-import pandas as pd
-from PIL import Image, ImageTk
-
-from EnrolmentFunction import curlPostRequestUpdateEnrolmentFee, getUpdateEnrolmentFeePayLoad, updateEnrolmentFee, \
-    curlRequestSearchEnrolment, searchEnrolment, displayPostRequestEnrolment
-from courseRunFunctions import (createCourserun, curlPostRequest)
-from HttpRequestFunction import loadFile
-from tooltip import CreateToolTip
-
-from tkinter import Button, Entry, IntVar, Label, Radiobutton, StringVar,scrolledtext,filedialog, ttk, messagebox
-import tkinter as tk
-from tkinter.constants import CENTER, DISABLED, END, INSERT
+from tkinter.constants import CENTER, DISABLED, END
 from tooltip import CreateToolTip
 from PIL import ImageTk, Image
 import json
@@ -247,11 +233,6 @@ class searchEnrolmentPage1(tk.Frame):
                 payload['enrolment']['trainingPartner'] = {}
                 payload['enrolment']['trainingPartner']['uen'] = config['UEN']
 
-
-
-
-
-
             print(json.dumps(payload, indent=4))
             return str(json.dumps(payload, indent=4))
 
@@ -356,8 +337,6 @@ class searchEnrolmentPage2(tk.Frame):
 
             print(json.dumps(temp, indent=4))
             return str(json.dumps(temp, indent=4))
-
-
 
 
         # Expand label to fit window size
