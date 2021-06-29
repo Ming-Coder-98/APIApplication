@@ -14,6 +14,7 @@ def httpRequestInit():
 
 def getHttpRequest(request_url):
       httpRequestInit()
+      print(request_url)
       response = requests.get(request_url, cert = (certPath,keyPath))
       # print(response.request.headers)
       printResponse(response)
