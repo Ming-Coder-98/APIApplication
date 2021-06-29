@@ -105,7 +105,7 @@ class viewEnrolmentPage(tk.Frame):
         submitButton = tk.Button(self, text="Submit", bg="white", width=25, pady=5,
                                  command=lambda: submitCallBack())
         submitButton.place(relx=0.5, rely=0.25, anchor=CENTER)
-        exportButton = tk.Button(self, text="Export Response", bg="white", width=25, pady=5,
+        exportButton = tk.Button(self, text="Export Decrypted Response", bg="white", width=25, pady=5,
                                  command=lambda: downloadFile())
         exportButton.place(relx=0.5, rely=0.95, anchor=CENTER)
 
@@ -254,10 +254,10 @@ class deleteEnrolmentPage(tk.Frame):
         submitButton = tk.Button(self, text="Delete", bg="white", width=25, pady=5,
                                  command=lambda: deleteCallBack(entry_ERN.get()))
         submitButton.place(relx=0.5, rely=0.22, anchor=CENTER)
-        exportButton1 = tk.Button(self, text="Export Payload", bg="white", width=15, pady=5,
+        exportButton1 = tk.Button(self, text="Export Decrypted Payload", bg="white", width=20, pady=3,
                                   command=lambda: downloadFile("payload"))
         exportButton1.place(relx=0.3, rely=0.95, anchor=CENTER)
-        exportButton2 = tk.Button(self, text="Export Response", bg="white", width=15, pady=5,
+        exportButton2 = tk.Button(self, text="Export Decrypted Response", bg="white", width=20, pady=3,
                                   command=lambda: downloadFile("response"))
         exportButton2.place(relx=0.7, rely=0.95, anchor=CENTER)
 
@@ -365,3 +365,4 @@ class deleteEnrolmentPage(tk.Frame):
             deleteEnrolmentPage.textPayload = StringVar(self, value=resp)
             responseText.insert(tk.END, deleteEnrolmentPage.textPayload.get())
             tabControl.select(tab3)
+            self.varResp.set(1)

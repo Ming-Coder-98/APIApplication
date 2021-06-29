@@ -67,7 +67,7 @@ class UpdateEnrolmentMainPage(tk.Frame):
         self.label_TraineeTitle.place(x=137, y=285)
 
 
-        self.Label_TraineePhone = Label(self, text="Contact Number*", width=20, font=("bold", 10), anchor='w')
+        self.Label_TraineePhone = Label(self, text="Contact Number", width=20, font=("bold", 10), anchor='w')
         self.Label_TraineePhone.place(x=100, y=320)
 
         self.Label_TraineePhone_ttp = CreateToolTip(self.Label_TraineePhone, tooltipDescription["Phone"])
@@ -112,7 +112,7 @@ class UpdateEnrolmentMainPage(tk.Frame):
         self.entry_EmpEmail.place(x=270, y=435)
         entry_listEmp.append(self.entry_EmpEmail)
 
-        self.Label_EmpPhone = Label(self, text="Contact Number*", width=20, font=("bold", 10), anchor='w')
+        self.Label_EmpPhone = Label(self, text="Contact Number", width=20, font=("bold", 10), anchor='w')
         self.Label_EmpPhone.place(x=100, y=460)
 
         self.Label_EmpPhone_ttp = CreateToolTip(self.Label_EmpPhone, tooltipDescription["Phone"])
@@ -133,7 +133,7 @@ class UpdateEnrolmentMainPage(tk.Frame):
         self.label_TraineeTitle = Label(self, text="Fees Details", width=20, font=("bold", 15))
         self.label_TraineeTitle.place(x=137, y=490)
 
-        self.Label_CollectionStatus = Label(self, text="Collection Status*", width=20, font=("bold", 10), anchor='w')
+        self.Label_CollectionStatus = Label(self, text="Collection Status", width=20, font=("bold", 10), anchor='w')
         self.Label_CollectionStatus.place(x=100, y=525)
 
         self.Label_CollectionStatus_ttp = CreateToolTip(self.Label_CollectionStatus, tooltipDescription["collectionStatus"])
@@ -159,7 +159,7 @@ class UpdateEnrolmentMainPage(tk.Frame):
         self.entry_DiscountAmt.place(x=270, y=550)
         entry_fee.append(self.entry_DiscountAmt)
 
-        self.Label_Action = Label(self, text="Action", width=20, font=("bold", 10), anchor='w')
+        self.Label_Action = Label(self, text="Action*", width=20, font=("bold", 10), anchor='w')
         self.Label_Action.place(x=100, y=575)
         self.Label_Actionl_ttp = CreateToolTip(self.Label_Action, tooltipDescription["Action"])
         self.entry_Action  = Entry(self,state=DISABLED, textvariable=StringVar(value="Update"))

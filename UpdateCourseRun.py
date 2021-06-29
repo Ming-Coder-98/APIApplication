@@ -335,8 +335,6 @@ class updateCourseRunPageSelect(tk.Frame):
                         controller.frames[updateCourseRunPagePage2].courseVacCode.current(1)
                     else:
                         controller.frames[updateCourseRunPagePage2].courseVacCode.current(3)
-                    # controller.frames[updateCourseRunPagePage2].entry_courseVacCode.delete("0","end")
-                    # controller.frames[updateCourseRunPagePage2].entry_courseVacCode.insert(tk.END, respObject['data']['course']['run']['courseVacancy']['code'])
 
                     if (str(respObject['data']['course']['run']['modeOfTraining']) != '2' and str(respObject['data']['course']['run']['modeOfTraining']) != '4'):
 
@@ -357,9 +355,6 @@ class updateCourseRunPageSelect(tk.Frame):
                         controller.frames[updateCourseRunPagePage2].label_venueFloor['text'] = "Venue - Floor"
                         controller.frames[updateCourseRunPagePage2].label_venuePostalCode['text'] = "Venue - Postal Code"
                         modeOfTraining.current(int(respObject['data']['course']['run']['modeOfTraining']))
-                        
-
-                    # print(respObject['data']['course']['referenceNumber'])
                 else:
                     messagebox.showerror(title="Error", message="Unable to retrieve Information - Invalid Run Id")
             else:
@@ -532,7 +527,7 @@ class updateCourseRunPagePage2(tk.Frame):
         self.entry_venueBuilding = Entry(self)
         self.entry_venueBuilding.place(x=270, y=340)
 
-        self.label_venuePostalCode = Label(self, text="Venue - Postal Code", width=20, font=("bold", 10), anchor='w')
+        self.label_venuePostalCode = Label(self, text="Venue - Postal Code*", width=20, font=("bold", 10), anchor='w')
         self.label_venuePostalCode.place(x=100, y=365)
 
         label_venuePostalCode_ttp = CreateToolTip(self.label_venuePostalCode, tooltipDescription["PostalCode"])
@@ -762,6 +757,12 @@ class updateCourseRunPagePage3(tk.Frame):
                 self.label_SessionVenueUnit.configure(text="Venue Unit")
                 self.label_SessionVenueFloor.configure(text="Venue Floor")
                 self.label_SessionVenuePostalCode.configure(text="Venue Postal code")
+            else:
+                self.label_SessionVenueRoom.configure(text="Venue Room*")
+                self.label_SessionVenueUnit.configure(text="Venue Unit*")
+                self.label_SessionVenueFloor.configure(text="Venue Floor*")
+                self.label_SessionVenuePostalCode.configure(text="Venue Postal code*")
+
         self.modeOfTraining.bind('<<ComboboxSelected>>', lambda x: changeLabel())
 
     def __init__(self, parent, controller):

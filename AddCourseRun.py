@@ -310,7 +310,7 @@ class addCourseRunPage1(tk.Frame):
         label_0 = Label(self, text="Basic Mandate Form", width=20, font=("bold", 15))
         label_0.place(x=137, y=185)
 
-        label_CRN = Label(self, text="Course Reference Number*", width=20, font=("bold", 10))
+        label_CRN = Label(self, text="Course Reference Number*", width=20, font=("bold", 10), anchor = 'w')
         label_CRN.place(x=80, y=230)
 
         label_CRN_ttp = CreateToolTip(label_CRN, tooltipDescription["CourseReferenceNumber"])
@@ -321,7 +321,7 @@ class addCourseRunPage1(tk.Frame):
         label_runTitle = Label(self, text="Run", width=20, font=("bold", 15))
         label_runTitle.place(x=137, y=270)
 
-        label_openRegDate = Label(self, text="Opening Registration Dates*", width=20, font=("bold", 10))
+        label_openRegDate = Label(self, text="Opening Registration Dates*", width=20, font=("bold", 10), anchor = 'w')
         label_openRegDate.place(x=80, y=310)
 
         label_openRegDate_ttp = CreateToolTip(label_openRegDate, tooltipDescription["CourseRegistrationDateOpen"])
@@ -329,7 +329,7 @@ class addCourseRunPage1(tk.Frame):
         entry_openRegDate = Entry(self)
         entry_openRegDate.place(x=250, y=310)
 
-        label_closeRegDate = Label(self, text="Closing Registration Dates*", width=20, font=("bold", 10))
+        label_closeRegDate = Label(self, text="Closing Registration Dates*", width=20, font=("bold", 10), anchor = 'w')
         label_closeRegDate.place(x=80, y=335)
 
         label_closeRegDate_ttp = CreateToolTip(label_closeRegDate, tooltipDescription["CourseRegistrationDateClose"])
@@ -337,7 +337,7 @@ class addCourseRunPage1(tk.Frame):
         entry_closeRegDate = Entry(self)
         entry_closeRegDate.place(x=250, y=335)
 
-        label_CourseStartDate = Label(self, text="Course Start Date*", width=20, font=("bold", 10))
+        label_CourseStartDate = Label(self, text="Course Start Date*", width=20, font=("bold", 10), anchor = 'w')
         label_CourseStartDate.place(x=80, y=360)
 
         label_CourseStartDate_ttp = CreateToolTip(label_CourseStartDate, tooltipDescription["CourseStartDate"])
@@ -345,7 +345,7 @@ class addCourseRunPage1(tk.Frame):
         entry_CourseStartDate = Entry(self)
         entry_CourseStartDate.place(x=250, y=360)
 
-        label_CourseEndDate = Label(self, text="Course End Date*", width=20, font=("bold", 10))
+        label_CourseEndDate = Label(self, text="Course End Date*", width=20, font=("bold", 10), anchor = 'w')
         label_CourseEndDate.place(x=80, y=385)
 
         label_CourseEndDate_ttp = CreateToolTip(label_CourseEndDate, tooltipDescription["CourseEndDate"])
@@ -353,7 +353,7 @@ class addCourseRunPage1(tk.Frame):
         entry_CourseEndDate = Entry(self)
         entry_CourseEndDate.place(x=250, y=385)
 
-        label_scheduleInfoType = Label(self, text="InfoTypeCode*", width=20, font=("bold", 10))
+        label_scheduleInfoType = Label(self, text="InfoTypeCode*", width=20, font=("bold", 10), anchor = 'w')
         label_scheduleInfoType.place(x=80, y=410)
 
         label_scheduleInfoType_ttp = CreateToolTip(label_scheduleInfoType, tooltipDescription["InfoTypeCode"])
@@ -361,7 +361,7 @@ class addCourseRunPage1(tk.Frame):
         entry_scheduleInfoType = Entry(self)
         entry_scheduleInfoType.place(x=250, y=410)
 
-        label_scheduleInfoTypeDescription = Label(self, text="InfoType Description", width=20, font=("bold", 10))
+        label_scheduleInfoTypeDescription = Label(self, text="InfoType Description", width=20, font=("bold", 10), anchor = 'w')
         label_scheduleInfoTypeDescription.place(x=80, y=435)
 
         label_scheduleInfoTypeDescription_ttp = CreateToolTip( label_scheduleInfoTypeDescription, tooltipDescription["InfoTypeDescription"])
@@ -369,7 +369,7 @@ class addCourseRunPage1(tk.Frame):
         entry_scheduleInfoTypeDescription = Entry(self)
         entry_scheduleInfoTypeDescription.place(x=250, y=435)
 
-        label_CourseModeOfTraining = Label(self, text="Mode Of Training", width=20, font=("bold", 10))
+        label_CourseModeOfTraining = Label(self, text="Mode Of Training", width=20, font=("bold", 10), anchor = 'w')
         label_CourseModeOfTraining.place(x=80, y=460)
 
         label_CourseModeOfTraining_ttp = CreateToolTip(label_CourseModeOfTraining, tooltipDescription["ModeOfTraining"])
@@ -389,7 +389,7 @@ class addCourseRunPage1(tk.Frame):
         # entry_CourseModeOfTraining = Entry(self)
         # entry_CourseModeOfTraining.place(x=250, y=435)
 
-        label_adminEmail = Label(self, text="Course Admin Email", width=20, font=("bold", 10))
+        label_adminEmail = Label(self, text="Course Admin Email", width=20, font=("bold", 10), anchor = 'w')
         label_adminEmail.place(x=80, y=485)
 
         label_adminEmail_ttp = CreateToolTip(label_adminEmail, tooltipDescription["CourseAdminEmail"])
@@ -397,7 +397,7 @@ class addCourseRunPage1(tk.Frame):
         entry_adminEmail = Entry(self)
         entry_adminEmail.place(x=250, y=485)
 
-        label_threshold = Label(self, text="Threshold", width=20, font=("bold", 10))
+        label_threshold = Label(self, text="Threshold", width=20, font=("bold", 10), anchor = 'w')
         label_threshold.place(x=80, y=510)
 
         label_threshold_ttp = CreateToolTip(label_threshold, tooltipDescription["Threshold"])
@@ -405,7 +405,7 @@ class addCourseRunPage1(tk.Frame):
         entry_threshold = Entry(self)
         entry_threshold.place(x=250, y=510)
 
-        label_intakeSize = Label(self, text="Intake Size", width=20, font=("bold", 10))
+        label_intakeSize = Label(self, text="Intake Size", width=20, font=("bold", 10), anchor = 'w')
         label_intakeSize.place(x=80, y=535)
 
         label_intakeSize_ttp = CreateToolTip(label_intakeSize, tooltipDescription["IntakeSize"])
@@ -413,7 +413,7 @@ class addCourseRunPage1(tk.Frame):
         entry_intakeSize = Entry(self)
         entry_intakeSize.place(x=250, y=535)
 
-        label_RegUserCount = Label(self, text="Registered User Count", width=20, font=("bold", 10))
+        label_RegUserCount = Label(self, text="Registered User Count", width=20, font=("bold", 10), anchor = 'w')
         label_RegUserCount.place(x=80, y=560)
 
         label_RegUserCount_ttp = CreateToolTip(label_RegUserCount, tooltipDescription["RegisteredUserCount"])
@@ -497,7 +497,7 @@ class addCourseRunPage2(tk.Frame):
         label_1 = Label(self, text="Run", width=20, font=("bold", 15))
         label_1.place(x=137, y=100)
 
-        label_courseVacCode = Label(self, text="Course Vacancy Code*", width=20, font=("bold", 10))
+        label_courseVacCode = Label(self, text="Course Vacancy Code*", width=20, font=("bold", 10), anchor = 'w')
         label_courseVacCode.place(x=80, y=140)
 
         label_courseVacCode_ttp = CreateToolTip(label_courseVacCode, tooltipDescription["CourseVacCode"])
@@ -510,7 +510,7 @@ class addCourseRunPage2(tk.Frame):
         self.courseVacCode.current(0)
         self.courseVacCode.place(x=250, y=140)
 
-        label_courseVacDescription = Label(self, text="Course Vacancy Description", width=20, font=("bold", 10))
+        label_courseVacDescription = Label(self, text="Course Vacancy Description", width=20, font=("bold", 10), anchor = 'w')
         label_courseVacDescription.place(x=80, y=165)
 
         label_courseVacDescription_ttp = CreateToolTip(label_courseVacDescription, tooltipDescription["CourseVacDescription"])
@@ -518,7 +518,7 @@ class addCourseRunPage2(tk.Frame):
         entry_courseVacDescription = Entry(self)
         entry_courseVacDescription.place(x=250, y=165)
 
-        label_scheduleInfo = Label(self, text="Schedule Info", width=20, font=("bold", 10))
+        label_scheduleInfo = Label(self, text="Schedule Info", width=20, font=("bold", 10), anchor = 'w')
         label_scheduleInfo.place(x=80, y=190)
 
         label_scheduleInfo_ttp = CreateToolTip(label_scheduleInfo, tooltipDescription["ScheduleInfo"])
@@ -526,7 +526,7 @@ class addCourseRunPage2(tk.Frame):
         entry_scheduleInfo = Entry(self)
         entry_scheduleInfo.place(x=250, y=190)
 
-        label_venueRoom = Label(self, text="Venue - Room*", width=20, font=("bold", 10))
+        label_venueRoom = Label(self, text="Venue - Room*", width=20, font=("bold", 10), anchor = 'w')
         label_venueRoom.place(x=80, y=215)
 
         label_venueRoom_ttp = CreateToolTip(label_venueRoom, tooltipDescription["Room"])
@@ -534,7 +534,7 @@ class addCourseRunPage2(tk.Frame):
         self.entry_venueRoom = Entry(self)
         self.entry_venueRoom.place(x=250, y=215)
 
-        label_venueUnit = Label(self, text="Venue - Unit*", width=20, font=("bold", 10))
+        label_venueUnit = Label(self, text="Venue - Unit*", width=20, font=("bold", 10), anchor = 'w')
         label_venueUnit.place(x=80, y=240)
 
         label_venueUnit_ttp = CreateToolTip(label_venueUnit, tooltipDescription["Unit"])
@@ -542,7 +542,7 @@ class addCourseRunPage2(tk.Frame):
         self.entry_venueUnit = Entry(self)
         self.entry_venueUnit.place(x=250, y=240)
 
-        label_venueFloor = Label(self, text="Venue - Floor*", width=20, font=("bold", 10))
+        label_venueFloor = Label(self, text="Venue - Floor*", width=20, font=("bold", 10), anchor = 'w')
         label_venueFloor.place(x=80, y=265)
 
         label_venueFloor_ttp = CreateToolTip(label_venueFloor, tooltipDescription["Floor"])
@@ -550,7 +550,7 @@ class addCourseRunPage2(tk.Frame):
         self.entry_venueFloor = Entry(self)
         self.entry_venueFloor.place(x=250, y=265)
 
-        label_venueBlock = Label(self, text="Venue - Block", width=20, font=("bold", 10))
+        label_venueBlock = Label(self, text="Venue - Block", width=20, font=("bold", 10), anchor = 'w')
         label_venueBlock.place(x=80, y=290)
 
         label_venueBlock_ttp = CreateToolTip(label_venueBlock, tooltipDescription["Block"])
@@ -558,7 +558,7 @@ class addCourseRunPage2(tk.Frame):
         entry_venueBlock = Entry(self)
         entry_venueBlock.place(x=250, y=290)
 
-        label_venueStreet = Label(self, text="Venue - Street", width=20, font=("bold", 10))
+        label_venueStreet = Label(self, text="Venue - Street", width=20, font=("bold", 10), anchor = 'w')
         label_venueStreet.place(x=80, y=315)
 
         label_venueStreet_ttp = CreateToolTip(label_venueStreet, tooltipDescription["Street"])
@@ -566,7 +566,7 @@ class addCourseRunPage2(tk.Frame):
         entry_venueStreet = Entry(self)
         entry_venueStreet.place(x=250, y=315)
 
-        label_venueBuilding = Label(self, text="Venue - Building", width=20, font=("bold", 10))
+        label_venueBuilding = Label(self, text="Venue - Building", width=20, font=("bold", 10), anchor = 'w')
         label_venueBuilding.place(x=80, y=340)
 
         label_venueBuilding_ttp = CreateToolTip(label_venueBuilding, tooltipDescription["Building"])
@@ -574,7 +574,7 @@ class addCourseRunPage2(tk.Frame):
         entry_venueBuilding = Entry(self)
         entry_venueBuilding.place(x=250, y=340)
 
-        label_venuePostalCode = Label(self, text="Venue - Postal Code*", width=20, font=("bold", 10))
+        label_venuePostalCode = Label(self, text="Venue - Postal Code*", width=20, font=("bold", 10), anchor = 'w')
         label_venuePostalCode.place(x=80, y=365)
 
         label_venuePostalCode_ttp = CreateToolTip(label_venuePostalCode, tooltipDescription["PostalCode"])
@@ -582,7 +582,7 @@ class addCourseRunPage2(tk.Frame):
         self.entry_venuePostalCode = Entry(self)
         self.entry_venuePostalCode.place(x=250, y=365)
 
-        label_venueWheelchair = Label(self, text="Venue - Wheelchair Access", width=20, font=("bold", 10))
+        label_venueWheelchair = Label(self, text="Venue - Wheelchair Access", width=20, font=("bold", 10), anchor = 'w')
         label_venueWheelchair.place(x=80, y=390)
 
         label_venueWheelchair_ttp = CreateToolTip(label_venueWheelchair, tooltipDescription["WheelChairAccess"])
@@ -663,7 +663,7 @@ class addCourseRunPage3(tk.Frame):
         img2.image = render
         img2.place(x=0, y=0, relwidth=1, relheight=1)
 
-        label_ModeOfTraining = Label(AddFrame, text="Mode of Training*", width=20, font=("bold", 10))
+        label_ModeOfTraining = Label(AddFrame, text="Mode of Training*", width=20, font=("bold", 10), anchor = 'w')
         label_ModeOfTraining.place(x=0, y=0)
         label_ModeOfTraining_ttp = CreateToolTip(label_ModeOfTraining, tooltipDescription["ModeOfTraining"])
 
@@ -681,67 +681,67 @@ class addCourseRunPage3(tk.Frame):
         self.modeOfTraining.current(0)
         self.modeOfTraining.place(x=270, y=170)
 
-        self.label_SessionStartDate = Label(AddFrame, text="Session Start Date*", width=20, font=("bold", 10))
+        self.label_SessionStartDate = Label(AddFrame, text="Session Start Date*", width=20, font=("bold", 10), anchor = 'w')
         self.label_SessionStartDate.place(x=0, y=25)
         label_SessionStartDate_ttp = CreateToolTip(self.label_SessionStartDate, tooltipDescription["SessionStartDate"])
         self.entry_SessionStartDate = Entry(AddFrame)
         self.entry_SessionStartDate.place(x=170, y=25)
 
-        self.label_SessionEndDate = Label(AddFrame, text="Session End Date*", width=20, font=("bold", 10))
+        self.label_SessionEndDate = Label(AddFrame, text="Session End Date*", width=20, font=("bold", 10), anchor = 'w')
         self.label_SessionEndDate.place(x=0, y=50)
         label_SessionEndDate_ttp = CreateToolTip(self.label_SessionEndDate, tooltipDescription["SessionEndDate"])
         self.entry_SessionEndDate = Entry(AddFrame)
         self.entry_SessionEndDate.place(x=170, y=50)
 
-        self.label_SessionStartTime = Label(AddFrame, text="Session Start Time*", width=20, font=("bold", 10))
+        self.label_SessionStartTime = Label(AddFrame, text="Session Start Time*", width=20, font=("bold", 10), anchor = 'w')
         self.label_SessionStartTime.place(x=0, y=75)
         label_SessionStartTime_ttp = CreateToolTip(self.label_SessionStartTime, tooltipDescription["SessionStartTime"])
         self.entry_SessionStartTime = Entry(AddFrame)
         self.entry_SessionStartTime.place(x=170, y=75)
 
-        self.label_SessionEndTime = Label(AddFrame, text="Session End Time*", width=20, font=("bold", 10))
+        self.label_SessionEndTime = Label(AddFrame, text="Session End Time*", width=20, font=("bold", 10), anchor = 'w')
         self.label_SessionEndTime.place(x=0, y=100)
         label_SessionEndTime_ttp = CreateToolTip(self.label_SessionEndTime, tooltipDescription["SessionEndTime"])
         self.entry_SessionEndTime = Entry(AddFrame)
         self.entry_SessionEndTime.place(x=170, y=100)
 
-        self.label_SessionVenueRoom = Label(AddFrame, text="Venue Room*", width=20, font=("bold", 10))
+        self.label_SessionVenueRoom = Label(AddFrame, text="Venue Room*", width=20, font=("bold", 10), anchor = 'w')
         self.label_SessionVenueRoom.place(x=0, y=125)
         label_SessionVenueRoom_ttp = CreateToolTip(self.label_SessionVenueRoom, tooltipDescription["Room"])
         self.entry_SessionVenueRoom = Entry(AddFrame)
         self.entry_SessionVenueRoom.place(x=170, y=125)
 
-        self.label_SessionVenueUnit = Label(AddFrame, text="Venue Unit*", width=20, font=("bold", 10))
+        self.label_SessionVenueUnit = Label(AddFrame, text="Venue Unit*", width=20, font=("bold", 10), anchor = 'w')
         self.label_SessionVenueUnit.place(x=0, y=150)
         label_SessionVenueUnit_ttp = CreateToolTip(self.label_SessionVenueUnit, tooltipDescription["Unit"])
         self.entry_SessionVenueUnit = Entry(AddFrame)
         self.entry_SessionVenueUnit.place(x=170, y=150)
 
-        self.label_SessionVenueFloor = Label(AddFrame, text="Venue Floor*", width=20, font=("bold", 10))
+        self.label_SessionVenueFloor = Label(AddFrame, text="Venue Floor*", width=20, font=("bold", 10), anchor = 'w')
         self.label_SessionVenueFloor.place(x=0, y=175)
         label_SessionVenueFloor_ttp = CreateToolTip(self.label_SessionVenueFloor, tooltipDescription["Floor"])
         self.entry_SessionVenueFloor = Entry(AddFrame)
         self.entry_SessionVenueFloor.place(x=170, y=175)
 
-        self.label_SessionVenueBuilding = Label(AddFrame, text="Venue Building", width=20, font=("bold", 10))
+        self.label_SessionVenueBuilding = Label(AddFrame, text="Venue Building", width=20, font=("bold", 10), anchor = 'w')
         self.label_SessionVenueBuilding.place(x=0, y=200)
         label_SessionVenueBuilding_ttp = CreateToolTip(self.label_SessionVenueBuilding, tooltipDescription["Building"])
         self.entry_SessionVenueBuilding = Entry(AddFrame)
         self.entry_SessionVenueBuilding.place(x=170, y=200)
 
-        self.label_SessionVenueBlock = Label(AddFrame, text="Venue Block", width=20, font=("bold", 10))
+        self.label_SessionVenueBlock = Label(AddFrame, text="Venue Block", width=20, font=("bold", 10), anchor = 'w')
         self.label_SessionVenueBlock.place(x=0, y=225)
         label_SessionVenueBlock_ttp = CreateToolTip(self.label_SessionVenueBlock, tooltipDescription["Block"])
         self.entry_SessionVenueBlock = Entry(AddFrame)
         self.entry_SessionVenueBlock.place(x=170, y=225)
 
-        self.label_SessionVenueStreet = Label(AddFrame, text="Venue Street", width=20, font=("bold", 10))
+        self.label_SessionVenueStreet = Label(AddFrame, text="Venue Street", width=20, font=("bold", 10), anchor = 'w')
         self.label_SessionVenueStreet.place(x=0, y=250)
         label_SessionVenueStreet_ttp = CreateToolTip(self.label_SessionVenueStreet, tooltipDescription["Street"])
         self.entry_SessionVenueStreet = Entry(AddFrame)
         self.entry_SessionVenueStreet.place(x=170, y=250)
 
-        self.label_SessionVenuePostalCode = Label(AddFrame, text="Venue Postal Code*", width=20, font=("bold", 10))
+        self.label_SessionVenuePostalCode = Label(AddFrame, text="Venue Postal Code*", width=20, font=("bold", 10), anchor = 'w')
         self.label_SessionVenuePostalCode.place(x=0, y=275)
         label_SessionVenuePostalCode_ttp = CreateToolTip(self.label_SessionVenuePostalCode, tooltipDescription["PostalCode"])
         self.entry_SessionVenuePostalCode = Entry(AddFrame)
@@ -753,7 +753,7 @@ class addCourseRunPage3(tk.Frame):
         self.tkvar_Wheelchair.set("Select an Option")
         self.tkvar_PriVenue.set("Select an Option")
 
-        self.label_SessionVenuePrimaryVenue= Label(AddFrame, text="Venue Primary Venue", width=20, font=("bold", 10))
+        self.label_SessionVenuePrimaryVenue= Label(AddFrame, text="Venue Primary Venue", width=20, font=("bold", 10), anchor = 'w')
         self.label_SessionVenuePrimaryVenue.place(x=0, y=300)
         label_SessionVenuePrimaryVenue_ttp = CreateToolTip(self.label_SessionVenuePrimaryVenue, tooltipDescription["PrimaryVenue"])
         self.options_PrimaryVenue = ttk.Combobox(AddFrame, width=17, state="readonly")
@@ -763,7 +763,7 @@ class addCourseRunPage3(tk.Frame):
         self.options_PrimaryVenue.current(0)
         self.options_PrimaryVenue.place(x=170, y=300)
 
-        self.label_SessionWheelChairAccess = Label(AddFrame, text="Venue Wheelchair Access", width=20, font=("bold", 10))
+        self.label_SessionWheelChairAccess = Label(AddFrame, text="Venue Wheelchair Access", width=20, font=("bold", 10), anchor = 'w')
         self.label_SessionWheelChairAccess.place(x=0, y=325)
         label_SessionWheelChairAccess_ttp = CreateToolTip(self.label_SessionWheelChairAccess, tooltipDescription["WheelChairAccess"])
         self.options_Wheelchair = ttk.Combobox(AddFrame, width=17, state="readonly")
@@ -905,7 +905,7 @@ class addCourseRunPage4(tk.Frame):
         self.index = 0
         self.ssecList = []
 
-        self.label_trainerTypeCode = Label(self, text="Trainer Type Code*", width=20, font=("bold", 10))
+        self.label_trainerTypeCode = Label(self, text="Trainer Type Code*", width=20, font=("bold", 10), anchor = 'w')
         self.label_trainerTypeCode.place(x=80, y=140)
         label_trainerTypeCode_ttp = CreateToolTip(self.label_trainerTypeCode, tooltipDescription["TrainerCode"])
         trainerTypeCode = ttk.Combobox(self, width = 27, state ="readonly")
@@ -917,43 +917,43 @@ class addCourseRunPage4(tk.Frame):
         trainerTypeCode.place(x=250, y=140)
 
 
-        self.label_trainerTypeDescription = Label(self, text="Trainer Type Description*", width=20, font=("bold", 10))
+        self.label_trainerTypeDescription = Label(self, text="Trainer Type Description*", width=20, font=("bold", 10), anchor = 'w')
         self.label_trainerTypeDescription.place(x=80, y=165)
         label_trainerTypeDescription_ttp = CreateToolTip(self.label_trainerTypeDescription,tooltipDescription["TrainerDescription"])
         self.entry_trainerTypeDescription = Entry(self)
         self.entry_trainerTypeDescription.place(x=250, y=165)
 
-        self.label_trainerId = Label(self, text="Trainer Id*", width=20, font=("bold", 10))
+        self.label_trainerId = Label(self, text="Trainer Id*", width=20, font=("bold", 10), anchor = 'w')
         self.label_trainerId.place(x=80, y=190)
         label_trainerId_ttp = CreateToolTip(self.label_trainerId, tooltipDescription["TrainerID"])
         self.entry_trainerId = Entry(self)
         self.entry_trainerId.place(x=250, y=190)
 
-        self.label_trainerName = Label(self, text="Trainer Name*", width=20, font=("bold", 10))
+        self.label_trainerName = Label(self, text="Trainer Name*", width=20, font=("bold", 10), anchor = 'w')
         self.label_trainerName.place(x=80, y=215)
         label_trainerName_ttp = CreateToolTip(self.label_trainerName, tooltipDescription["TrainerName"])
         self.entry_trainerName = Entry(self)
         self.entry_trainerName.place(x=250, y=215)
 
-        self.label_trainerEmail = Label(self, text="Trainer Email*", width=20, font=("bold", 10))
+        self.label_trainerEmail = Label(self, text="Trainer Email*", width=20, font=("bold", 10), anchor = 'w')
         self.label_trainerEmail.place(x=80, y=240)
         label_trainerEmail_ttp = CreateToolTip(self.label_trainerEmail, tooltipDescription["TrainerEmail"])
         self.entry_trainerEmail = Entry(self)
         self.entry_trainerEmail.place(x=250, y=240)
 
-        self.label_trainerExperience = Label(self, text="Trainer Experience", width=20, font=("bold", 10))
+        self.label_trainerExperience = Label(self, text="Trainer Experience", width=20, font=("bold", 10), anchor = 'w')
         self.label_trainerExperience.place(x=80, y=265)
         label_trainerExperience_ttp = CreateToolTip(self.label_trainerExperience, tooltipDescription["TrainerExperience"])
         self.entry_trainerExperience = Entry(self)
         self.entry_trainerExperience.place(x=250, y=265)
 
-        self.label_trainerlinkedInUrl = Label(self, text="Trainer linkedInUrl", width=20, font=("bold", 10))
+        self.label_trainerlinkedInUrl = Label(self, text="Trainer linkedInUrl", width=20, font=("bold", 10), anchor = 'w')
         self.label_trainerlinkedInUrl.place(x=80, y=290)
         label_trainerlinkedInUrl_ttp = CreateToolTip(self.label_trainerlinkedInUrl, tooltipDescription["TrainerLinkedlnURL"])
         self.entry_trainerlinkedInUrl = Entry(self)
         self.entry_trainerlinkedInUrl.place(x=250, y=290)
 
-        self.label_trainersalutationId = Label(self, text="Trainer salutationId", width=20, font=("bold", 10))
+        self.label_trainersalutationId = Label(self, text="Trainer salutationId", width=20, font=("bold", 10), anchor = 'w')
         self.label_trainersalutationId.place(x=80, y=315)
         label_trainersalutationId_ttp = CreateToolTip(self.label_trainersalutationId, tooltipDescription["TrainerSalutationID"])
         trainersalutationId = ttk.Combobox(self, width = 27, state ="readonly")
@@ -968,7 +968,7 @@ class addCourseRunPage4(tk.Frame):
         trainersalutationId.current(0)
         trainersalutationId.place(x=250, y=315)
 
-        self.label_trainerdomainAreaOfPractice = Label(self, text="Trainer AreaOfPractice*", width=20, font=("bold", 10))
+        self.label_trainerdomainAreaOfPractice = Label(self, text="Trainer AreaOfPractice*", width=20, font=("bold", 10), anchor = 'w')
         self.label_trainerdomainAreaOfPractice.place(x=80, y=340)
         label_trainerdomainAreaOfPractice_ttp = CreateToolTip(self.label_trainerdomainAreaOfPractice, tooltipDescription["TrainerAreaOfPractice"])
         self.entry_trainerdomainAreaOfPractice = Entry(self)
@@ -976,7 +976,7 @@ class addCourseRunPage4(tk.Frame):
 
 
         self.label_trainerinTrainingProviderProfile = Label(self, text="inTrainingProviderProfile", width=20,
-                                                            font=("bold", 10))
+                                                            font=("bold", 10), anchor = 'w')
         self.label_trainerinTrainingProviderProfile.place(x=80, y=365)
         label_trainerinTrainingProviderProfile_ttp = CreateToolTip(self.label_trainerinTrainingProviderProfile, tooltipDescription["inTrainingProviderProfile"])
         inTrainingProviderProfile = ttk.Combobox(self, width = 27, state ="readonly")
@@ -987,16 +987,16 @@ class addCourseRunPage4(tk.Frame):
         inTrainingProviderProfile.current(0)
         inTrainingProviderProfile.place(x=250, y=365)
 
-        label_1 = Label(self, text="Trainers - SsecEQAs", width=20, font=("bold", 15))
+        label_1 = Label(self, text="Trainers - SsecEQAs", width=20, font=("bold", 15), anchor = 'w')
         label_1.place(x=137, y=410)
 
-        self.label_trainerssecEQA = Label(self, text="Trainer ssecEQA", width=20, font=("bold", 10))
+        self.label_trainerssecEQA = Label(self, text="Trainer ssecEQA", width=20, font=("bold", 10), anchor = 'w')
         self.label_trainerssecEQA.place(x=80, y=450)
         label_trainerssecEQA_ttp = CreateToolTip(self.label_trainerssecEQA, tooltipDescription["TrainerssecEQA"])
         self.entry_trainerssecEQA = Entry(self)
         self.entry_trainerssecEQA.place(x=250, y=450)
 
-        self.label_trainerssecEQAdescription = Label(self, text="Trainer description", width=20, font=("bold", 10))
+        self.label_trainerssecEQAdescription = Label(self, text="Trainer description", width=20, font=("bold", 10), anchor = 'w')
         self.label_trainerssecEQAdescription.place(x=80, y=475)
         label_trainerssecEQAdescription_ttp = CreateToolTip(self.label_trainerssecEQAdescription, tooltipDescription["TrainerssecDescription"])
         self.entry_trainerssecEQAdescription = Entry(self)

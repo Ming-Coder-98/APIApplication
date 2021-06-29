@@ -47,7 +47,7 @@ class searchEnrolmentPage1(tk.Frame):
         label_filterTitle = Label(self, text="Filter Details:", width=20, font=("bold", 15))
         label_filterTitle.place(x=137, y=100)
 
-        label_updateFromDate = Label(self, text="Last Update Dates From*", width=20, font=("bold", 10))
+        label_updateFromDate = Label(self, text="Last Update Dates From", width=20, font=("bold", 10), anchor = 'w')
         label_updateFromDate.place(x=80, y=135)
 
         #label_openRegDate_ttp = CreateToolTip(label_openRegDate, tooltipDescription["CourseRegistrationDateOpen"])
@@ -55,7 +55,7 @@ class searchEnrolmentPage1(tk.Frame):
         entry_updateFromDate = Entry(self)
         entry_updateFromDate.place(x=250, y=135)
 
-        label_updateToDate = Label(self, text="Last Update Dates To*", width=20, font=("bold", 10))
+        label_updateToDate = Label(self, text="Last Update Dates To", width=20, font=("bold", 10), anchor = 'w')
         label_updateToDate.place(x=80, y=160)
 
         #label_closeRegDate_ttp = CreateToolTip(label_closeRegDate, tooltipDescription["CourseRegistrationDateClose"])
@@ -66,7 +66,7 @@ class searchEnrolmentPage1(tk.Frame):
         label_sortTitle = Label(self, text="Sort by Details:", width=20, font=("bold", 15))
         label_sortTitle.place(x=137, y=190)
 
-        label_field = Label(self, text="Field", width=20, font=("bold", 10))
+        label_field = Label(self, text="Field", width=20, font=("bold", 10), anchor = 'w')
         label_field.place(x=80, y=225)
 
         #label_CourseModeOfTraining_ttp = CreateToolTip(label_CourseModeOfTraining, tooltipDescription["ModeOfTraining"])
@@ -78,7 +78,7 @@ class searchEnrolmentPage1(tk.Frame):
         field.current(0)
         field.place(x=250, y=225)
 
-        label_order = Label(self, text="Order", width=20, font=("bold", 10))
+        label_order = Label(self, text="Order", width=20, font=("bold", 10), anchor = 'w')
         label_order.place(x=80, y=250)
 
         #label_CourseModeOfTraining_ttp = CreateToolTip(label_CourseModeOfTraining, tooltipDescription["ModeOfTraining"])
@@ -94,7 +94,7 @@ class searchEnrolmentPage1(tk.Frame):
         label_sortTitle.place(x=137, y=280)
 
 
-        label_runId = Label(self, text="Course Run Id*", width=20, font=("bold", 10))
+        label_runId = Label(self, text="Course Run Id", width=20, font=("bold", 10), anchor = 'w')
         label_runId.place(x=80, y=315)
 
         #label_runId_ttp = CreateToolTip(self.label_runId, tooltipDescription["CourseRunId"])
@@ -102,7 +102,7 @@ class searchEnrolmentPage1(tk.Frame):
         entry_runId = Entry(self)
         entry_runId.place(x=250, y=315)
 
-        label_CRN = Label(self, text="Course Reference Number*", width=20, font=("bold", 10))
+        label_CRN = Label(self, text="Course Reference Number", width=20, font=("bold", 10), anchor = 'w')
         label_CRN.place(x=80, y=340)
 
         label_CRN_ttp = CreateToolTip(label_CRN, tooltipDescription["CourseReferenceNumber"])
@@ -110,7 +110,7 @@ class searchEnrolmentPage1(tk.Frame):
         entry_CRN = Entry(self)
         entry_CRN.place(x=250, y=340)
 
-        label_status = Label(self, text="Enrolment Status", width=20, font=("bold", 10))
+        label_status = Label(self, text="Enrolment Status", width=20, font=("bold", 10), anchor = 'w')
         label_status.place(x=80, y=365)
 
         #label_CourseModeOfTraining_ttp = CreateToolTip(label_CourseModeOfTraining, tooltipDescription["ModeOfTraining"])
@@ -122,7 +122,7 @@ class searchEnrolmentPage1(tk.Frame):
         status.current(0)
         status.place(x=250, y=365)
 
-        label_traineeId = Label(self, text="Trainee Id", width=20, font=("bold", 10))
+        label_traineeId = Label(self, text="Trainee Id", width=20, font=("bold", 10), anchor = 'w')
         label_traineeId.place(x=80, y=390)
 
         #label_runId_ttp = CreateToolTip(self.label_runId, tooltipDescription["CourseRunId"])
@@ -131,7 +131,7 @@ class searchEnrolmentPage1(tk.Frame):
         entry_traineeId.place(x=250, y=390)
 
 
-        label_statusCollection = Label(self, text="Fee Status Collection*", width=20, font=("bold", 10))
+        label_statusCollection = Label(self, text="Fee Status Collection", width=20, font=("bold", 10), anchor = 'w')
         label_statusCollection.place(x=80, y=415)
 
         # label_statusCollection_ttp = CreateToolTip(label_statusCollection, tooltipDescription["CourseVacCode"])
@@ -146,7 +146,7 @@ class searchEnrolmentPage1(tk.Frame):
         statusCollection.current(0)
         statusCollection.place(x=250, y=415)
 
-        label_idType = Label(self, text="ID Type", width=20, font=("bold", 10))
+        label_idType = Label(self, text="ID Type", width=20, font=("bold", 10), anchor = 'w')
         label_idType.place(x=80, y=440)
 
         #label_CourseModeOfTraining_ttp = CreateToolTip(label_CourseModeOfTraining, tooltipDescription["ModeOfTraining"])
@@ -159,7 +159,7 @@ class searchEnrolmentPage1(tk.Frame):
         idType.current(0)
         idType.place(x=250, y=440)
 
-        label_employerUEN = Label(self, text="Employer UEN", width=20, font=("bold", 10))
+        label_employerUEN = Label(self, text="Employer UEN", width=20, font=("bold", 10), anchor = 'w')
         label_employerUEN.place(x=80, y=465)
 
         #label_runId_ttp = CreateToolTip(self.label_runId, tooltipDescription["CourseRunId"])
@@ -167,7 +167,7 @@ class searchEnrolmentPage1(tk.Frame):
         entry_employerUEN = Entry(self)
         entry_employerUEN.place(x=250, y=465)
 
-        label_enrolmentDate = Label(self, text="Enrolment Date", width=20, font=("bold", 10))
+        label_enrolmentDate = Label(self, text="Enrolment Date", width=20, font=("bold", 10), anchor = 'w')
         label_enrolmentDate.place(x=80, y=490)
 
         #label_closeRegDate_ttp = CreateToolTip(label_closeRegDate, tooltipDescription["CourseRegistrationDateClose"])
@@ -176,7 +176,7 @@ class searchEnrolmentPage1(tk.Frame):
         entry_enrolmentDate.place(x=250, y=490)
 
 
-        label_sponsorshipType = Label(self, text="Sponsorship Type", width=20, font=("bold", 10))
+        label_sponsorshipType = Label(self, text="Sponsorship Type", width=20, font=("bold", 10), anchor = 'w')
         label_sponsorshipType.place(x=80, y=515)
 
         #label_CourseModeOfTraining_ttp = CreateToolTip(label_CourseModeOfTraining, tooltipDescription["ModeOfTraining"])
@@ -189,23 +189,7 @@ class searchEnrolmentPage1(tk.Frame):
         sponsorshipType.current(0)
         sponsorshipType.place(x=250, y=515)
 
-        label_TpUEN = Label(self, text="Training Partner - UEN", width=20, font=("bold", 10))
-        label_TpUEN.place(x=80, y=540)
-
-        label_UEN_ttp = CreateToolTip(label_TpUEN, tooltipDescription["UEN"])
-        uenReadOnly = StringVar()
-        uenReadOnly.set(config["UEN"])
-        entry_TpUEN = Entry(self, state=DISABLED, textvariable=uenReadOnly)
-        entry_TpUEN.place(x=250, y=542)
-
-        label_tpCode = Label(self, text="TP Code", width=20, font=("bold", 10))
-        label_tpCode.place(x=80, y=565)
-
-        #label_runId_ttp = CreateToolTip(self.label_runId, tooltipDescription["CourseRunId"])
-
-        entry_tpCode = Entry(self)
-        entry_tpCode.place(x=250, y=565)
-
+       
         previewButton = tk.Button(self, text="Next", bg="white", width=25, pady=5,
                                   command= lambda: NextCallBack())
         previewButton.place(x=250, y=610, anchor=CENTER)
@@ -216,10 +200,9 @@ class searchEnrolmentPage1(tk.Frame):
             controller.show_frame(searchEnrolmentPage2)
 
         def StoreAndSave():
-            try:
-                payload = json.loads(searchEnrolmentPage2.payload)
-            except:
-                payload = {}
+            
+            payload = {}
+            payload['enrolment'] = {}
 
             if field.get()  != 'Select an Option' or order.get() != 'Select an Option':
                 payload['sortBy'] = {}
@@ -234,39 +217,35 @@ class searchEnrolmentPage1(tk.Frame):
                     payload['meta']['lastUpdateDateFrom']= entry_updateFromDate.get()
                 if entry_updateToDate.get() != '':
                     payload['meta']['lastUpdateDateTo'] = entry_updateToDate.get()
-
-            if entry_CRN.get() or entry_runId.get() or entry_traineeId or entry_employerUEN or entry_enrolmentDate or entry_tpCode!= '':
-                payload['enrolment'] = {}
-                if entry_runId.get() != '':
-                    payload['enrolment']['course'] = {}
-                    payload['enrolment']['course']['run'] = {}
-                    payload['enrolment']['course']['run']['id']= entry_runId.get()
-                if entry_CRN.get() != '':
-                    payload['enrolment']['course'] = {}
-                    payload['enrolment']['course']['referenceNumber'] = entry_CRN.get()
-                if entry_traineeId.get() != '':
-                    payload['enrolment']['trainee'] = {}
-                    payload['enrolment']['trainee']['id'] = entry_traineeId.get()
-                if entry_employerUEN.get() != '':
-                    payload['enrolment']['employer'] = {}
-                    payload['enrolment']['employer']['uen'] = entry_employerUEN.get()
-                if entry_enrolmentDate.get() != '':
-                    payload['enrolment']['enrolmentDate'] = entry_enrolmentDate.get()
-                if entry_TpUEN.get() != '':
-                    payload['enrolment']['trainingPartner'] = {}
-                    payload['enrolment']['trainingPartner']['uen'] = entry_TpUEN.get()
-                if entry_tpCode.get() != '':
-                    payload['enrolment']['trainingPartner']['code'] = entry_tpCode.get()
-                if status.get() != 'Select an Option':
-                    payload['enrolment']['status']= status.get()
-                if statusCollection.get() != 'Select an Option':
-                    payload['enrolment']['fee'] = {}
-                    payload['enrolment']['fee']['feeCollectionStatus'] = statusCollection.get()
-                if idType.get() != 'Select an Option':
-                    payload['enrolment']['idType'] = {}
-                    payload['enrolment']['idType']['type'] = idType.get()
-                if sponsorshipType.get() != 'Select an Option':
-                    payload['enrolment']['sponsorshipType'] = sponsorshipType.get()
+                
+            if entry_runId.get() != '':
+                payload['enrolment']['course'] = {}
+                payload['enrolment']['course']['run'] = {}
+                payload['enrolment']['course']['run']['id']= entry_runId.get()
+            if entry_CRN.get() != '':
+                payload['enrolment']['course'] = {}
+                payload['enrolment']['course']['referenceNumber'] = entry_CRN.get()
+            if entry_traineeId.get() != '':
+                payload['enrolment']['trainee'] = {}
+                payload['enrolment']['trainee']['id'] = entry_traineeId.get()
+            if entry_employerUEN.get() != '':
+                payload['enrolment']['employer'] = {}
+                payload['enrolment']['employer']['uen'] = entry_employerUEN.get()
+            if entry_enrolmentDate.get() != '':
+                payload['enrolment']['enrolmentDate'] = entry_enrolmentDate.get()
+            if status.get() != 'Select an Option':
+                payload['enrolment']['status']= status.get()
+            if statusCollection.get() != 'Select an Option':
+                payload['enrolment']['fee'] = {}
+                payload['enrolment']['fee']['feeCollectionStatus'] = statusCollection.get()
+            if idType.get() != 'Select an Option':
+                payload['enrolment']['idType'] = {}
+                payload['enrolment']['idType']['type'] = idType.get()
+            if sponsorshipType.get() != 'Select an Option':
+                payload['enrolment']['sponsorshipType'] = sponsorshipType.get()
+            if config['UEN'] != '':
+                payload['enrolment']['trainingPartner'] = {}
+                payload['enrolment']['trainingPartner']['uen'] = config['UEN']
 
 
 
@@ -316,23 +295,41 @@ class searchEnrolmentPage2(tk.Frame):
 
         # Title
         label_0 = Label(self, text="Search Enrolment", width=20, font=("bold", 20))
-        label_0.place(x=90, y=50)
+        label_0.place(x=90, y=10)
 
-        label_page = Label(self, text="Number of Pages", width=20, font=("bold", 10))
-        label_page.place(x=100, y=95)
+        label_TpUEN = Label(self, text="Training Partner - UEN", width=20, font=("bold", 10), anchor = 'w')
+        label_TpUEN.place(x=100, y=80)
+
+        label_UEN_ttp = CreateToolTip(label_TpUEN, tooltipDescription["UEN"])
+        uenReadOnly = StringVar()
+        uenReadOnly.set(config["UEN"])
+        entry_TpUEN = Entry(self, state=DISABLED, textvariable=uenReadOnly)
+        entry_TpUEN.place(x=250, y=80)
+
+        label_tpCode = Label(self, text="TP Code*", width=20, font=("bold", 10), anchor = 'w')
+        label_tpCode.place(x=100, y=105)
+
+        #label_runId_ttp = CreateToolTip(self.label_runId, tooltipDescription["CourseRunId"])
+
+        entry_tpCode = Entry(self)
+        entry_tpCode.place(x=250, y=105)
+
+
+        label_page = Label(self, text="Number of Pages", width=20, font=("bold", 10), anchor = 'w')
+        label_page.place(x=100, y=130)
 
         #label_runId_ttp = CreateToolTip(self.label_runId, tooltipDescription["CourseRunId"])
 
         entry_page = Entry(self)
-        entry_page.place(x=250, y=95)
+        entry_page.place(x=250, y=130)
 
-        label_pageSize = Label(self, text="Page Sizes", width=20, font=("bold", 10))
-        label_pageSize.place(x=100, y=120)
+        label_pageSize = Label(self, text="Page Sizes", width=20, font=("bold", 10), anchor = 'w')
+        label_pageSize.place(x=100, y=155)
 
         #label_runId_ttp = CreateToolTip(self.label_runId, tooltipDescription["CourseRunId"])
 
         entry_pageSize = Entry(self)
-        entry_pageSize.place(x=250, y=120)
+        entry_pageSize.place(x=250, y=155)
 
 
         # This method is used to update the display information dynamically in "Payload" Tab whenever user key in a value
@@ -344,6 +341,7 @@ class searchEnrolmentPage2(tk.Frame):
 
         entry_page.bind('<KeyRelease>', lambda a: typing())
         entry_pageSize.bind('<KeyRelease>', lambda a: typing())
+        entry_tpCode.bind('<KeyRelease>', lambda a: typing())
 
         def storeAndSave():
             temp = searchEnrolmentPage2.payload
@@ -353,6 +351,8 @@ class searchEnrolmentPage2(tk.Frame):
                 temp['parameters'] = {}
                 temp['parameters']['page'] = entry_page.get()
                 temp['parameters']['pageSize'] = entry_pageSize.get()
+            if entry_tpCode.get() != '':
+                temp['enrolment']['trainingPartner']['code'] = entry_tpCode.get()
 
             print(json.dumps(temp, indent=4))
             return str(json.dumps(temp, indent=4))
@@ -385,12 +385,12 @@ class searchEnrolmentPage2(tk.Frame):
         responseText.place(height=405, width=440, y=20)
         responseText.bind("<Key>", lambda e: "break")
 
-        submitButton = tk.Button(self, text="Search", bg="white", width=25, pady=5,
+        submitButton = tk.Button(self, text="Search", bg="white", width=15, pady=5,
                                  command=lambda: searchEnrolmentCallBack(searchEnrolmentPage2.payload))
-        submitButton.place(relx=0.5, rely=0.22, anchor=CENTER)
-        backButton = tk.Button(self, text="Back", bg="white", width=25, pady=5,
+        submitButton.place(relx=0.65, rely=0.27, anchor=CENTER)
+        backButton = tk.Button(self, text="Back", bg="white", width=15, pady=5,
                                  command=lambda:controller.show_frame(searchEnrolmentPage1))
-        backButton.place(relx=0.5, rely=0.27, anchor=CENTER)
+        backButton.place(relx=0.35, rely=0.27, anchor=CENTER)
         exportButton1 = tk.Button(self, text="Export Payload", bg="white", width=15, pady=5,
                                   command=lambda: downloadFile("payload"))
         exportButton1.place(relx=0.3, rely=0.95, anchor=CENTER)
