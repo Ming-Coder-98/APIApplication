@@ -1,5 +1,4 @@
 from AttendanceFunction import curlRequestUploadAttendance, uploadAttendanceFn
-from EnrolmentFunction import curlRequestSearchEnrolment, searchEnrolment
 from tkinter import Button, Entry, Label, StringVar, scrolledtext, filedialog, ttk, messagebox
 import tkinter as tk
 from tkinter.constants import CENTER, DISABLED, END

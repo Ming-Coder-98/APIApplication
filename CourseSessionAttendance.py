@@ -1,6 +1,4 @@
-
 from AttendanceFunction import displayViewSession, getSessionAttendance
-import json
 from PIL import Image, ImageTk
 from tooltip import CreateToolTip
 from EncryptAndDecryptFunction import doEncryption
