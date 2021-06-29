@@ -1,4 +1,5 @@
 #Import course Run py Functions
+from CourseSessionAttendance import ViewSessionAttendance
 from UpdateEnrolment import UpdateEnrolmentMainPage, UpdateEnrolmentPageFileUploadPage, UpdateEnrolmentPreviewPage
 from tkinter.constants import CENTER, END, INSERT
 from AddEnrolment import AddEnrolmentMainPage, AddEnrolmentPage2, AddEnrolmentPreviewPage, addEnrolmentPageFileUpload
@@ -65,7 +66,7 @@ class APIProject(tk.Tk):
         
 
         self.frames = {}
-        for F in (updateEnrolFeePage,
+        for F in (updateEnrolFeePage,ViewSessionAttendance,
             UpdateEnrolmentMainPage, UpdateEnrolmentPageFileUploadPage, UpdateEnrolmentPreviewPage,
             AddEnrolmentPage2,AddEnrolmentPreviewPage,addEnrolmentPageFileUpload,AddEnrolmentMainPage ,
             deleteEnrolmentPage, viewEnrolmentPage, getCourseSessionPage, updateCourseRunPagePreview,updateCourseRunPagePage2,updateCourseRunPagePage3,
@@ -91,7 +92,7 @@ class APIProject(tk.Tk):
         courseMenu.add_command(label="Add Course Run",command=lambda:self.show_frame(addCourseRunPage1))
         courseMenu.add_command(label="Delete Course Run",command=lambda: self.show_frame(deleteCourseRunPage)) 
         courseMenu.add_command(label="Update Course Run",command=lambda: self.show_frame(updateCourseRunPageSelect))  
-        courseMenu.add_command(label="Course Session",command=lambda: self.show_frame(getCourseSessionPage))   
+        courseMenu.add_command(label="Course Session",command=lambda: self.show_frame(getCourseSessionPage))    
         menubar.add_cascade(label="Course", menu=courseMenu)  
 
         
@@ -106,7 +107,7 @@ class APIProject(tk.Tk):
 
         
         attendanceMenu = Menu(menubar, tearoff=0)  
-        attendanceMenu.add_command(label="Course Session Attendance")
+        attendanceMenu.add_command(label="Course Session Attendance",command=lambda: self.show_frame(ViewSessionAttendance))
         attendanceMenu.add_command(label="Upload Course Session Attendance")   
         menubar.add_cascade(label="Attendance", menu=attendanceMenu)  
 

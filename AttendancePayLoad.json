@@ -1,5 +1,5 @@
 {
-    "uen": "199900650G",
+    
     "course": {
         "sessionID": "TGS-2020000703-224596-S1",
         "attendance": {
@@ -26,5 +26,6 @@
         },
         "referenceNumber": "TGS-2020000703"
     },
+    "uen": "199900650G",
     "corppassId": "S1449757I"
 }

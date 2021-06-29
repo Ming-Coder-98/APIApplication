@@ -1,3 +1,4 @@
+from EncryptAndDecryptFunction import doEncryption
 import json
 import tkinter
 import tkinter as tk
@@ -252,7 +253,7 @@ class searchEnrolmentPage1(tk.Frame):
 
 
 
-            print(json.dumps(payload, indent=4))
+            #print(json.dumps(payload, indent=4))
             return str(json.dumps(payload, indent=4))
 
         # Initialies the file and object first in order to prevent clearing of data
@@ -338,6 +339,7 @@ class searchEnrolmentPage2(tk.Frame):
             value = curlRequestSearchEnrolment(searchEnrolmentPage2.payload)
             self.curlText.delete("1.0", "end")
             self.curlText.insert(tk.END, value)
+            self.varPayload.set(1)
 
         entry_page.bind('<KeyRelease>', lambda a: typing())
         entry_pageSize.bind('<KeyRelease>', lambda a: typing())
@@ -345,16 +347,24 @@ class searchEnrolmentPage2(tk.Frame):
 
         def storeAndSave():
             temp = searchEnrolmentPage2.payload
-            print(temp)
             temp = json.loads(temp)
-            if entry_page.get()!= '' or entry_pageSize.get() != '':
-                temp['parameters'] = {}
-                temp['parameters']['page'] = entry_page.get()
-                temp['parameters']['pageSize'] = entry_pageSize.get()
             if entry_tpCode.get() != '':
                 temp['enrolment']['trainingPartner']['code'] = entry_tpCode.get()
+            else: 
+                temp['enrolment']['trainingPartner']['code']  = {}
+                del temp['enrolment']['trainingPartner']['code'] 
+            temp['parameters'] = {}
+            temp['parameters']['page'] = {}
+            temp['parameters']['pageSize'] = {}
+            if entry_page.get()!= '' or entry_pageSize.get() != '':
+                temp['parameters']['page'] = entry_page.get()
+                temp['parameters']['pageSize'] = entry_pageSize.get()
+            else:
+                del temp['parameters']['page']
+                del temp['parameters']['pageSize']
+           
 
-            print(json.dumps(temp, indent=4))
+
             return str(json.dumps(temp, indent=4))
 
 
@@ -398,6 +408,18 @@ class searchEnrolmentPage2(tk.Frame):
                                   command=lambda: downloadFile("response"))
         exportButton2.place(relx=0.7, rely=0.95, anchor=CENTER)
 
+        #Radio button for Request
+        self.varPayload = IntVar()
+        Radiobutton(tab2, text="Decrypt", variable=self.varPayload, value=1, width=12, anchor='w', command = lambda:displayPayload("decrypt")).place(x=0,y=-5)
+        Radiobutton(tab2, text="Encrypt", variable=self.varPayload, value=2,width=12, anchor='w',command = lambda:displayPayload("encrypt")).place(x=130,y=-5)
+        self.varPayload.set(1)
+        
+        #Radio button for Response
+        self.varResp = IntVar()
+        Radiobutton(tab3, text="Decrypt", variable=self.varResp, value=1, width=12, anchor='w', command = lambda:displayResp("decrypt")).place(x=0,y=-5)
+        Radiobutton(tab3, text="Encrypt", variable=self.varResp, value=2,width=12, anchor='w',command = lambda:displayResp("encrypt")).place(x=130,y=-5)
+        self.varResp.set(1)
+
         # adding of single line text box
         edit = Entry(self, background="light gray")
 
@@ -414,6 +436,29 @@ class searchEnrolmentPage2(tk.Frame):
                            background="gray")
         butt_resp.place(x=380, y=0, height=21, width=60)
 
+        def displayResp(method):
+            if method != 'encrypt':
+                try:
+                    display = searchEnrolmentPage2.textPayload.get()
+                except:
+                    display = ''
+                responseText.delete("1.0","end")
+                responseText.insert(INSERT,display)
+            else:
+                try:
+                    display = doEncryption(str(searchEnrolmentPage2.textPayload.get()).encode())
+                except:
+                    display = b''
+                responseText.delete("1.0","end")
+                responseText.insert(tk.END, display.decode())
+        def displayPayload(method):
+            if method == 'decrypt':
+
+                self.curlText.delete("1.0","end")
+                self.curlText.insert(tk.END,curlPostRequest("",searchEnrolmentPage2.payload))
+            else:
+                self.curlText.delete("1.0","end")
+                self.curlText.insert(tk.END, curlPostRequest("", str(doEncryption(searchEnrolmentPage2.payload.encode()).decode())))
         # This method is used to search the response text and highlight the searched word in red
         def find(method):
             if method == "resp":
@@ -462,5 +507,6 @@ class searchEnrolmentPage2(tk.Frame):
         def searchEnrolmentCallBack(searchEnrolmentPayload):
             resp = searchEnrolment(searchEnrolmentPayload)
             responseText.delete("1.0", "end")
-            responseText.insert(tk.END, resp)
+            searchEnrolmentPage2.textPayload = StringVar(self, value=resp)
+            responseText.insert(tk.END, searchEnrolmentPage2.textPayload.get())
             tabControl.select(tab3)

@@ -824,11 +824,11 @@ class updateCourseRunPagePage3(tk.Frame):
                                command=lambda: backcallback()
                                )
         backButton.place(relx=0.35, rely=0.86, anchor=CENTER)
-        addButton = tk.Button(self, text="Clear Sessions", bg="white", width=15, pady=5, command=lambda: addCallback())
+        addButton = tk.Button(self, text="Add", bg="white", width=15, pady=5, command=lambda: addCallback())
         addButton.place(relx=0.65, rely=0.8, anchor=CENTER)
         previewButton = tk.Button(self, text="Next", bg="white", width=15, pady=5, command=lambda: callback())
         previewButton.place(relx=0.65, rely=0.86, anchor=CENTER)
-        resetButton = tk.Button(self, text="Reset", bg="white", width=15, pady=5,command=lambda: resetSessions())
+        resetButton = tk.Button(self, text="Clear Sessions", bg="white", width=15, pady=5,command=lambda: resetSessions())
         resetButton.place(relx=0.35, rely=0.8, anchor=CENTER)
 
         def callback():
