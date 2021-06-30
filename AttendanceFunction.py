@@ -118,7 +118,7 @@ def curlRequestUploadAttendance(runId, payloadToDisplay):
             '----------------Request Information----------------',
           req.method + ' ' + req.url,
           '\r\n'.join('{}: {}'.format(k, v) for k, v in req.headers.items()),
-          'Encryption: Required',
+          'Encryption: Required\n',
           '----------------Payload Information----------------',
           payloadToDisplay,
       )

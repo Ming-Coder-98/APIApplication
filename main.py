@@ -1,5 +1,5 @@
 #Import course Run py Functions
-
+from SearchAssessment import searchAssessmentPage1, searchAssessmentPage2
 from ViewAssessment import ViewAssessmentPage
 from ViewCourseSessionAttendance import ViewSessionAttendance
 from UpdateEnrolment import UpdateEnrolmentMainPage, UpdateEnrolmentPageFileUploadPage, UpdateEnrolmentPreviewPage
@@ -55,7 +55,8 @@ class APIProject(tk.Tk):
             updateCourseRunPagePage4,updateCourseRunPageFormFileUpload, updateCourseRunPageSelect, addCourseRunPageFormFileUpload,addCourseRunPageForm,addCourseRunPage4,
             addCourseRunPage3,addCourseRunPage2, addCourseRunPage1, viewCourseRunPage, deleteCourseRunPage,
             searchEnrolmentPage1, searchEnrolmentPage2,
-            addAttendancePage1, addAttendancePage2, StartPage):
+            addAttendancePage1, addAttendancePage2,
+            searchAssessmentPage1, searchAssessmentPage2, StartPage):
             frame = F(self.container, self)
 
             self.frames[F] = frame
@@ -92,13 +93,13 @@ class APIProject(tk.Tk):
         attendanceMenu = Menu(menubar, tearoff=0)  
         attendanceMenu.add_command(label="Course Session Attendance",command=lambda: self.show_frame(ViewSessionAttendance))
         attendanceMenu.add_command(label="Upload Course Session Attendance",command=lambda: self.show_frame(addAttendancePage1))
-        menubar.add_cascade(label="Attendance", menu=attendanceMenu)  
+        menubar.add_cascade(label="Attendance", menu=attendanceMenu)
 
-        
+
         assessmentMenu = Menu(menubar, tearoff=0)  
         assessmentMenu.add_command(label="Create Assessment")
         assessmentMenu.add_command(label="Update/Void Assessment")  
-        assessmentMenu.add_command(label="Search Assessment")  
+        assessmentMenu.add_command(label="Search Assessment",command=lambda: self.show_frame(searchAssessmentPage1))
         assessmentMenu.add_command(label="View Assessment", command=lambda: self.show_frame(ViewAssessmentPage))  
         menubar.add_cascade(label="Assessment", menu=assessmentMenu)  
             
