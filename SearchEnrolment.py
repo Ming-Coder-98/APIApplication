@@ -1,19 +1,7 @@
 from EncryptAndDecryptFunction import doEncryption
-import json
-import tkinter
-import tkinter as tk
-from tkinter import Button, Entry, IntVar, Label, Radiobutton, StringVar, filedialog, messagebox, scrolledtext, ttk
-from tkinter.constants import CENTER, END, INSERT
-
-import pandas as pd
-from PIL import Image, ImageTk
-
 from EnrolmentFunction import curlPostRequestUpdateEnrolmentFee, getUpdateEnrolmentFeePayLoad, updateEnrolmentFee, \
     curlRequestSearchEnrolment, searchEnrolment, displayPostRequestEnrolment
 from courseRunFunctions import (createCourserun, curlPostRequest)
-from HttpRequestFunction import loadFile
-from tooltip import CreateToolTip
-
 from tkinter import Button, Entry, IntVar, Label, Radiobutton, StringVar,scrolledtext,filedialog, ttk, messagebox
 import tkinter as tk
 from tkinter.constants import CENTER, DISABLED, END, INSERT
@@ -29,7 +17,7 @@ with open("config.json") as file:
     config = json.load(file)
 
 
-# Frame for Page 1 - Add Course Run
+# Frame for Page 1 - Add Enrolment
 class searchEnrolmentPage1(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
@@ -248,11 +236,6 @@ class searchEnrolmentPage1(tk.Frame):
                 payload['enrolment']['trainingPartner'] = {}
                 payload['enrolment']['trainingPartner']['uen'] = config['UEN']
 
-
-
-
-
-
             #print(json.dumps(payload, indent=4))
             return str(json.dumps(payload, indent=4))
 
@@ -362,12 +345,14 @@ class searchEnrolmentPage2(tk.Frame):
             else:
                 del temp['parameters']['page']
                 del temp['parameters']['pageSize']
-           
-
 
             return str(json.dumps(temp, indent=4))
 
-
+        def clearEntryBox():
+            entry_page.delete(0, 'end')
+            entry_pageSize.delete(0, 'end')
+            entry_tpCode.delete(0, 'end')
+            controller.show_frame(searchEnrolmentPage1)
 
 
         # Expand label to fit window size
@@ -399,7 +384,7 @@ class searchEnrolmentPage2(tk.Frame):
                                  command=lambda: searchEnrolmentCallBack(searchEnrolmentPage2.payload))
         submitButton.place(relx=0.65, rely=0.27, anchor=CENTER)
         backButton = tk.Button(self, text="Back", bg="white", width=15, pady=5,
-                                 command=lambda:controller.show_frame(searchEnrolmentPage1))
+                                 command=lambda:clearEntryBox())
         backButton.place(relx=0.35, rely=0.27, anchor=CENTER)
         exportButton1 = tk.Button(self, text="Export Payload", bg="white", width=15, pady=5,
                                   command=lambda: downloadFile("payload"))

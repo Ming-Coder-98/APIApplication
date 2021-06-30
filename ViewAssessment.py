@@ -34,9 +34,7 @@ class ViewAssessmentPage(tk.Frame):
         img2.place(x=0, y=0, relwidth=1, relheight=1)
 
         label_0 = Label(self, text="View Assessment", width=20, font=("bold", 20))
-        label_0.place(x=90, y=25)
-
-
+        label_0.place(x=90, y=65)
 
         self.label_crn = Label(self, text="Reference Number*", width=20, font=("bold", 10), anchor = 'w')
         self.label_crn.place(x=100, y=130)
@@ -103,7 +101,7 @@ class ViewAssessmentPage(tk.Frame):
 
         submitButton = tk.Button(self, text="View", bg="white", width=15, pady=5,
                                  command=lambda: submitCallBack())
-        submitButton.place(relx=0.5, rely=0.27, anchor=CENTER)
+        submitButton.place(relx=0.5, rely=0.25, anchor=CENTER)
         exportButton = tk.Button(self, text="Export Decrypted Response", bg="white", width=25, pady=5,
                                  command=lambda: downloadFile())
         exportButton.place(relx=0.5, rely=0.95, anchor=CENTER)
