@@ -33,7 +33,7 @@ class ViewSessionAttendance(tk.Frame):
         img2.place(x=0, y=0, relwidth=1, relheight=1)
 
         label_0 = Label(self, text="View Session Attendance", width=20, font=("bold", 20))
-        label_0.place(x=90, y=10)
+        label_0.place(x=90, y=28)
 
         label_TpUEN = Label(self, text="Training Partner - UEN*", width=20, font=("bold", 10), anchor = 'w')
         label_TpUEN.place(x=100, y=80)
