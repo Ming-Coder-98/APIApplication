@@ -57,7 +57,12 @@ def saveAssessmentRefNumber(assessmentRefNumber):
     configInfo = json.loads(configInfo)
     configInfo["AssessmentRefNum"] = assessmentRefNumber
     saveJsonFormat(configInfo, fileName)
-
+def getAssessment(crn):
+    resp = getHttpRequest("https://uat-api.ssg-wsg.sg/tpg/assessments/details/" + crn)
+    plainText = doDecryption(resp.text)
+    json_load = json.loads(plainText.decode())
+    text = json.dumps(json_load, indent = 4)
+    return text
 def displayViewAssessment(crn):
     req = requests.Request('GET',"https://uat-api.ssg-wsg.sg/tpg/assessments/details/" + crn,headers={'accept':'application/json'}).prepare()
     text =  '{}\n{}\r\n{}\n{}\r\n\r\n'.format(

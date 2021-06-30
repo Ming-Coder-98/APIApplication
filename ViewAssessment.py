@@ -1,4 +1,4 @@
-from AssessmentFunction import displayViewAssessment
+from AssessmentFunction import displayViewAssessment, getAssessment
 from PIL import Image, ImageTk
 from tooltip import CreateToolTip
 from EncryptAndDecryptFunction import doEncryption
@@ -130,7 +130,7 @@ class ViewAssessmentPage(tk.Frame):
         # 2) Based on the response, if a status 200 is received, it will display the response
         def submitCallBack():
             responseText.delete("1.0", "end")
-            resp = displayViewAssessment(self.entry_crn.get())
+            resp = getAssessment(self.entry_crn.get())
             ViewAssessmentPage.textResponse = StringVar(self, value=resp)
             responseText.insert(INSERT, ViewAssessmentPage.textResponse.get())
             tabControl.select(responseFrame)

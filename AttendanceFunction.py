@@ -87,7 +87,6 @@ def getSessionAttendance(runId, uen, crn, sessionId):
     if sessionId != '':
         sessionId = "&sessionId=" + sessionId
     resp = getHttpRequest("https://uat-api.ssg-wsg.sg/courses/runs/" + runId + "/sessions/attendance" + uen + crn + sessionId)
-    print(resp)
     plainText = doDecryption(resp.text)
     json_load = json.loads(plainText.decode())
     text = json.dumps(json_load, indent = 4)

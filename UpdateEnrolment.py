@@ -265,7 +265,7 @@ class UpdateEnrolmentPreviewPage(tk.Frame):
         self.refNumber = 0
 
         # Title
-        label_0 = Label(self, text="Add Enrolment", width=20, font=("bold", 20))
+        label_0 = Label(self, text="Update Enrolment", width=20, font=("bold", 20))
         label_0.place(x=90, y=43)
 
         # Expand label to fit window size
