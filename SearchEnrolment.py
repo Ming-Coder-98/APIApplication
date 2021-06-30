@@ -296,7 +296,7 @@ class searchEnrolmentPage2(tk.Frame):
 
         # Title
         label_0 = Label(self, text="Search Enrolment", width=20, font=("bold", 20))
-        label_0.place(x=90, y=10)
+        label_0.place(x=90, y=25)
 
         label_TpUEN = Label(self, text="Training Partner - UEN", width=20, font=("bold", 10), anchor = 'w')
         label_TpUEN.place(x=100, y=80)
