@@ -1,5 +1,6 @@
+from EncryptAndDecryptFunction import doEncryption
 from AttendanceFunction import curlRequestUploadAttendance, uploadAttendanceFn
-from tkinter import Button, Entry, Label, StringVar, scrolledtext, filedialog, ttk, messagebox
+from tkinter import Button, Entry, IntVar, Label, Radiobutton, StringVar, scrolledtext, filedialog, ttk, messagebox
 import tkinter as tk
 from tkinter.constants import CENTER, DISABLED, END
 from tooltip import CreateToolTip
@@ -288,6 +289,12 @@ class addAttendancePage2(tk.Frame):
                                   command=lambda: downloadFile("response"))
         exportButton2.place(relx=0.7, rely=0.95, anchor=CENTER)
 
+        #Radio button for Request
+        self.varPayload = IntVar()
+        Radiobutton(tab2, text="Decrypt", variable=self.varPayload, value=1, width=12, anchor='w', command = lambda:displayPayload("decrypt")).place(x=0,y=-5)
+        Radiobutton(tab2, text="Encrypt", variable=self.varPayload, value=2,width=12, anchor='w',command = lambda:displayPayload("encrypt")).place(x=130,y=-5)
+        self.varPayload.set(1)
+        
         # adding of single line text box
         edit = Entry(self, background="light gray")
 
@@ -304,6 +311,15 @@ class addAttendancePage2(tk.Frame):
                            background="gray")
         butt_resp.place(x=380, y=0, height=21, width=60)
 
+        def displayPayload(method):
+            if method == 'decrypt':
+                
+                self.curlText.delete("1.0","end")
+                self.curlText.insert(tk.END,curlRequestUploadAttendance(self.entry_runId.get(), addAttendancePage2.payload))
+            else:
+                self.curlText.delete("1.0","end")
+                self.curlText.insert(tk.END, curlRequestUploadAttendance(self.entry_runId.get(), str(doEncryption(addAttendancePage2.payload.encode()).decode())))
+                
         # This method is used to search the response text and highlight the searched word in red
         def find(method):
             if method == "resp":

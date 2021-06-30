@@ -1,5 +1,7 @@
 import base64
 import json
+
+import requests
 from EncryptAndDecryptFunction import doDecryption, doEncryption, pprintJsonFormat
 from HttpRequestFunction import getHttpRequest, loadFile, postHttpRequestJson, saveJsonFormat
 
@@ -55,3 +57,13 @@ def saveAssessmentRefNumber(assessmentRefNumber):
     configInfo = json.loads(configInfo)
     configInfo["AssessmentRefNum"] = assessmentRefNumber
     saveJsonFormat(configInfo, fileName)
+
+def displayViewAssessment(crn):
+    req = requests.Request('GET',"https://uat-api.ssg-wsg.sg/tpg/assessments/details/" + crn,headers={'accept':'application/json'}).prepare()
+    text =  '{}\n{}\r\n{}\n{}\r\n\r\n'.format(
+            '----------------Request Information----------------',
+            req.method + ' ' + req.url,
+            '\r\n'.join('{}: {}'.format(k, v) for k, v in req.headers.items()),
+            'Decryption: Required'
+      )
+    return text

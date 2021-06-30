@@ -1,6 +1,7 @@
 #Import course Run py Functions
 
-from CourseSessionAttendance import ViewSessionAttendance
+from ViewAssessment import ViewAssessmentPage
+from ViewCourseSessionAttendance import ViewSessionAttendance
 from UpdateEnrolment import UpdateEnrolmentMainPage, UpdateEnrolmentPageFileUploadPage, UpdateEnrolmentPreviewPage
 from tkinter.constants import CENTER, END, INSERT
 from AddEnrolment import AddEnrolmentMainPage, AddEnrolmentPage2, AddEnrolmentPreviewPage, addEnrolmentPageFileUpload
@@ -13,34 +14,13 @@ from configWindow import setConfigWindow, showConfigWindow
 from courseRunFunctions import curlGetRequestViewCourseRun, curlPostRequest, deleteCourserun, getCourseRun, getDeleteCourseRunPayLoad
 from AddCourseRun import addCourseRunPageForm, addCourseRunPageFormFileUpload, addCourseRunPage1, addCourseRunPage2, addCourseRunPage3, addCourseRunPage4
 
-import tkinter as tk
 from tkinter import Button, Entry, Label, Menu, StringVar, ttk, filedialog, messagebox, scrolledtext
 import json
 import tkinter as tk
-from tkinter import (Button, Entry, Label, Menu, StringVar, filedialog,
-                     messagebox, scrolledtext, ttk)
-from tkinter.constants import CENTER, END, INSERT
-
 from PIL import Image, ImageTk
-
-from AddCourseRun import (addCourseRunPage1, addCourseRunPage2,
-                          addCourseRunPage3, addCourseRunPage4,
-                          addCourseRunPageForm, addCourseRunPageFormFileUpload)
-from AddEnrolment import (AddEnrolmentMainPage, AddEnrolmentPage2,
-                          AddEnrolmentPreviewPage, addEnrolmentPageFileUpload)
-from configWindow import setConfigWindow, showConfigWindow
 from courseRunFunctions import (curlGetRequestViewCourseRun, curlPostRequest,
                                 deleteCourserun, getCourseRun,
                                 getDeleteCourseRunPayLoad)
-from CourseSession import getCourseSessionPage
-from tooltip import CreateToolTip
-from UpdateCourseRun import (updateCourseRunPageFormFileUpload,
-                             updateCourseRunPagePage2,
-                             updateCourseRunPagePage3,
-                             updateCourseRunPagePage4,
-                             updateCourseRunPagePreview,
-                             updateCourseRunPageSelect)
-from ViewEnrolment import deleteEnrolmentPage, viewEnrolmentPage
 from SearchEnrolment import searchEnrolmentPage1, searchEnrolmentPage2
 from AddAttendance import addAttendancePage1, addAttendancePage2
 
@@ -68,7 +48,7 @@ class APIProject(tk.Tk):
         
 
         self.frames = {}
-        for F in (updateEnrolFeePage,ViewSessionAttendance,
+        for F in (updateEnrolFeePage,ViewSessionAttendance,ViewAssessmentPage,
             UpdateEnrolmentMainPage, UpdateEnrolmentPageFileUploadPage, UpdateEnrolmentPreviewPage,
             AddEnrolmentPage2,AddEnrolmentPreviewPage,addEnrolmentPageFileUpload,AddEnrolmentMainPage ,
             deleteEnrolmentPage, viewEnrolmentPage, getCourseSessionPage, updateCourseRunPagePreview,updateCourseRunPagePage2,updateCourseRunPagePage3,
@@ -119,7 +99,7 @@ class APIProject(tk.Tk):
         assessmentMenu.add_command(label="Create Assessment")
         assessmentMenu.add_command(label="Update/Void Assessment")  
         assessmentMenu.add_command(label="Search Assessment")  
-        assessmentMenu.add_command(label="View Assessment")  
+        assessmentMenu.add_command(label="View Assessment", command=lambda: self.show_frame(ViewAssessmentPage))  
         menubar.add_cascade(label="Assessment", menu=assessmentMenu)  
             
         self.config(menu=menubar)
