@@ -20,12 +20,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="334dd218-34f3-4180-b43b-f82e69c63fb1" name="Default Changelist" comment="test.">
-      <change afterPath="$PROJECT_DIR$/SearchAssessment.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/addAssessment.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AddCourseRun.py" beforeDir="false" afterPath="$PROJECT_DIR$/AddCourseRun.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/AssessmentFunction.py" beforeDir="false" afterPath="$PROJECT_DIR$/AssessmentFunction.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SearchEnrolment.py" beforeDir="false" afterPath="$PROJECT_DIR$/SearchEnrolment.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ViewAssessment.py" beforeDir="false" afterPath="$PROJECT_DIR$/ViewAssessment.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config.json" beforeDir="false" afterPath="$PROJECT_DIR$/config.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AssessmentPayLoad.json" beforeDir="false" afterPath="$PROJECT_DIR$/AssessmentPayLoad.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

@@ -9,6 +9,7 @@ from CourseSession import getCourseSessionPage
 from UpdateCourseRun import updateCourseRunPageFormFileUpload, updateCourseRunPagePage2, updateCourseRunPagePage3, updateCourseRunPagePage4, updateCourseRunPagePreview, updateCourseRunPageSelect
 from UpdateEnrolmentFeeCollection import updateEnrolFeePage
 from ViewEnrolment import viewEnrolmentPage, deleteEnrolmentPage
+from addAssessment import AddAssessmentMainPage, AddAssessmentPreviewPage, addAssessmentPageFileUpload
 from tooltip import CreateToolTip
 from configWindow import setConfigWindow, showConfigWindow
 from courseRunFunctions import curlGetRequestViewCourseRun, curlPostRequest, deleteCourserun, getCourseRun, getDeleteCourseRunPayLoad
@@ -56,7 +57,8 @@ class APIProject(tk.Tk):
             addCourseRunPage3,addCourseRunPage2, addCourseRunPage1, viewCourseRunPage, deleteCourseRunPage,
             searchEnrolmentPage1, searchEnrolmentPage2,
             addAttendancePage1, addAttendancePage2,
-            searchAssessmentPage1, searchAssessmentPage2, StartPage):
+            searchAssessmentPage1, searchAssessmentPage2,
+            AddAssessmentMainPage, AddAssessmentPreviewPage, addAssessmentPageFileUpload, StartPage):
             frame = F(self.container, self)
 
             self.frames[F] = frame
@@ -97,7 +99,7 @@ class APIProject(tk.Tk):
 
 
         assessmentMenu = Menu(menubar, tearoff=0)  
-        assessmentMenu.add_command(label="Create Assessment")
+        assessmentMenu.add_command(label="Create Assessment",command=lambda: self.show_frame(AddAssessmentMainPage))
         assessmentMenu.add_command(label="Update/Void Assessment")  
         assessmentMenu.add_command(label="Search Assessment",command=lambda: self.show_frame(searchAssessmentPage1))
         assessmentMenu.add_command(label="View Assessment", command=lambda: self.show_frame(ViewAssessmentPage))  
