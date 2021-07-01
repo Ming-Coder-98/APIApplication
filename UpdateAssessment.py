@@ -45,7 +45,7 @@ class UpdateAssessmentMainPage(tk.Frame):
         label_0 = Label(self, text="Assessment Details", width=20, font=("bold", 15))
         label_0.place(x=137, y=195)
 
-        self.label_EnrolRefNum = Label(self, text="Course Reference Number*", width=20, font=("bold", 10), anchor='w')
+        self.label_EnrolRefNum = Label(self, text="Reference Number*", width=20, font=("bold", 10), anchor='w')
         self.label_EnrolRefNum.place(x=100, y=230)
 
         label_EnrolRefNum_ttp = CreateToolTip(self.label_EnrolRefNum, tooltipDescription["EnrolRefNum"])

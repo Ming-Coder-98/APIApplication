@@ -17,275 +17,6 @@ with open("TooltipDescription.json") as f:
     tooltipDescription = json.load(f)
 
 
-class addCourseRunPageForm(tk.Frame):
-    def refresh(text):
-        text.delete("1.0","end")
-        text.insert(tk.END, str(curlPostRequest("",addCourseRunPageForm.payload)))
-
-    def __init__(self, parent, controller):
-
-        self.payload = {}
-        tk.Frame.__init__(self, parent)
-
-        load = Image.open("SKFBGPage.JPG")
-        render = ImageTk.PhotoImage(load)
-
-        # labels can be text or images
-        img2 = Label(self, image=render)
-        img2.image = render
-        img2.place(x=0, y=0, relwidth=1, relheight=1)
-
-        # Title
-        label_0 = Label(self, text="Add Course Run", width=20, font=("bold", 20))
-        label_0.place(x=90, y=85)
-
-        # Expand label to fit window size
-        style = ttk.Style(self)
-        style.configure('TNotebook.Tab', width=self.winfo_screenwidth())
-
-        # Configuration for Notebook layout
-        tabControl = ttk.Notebook(self)
-
-        tab2 = ttk.Frame(tabControl)
-        tab3 = ttk.Frame(tabControl)
-
-        # Adding of tabs
-        tabControl.add(tab2, text='Request')
-        tabControl.add(tab3, text='Reponse')
-        tabControl.place(width=440, height=460, x=30, y=222)
-
-        self.curlText = scrolledtext.ScrolledText(tab2, width=70, height=30)
-        # self.curlText.insert(tk.END, str(curlPostRequest("", "")))
-        self.curlText.place(height=405, width=440, y=20)
-        self.curlText.bind("<Key>", lambda e: "break")
-
-
-
-
-        self.responseText = scrolledtext.ScrolledText(tab3, width=70, height=30)
-        self.responseText.place(height=405, width=440, y=20)
-        # responseText.bind("<Key>", lambda e: "break")
-
-        def submitCallBack():
-            self.responseText.delete("1.0","end")
-            resp = createCourserun(addCourseRunPageForm.payload)
-            print(addCourseRunPageForm.payload)
-            print(resp.status_code)
-            textPayload = StringVar(self, value = resp.text) 
-            self.responseText.insert(INSERT, textPayload.get())
-            tabControl.select(tab3)
-
-
-            
-        submitButton = tk.Button(self, text="Create", bg="white", width=25, pady=5, command=lambda: submitCallBack())
-        submitButton.place(relx=0.5, rely=0.2, anchor=CENTER)
-        backButton = tk.Button(self, text="Back", bg="white", width=10, pady=5,
-                               command=lambda: controller.show_frame(addCourseRunPage4),
-                               )
-        backButton.place(relx=0.5, rely=0.25, anchor=CENTER)
-        exportButton1 = tk.Button(self, text="Export Payload", bg="white", width=15, pady=5, command=lambda: downloadFile("payload"))
-        exportButton1.place(relx=0.3, rely=0.95, anchor=CENTER)
-        exportButton2 = tk.Button(self, text="Export Response", bg="white", width=15, pady=5,  command=lambda: downloadFile("response"))
-        exportButton2.place(relx=0.7, rely=0.95, anchor=CENTER)
-
-        # adding of single line text box
-        edit = Entry(self, background="light gray")
-
-        # positioning of text box
-        edit.place(x=285, height=21, y=244)
-
-        # setting focus
-        edit.focus_set()
-
-        butt_resp = Button(tab2, text='Find', command=lambda: find("curl"), highlightthickness=0, bd=0,
-                           background="gray")
-        butt_resp.place(x=380, y=0, height=21, width=60)
-        butt_resp = Button(tab3, text='Find', command=lambda: find("resp"), highlightthickness=0, bd=0,
-                           background="gray")
-        butt_resp.place(x=380, y=0, height=21, width=60)
-
-
-        # This method is used to search the response text and highlight the searched word in red
-        def find(method):
-            if method == "resp":
-                textw = self.responseText
-            else:
-                textw = self.curlText
-            textw.tag_remove('found', '1.0', END)
-
-            # returns to widget currently in focus
-            s = edit.get()
-            if s:
-                idx = '1.0'
-                while 1:
-                    # searches for desried string from index 1
-                    idx = textw.search(s, idx, nocase=1,
-                                       stopindex=END)
-                    if not idx: break
-
-                    # last index sum of current index and
-                    # length of text
-                    lastidx = '%s+%dc' % (idx, len(s))
-
-                    # overwrite 'Found' at idx
-                    textw.tag_add('found', idx, lastidx)
-                    idx = lastidx
-                    # textw.see(idx)  # Once found, the scrollbar automatically scrolls to the text
-
-                # mark located string as red
-                textw.tag_config('found', foreground='red')
-
-        edit.focus_set()
-
-        def downloadFile(method):
-            files = [('JSON', '*.json'),
-                     ('Text Document', '*.txt')]
-            file = filedialog.asksaveasfile(filetypes=files, defaultextension='.json')
-            filetext = str(addCourseRunPageForm.payload) if method == "payload" else str(
-                addCourseRunPageForm.responseText.get("1.0", END))
-            file.write(filetext)
-            file.close()
-            messagebox.showinfo("Successful", "File has been downloaded")
-
-
-class addCourseRunPageFormFileUpload(tk.Frame):
-    global fileUploadEntry
-
-    def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
-
-        load = Image.open("SKFBGPage.JPG")
-        render = ImageTk.PhotoImage(load)
-
-        # labels can be text or images
-        img2 = Label(self, image=render)
-        img2.image = render
-        img2.place(x=0, y=0, relwidth=1, relheight=1)
-
-        label_0 = Label(self, text="Add Course Run", width=20, font=("bold", 20))
-        label_0.place(x=90, y=53)
-        fileuploadframe = tk.Frame(self)
-        fileuploadframe.place(x=90, y=110)
-
-        fileUploadEntry = tk.Entry(fileuploadframe, width=45)
-        fileUploadEntry.pack(side=tk.LEFT, fill=tk.X )
-
-
-         #Configuration for Notebook layout
-        tabControl = ttk.Notebook(self)
-  
-        tab2 = ttk.Frame(tabControl)
-        tab3 = ttk.Frame(tabControl)
-        
-        #Adding of tabs
-        tabControl.add(tab2, text ='Request')
-        tabControl.add(tab3, text ='Reponse')
-        tabControl.place(width= 440, height= 460, x = 30, y = 222)
-
-        curlText = scrolledtext.ScrolledText(tab2,width=70,height=30)
-        curlText.insert(tk.END, str(curlPostRequest("","")))
-        curlText.place(height = 405, width = 440, y=20)
-        curlText.bind("<Key>", lambda e: "break")
-        
-        responseText = scrolledtext.ScrolledText(tab3,width=70,height=30)
-        responseText.place(height = 405, width = 440, y=20)
-        # responseText.bind("<Key>", lambda e: "break")
-
-
-        browseButton = Button(self,text="Browse", command=lambda:getCertPemFile(self))       
-        browseButton.pack(in_=fileuploadframe, side=tk.LEFT)
-        submitButton = Button(self, text="Create", bg="white", width=25, pady=4, command=lambda: submitCallBack())
-        submitButton.place(relx=0.5, rely=0.21, anchor=CENTER)
-        backButton = Button(self, text="Back", bg="white", width=10, pady=4,
-                               command=lambda: controller.show_frame(addCourseRunPage1),
-                               )
-        backButton.place(relx=0.5, rely=0.26, anchor=CENTER)
-
-        exportButton1 = Button(self, text="Export Payload", bg="white", width=15, pady=5, command = lambda: downloadFile("payload"))
-        exportButton1.place(relx=0.3, rely=0.95, anchor=CENTER)
-        exportButton2 = Button(self, text="Export Response", bg="white", width=15, pady=5,command = lambda: downloadFile("response"))
-        exportButton2.place(relx=0.7, rely=0.95, anchor=CENTER)
-        
-        #adding of single line text box
-        edit = Entry(self, background="light gray") 
-
-        #positioning of text box
-        edit.place(x = 285, height= 21, y=244) 
-
-        #setting focus
-        edit.focus_set()
-
-        butt_resp = Button(tab2, text='Find', command=lambda:find("curl"), highlightthickness = 0, bd = 0, background="gray")  
-        butt_resp.place(x = 380, y=0, height=21, width=60) 
-        butt_resp = Button(tab3, text='Find', command=lambda:find("resp"), highlightthickness = 0, bd = 0, background="gray")  
-        butt_resp.place(x = 380, y=0, height=21, width=60) 
-
-        #This method is used to search the response text and highlight the searched word in red
-        def find(method):
-            if method == "resp":
-                textw = responseText
-            else:
-                textw = curlText
-            textw.tag_remove('found', '1.0', END) 
-            
-            #returns to widget currently in focus
-            s = edit.get() 
-            if s:
-                idx = '1.0'
-                while 1:
-                    #searches for desried string from index 1
-                    idx = textw.search(s, idx, nocase=1, 
-                                    stopindex=END) 
-                    if not idx: break
-                    
-                    #last index sum of current index and
-                    #length of text
-                    lastidx = '%s+%dc' % (idx, len(s)) 
-                    
-                    #overwrite 'Found' at idx
-                    textw.tag_add('found', idx, lastidx) 
-                    idx = lastidx
-                    # textw.see(idx)  # Once found, the scrollbar automatically scrolls to the text
-                
-                #mark located string as red
-                textw.tag_config('found', foreground='red') 
-               
-            edit.focus_set()
-
-        def getCertPemFile(window):
-            curlText.delete("1.0","end")
-            filePath=filedialog.askopenfilename(filetypes=[('JSON', '*.json')])
-            fileUploadEntry.delete(0, 'end')
-            fileUploadEntry.insert(1, filePath)
-            global contentInfo
-            with open(filePath, 'r') as content:
-                contentInfo = content.read()
-
-            curlText.insert(tk.END, curlPostRequest("",contentInfo))
-                
-
-        def submitCallBack():
-            responseText.delete("1.0","end")
-            payload = contentInfo
-            # payload = json.loads(payload)
-            # print(payload)
-            resp = createCourserun(payload)
-            textPayload = StringVar(self, value = resp.text) 
-            responseText.insert(INSERT,textPayload.get())
-            tabControl.select(tab3)
-
-
-        def downloadFile(method):
-            files = [('JSON', '*.json'),
-                     ('Text Document', '*.txt')]
-            file = filedialog.asksaveasfile(filetypes=files, defaultextension='.json')
-            filetext = str(addCourseRunPageForm.payload) if method == "payload" else str(
-                addCourseRunPageForm.responseText.get("1.0", END))
-            file.write(filetext)
-            file.close()
-            messagebox.showinfo("Successful", "File has been downloaded")
-
-
 # Frame for Page 1 - Add Course Run
 class addCourseRunPage1(tk.Frame):
     def __init__(self, parent, controller):
@@ -1121,3 +852,271 @@ class addCourseRunPage4(tk.Frame):
         addButton.place(relx=0.65, rely=0.80, anchor=CENTER)
         previewButton = tk.Button(self, text="Preview", bg="white", width=15, pady=5, command=lambda: callback())
         previewButton.place(relx=0.65, rely=0.86, anchor=CENTER)
+
+
+class addCourseRunPageForm(tk.Frame):
+    def refresh(text):
+        text.delete("1.0", "end")
+        text.insert(tk.END, str(curlPostRequest("", addCourseRunPageForm.payload)))
+
+    def __init__(self, parent, controller):
+
+        self.payload = {}
+        tk.Frame.__init__(self, parent)
+
+        load = Image.open("SKFBGPage.JPG")
+        render = ImageTk.PhotoImage(load)
+
+        # labels can be text or images
+        img2 = Label(self, image=render)
+        img2.image = render
+        img2.place(x=0, y=0, relwidth=1, relheight=1)
+
+        # Title
+        label_0 = Label(self, text="Add Course Run", width=20, font=("bold", 20))
+        label_0.place(x=90, y=85)
+
+        # Expand label to fit window size
+        style = ttk.Style(self)
+        style.configure('TNotebook.Tab', width=self.winfo_screenwidth())
+
+        # Configuration for Notebook layout
+        tabControl = ttk.Notebook(self)
+
+        tab2 = ttk.Frame(tabControl)
+        tab3 = ttk.Frame(tabControl)
+
+        # Adding of tabs
+        tabControl.add(tab2, text='Request')
+        tabControl.add(tab3, text='Reponse')
+        tabControl.place(width=440, height=460, x=30, y=222)
+
+        self.curlText = scrolledtext.ScrolledText(tab2, width=70, height=30)
+        # self.curlText.insert(tk.END, str(curlPostRequest("", "")))
+        self.curlText.place(height=405, width=440, y=20)
+        self.curlText.bind("<Key>", lambda e: "break")
+
+        self.responseText = scrolledtext.ScrolledText(tab3, width=70, height=30)
+        self.responseText.place(height=405, width=440, y=20)
+
+        # responseText.bind("<Key>", lambda e: "break")
+
+        def submitCallBack():
+            self.responseText.delete("1.0", "end")
+            resp = createCourserun(addCourseRunPageForm.payload)
+            print(addCourseRunPageForm.payload)
+            print(resp.status_code)
+            textPayload = StringVar(self, value=resp.text)
+            self.responseText.insert(INSERT, textPayload.get())
+            tabControl.select(tab3)
+
+        submitButton = tk.Button(self, text="Create", bg="white", width=25, pady=5, command=lambda: submitCallBack())
+        submitButton.place(relx=0.5, rely=0.2, anchor=CENTER)
+        backButton = tk.Button(self, text="Back", bg="white", width=10, pady=5,
+                               command=lambda: controller.show_frame(addCourseRunPage4),
+                               )
+        backButton.place(relx=0.5, rely=0.25, anchor=CENTER)
+        exportButton1 = tk.Button(self, text="Export Payload", bg="white", width=15, pady=5,
+                                  command=lambda: downloadFile("payload"))
+        exportButton1.place(relx=0.3, rely=0.95, anchor=CENTER)
+        exportButton2 = tk.Button(self, text="Export Response", bg="white", width=15, pady=5,
+                                  command=lambda: downloadFile("response"))
+        exportButton2.place(relx=0.7, rely=0.95, anchor=CENTER)
+
+        # adding of single line text box
+        edit = Entry(self, background="light gray")
+
+        # positioning of text box
+        edit.place(x=285, height=21, y=244)
+
+        # setting focus
+        edit.focus_set()
+
+        butt_resp = Button(tab2, text='Find', command=lambda: find("curl"), highlightthickness=0, bd=0,
+                           background="gray")
+        butt_resp.place(x=380, y=0, height=21, width=60)
+        butt_resp = Button(tab3, text='Find', command=lambda: find("resp"), highlightthickness=0, bd=0,
+                           background="gray")
+        butt_resp.place(x=380, y=0, height=21, width=60)
+
+        # This method is used to search the response text and highlight the searched word in red
+        def find(method):
+            if method == "resp":
+                textw = self.responseText
+            else:
+                textw = self.curlText
+            textw.tag_remove('found', '1.0', END)
+
+            # returns to widget currently in focus
+            s = edit.get()
+            if s:
+                idx = '1.0'
+                while 1:
+                    # searches for desried string from index 1
+                    idx = textw.search(s, idx, nocase=1,
+                                       stopindex=END)
+                    if not idx: break
+
+                    # last index sum of current index and
+                    # length of text
+                    lastidx = '%s+%dc' % (idx, len(s))
+
+                    # overwrite 'Found' at idx
+                    textw.tag_add('found', idx, lastidx)
+                    idx = lastidx
+                    # textw.see(idx)  # Once found, the scrollbar automatically scrolls to the text
+
+                # mark located string as red
+                textw.tag_config('found', foreground='red')
+
+        edit.focus_set()
+
+        def downloadFile(method):
+            files = [('JSON', '*.json'),
+                     ('Text Document', '*.txt')]
+            file = filedialog.asksaveasfile(filetypes=files, defaultextension='.json')
+            filetext = str(addCourseRunPageForm.payload) if method == "payload" else str(
+                addCourseRunPageForm.responseText.get("1.0", END))
+            file.write(filetext)
+            file.close()
+            messagebox.showinfo("Successful", "File has been downloaded")
+
+
+class addCourseRunPageFormFileUpload(tk.Frame):
+    global fileUploadEntry
+
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+
+        load = Image.open("SKFBGPage.JPG")
+        render = ImageTk.PhotoImage(load)
+
+        # labels can be text or images
+        img2 = Label(self, image=render)
+        img2.image = render
+        img2.place(x=0, y=0, relwidth=1, relheight=1)
+
+        label_0 = Label(self, text="Add Course Run", width=20, font=("bold", 20))
+        label_0.place(x=90, y=53)
+        fileuploadframe = tk.Frame(self)
+        fileuploadframe.place(x=90, y=110)
+
+        fileUploadEntry = tk.Entry(fileuploadframe, width=45)
+        fileUploadEntry.pack(side=tk.LEFT, fill=tk.X)
+
+        # Configuration for Notebook layout
+        tabControl = ttk.Notebook(self)
+
+        tab2 = ttk.Frame(tabControl)
+        tab3 = ttk.Frame(tabControl)
+
+        # Adding of tabs
+        tabControl.add(tab2, text='Request')
+        tabControl.add(tab3, text='Reponse')
+        tabControl.place(width=440, height=460, x=30, y=222)
+
+        curlText = scrolledtext.ScrolledText(tab2, width=70, height=30)
+        curlText.insert(tk.END, str(curlPostRequest("", "")))
+        curlText.place(height=405, width=440, y=20)
+        curlText.bind("<Key>", lambda e: "break")
+
+        responseText = scrolledtext.ScrolledText(tab3, width=70, height=30)
+        responseText.place(height=405, width=440, y=20)
+        # responseText.bind("<Key>", lambda e: "break")
+
+        browseButton = Button(self, text="Browse", command=lambda: getCertPemFile(self))
+        browseButton.pack(in_=fileuploadframe, side=tk.LEFT)
+        submitButton = Button(self, text="Create", bg="white", width=25, pady=4, command=lambda: submitCallBack())
+        submitButton.place(relx=0.5, rely=0.21, anchor=CENTER)
+        backButton = Button(self, text="Back", bg="white", width=10, pady=4,
+                            command=lambda: controller.show_frame(addCourseRunPage1),
+                            )
+        backButton.place(relx=0.5, rely=0.26, anchor=CENTER)
+
+        exportButton1 = Button(self, text="Export Payload", bg="white", width=15, pady=5,
+                               command=lambda: downloadFile("payload"))
+        exportButton1.place(relx=0.3, rely=0.95, anchor=CENTER)
+        exportButton2 = Button(self, text="Export Response", bg="white", width=15, pady=5,
+                               command=lambda: downloadFile("response"))
+        exportButton2.place(relx=0.7, rely=0.95, anchor=CENTER)
+
+        # adding of single line text box
+        edit = Entry(self, background="light gray")
+
+        # positioning of text box
+        edit.place(x=285, height=21, y=244)
+
+        # setting focus
+        edit.focus_set()
+
+        butt_resp = Button(tab2, text='Find', command=lambda: find("curl"), highlightthickness=0, bd=0,
+                           background="gray")
+        butt_resp.place(x=380, y=0, height=21, width=60)
+        butt_resp = Button(tab3, text='Find', command=lambda: find("resp"), highlightthickness=0, bd=0,
+                           background="gray")
+        butt_resp.place(x=380, y=0, height=21, width=60)
+
+        # This method is used to search the response text and highlight the searched word in red
+        def find(method):
+            if method == "resp":
+                textw = responseText
+            else:
+                textw = curlText
+            textw.tag_remove('found', '1.0', END)
+
+            # returns to widget currently in focus
+            s = edit.get()
+            if s:
+                idx = '1.0'
+                while 1:
+                    # searches for desried string from index 1
+                    idx = textw.search(s, idx, nocase=1,
+                                       stopindex=END)
+                    if not idx: break
+
+                    # last index sum of current index and
+                    # length of text
+                    lastidx = '%s+%dc' % (idx, len(s))
+
+                    # overwrite 'Found' at idx
+                    textw.tag_add('found', idx, lastidx)
+                    idx = lastidx
+                    # textw.see(idx)  # Once found, the scrollbar automatically scrolls to the text
+
+                # mark located string as red
+                textw.tag_config('found', foreground='red')
+
+            edit.focus_set()
+
+        def getCertPemFile(window):
+            curlText.delete("1.0", "end")
+            filePath = filedialog.askopenfilename(filetypes=[('JSON', '*.json')])
+            fileUploadEntry.delete(0, 'end')
+            fileUploadEntry.insert(1, filePath)
+            global contentInfo
+            with open(filePath, 'r') as content:
+                contentInfo = content.read()
+
+            curlText.insert(tk.END, curlPostRequest("", contentInfo))
+
+        def submitCallBack():
+            responseText.delete("1.0", "end")
+            payload = contentInfo
+            # payload = json.loads(payload)
+            # print(payload)
+            resp = createCourserun(payload)
+            textPayload = StringVar(self, value=resp.text)
+            responseText.insert(INSERT, textPayload.get())
+            tabControl.select(tab3)
+
+        def downloadFile(method):
+            files = [('JSON', '*.json'),
+                     ('Text Document', '*.txt')]
+            file = filedialog.asksaveasfile(filetypes=files, defaultextension='.json')
+            filetext = str(addCourseRunPageForm.payload) if method == "payload" else str(
+                addCourseRunPageForm.responseText.get("1.0", END))
+            file.write(filetext)
+            file.close()
+            messagebox.showinfo("Successful", "File has been downloaded")
+
+

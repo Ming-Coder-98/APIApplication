@@ -82,3 +82,35 @@ def updateAssessment(refNum, payload):
     json_load = json.loads(plainText.decode())
     text = json.dumps(json_load, indent = 4)
     return text
+    
+# This method is to update the curl text dynamically for displaying purpose in AddEnrolment Page
+def displayPostRequestAssessment(payloadToDisplay):
+    # Remove Whitespacing new line and tabs for accurate content length
+    try:
+        payloadToSend = re.sub(r"[\n\t\s]*", "", payloadToDisplay)
+    except :
+        payloadToSend = payloadToDisplay
+    req = requests.Request('POST', "https://uat-api.ssg-wsg.sg/tpg/assessments",
+                           headers={'accept': 'application/json'}, data=str(payloadToSend)).prepare()
+    text = '{}\n{}\r\n{}\n{}\r\n\r\n{}\n{}'.format(
+        '----------------Request Information----------------',
+        req.method + ' ' + req.url,
+        '\r\n'.join('{}: {}'.format(k, v) for k, v in req.headers.items()),
+        'Encryption: Required\nDecryption: Required',
+        '----------------Payload Information----------------',
+        payloadToDisplay,
+    )
+    return text
+
+def addAssessmentFn(assessmentPayload):
+    addAssessmentURL = "https://uat-api.ssg-wsg.sg/tpg/assessments"
+    ciptertext = doEncryption(assessmentPayload.encode())
+    response = postHttpRequestJson(addAssessmentURL, ciptertext.decode())
+    print(response.text)
+    plainText = doDecryption(response.text)
+    pprintJsonFormat(plainText)
+    json_load = json.loads(plainText.decode())
+    text = json.dumps(json_load, indent=4)
+    return text
+
+
