@@ -1,4 +1,5 @@
 #Import course Run py Functions
+from UpdateAssessment import UpdateAssessmentMainPage, UpdateAssessmentPageFileUploadPage, UpdateAssessmentPreviewPage
 from SearchAssessment import searchAssessmentPage1, searchAssessmentPage2
 from ViewAssessment import ViewAssessmentPage
 from ViewCourseSessionAttendance import ViewSessionAttendance
@@ -11,9 +12,7 @@ from UpdateEnrolmentFeeCollection import updateEnrolFeePage
 from ViewEnrolment import viewEnrolmentPage, deleteEnrolmentPage
 from tooltip import CreateToolTip
 from configWindow import setConfigWindow, showConfigWindow
-from courseRunFunctions import curlGetRequestViewCourseRun, curlPostRequest, deleteCourserun, getCourseRun, getDeleteCourseRunPayLoad
 from AddCourseRun import addCourseRunPageForm, addCourseRunPageFormFileUpload, addCourseRunPage1, addCourseRunPage2, addCourseRunPage3, addCourseRunPage4
-
 from tkinter import Button, Entry, Label, Menu, StringVar, ttk, filedialog, messagebox, scrolledtext
 import json
 import tkinter as tk
@@ -48,7 +47,7 @@ class APIProject(tk.Tk):
         
 
         self.frames = {}
-        for F in (updateEnrolFeePage,ViewSessionAttendance,ViewAssessmentPage,
+        for F in (UpdateAssessmentPreviewPage,UpdateAssessmentPageFileUploadPage,UpdateAssessmentMainPage,updateEnrolFeePage,ViewSessionAttendance,ViewAssessmentPage,
             UpdateEnrolmentMainPage, UpdateEnrolmentPageFileUploadPage, UpdateEnrolmentPreviewPage,
             AddEnrolmentPage2,AddEnrolmentPreviewPage,addEnrolmentPageFileUpload,AddEnrolmentMainPage ,
             deleteEnrolmentPage, viewEnrolmentPage, getCourseSessionPage, updateCourseRunPagePreview,updateCourseRunPagePage2,updateCourseRunPagePage3,
@@ -98,7 +97,7 @@ class APIProject(tk.Tk):
 
         assessmentMenu = Menu(menubar, tearoff=0)  
         assessmentMenu.add_command(label="Create Assessment")
-        assessmentMenu.add_command(label="Update/Void Assessment")  
+        assessmentMenu.add_command(label="Update/Void Assessment",command=lambda: self.show_frame(UpdateAssessmentMainPage))  
         assessmentMenu.add_command(label="Search Assessment",command=lambda: self.show_frame(searchAssessmentPage1))
         assessmentMenu.add_command(label="View Assessment", command=lambda: self.show_frame(ViewAssessmentPage))  
         menubar.add_cascade(label="Assessment", menu=assessmentMenu)  

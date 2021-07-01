@@ -1,4 +1,5 @@
 
+from AssessmentFunction import displayUpdateAssessment, updateAssessment
 from re import S
 from EncryptAndDecryptFunction import doDecryption, doEncryption
 from EnrolmentFunction import displayPostRequestEnrolment, updateEnrolment
@@ -19,7 +20,7 @@ def txtEvent(event):
         return "break"
         
 #Page 1 for Create Enrolment
-class UpdateEnrolmentMainPage(tk.Frame):
+class UpdateAssessmentMainPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
 
@@ -27,26 +28,24 @@ class UpdateEnrolmentMainPage(tk.Frame):
         render = ImageTk.PhotoImage(load)
         #Variable
         #This list will be used to generate the payload layout for Trainee
-        entry_listEmp = []
-        entry_listTrainee = []
-        entry_fee = []
+
         # labels can be text or images
         img2 = Label(self, image=render)
         img2.image = render
         img2.place(x=0, y=0, relwidth=1, relheight=1)
 
-        label_0 = Label(self, text="Update Enrolment", width=20, font=("bold", 20))
+        label_0 = Label(self, text="Update/Void Assessment", width=20, font=("bold", 20))
         label_0.place(x=90, y=53)
 
         self.var = IntVar()
-        Radiobutton(self, text="Upload a Enrolment JSON File", variable=self.var, value=1, width=25, anchor='w').place(x=158,y=100)
+        Radiobutton(self, text="Upload a Assessment JSON File", variable=self.var, value=1, width=25, anchor='w').place(x=158,y=100)
         Radiobutton(self, text="Fill in the basic mandate form", variable=self.var, value=2,width=25, anchor='w').place(x=158,y=130)
         self.var.set(2)
 
-        label_0 = Label(self, text="Course Details", width=20, font=("bold", 15))
+        label_0 = Label(self, text="Assessment Details", width=20, font=("bold", 15))
         label_0.place(x=137, y=195)
 
-        self.label_EnrolRefNum = Label(self, text="Reference Number*", width=20, font=("bold", 10), anchor='w')
+        self.label_EnrolRefNum = Label(self, text="Course Reference Number*", width=20, font=("bold", 10), anchor='w')
         self.label_EnrolRefNum.place(x=100, y=230)
 
         label_EnrolRefNum_ttp = CreateToolTip(self.label_EnrolRefNum, tooltipDescription["EnrolRefNum"])
@@ -54,196 +53,139 @@ class UpdateEnrolmentMainPage(tk.Frame):
         self.entry_EnrolRefNum = Entry(self)
         self.entry_EnrolRefNum.place(x=270, y=230)
 
-        self.label_runId = Label(self, text="Course Run Id", width=20, font=("bold", 10), anchor='w')
-        self.label_runId.place(x=100, y=255)
-
-        label_runId_ttp = CreateToolTip(self.label_runId, tooltipDescription["CourseRunId"])
-
-        self.entry_runId = Entry(self)
-        self.entry_runId.place(x=270, y=255)
-        
-        
-        self.label_TraineeTitle = Label(self, text="Trainee Details", width=20, font=("bold", 15))
-        self.label_TraineeTitle.place(x=137, y=285)
-
-
-        self.Label_TraineePhone = Label(self, text="Contact Number", width=20, font=("bold", 10), anchor='w')
-        self.Label_TraineePhone.place(x=100, y=320)
-
-        self.Label_TraineePhone_ttp = CreateToolTip(self.Label_TraineePhone, tooltipDescription["Phone"])
-
-        self.entry_TraineeCountryCode = Entry(self, width=3)
-        self.entry_TraineeCountryCode.place(x=270, y=320)
-        entry_listTrainee.append(self.entry_TraineeCountryCode)
-
-        self.entry_TraineeAreaCode = Entry(self, width=3)
-        self.entry_TraineeAreaCode.place(x=300, y=320)
-        entry_listTrainee.append(self.entry_TraineeAreaCode)
-
-
-        self.entry_TraineePhone = Entry(self, width=10)
-        self.entry_TraineePhone.place(x=330, y=320)
-        entry_listTrainee.append(self.entry_TraineePhone)
-
-        self.Label_TraineeEmail = Label(self, text="Email", width=20, font=("bold", 10), anchor='w')
-        self.Label_TraineeEmail.place(x=100, y=345)
-
-        self.Label_TraineeEmail_ttp = CreateToolTip(self.Label_TraineeEmail, tooltipDescription["CourseAdminEmail"])
-        self.entry_TraineeEmail = Entry(self)
-        self.entry_TraineeEmail.place(x=270, y=345)
-        entry_listTrainee.append(self.entry_TraineeEmail)
-
-        self.label_TraineeTitle = Label(self, text="Employee Details", width=20, font=("bold", 15))
-        self.label_TraineeTitle.place(x=137, y=375)
-
-        self.Label_EmpName = Label(self, text="Name", width=20, font=("bold", 10), anchor='w')
-        self.Label_EmpName.place(x=100, y=410)
-
-        self.Label_EmpName_ttp = CreateToolTip(self.Label_EmpName, tooltipDescription["TrainerName"])
-        self.entry_EmpName = Entry(self)
-        self.entry_EmpName.place(x=270, y=410)
-        entry_listEmp.append(self.entry_EmpName)
-
-        self.Label_EmpEmail = Label(self, text="Email", width=20, font=("bold", 10), anchor='w')
-        self.Label_EmpEmail.place(x=100, y=435)
-
-        self.Label_EmpEmail_ttp = CreateToolTip(self.Label_EmpEmail, tooltipDescription["CourseAdminEmail"])
-        self.entry_EmpEmail = Entry(self)
-        self.entry_EmpEmail.place(x=270, y=435)
-        entry_listEmp.append(self.entry_EmpEmail)
-
-        self.Label_EmpPhone = Label(self, text="Contact Number", width=20, font=("bold", 10), anchor='w')
-        self.Label_EmpPhone.place(x=100, y=460)
-
-        self.Label_EmpPhone_ttp = CreateToolTip(self.Label_EmpPhone, tooltipDescription["Phone"])
-
-        self.entry_EmpCountryCode = Entry(self, width=3)
-        self.entry_EmpCountryCode.place(x=270, y=460)
-        entry_listEmp.append(self.entry_EmpCountryCode)
-
-        self.entry_EmpAreaCode = Entry(self, width=3)
-        self.entry_EmpAreaCode.place(x=300, y=460)
-        entry_listEmp.append(self.entry_EmpAreaCode)
-
-
-        self.entry_EmpPhone = Entry(self, width=10)
-        self.entry_EmpPhone.place(x=330, y=460)
-        entry_listEmp.append(self.entry_EmpPhone)
-        
-        self.label_TraineeTitle = Label(self, text="Fees Details", width=20, font=("bold", 15))
-        self.label_TraineeTitle.place(x=137, y=490)
-
-        self.Label_CollectionStatus = Label(self, text="Collection Status", width=20, font=("bold", 10), anchor='w')
-        self.Label_CollectionStatus.place(x=100, y=525)
-
-        self.Label_CollectionStatus_ttp = CreateToolTip(self.Label_CollectionStatus, tooltipDescription["collectionStatus"])
-        
-        self.collectionStatus = ttk.Combobox(self, width = 17,state="readonly")
-        self.collectionStatus['values'] = ["Select An Option",
-                     "Full Payment",
-                     "Partial Payment ",
-                     "Pending Payment",
-                     "Cancelled"
-                     ]
-        self.collectionStatus.current(0)
-        self.collectionStatus.place(x=270, y=525)
-        entry_fee.append(self.collectionStatus)
-
-
-        self.Label_DiscountAmt = Label(self, text="Discount Amount", width=20, font=("bold", 10), anchor='w')
-        self.Label_DiscountAmt.place(x=100, y=550)
-
-        self.DiscountAmt_ttp = CreateToolTip(self.Label_DiscountAmt, tooltipDescription["discountAmount"])
-        
-        self.entry_DiscountAmt  = Entry(self)
-        self.entry_DiscountAmt.place(x=270, y=550)
-        entry_fee.append(self.entry_DiscountAmt)
-
         self.Label_Action = Label(self, text="Action*", width=20, font=("bold", 10), anchor='w')
-        self.Label_Action.place(x=100, y=575)
+        self.Label_Action.place(x=100, y=255)
         self.Label_Actionl_ttp = CreateToolTip(self.Label_Action, tooltipDescription["Action"])
-        self.entry_Action  = Entry(self,state=DISABLED, textvariable=StringVar(value="Update"))
-        self.entry_Action.place(x=270, y=575)
+        self.Action = ttk.Combobox(self, width = 17,state="readonly")
+        self.Action['values'] = ["Select An Option",
+                     "Update",
+                     "Void"
+                     ]
+        self.Action.current(0)
+        self.Action.place(x=270, y=255)
+        def changeLabel():
+            print(self.Action.get())
+            if self.Action.get() == 'Void':
+                self.Grade.place_forget()
+                self.Result.place_forget()
+                self.entry_AssessmentDate.place_forget()
+                self.entry_Name.place_forget()
+                self.entry_SkillCode.place_forget()
+                self.Label_SkillCode.place_forget()
+                self.Label_AssessmentDate.place_forget()
+                self.Label_Name.place_forget()
+                self.Label_Grade.place_forget()
+                self.Label_Result.place_forget()
+                self.Label_Score.place_forget()
+                self.entry_Score.place_forget()
+            else:
+                self.Label_Grade.place(x=100, y=280)
+                self.Grade.place(x=270, y=280)
+                self.Label_Result.place(x=100, y=305)
+                self.Result.place(x=270, y=305)
+                self.Label_Score.place(x=100, y=330)
+                self.entry_Score.place(x=270, y=330)
+                self.Label_Name.place(x=100, y=355)
+                self.entry_Name.place(x=270, y=355)
+                self.Label_SkillCode.place(x=100, y=380)
+                self.entry_SkillCode.place(x=270, y=380)
+                self.Label_AssessmentDate.place(x=100, y=405)
+                self.entry_AssessmentDate.place(x=270, y=405)
+
+        self.Action.bind('<<ComboboxSelected>>', lambda x: changeLabel())
+
+        self.Label_Grade = Label(self, text="Grade", width=20, font=("bold", 10), anchor='w')
+        self.Label_Grade.place(x=100, y=280)
+
+        self.Label_Grade_ttp = CreateToolTip(self.Label_Grade, tooltipDescription["Grade"])
+        
+        self.Grade = ttk.Combobox(self, width = 17,state="readonly")
+        self.Grade['values'] = ["Select An Option",
+                     "A",
+                     "B",
+                     "C",
+                     "D",
+                     "E",
+                     "F"
+                     ]
+        self.Grade.current(0)
+        self.Grade.place(x=270, y=280)
+        
+        self.Label_Result = Label(self, text="Results", width=20, font=("bold", 10), anchor='w')
+        self.Label_Result.place(x=100, y=305)
+
+        self.Label_Result_ttp = CreateToolTip(self.Label_Result, tooltipDescription["Result"])
+        
+        self.Result = ttk.Combobox(self, width = 17,state="readonly")
+        self.Result['values'] = ["Select An Option",
+                     "Pass",
+                     "Fail",
+                     "Exempt "
+                     ]
+        self.Result.current(0)
+        self.Result.place(x=270, y=305)
+        
+        self.Label_Score = Label(self, text="Score", width=20, font=("bold", 10), anchor='w')
+        self.Label_Score.place(x=100, y=330)
+        self.Label_Score_ttp = CreateToolTip(self.Label_Score, tooltipDescription["Score"])
+        self.entry_Score = Entry(self)
+        self.entry_Score.place(x=270, y=330)
+
+        self.Label_Name = Label(self, text="Trainee Full Name", width=20, font=("bold", 10), anchor='w')
+        self.Label_Name.place(x=100, y=355)
+        self.Label_Name_ttp = CreateToolTip(self.Label_Name, tooltipDescription["TrainerName"])
+        self.entry_Name  = Entry(self)
+        self.entry_Name.place(x=270, y=355)
+
+        self.Label_SkillCode = Label(self, text="Skill Code", width=20, font=("bold", 10), anchor='w')
+        self.Label_SkillCode.place(x=100, y=380)
+        self.Label_SkillCode_ttp = CreateToolTip(self.Label_SkillCode, tooltipDescription["skillCode"])
+        self.entry_SkillCode  = Entry(self)
+        self.entry_SkillCode.place(x=270, y=380)
+
+        self.Label_AssessmentDate = Label(self, text="Assessment Date", width=20, font=("bold", 10), anchor='w')
+        self.Label_AssessmentDate.place(x=100, y=405)
+        self.Label_AssessmentDate_ttp = CreateToolTip(self.Label_AssessmentDate, tooltipDescription["assessmentDate"])
+        self.entry_AssessmentDate  = Entry(self)
+        self.entry_AssessmentDate.place(x=270, y=405)
 
 
-        nextButton = tk.Button(self, text="Next", bg="white", width=25, pady=5, command=lambda: NextCallBack() if self.var.get() == 2 else controller.show_frame(UpdateEnrolmentPageFileUploadPage))
+        nextButton = tk.Button(self, text="Next", bg="white", width=25, pady=5, command=lambda: NextCallBack() if self.var.get() == 2 else controller.show_frame(UpdateAssessmentPageFileUploadPage))
         nextButton.place(x=250, y=675, anchor=CENTER)
-        # retrieveButton = tk.Button(self, text="Retrieve required fields", bg="white", width=25, pady=5)
-        # retrieveButton.place(x=250, y=265, anchor=CENTER)
         def NextCallBack():
-            UpdateEnrolmentPreviewPage.payload = StoreAndSave()
-            UpdateEnrolmentPreviewPage.refresh(controller.frames[UpdateEnrolmentPreviewPage].curlText)
-            controller.show_frame(UpdateEnrolmentPreviewPage)
+            print("nothing")
+            UpdateAssessmentPreviewPage.payload = StoreAndSave()
+            UpdateAssessmentPreviewPage.refresh(controller.frames[UpdateAssessmentPreviewPage].curlText)
+            controller.show_frame(UpdateAssessmentPreviewPage)
             
         def StoreAndSave():
             payload = {}
-            payload['enrolment'] = {}
-
-            for entry1 in entry_listEmp:
-                if (entry1.get() != ''):
-                    payload['enrolment']['employer'] = {}
-                    break
-            for entry2 in entry_listTrainee:
-                if (entry2.get() != ''):
-                    payload['enrolment']['trainee'] = {}
-                    break
-            for entry3 in entry_fee:
-                if (entry3.get() != '' and entry3.get() != 'Select An Option'):
-                    payload['enrolment']['fees'] = {}
-                    break
-            
-            payload['enrolment']['action'] = "Update"
-
-            if self.entry_runId.get() != '':
-                payload['enrolment']['course'] = {'run':{'id': self.entry_runId.get()}}
-
-            if (self.entry_TraineePhone.get() != '' or self.entry_TraineeCountryCode.get() != '' or self.entry_TraineeAreaCode.get() != ''):
-                payload['enrolment']['trainee']['contactNumber'] = {}
-                if (self.entry_TraineePhone.get() != ''):
-                    payload['enrolment']['trainee']['contactNumber']['phoneNumber'] = self.entry_TraineePhone.get()
-                if (self.entry_TraineeCountryCode.get() != ''):
-                    payload['enrolment']['trainee']['contactNumber']['countryCode'] = self.entry_TraineeCountryCode.get()
-                if (self.entry_TraineeAreaCode.get() != ''):
-                    payload['enrolment']['trainee']['contactNumber']['areaCode'] = self.entry_TraineeAreaCode.get()     
-
-            if self.entry_TraineeEmail.get() != '':
-                payload['enrolment']['trainee']['emailAddress'] = self.entry_TraineeEmail.get()
-           
-            if (self.entry_EmpEmail.get() != ''):
-                payload['enrolment']['employer']['emailAddress'] = self.entry_EmpEmail.get()
-
-            if (self.entry_EmpName.get() != ''):
-                payload['enrolment']['employer']['fullName'] = self.entry_EmpName.get()
-
-            if (self.entry_EmpAreaCode.get() != '' or self.entry_EmpCountryCode.get() != '' or self.entry_EmpPhone.get() != ''):
-                payload['enrolment']['employer']['contactNumber'] = {}
-                if (self.entry_EmpPhone.get() != ''):
-                    payload['enrolment']['employer']['contactNumber']['phoneNumber'] = self.entry_EmpPhone.get()
-                if (self.entry_EmpCountryCode.get() != ''):
-                    payload['enrolment']['employer']['contactNumber']['countryCode'] = self.entry_EmpCountryCode.get()
-                if (self.entry_EmpAreaCode.get() != ''):
-                    payload['enrolment']['employer']['contactNumber']['areaCode'] = self.entry_EmpAreaCode.get()
-            
-            if self.entry_DiscountAmt.get() != '':
-                payload['enrolment']['fees']['discountAmount'] = self.entry_DiscountAmt.get()
-            if self.collectionStatus.get() != 'Select An Option':
-                payload['enrolment']['fees']['collectionStatus'] = self.collectionStatus.get()
-
-
-
-            UpdateEnrolmentPreviewPage.refNumber = self.entry_EnrolRefNum.get()       
+            payload['assessment'] = {}
+            payload['assessment']['action'] = self.Action.get() if self.Action.get() != 'Select An Option' else {}
+            if self.Action.get() != 'Void':
+                if self.entry_Name.get() != '':
+                    payload['assessment']['trainee'] = {'fullName':self.Action.get()}
+                if self.entry_AssessmentDate.get() != '':
+                    payload['assessment']['assessmentDate'] = self.entry_AssessmentDate.get()
+                if self.entry_SkillCode.get() != '':
+                    payload['assessment']['skillCode'] = self.entry_SkillCode.get()            
+                if self.Grade.get() != 'Select An Option':
+                    payload['assessment']['grade'] = self.Grade.get()
+                if self.entry_Score.get() != '':
+                    payload['assessment']['score'] = self.entry_Score.get()
+                if self.Result.get() != 'Select An Option':
+                    payload['assessment']['result'] = self.Result.get()
+            UpdateAssessmentPreviewPage.refNumber = self.entry_EnrolRefNum.get()       
             return str(json.dumps(payload, indent=4))
         
-
-
     def show_frame(self, cont):
         frame = self.frames[cont]
         frame.tkraise()
 
-class UpdateEnrolmentPreviewPage(tk.Frame):
+class UpdateAssessmentPreviewPage(tk.Frame):
     def refresh(controllerCurlText):
         controllerCurlText.delete("1.0","end")
-        controllerCurlText.insert(tk.END, str(displayPostRequestEnrolment(UpdateEnrolmentPreviewPage.refNumber,UpdateEnrolmentPreviewPage.payload)))
+        controllerCurlText.insert(tk.END, str(displayUpdateAssessment(UpdateAssessmentPreviewPage.refNumber,UpdateAssessmentPreviewPage.payload)))
 
     def __init__(self, parent, controller):
 
@@ -264,7 +206,7 @@ class UpdateEnrolmentPreviewPage(tk.Frame):
         self.refNumber = 0
 
         # Title
-        label_0 = Label(self, text="Update Enrolment", width=20, font=("bold", 20))
+        label_0 = Label(self, text="Update Assessment", width=20, font=("bold", 20))
         label_0.place(x=90, y=43)
 
         # Expand label to fit window size
@@ -294,7 +236,7 @@ class UpdateEnrolmentPreviewPage(tk.Frame):
         submitButton = tk.Button(self, text="Update", bg="white", width=25, pady=5, command=lambda: updateCallBack())
         submitButton.place(relx=0.5, rely=0.15, anchor=CENTER)
         backButton = tk.Button(self, text="Back", bg="white", width=10, pady=5,
-                               command=lambda: controller.show_frame(UpdateEnrolmentMainPage),
+                               command=lambda: controller.show_frame(UpdateAssessmentMainPage),
                                )
         backButton.place(relx=0.5, rely=0.2, anchor=CENTER)
         exportButton1 = tk.Button(self, text="Export Decrypted Payload", bg="white", width=20, pady=3, command = lambda: downloadFile("payload"))
@@ -330,24 +272,24 @@ class UpdateEnrolmentPreviewPage(tk.Frame):
         
         def displayPayload(method):
             if method != 'decrypt':
-                payloadToDisplay = doEncryption(str(UpdateEnrolmentPreviewPage.payload).encode()).decode()
+                payloadToDisplay = doEncryption(str(UpdateAssessmentPreviewPage.payload).encode()).decode()
                 self.curlText.delete("1.0","end")
-                self.curlText.insert(tk.END, str(displayPostRequestEnrolment("",payloadToDisplay)))
+                self.curlText.insert(tk.END, str(displayUpdateAssessment(UpdateAssessmentPreviewPage.refNumber,payloadToDisplay)))
             else:
                 self.curlText.delete("1.0","end")
-                self.curlText.insert(tk.END, str(displayPostRequestEnrolment("",UpdateEnrolmentPreviewPage.payload)))
+                self.curlText.insert(tk.END, str(displayUpdateAssessment(UpdateAssessmentPreviewPage.refNumber,UpdateAssessmentPreviewPage.payload)))
 
         def displayResp(method):
             if method != 'encrypt':
                 try:
-                    display = UpdateEnrolmentPreviewPage.textPayload.get()
+                    display = UpdateAssessmentPreviewPage.textPayload.get()
                 except:
                     display = ''
                 responseText.delete("1.0","end")
                 responseText.insert(INSERT,display)
             else:
                 try:
-                    display = doEncryption(str(UpdateEnrolmentPreviewPage.textPayload.get()).encode())
+                    display = doEncryption(str(UpdateAssessmentPreviewPage.textPayload.get()).encode())
                 except:
                     display = b''
                 
@@ -355,8 +297,9 @@ class UpdateEnrolmentPreviewPage(tk.Frame):
                 responseText.insert(tk.END, display.decode())
 
         def updateCallBack():
+            print("Create Enrolment:" + UpdateAssessmentPreviewPage.payload)
             responseText.delete("1.0","end")
-            resp = updateEnrolment(UpdateEnrolmentPreviewPage.refNumber,UpdateEnrolmentPreviewPage.payload)
+            resp = updateEnrolment(UpdateAssessmentPreviewPage.refNumber,UpdateAssessmentPreviewPage.payload)
             try:
                     resp = doDecryption(resp)
                     resp = json.loads(resp.decode())
@@ -364,8 +307,8 @@ class UpdateEnrolmentPreviewPage(tk.Frame):
             except:
                 pass
                 
-            UpdateEnrolmentPreviewPage.textPayload = StringVar(self, value = resp) 
-            responseText.insert(INSERT,UpdateEnrolmentPreviewPage.textPayload.get())
+            UpdateAssessmentPreviewPage.textPayload = StringVar(self, value = resp) 
+            responseText.insert(INSERT,UpdateAssessmentPreviewPage.textPayload.get())
             self.varResp.set(1)
             tabControl.select(tab3)
 
@@ -406,14 +349,14 @@ class UpdateEnrolmentPreviewPage(tk.Frame):
             files = [('JSON', '*.json'),
                         ('Text Document', '*.txt')]
             file = filedialog.asksaveasfile(filetypes=files, defaultextension='.json')
-            filetext = str(UpdateEnrolmentPreviewPage.payload) if method == "payload" else str(
+            filetext = str(UpdateAssessmentPreviewPage.payload) if method == "payload" else str(
                 responseText.get("1.0", END))
             file.write(filetext)
             file.close()
             messagebox.showinfo("Successful", "File has been downloaded")
 
 #File Upload Page for UpdateEnrolment
-class UpdateEnrolmentPageFileUploadPage(tk.Frame):
+class UpdateAssessmentPageFileUploadPage(tk.Frame):
     global fileUploadEntry
 
     def __init__(self, parent, controller):
@@ -431,11 +374,11 @@ class UpdateEnrolmentPageFileUploadPage(tk.Frame):
         img2.image = render
         img2.place(x=0, y=0, relwidth=1, relheight=1)
 
-        label_0 = Label(self, text="Update Enrolment", width=20, font=("bold", 20))
+        label_0 = Label(self, text="Update Assessment", width=20, font=("bold", 20))
         label_0.place(x=90, y=33)
 
         #Course Run Id
-        label_EnrolRefNum = Label(self, text="Reference Number: ", width=20, font=("bold", 10), anchor='w')
+        label_EnrolRefNum = Label(self, text="Reference Number*", width=20, font=("bold", 10), anchor='w')
         label_EnrolRefNum.place(x=100, y=80)
 
         self.entry_EnrolRefNum = Entry(self)
@@ -485,7 +428,7 @@ class UpdateEnrolmentPageFileUploadPage(tk.Frame):
         submitButton = tk.Button(self, text="Create", bg="white", width=25, pady=4, command=lambda: submitCallBack())
         submitButton.place(relx=0.5, rely=0.21, anchor=CENTER)
         backButton = tk.Button(self, text="Back", bg="white", width=10, pady=4,
-                               command=lambda: controller.show_frame(UpdateEnrolmentMainPage),
+                               command=lambda: controller.show_frame(UpdateAssessmentMainPage),
                                )
         backButton.place(relx=0.5, rely=0.26, anchor=CENTER)
 
@@ -523,14 +466,14 @@ class UpdateEnrolmentPageFileUploadPage(tk.Frame):
         def displayResp(method):
             if method != 'encrypt':
                 try:
-                    display = UpdateEnrolmentPageFileUploadPage.textPayload.get()
+                    display = UpdateAssessmentPageFileUploadPage.textPayload.get()
                 except:
                     display = ''
                 responseText.delete("1.0","end")
                 responseText.insert(INSERT,display)
             else:
                 try:
-                    display = doEncryption(str(UpdateEnrolmentPageFileUploadPage.textPayload.get()).encode())
+                    display = doEncryption(str(UpdateAssessmentPageFileUploadPage.textPayload.get()).encode())
                 except:
                     display = b''
                 responseText.delete("1.0","end")
@@ -597,7 +540,8 @@ class UpdateEnrolmentPageFileUploadPage(tk.Frame):
             payload = self.contentInfo
             if (payload != ''):
                 responseText.delete("1.0","end")
-                resp = updateEnrolment(self.entry_EnrolRefNum.get(),payload)
+                resp = updateAssessment(self.entry_EnrolRefNum.get(),payload)
+                print(resp)
                 try:
                     resp = doDecryption(resp)
                     resp = json.loads(resp.decode())
@@ -605,15 +549,15 @@ class UpdateEnrolmentPageFileUploadPage(tk.Frame):
                 except:
                     pass
                 
-                UpdateEnrolmentPageFileUploadPage.textPayload = StringVar(self, value = resp)
-                responseText.insert(INSERT,UpdateEnrolmentPageFileUploadPage.textPayload.get())
+                UpdateAssessmentPageFileUploadPage.textPayload = StringVar(self, value = resp)
+                responseText.insert(INSERT,UpdateAssessmentPageFileUploadPage.textPayload.get())
                 self.varResp.set(1)
                 tabControl.select(tab3)
 
 
         def downloadFile():
             try:
-                filetext = str(UpdateEnrolmentPageFileUploadPage.textPayload.get())
+                filetext = str(UpdateAssessmentPageFileUploadPage.textPayload.get())
                 files = [('JSON', '*.json'),
                         ('Text Document', '*.txt')]
                 file = filedialog.asksaveasfile(filetypes=files, defaultextension='.json')

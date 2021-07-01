@@ -5,7 +5,6 @@ import tkinter
 from requests.api import delete, request
 from requests.sessions import session
 from configWindow import getCertPemFile, setConfigWindow, showConfigWindow
-from AssessmentFunction import addAssessment
 from EnrolmentFunction import addEnrolment
 from AttendanceFunction import uploadAttendance
 from courseRunFunctions import createCourserun, curlPostRequest, deleteCourserun, getCourseRun, getDeleteCourseRunPayLoad, updateCourserun

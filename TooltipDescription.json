@@ -56,5 +56,10 @@
     "collectionStatus":"Status of the trainee's or employer's payment of the course fees to the training partner",
     "discountAmount":"Amount of discount the training partner is deducting from course fees",
     "EnrolRefNum": "Indication of the Reference Number generated during the creation of Enrolment.\nExample:ENR-2003-123456",
-    "Action":"The action intended by calling this API"
+    "Action":"The action intended by calling this API",
+    "Grade":"The letter grade of the assessment, entered as A-F, if applicable",
+    "Score":"The numerical score or percentage score of the assessment, entered as a whole number, if applicable",
+    "Result":"The outcome of the assessment, specified as pass, fail or exempt",
+    "skillCode":"The competency or skill code assessed for the course, derived from the course data in the Training Partners Gateway",
+    "assessmentDate":"Date the assessment was conducted"
 }
