@@ -1,3 +1,4 @@
+from resources import *
 from tkinter.constants import CENTER, END, INSERT
 from EncryptAndDecryptFunction import doEncryption
 import tkinter as tk
@@ -11,7 +12,7 @@ import json
 from tooltip import CreateToolTip
 
 #Load Tooltip Json object as ttDescription
-with open("TooltipDescription.json") as f:
+with open(tooltip_path) as f:
     tooltipDescription = json.load(f)
 #Global method for this File - This method allow copy and paste but not editing textbox
 def txtEvent(event):
@@ -25,7 +26,8 @@ class viewEnrolmentPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
 
-        load = Image.open("SKFBGPage.JPG")
+        file_path = resource_path("SKFBGPage.JPG")
+        load = Image.open(file_path)
         render = ImageTk.PhotoImage(load)
         #Setting of Variable
         self.textPayload = ''
@@ -191,7 +193,8 @@ class deleteEnrolmentPage(tk.Frame):
 
         tk.Frame.__init__(self, parent)
 
-        load = Image.open("SKFBGPage.JPG")
+        file_path = resource_path("SKFBGPage.JPG")
+        load = Image.open(file_path)
         render = ImageTk.PhotoImage(load)
         #variable
         self.textPayload = ''

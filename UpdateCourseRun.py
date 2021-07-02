@@ -1,4 +1,5 @@
 import json
+from resources import *
 import tkinter
 import tkinter as tk
 from tkinter import *
@@ -11,7 +12,7 @@ from courseRunFunctions import curlPostRequest, getCourseRun, updateCourserun
 
 
 #Load Tooltip Json object as ttDescription
-with open("TooltipDescription.json") as f:
+with open(tooltip_path) as f:
     tooltipDescription = json.load(f)
 
 
@@ -20,7 +21,8 @@ class updateCourseRunPageSelect(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
 
-        load = Image.open("SKFBGPage.JPG")
+        file_path = resource_path("SKFBGPage.JPG")
+        load = Image.open(file_path)
         render = ImageTk.PhotoImage(load)
 
         # labels can be text or images
@@ -239,7 +241,7 @@ class updateCourseRunPageSelect(tk.Frame):
 
         def storeAndsave_all():
             # load config File
-            uen_Info = loadFile("config.json")
+            uen_Info = loadFile(config_path)
             config_uenJson = json.loads(uen_Info)
             uen_number = config_uenJson["UEN"]
             # self.courseRunInfoPythonObject["course"]["trainingProvider"]["uen"] = uen_number
@@ -310,7 +312,8 @@ class updateCourseRunPagePage2(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
 
-        load = Image.open("SKFBGPage.JPG")
+        file_path = resource_path("SKFBGPage.JPG")
+        load = Image.open(file_path)
         render = ImageTk.PhotoImage(load)
 
         # labels can be text or images
@@ -493,7 +496,8 @@ class updateCourseRunPagePage3(tk.Frame):
 
     def deleteFrameInit(self, deleteFrame):
 
-        load = Image.open("SKFBGPage.JPG")
+        file_path = resource_path("SKFBGPage.JPG")
+        load = Image.open(file_path)
         render = ImageTk.PhotoImage(load)
 
         # labels can be text or images
@@ -517,7 +521,8 @@ class updateCourseRunPagePage3(tk.Frame):
 
     def addFrame(self, AddFrame):
 
-        load = Image.open("SKFBGPage.JPG")
+        file_path = resource_path("SKFBGPage.JPG")
+        load = Image.open(file_path)
         render = ImageTk.PhotoImage(load)
 
         # labels can be text or images
@@ -656,7 +661,8 @@ class updateCourseRunPagePage3(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
 
-        load = Image.open("SKFBGPage.JPG")
+        file_path = resource_path("SKFBGPage.JPG")
+        load = Image.open(file_path)
         render = ImageTk.PhotoImage(load)
 
         # labels can be text or images
@@ -822,7 +828,8 @@ class updateCourseRunPagePage4(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
 
-        load = Image.open("SKFBGPage.JPG")
+        file_path = resource_path("SKFBGPage.JPG")
+        load = Image.open(file_path)
         render = ImageTk.PhotoImage(load)
 
         # labels can be text or images
@@ -1068,7 +1075,8 @@ class updateCourseRunPagePreview(tk.Frame):
 
         tk.Frame.__init__(self, parent)
 
-        load = Image.open("SKFBGPage.JPG")
+        file_path = resource_path("SKFBGPage.JPG")
+        load = Image.open(file_path)
         render = ImageTk.PhotoImage(load)
 
         # labels can be text or images
@@ -1192,7 +1200,8 @@ class updateCourseRunPageFormFileUpload(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
 
-        load = Image.open("SKFBGPage.JPG")
+        file_path = resource_path("SKFBGPage.JPG")
+        load = Image.open(file_path)
         render = ImageTk.PhotoImage(load)
 
         # labels can be text or images

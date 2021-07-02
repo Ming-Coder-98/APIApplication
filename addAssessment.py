@@ -1,3 +1,4 @@
+from resources import *
 from AssessmentFunction import displayPostRequestAssessment, addAssessmentFn
 from EncryptAndDecryptFunction import doEncryption
 from tkinter import Button, Entry, IntVar, Label, Radiobutton, StringVar, scrolledtext, filedialog, ttk, messagebox
@@ -8,10 +9,10 @@ from PIL import ImageTk, Image
 import json
 
 # Load Tooltip Json object as ttDescription
-with open("TooltipDescription.json") as f:
+with open(tooltip_path) as f:
     tooltipDescription = json.load(f)
 
-with open("config.json") as file:
+with open(config_path) as file:
     config = json.load(file)
 
 
@@ -27,7 +28,8 @@ def txtEvent(event):
 class AddAssessmentMainPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-        load = Image.open("SKFBGPage.JPG")
+        file_path = resource_path("SKFBGPage.JPG")
+        load = Image.open(file_path)
         render = ImageTk.PhotoImage(load)
         # Variable
         # This list will be used to generate the payload layout for Trainee
@@ -257,7 +259,8 @@ class AddAssessmentPreviewPage(tk.Frame):
 
         tk.Frame.__init__(self, parent)
 
-        load = Image.open("SKFBGPage.JPG")
+        file_path = resource_path("SKFBGPage.JPG")
+        load = Image.open(file_path)
         render = ImageTk.PhotoImage(load)
 
         # labels can be text or images
@@ -424,7 +427,8 @@ class addAssessmentPageFileUpload(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
 
-        load = Image.open("SKFBGPage.JPG")
+        file_path = resource_path("SKFBGPage.JPG")
+        load = Image.open(file_path)
         render = ImageTk.PhotoImage(load)
         # Variable
         self.textPayload = ''

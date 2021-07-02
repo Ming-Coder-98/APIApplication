@@ -1,3 +1,4 @@
+from resources import *
 from AssessmentFunction import curlRequestSearchAssessment, searchAssessment
 from EncryptAndDecryptFunction import doEncryption
 from EnrolmentFunction import curlPostRequestUpdateEnrolmentFee, getUpdateEnrolmentFeePayLoad, updateEnrolmentFee, \
@@ -11,10 +12,10 @@ from PIL import ImageTk, Image
 import json
 
 # Load Tooltip Json object as ttDescription
-with open("TooltipDescription.json") as f:
+with open(tooltip_path) as f:
     tooltipDescription = json.load(f)
 
-with open("config.json") as file:
+with open(config_path) as file:
     config = json.load(file)
 
 
@@ -23,7 +24,8 @@ class searchAssessmentPage1(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
 
-        load = Image.open("SKFBGPage.JPG")
+        file_path = resource_path("SKFBGPage.JPG")
+        load = Image.open(file_path)
         render = ImageTk.PhotoImage(load)
 
         # labels can be text or images
@@ -199,7 +201,8 @@ class searchAssessmentPage2(tk.Frame):
 
         tk.Frame.__init__(self, parent)
 
-        load = Image.open("SKFBGPage.JPG")
+        file_path = resource_path("SKFBGPage.JPG")
+        load = Image.open(file_path)
         render = ImageTk.PhotoImage(load)
 
         # labels can be text or images

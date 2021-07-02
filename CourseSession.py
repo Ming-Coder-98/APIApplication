@@ -1,4 +1,5 @@
 import json
+from resources import *
 import tkinter as tk
 from tkinter import Button, Entry, Label, StringVar, ttk, scrolledtext, filedialog
 from tkinter import messagebox
@@ -8,7 +9,7 @@ from courseRunFunctions import curlGetCourseSession, getCourseSession
 from tooltip import CreateToolTip
 
 #Load Tooltip Json object as ttDescription
-with open("TooltipDescription.json") as f:
+with open(tooltip_path) as f:
     tooltipDescription = json.load(f)
 
 
@@ -16,8 +17,8 @@ with open("TooltipDescription.json") as f:
 class getCourseSessionPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-
-        load = Image.open("SKFBGPage.JPG")
+        file_path = resource_path("SKFBGPage.JPG")
+        load = Image.open(file_path)
         render = ImageTk.PhotoImage(load)
 
         # labels can be text or images

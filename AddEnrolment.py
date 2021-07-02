@@ -1,3 +1,4 @@
+from resources import *
 from EncryptAndDecryptFunction import doDecryption, doEncryption
 from EnrolmentFunction import addEnrolment, displayPostRequestEnrolment
 from tkinter import Button, Entry, IntVar, Label, Radiobutton, StringVar,scrolledtext,filedialog, ttk, messagebox
@@ -8,10 +9,10 @@ from PIL import ImageTk, Image
 import json
 
 #Load Tooltip Json object as ttDescription
-with open("TooltipDescription.json") as f:
+with open(tooltip_path) as f:
     tooltipDescription = json.load(f)
 #Preload file for UEN
-with open("config.json") as file:
+with open(config_path) as file:
     config = json.load(file)
 
 #Global method for this File - This method allow copy and paste but not editing textbox
@@ -26,7 +27,8 @@ class AddEnrolmentMainPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
 
-        load = Image.open("SKFBGPage.JPG")
+        file_path = resource_path("SKFBGPage.JPG")
+        load = Image.open(file_path)
         render = ImageTk.PhotoImage(load)
         #Variable
         #This list will be used to generate the payload layout for Trainee
@@ -190,7 +192,8 @@ class AddEnrolmentPage2(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
 
-        load = Image.open("SKFBGPage.JPG")
+        file_path = resource_path("SKFBGPage.JPG")
+        load = Image.open(file_path)
         render = ImageTk.PhotoImage(load)
         # Variable
         # This list will be used to generate the payload layout for Trainee
@@ -385,7 +388,8 @@ class AddEnrolmentPreviewPage(tk.Frame):
 
         tk.Frame.__init__(self, parent)
 
-        load = Image.open("SKFBGPage.JPG")
+        file_path = resource_path("SKFBGPage.JPG")
+        load = Image.open(file_path)
         render = ImageTk.PhotoImage(load)
 
         # labels can be text or images
@@ -550,7 +554,8 @@ class addEnrolmentPageFileUpload(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
 
-        load = Image.open("SKFBGPage.JPG")
+        file_path = resource_path("SKFBGPage.JPG")
+        load = Image.open(file_path)
         render = ImageTk.PhotoImage(load)
         #Variable
         self.textPayload = ''

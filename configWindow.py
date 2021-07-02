@@ -6,6 +6,7 @@ import tkinter as tk
 from tkinter import *
 from tkinter import filedialog
 import tkinter
+from resources import config_path
 
 def displayFileLabel(window ,filePath, type):
     global pathName, certPemPath
@@ -71,13 +72,6 @@ class setConfigWindow(Toplevel):
         self.protocol("WM_DELETE_WINDOW", disable_event)
         
 
-
-        # closeButton =  tk.Button(self,text="Exit", command=lambda:destroyWindow())
-        # closeButton.place(relx = 0.5, rely=0.9)
-        # def destroyWindow():
-        #     self.destroy()
-        
-
 class saveButtonFrame(tkinter.Frame):
     def __init__(self,parent):
         super().__init__(parent)
@@ -91,7 +85,7 @@ class LabelEntry(tkinter.Frame):
         super().__init__(parent)
         self.pack(fill=tk.X)
 
-        placeholder = loadFile("config.json")
+        placeholder = loadFile(config_path)
         placeholder = json.loads(placeholder)
         UENPlaceholder = placeholder["UEN"]
         KeyPlaceholder = placeholder["key"]
@@ -125,7 +119,7 @@ class LabelEntry(tkinter.Frame):
 def storeAndsave_all():
     global entries
     #load config File
-    configInfo = loadFile("config.json")
+    configInfo = loadFile(config_path)
     configInfoJson = json.loads(configInfo)
 
     configInfoJson["UEN"] = entries[0].entry.get()

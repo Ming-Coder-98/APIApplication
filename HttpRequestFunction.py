@@ -1,13 +1,13 @@
 import requests
 import json
-
+from resources import config_path
 keyPath = ""
 certPath = ""
 #Preload keypath and certPath
 def httpRequestInit():
       
       global keyPath, certPath
-      config = loadFile("config.json")
+      config = loadFile(config_path)
       config = json.loads(config)
       keyPath = config["keyPath"]
       certPath = config["certPath"]
@@ -56,5 +56,3 @@ def saveJsonFormat(content, fileName):
 def printResponse(response):
       print("Status Code: ", response.status_code)
       print(response.text)
-
-httpRequestInit()

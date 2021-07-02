@@ -4,9 +4,9 @@ from cryptography.hazmat.primitives import padding
 from cryptography.hazmat.backends import default_backend
 from base64 import b64decode, b64encode
 import json
+from resources import config_path
 
-
-configInfo = loadFile("config.json")
+configInfo = loadFile(config_path)
 configInfoJson = json.loads(configInfo)
 
 

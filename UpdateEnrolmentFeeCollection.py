@@ -1,3 +1,4 @@
+from resources import *
 from EncryptAndDecryptFunction import doEncryption
 import tkinter as tk
 from tkinter import *
@@ -10,7 +11,7 @@ import json
 from tooltip import CreateToolTip
 
 # Load Tooltip Json object as ttDescription
-with open("TooltipDescription.json") as f:
+with open(tooltip_path) as f:
     tooltipDescription = json.load(f)
 
 # Update Fee Collection Page
@@ -20,7 +21,8 @@ class updateEnrolFeePage(tk.Frame):
 
         tk.Frame.__init__(self, parent)
 
-        load = Image.open("SKFBGPage.JPG")
+        file_path = resource_path("SKFBGPage.JPG")
+        load = Image.open(file_path)
         render = ImageTk.PhotoImage(load)
         #Variables
         self.textPayload = ''
