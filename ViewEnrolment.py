@@ -1,7 +1,7 @@
+from tkinter.constants import CENTER, END, INSERT
 from EncryptAndDecryptFunction import doEncryption
 import tkinter as tk
-from tkinter import *
-from tkinter import ttk, scrolledtext
+from tkinter import Button, Entry, IntVar, Label, Radiobutton, StringVar, ttk, scrolledtext
 from PIL import ImageTk, Image
 from tkinter import filedialog
 from tkinter import messagebox
@@ -10,8 +10,6 @@ from EnrolmentFunction import curlGetRequestViewEnrolment, getEnrolment, getDele
 from courseRunFunctions import getDeleteCourseRunPayLoad
 import json
 
-# ViewCourseRun Page
-# 2 options for the user to choose from
 
 from tooltip import CreateToolTip
 
@@ -73,13 +71,13 @@ class viewEnrolmentPage(tk.Frame):
         # Textbox for response Frame
         responseText = scrolledtext.ScrolledText(responseFrame, width=70, height=30)
         responseText.place(height=405, width=440, y=20)
-        # responseText.bind("<Key>", lambda e: "break")
+        responseText.bind("<Key>", txtEvent)
 
         # Textbox for Curl Frame
         curlText = scrolledtext.ScrolledText(curlFrame, width=70, height=30)
         curlText.insert(tk.END, str(curlGetRequestViewEnrolment("")))
         curlText.place(height=405, width=440, y=20)
-        # curlText.bind("<Key>", lambda e: "break")
+        curlText.bind("<Key>", txtEvent)
 
         self.varResp = IntVar()
         Radiobutton(responseFrame, text="Decrypt", variable=self.varResp, value=1, width=12, anchor='w', command = lambda:displayResp("decrypt")).place(x=0,y=-5)
@@ -214,7 +212,7 @@ class deleteEnrolmentPage(tk.Frame):
         entry_ERN = Entry(self)
         entry_ERN.place(x=275, y=110)
 
-        label_ERN_ttp = CreateToolTip(label_ERN, tooltipDescription["CourseReferenceNumber"])
+        label_ERN_ttp = CreateToolTip(label_ERN, tooltipDescription["EnrolRefNum"])
 
         # This method is used to update the display information dynamically in "Payload" Tab whenever user key in a value
         def typing():

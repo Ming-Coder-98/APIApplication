@@ -5,40 +5,7 @@ from HttpRequestFunction import *
 import re
 
 baseurl = "https://uat-api.ssg-wsg.sg/courses/runs"
-payload = loadFile("CourseRunPayLoad.json")
 deleteCourseRunPayLoad = ''
-
-def saveCourseRunDetails(content):
-      configInfo = loadFile("config.json")
-      configInfo = json.loads(configInfo)
-      configInfo["runId"] = (((content.json())["data"])["runs"])[0]["id"]
-      configInfo["CourseRefNum"] =  ((json.loads(payload)["course"])["courseReferenceNumber"])
-      configInfo["ExtCourseRefNum"] = ((json.loads(payload)["course"])["courseReferenceNumber"])
-      saveJsonFormat(configInfo, "config.json")
-
-
-
-#If data exists, delete
-def courseRunInitialization():
-
-      try:
-            #Load the runId saved
-            tempFile = open("config.json")
-            jsonTempFile = json.load(tempFile)
-            runId = jsonTempFile["runId"]
-            
-            if (runId != ""):
-                  #Call a Get HTTP to see if runId exists
-                  print("Searching Course Run Id: " + str(runId))
-                  resp = getHttpRequest("https://uat-api.ssg-wsg.sg/courses/runs/" + str(runId))
-                  print(resp.status_code)
-                  #Deletion
-                  if (resp.status_code < 400):
-                        deleteCourserun(runId, jsonTempFile["CourseRefNum"], jsonTempFile["UEN"])
-                        print("Successfully delete Course Run: " + str(runId))
-
-      except:
-            print ("There is an Error reading the File - Initialization")
 
 def getCourseRun(runId):
       resp = getHttpRequest("https://uat-api.ssg-wsg.sg/courses/runs/" + str(runId))

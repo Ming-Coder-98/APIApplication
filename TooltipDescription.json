@@ -61,5 +61,13 @@
     "Score":"The numerical score or percentage score of the assessment, entered as a whole number, if applicable",
     "Result":"The outcome of the assessment, specified as pass, fail or exempt",
     "skillCode":"The competency or skill code assessed for the course, derived from the course data in the Training Partners Gateway",
-    "assessmentDate":"Date the assessment was conducted"
+    "assessmentDate":"Date the assessment was conducted",
+    "page":"Page number of page displayed, starting from 0",
+    "pageSize":"The number of items to be displayed on one page.",
+    "lastUpdateDateFrom":"This parameter is mandatory if retrieveType is DELTA. This will return records with last update date same or greater than this input value. Format YYYY-MM-DD.",
+    "lastUpdateDateTo":"Optional parameter. This will return records up till the specified date. Format YYYY-MM-DD.",
+    "field":"Field to sort by. Available fields -updatedOn, -createdOn. Will default to updatedOn if null",
+    "order":"Sort order. Ascending - asc, Descending - desc. Will default to desc if null",
+    "status":"Status of enrolment records to be searched",
+    "enrolmentDate":"example: 2021-05-15"
 }

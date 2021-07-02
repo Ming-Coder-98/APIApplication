@@ -45,12 +45,12 @@ class updateEnrolFeePage(tk.Frame):
         self.entry_ERN = Entry(self)
         self.entry_ERN.place(x=275, y=110)
 
-        label_ERN_ttp = CreateToolTip(label_ERN, tooltipDescription["CourseReferenceNumber"])
+        label_ERN_ttp = CreateToolTip(label_ERN, tooltipDescription["EnrolRefNum"])
 
         label_statusCollection = Label(self, text="Fee Status Collection*", width=20, font=("bold", 10))
         label_statusCollection.place(x=100, y=140)
 
-        #label_statusCollection_ttp = CreateToolTip(label_statusCollection, tooltipDescription["CourseVacCode"])
+        label_statusCollection_ttp = CreateToolTip(label_statusCollection, tooltipDescription["collectionStatus"])
 
         self.statusCollection = ttk.Combobox(self, width=27, state="readonly")
         self.statusCollection['values'] = ["Full Payment",

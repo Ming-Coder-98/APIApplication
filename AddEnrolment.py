@@ -11,9 +11,10 @@ import json
 #Load Tooltip Json object as ttDescription
 with open("TooltipDescription.json") as f:
     tooltipDescription = json.load(f)
-
+#Preload file for UEN
 with open("config.json") as file:
     config = json.load(file)
+
 #Global method for this File - This method allow copy and paste but not editing textbox
 def txtEvent(event):
     if(event.state==12 and event.keysym=='c' ):
@@ -132,11 +133,8 @@ class AddEnrolmentMainPage(tk.Frame):
 
         nextButton = tk.Button(self, text="Next", bg="white", width=25, pady=5, command=lambda: NextCallBack() if self.var.get() == 2 else controller.show_frame(addEnrolmentPageFileUpload))
         nextButton.place(x=250, y=675, anchor=CENTER)
-        # retrieveButton = tk.Button(self, text="Retrieve required fields", bg="white", width=25, pady=5)
-        # retrieveButton.place(x=250, y=265, anchor=CENTER)
         def NextCallBack():
             AddEnrolmentPreviewPage.payload = StoreAndSave()
-            # AddEnrolmentPreviewPage.refresh(controller.frames[AddEnrolmentPreviewPage].curlText, controller.frames[AddEnrolmentMainPage].entry_runId.get())
             controller.show_frame(AddEnrolmentPage2)
             
         def StoreAndSave():
@@ -181,16 +179,13 @@ class AddEnrolmentMainPage(tk.Frame):
                 payload['enrolment']['trainee']['employer']['contact']['emailAddress'] = self.entry_TraineeEmpEmail.get()
             if self.entry_TraineeEmpName.get() != '':
                 payload['enrolment']['trainee']['employer']['contact']['fullName'] = self.entry_TraineeEmpName.get()
-                
 
-            # print (json.dumps(payload, indent=4))
             return str(json.dumps(payload, indent=4))
         
-
-
     def show_frame(self, cont):
         frame = self.frames[cont]
         frame.tkraise()
+
 # Page 2 for Create Enrolment
 class AddEnrolmentPage2(tk.Frame):
     def __init__(self, parent, controller):
@@ -331,12 +326,12 @@ class AddEnrolmentPage2(tk.Frame):
                                command=lambda: controller.show_frame(AddEnrolmentMainPage)
                                )
         backButton.place(relx=0.35, rely=0.86, anchor=CENTER)
-         # retrieveButton = tk.Button(self, text="Retrieve required fields", bg="white", width=25, pady=5)
-         # retrieveButton.place(x=250, y=265, anchor=CENTER)
+
         def NextCallBack():
             AddEnrolmentPreviewPage.payload = StoreAndSave()
             AddEnrolmentPreviewPage.refresh(controller.frames[AddEnrolmentPreviewPage].curlText)
             controller.show_frame(AddEnrolmentPreviewPage)
+
         def StoreAndSave():
             try:
                 payload = json.loads(AddEnrolmentPreviewPage.payload)
@@ -374,11 +369,8 @@ class AddEnrolmentPage2(tk.Frame):
                     payload['enrolment']['trainee']['contactNumber']['countryCode'] = self.entry_TraineeCountryCode.get()
                 if self.entry_TraineePhone.get() != '':
                     payload['enrolment']['trainee']['contactNumber']['phoneNumber'] = self.entry_TraineePhone.get()
-                
-            print (json.dumps(payload, indent=4))
+            
             return str(json.dumps(payload, indent=4))
-        
-
 
     def show_frame(self, cont):
         frame = self.frames[cont]
@@ -473,6 +465,7 @@ class AddEnrolmentPreviewPage(tk.Frame):
                            background="gray")
         butt_resp.place(x=380, y=0, height=21, width=60)
         
+        #displayPayload and displayResp method is used to display the encrypted and decrypted payload/response in the Preview/Fileupload Page
         def displayPayload(method):
             if method != 'decrypt':
                 payloadToDisplay = doEncryption(str(AddEnrolmentPreviewPage.payload).encode()).decode()
@@ -500,7 +493,6 @@ class AddEnrolmentPreviewPage(tk.Frame):
                 responseText.insert(tk.END, display.decode())
 
         def createCallBack():
-            print("Create Enrolment:" + AddEnrolmentPreviewPage.payload)
             responseText.delete("1.0","end")
             resp = addEnrolment(AddEnrolmentPreviewPage.payload)
             resp = doDecryption(resp)
@@ -597,7 +589,6 @@ class addEnrolmentPageFileUpload(tk.Frame):
         responseText = scrolledtext.ScrolledText(tab3,width=70,height=30)
         responseText.place(height = 405, width = 440, y=20)
 
-
         self.curlText.bind("<Key>", lambda e: txtEvent(e))
         responseText.bind("<Key>", lambda e: txtEvent(e))
 
@@ -623,8 +614,22 @@ class addEnrolmentPageFileUpload(tk.Frame):
         Radiobutton(tab3, text="Decrypt", variable=self.varResp, value=1, width=12, anchor='w', command = lambda:displayResp("decrypt")).place(x=0,y=-5)
         Radiobutton(tab3, text="Encrypt", variable=self.varResp, value=2,width=12, anchor='w',command = lambda:displayResp("encrypt")).place(x=130,y=-5)
         self.varResp.set(1)
+    
+        #adding of single line text box
+        edit = Entry(self, background="light gray") 
 
+        #positioning of text box
+        edit.place(x = 285, height= 21, y=244) 
 
+        #setting focus
+        edit.focus_set()
+
+        butt_resp = Button(tab2, text='Find', command=lambda:find("curl"), highlightthickness = 0, bd = 0, background="gray")  
+        butt_resp.place(x = 380, y=0, height=21, width=60) 
+        butt_resp = Button(tab3, text='Find', command=lambda:find("resp"), highlightthickness = 0, bd = 0, background="gray")  
+        butt_resp.place(x = 380, y=0, height=21, width=60) 
+
+        #displayPayload and displayResp method is used to display the encrypted and decrypted payload/response in the Preview/Fileupload Page
         def displayPayload(method):
             if method != 'decrypt':
                 payloadToDisplay = ''
@@ -657,21 +662,7 @@ class addEnrolmentPageFileUpload(tk.Frame):
                     display = b''
                 responseText.delete("1.0","end")
                 responseText.insert(tk.END, display.decode())
-    
-        #adding of single line text box
-        edit = Entry(self, background="light gray") 
-
-        #positioning of text box
-        edit.place(x = 285, height= 21, y=244) 
-
-        #setting focus
-        edit.focus_set()
-
-        butt_resp = Button(tab2, text='Find', command=lambda:find("curl"), highlightthickness = 0, bd = 0, background="gray")  
-        butt_resp.place(x = 380, y=0, height=21, width=60) 
-        butt_resp = Button(tab3, text='Find', command=lambda:find("resp"), highlightthickness = 0, bd = 0, background="gray")  
-        butt_resp.place(x = 380, y=0, height=21, width=60) 
-
+        
         #This method is used to search the response text and highlight the searched word in red
         def find(method):
             if method == "resp":

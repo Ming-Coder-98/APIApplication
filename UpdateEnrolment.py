@@ -46,7 +46,7 @@ class UpdateEnrolmentMainPage(tk.Frame):
         label_0 = Label(self, text="Course Details", width=20, font=("bold", 15))
         label_0.place(x=137, y=195)
 
-        self.label_EnrolRefNum = Label(self, text="Reference Number*", width=20, font=("bold", 10), anchor='w')
+        self.label_EnrolRefNum = Label(self, text="Enrol Reference Number*", width=20, font=("bold", 10), anchor='w')
         self.label_EnrolRefNum.place(x=100, y=230)
 
         label_EnrolRefNum_ttp = CreateToolTip(self.label_EnrolRefNum, tooltipDescription["EnrolRefNum"])
@@ -168,8 +168,7 @@ class UpdateEnrolmentMainPage(tk.Frame):
 
         nextButton = tk.Button(self, text="Next", bg="white", width=25, pady=5, command=lambda: NextCallBack() if self.var.get() == 2 else controller.show_frame(UpdateEnrolmentPageFileUploadPage))
         nextButton.place(x=250, y=675, anchor=CENTER)
-        # retrieveButton = tk.Button(self, text="Retrieve required fields", bg="white", width=25, pady=5)
-        # retrieveButton.place(x=250, y=265, anchor=CENTER)
+
         def NextCallBack():
             UpdateEnrolmentPreviewPage.payload = StoreAndSave()
             UpdateEnrolmentPreviewPage.refresh(controller.frames[UpdateEnrolmentPreviewPage].curlText)
@@ -229,12 +228,8 @@ class UpdateEnrolmentMainPage(tk.Frame):
             if self.collectionStatus.get() != 'Select An Option':
                 payload['enrolment']['fees']['collectionStatus'] = self.collectionStatus.get()
 
-
-
             UpdateEnrolmentPreviewPage.refNumber = self.entry_EnrolRefNum.get()       
             return str(json.dumps(payload, indent=4))
-        
-
 
     def show_frame(self, cont):
         frame = self.frames[cont]
