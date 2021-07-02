@@ -1,3 +1,4 @@
+from resources import resource_path
 from tkinter import Label, Menu
 import tkinter as tk
 from PIL import Image, ImageTk
@@ -27,9 +28,12 @@ def quit_program():
     quit()
 
 
+
 class APIProject(tk.Tk):
 
     def __init__(self, *args, **kwargs):
+
+            
         tk.Tk.__init__(self, *args, *kwargs)
         self.container = tk.Frame(self)
 
@@ -133,7 +137,9 @@ class StartPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
 
-        load = Image.open("SKFMenuPage.JPG")
+        file_path = resource_path("SKFMenuPage.JPG")
+        load = Image.open(file_path)
+
         render = ImageTk.PhotoImage(load)
 
         # labels can be text or images

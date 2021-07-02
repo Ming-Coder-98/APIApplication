@@ -1,4 +1,5 @@
 import json
+from resources import *
 from tkinter.constants import CENTER, END, INSERT
 from tooltip import CreateToolTip
 from tkinter import Button, Entry, Label, StringVar, ttk, filedialog, messagebox, scrolledtext
@@ -10,7 +11,7 @@ from courseRunFunctions import (curlGetRequestViewCourseRun, curlPostRequest,
 
 
 #Load Tooltip Json object as ttDescription
-with open("TooltipDescription.json") as f:
+with open(tooltip_path) as f:
     ttDescription = json.load(f)
 
 
@@ -20,7 +21,8 @@ class viewCourseRunPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
 
-        load = Image.open("SKFBGPage.JPG")
+        file_path = resource_path("SKFBGPage.JPG")
+        load = Image.open(file_path)
         render = ImageTk.PhotoImage(load)
 
         # labels can be text or images
@@ -162,8 +164,8 @@ class deleteCourseRunPage(tk.Frame):
     def __init__(self, parent, controller):
 
         tk.Frame.__init__(self, parent)
-
-        load = Image.open("SKFBGPage.JPG")
+        file_path = resource_path("SKFBGPage.JPG")
+        load = Image.open(file_path)
         render = ImageTk.PhotoImage(load)
 
         # labels can be text or images

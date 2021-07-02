@@ -1,3 +1,4 @@
+from resources import *
 from AttendanceFunction import displayViewSession, getSessionAttendance
 from PIL import Image, ImageTk
 from tooltip import CreateToolTip
@@ -7,10 +8,10 @@ import tkinter as tk
 from tkinter import Button, Entry, IntVar, Label, Radiobutton, StringVar, filedialog, messagebox, scrolledtext, ttk
 from tkinter.constants import CENTER, DISABLED, END, INSERT
 
-with open("config.json") as file:
+with open(config_path) as file:
     config = json.load(file)
 #Load Tooltip Json object as ttDescription
-with open("TooltipDescription.json") as f:
+with open(tooltip_path) as f:
     tooltipDescription = json.load(f)
 #Global method for this File - This method allow copy and paste but not editing textbox
 def txtEvent(event):
@@ -21,8 +22,8 @@ def txtEvent(event):
 class ViewSessionAttendance(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-
-        load = Image.open("SKFBGPage.JPG")
+        file_path = resource_path("SKFBGPage.JPG")
+        load = Image.open(file_path)
         render = ImageTk.PhotoImage(load)
         #Setting of Variable
         self.textResponse = ''

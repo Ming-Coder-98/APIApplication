@@ -1,3 +1,4 @@
+from resources import *
 from EncryptAndDecryptFunction import doDecryption, doEncryption
 from EnrolmentFunction import displayPostRequestEnrolment, updateEnrolment
 from tkinter import Button, Entry, IntVar, Label, Radiobutton, StringVar,scrolledtext,filedialog, ttk, messagebox
@@ -7,7 +8,7 @@ from tooltip import CreateToolTip
 from PIL import ImageTk, Image
 import json
 
-with open("TooltipDescription.json") as f:
+with open(tooltip_path) as f:
     tooltipDescription = json.load(f)
 #Global method for this File - This method allow copy and paste but not editing textbox
 def txtEvent(event):
@@ -21,7 +22,8 @@ class UpdateEnrolmentMainPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
 
-        load = Image.open("SKFBGPage.JPG")
+        file_path = resource_path("SKFBGPage.JPG")
+        load = Image.open(file_path)
         render = ImageTk.PhotoImage(load)
         #Variable
         #This list will be used to generate the payload layout for Trainee
@@ -243,7 +245,8 @@ class UpdateEnrolmentPreviewPage(tk.Frame):
 
         tk.Frame.__init__(self, parent)
 
-        load = Image.open("SKFBGPage.JPG")
+        file_path = resource_path("SKFBGPage.JPG")
+        load = Image.open(file_path)
         render = ImageTk.PhotoImage(load)
 
         # labels can be text or images
@@ -413,7 +416,8 @@ class UpdateEnrolmentPageFileUploadPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
 
-        load = Image.open("SKFBGPage.JPG")
+        file_path = resource_path("SKFBGPage.JPG")
+        load = Image.open(file_path)
         render = ImageTk.PhotoImage(load)
 
         #Setting of variables

@@ -1,3 +1,4 @@
+from resources import *
 from EncryptAndDecryptFunction import doEncryption
 from AttendanceFunction import curlRequestUploadAttendance, uploadAttendanceFn
 from tkinter import Button, Entry, IntVar, Label, Radiobutton, StringVar, scrolledtext, filedialog, ttk, messagebox
@@ -8,10 +9,10 @@ from PIL import ImageTk, Image
 import json
 
 # Load Tooltip Json object as ttDescription
-with open("TooltipDescription.json") as f:
+with open(tooltip_path) as f:
     tooltipDescription = json.load(f)
 
-with open("config.json") as file:
+with open(config_path) as file:
     config = json.load(file)
 
 
@@ -20,7 +21,8 @@ class addAttendancePage1(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
 
-        load = Image.open("SKFBGPage.JPG")
+        file_path = resource_path("SKFBGPage.JPG")
+        load = Image.open(file_path)
         render = ImageTk.PhotoImage(load)
 
         # labels can be text or images
@@ -165,7 +167,7 @@ class addAttendancePage1(tk.Frame):
         def StoreAndSave():
             payload = {}
             payload['course'] = {}
-
+            payload['course']['attendance'] = {}
             if entry_TpUEN.get() != '':
                 payload['uen'] = entry_TpUEN.get()
 
@@ -173,14 +175,10 @@ class addAttendancePage1(tk.Frame):
                 payload['course']['sessionID'] = entry_sessionID.get()
 
             if attendanceStatusCode.get() != 'Select an Option':
-                payload['course'] = {}
-                payload['course']['attendance'] = {}
                 payload['course']['attendance']['status'] = {}
                 payload['course']['attendance']['status']['code'] = attendanceStatusCode.get()[0]
 
             if entry_traineeID.get() != '' or entry_traineeName.get() != '' or entry_traineeEmail.get() != ''  or entry_TraineePhoneNo.get() != '' or entry_TraineeCountryCode.get() != '' or entry_TraineeAreaCode.get() != '' or entry_traineeHours.get() != '' :
-                payload['course'] = {}
-                payload['course']['attendance'] = {}
                 payload['course']['attendance']['trainee'] = {}
                 payload['course']['attendance']['trainee']['id'] = entry_traineeID.get()
                 payload['course']['attendance']['trainee']['name'] = entry_traineeName.get()
@@ -219,7 +217,8 @@ class addAttendancePage2(tk.Frame):
 
         tk.Frame.__init__(self, parent)
 
-        load = Image.open("SKFBGPage.JPG")
+        file_path = resource_path("SKFBGPage.JPG")
+        load = Image.open(file_path)
         render = ImageTk.PhotoImage(load)
 
         # labels can be text or images
@@ -275,7 +274,7 @@ class addAttendancePage2(tk.Frame):
         responseText.place(height=405, width=440, y=20)
         responseText.bind("<Key>", lambda e: "break")
 
-        submitButton = tk.Button(self, text="Search", bg="white", width=15, pady=5,
+        submitButton = tk.Button(self, text="Create", bg="white", width=15, pady=5,
                                  command=lambda: uploadAttendanceCallBack(self.entry_runId.get(),
                                                                           addAttendancePage2.payload))
         submitButton.place(relx=0.5, rely=0.20, anchor=CENTER)

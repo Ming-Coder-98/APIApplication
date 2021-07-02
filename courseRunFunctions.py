@@ -32,7 +32,7 @@ def updateCourseRunPayload():
       global payload
       print("Update Course Run")
       #load config File
-      configInfo = loadFile("config.json")
+      configInfo = loadFile(config_path)
       configInfoJson = json.loads(configInfo)
 
       #load courseRunPayload Json File
@@ -50,7 +50,7 @@ def getDeleteCourseRunPayLoad(CRN):
       global deleteCourseRunPayLoad
       
       #Set UEN to payload
-      config = loadFile("config.json")
+      config = loadFile(config_path)
       config = json.loads(config)
       uen = config["UEN"]
 
@@ -82,7 +82,7 @@ def curlGetRequestViewCourseRun(text1):
 
 def curlGetCourseSession(runId, CRN, sessionMonth):
       #Set UEN to payload
-      config = loadFile("config.json")
+      config = loadFile(config_path)
       config = json.loads(config)
       uen = config["UEN"]
       if CRN != "":
@@ -99,7 +99,7 @@ def curlGetCourseSession(runId, CRN, sessionMonth):
       
 def getCourseSession(runId, CRN, sessionMonth):
       #Set UEN to payload
-      config = loadFile("config.json")
+      config = loadFile(config_path)
       config = json.loads(config)
       uen = config["UEN"]
       print("getCourseSession")
