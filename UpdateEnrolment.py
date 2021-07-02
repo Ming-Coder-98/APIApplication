@@ -1,5 +1,3 @@
-
-from re import S
 from EncryptAndDecryptFunction import doDecryption, doEncryption
 from EnrolmentFunction import displayPostRequestEnrolment, updateEnrolment
 from tkinter import Button, Entry, IntVar, Label, Radiobutton, StringVar,scrolledtext,filedialog, ttk, messagebox
@@ -18,7 +16,7 @@ def txtEvent(event):
     else:
         return "break"
         
-#Page 1 for Create Enrolment
+#Page 1 for Update Enrolment
 class UpdateEnrolmentMainPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
@@ -229,17 +227,15 @@ class UpdateEnrolmentMainPage(tk.Frame):
             if self.collectionStatus.get() != 'Select An Option':
                 payload['enrolment']['fees']['collectionStatus'] = self.collectionStatus.get()
 
-
-
             UpdateEnrolmentPreviewPage.refNumber = self.entry_EnrolRefNum.get()       
             return str(json.dumps(payload, indent=4))
-        
 
 
     def show_frame(self, cont):
         frame = self.frames[cont]
         frame.tkraise()
 
+#Preview Page for Update Enrolment
 class UpdateEnrolmentPreviewPage(tk.Frame):
     def refresh(controllerCurlText):
         controllerCurlText.delete("1.0","end")

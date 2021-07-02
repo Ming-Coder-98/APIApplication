@@ -1,11 +1,18 @@
-from courseRunFunctions import curlGetCourseSession, getCourseSession
+import json
 import tkinter as tk
-from tkinter import Button, Entry, Label, StringVar, Tk, ttk, scrolledtext, filedialog
+from tkinter import Button, Entry, Label, StringVar, ttk, scrolledtext, filedialog
 from tkinter import messagebox
 from tkinter.constants import CENTER, END, INSERT
 from PIL import ImageTk, Image
+from courseRunFunctions import curlGetCourseSession, getCourseSession
 from tooltip import CreateToolTip
 
+#Load Tooltip Json object as ttDescription
+with open("TooltipDescription.json") as f:
+    tooltipDescription = json.load(f)
+
+
+# ViewCourseSession Page
 class getCourseSessionPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
@@ -23,16 +30,19 @@ class getCourseSessionPage(tk.Frame):
 
         label_runId = Label(self, text="Course Run ID", width=20, font=("bold", 10), anchor='w')
         label_runId.place(x=105, y=90)
+        label_runId_ttp = CreateToolTip(label_runId, tooltipDescription["CourseRunId"])
         entry_runId = Entry(self)
         entry_runId.place(x=275, y=90)
 
         label_CRN = Label(self, text="Course References Number", width=20, font=("bold", 10), anchor='w')
         label_CRN.place(x=105, y=120)
+        label_CRN_ttp = CreateToolTip(label_CRN, tooltipDescription["CourseReferenceNumber"])
         entry_CRN = Entry(self)
         entry_CRN.place(x=275, y=120)
 
         label_sessionMonth = Label(self, text="Session Month (Optional)", width=20, font=("bold", 10), anchor='w')
         label_sessionMonth.place(x=105, y=150)
+        label_sessionMonth_ttp = CreateToolTip(label_sessionMonth, tooltipDescription["SessionMonth"])
         entry_sessionMonth = Entry(self)
         entry_sessionMonth.place(x=275, y=150)
 

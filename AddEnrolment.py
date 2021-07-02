@@ -1,6 +1,5 @@
 from EncryptAndDecryptFunction import doDecryption, doEncryption
 from EnrolmentFunction import addEnrolment, displayPostRequestEnrolment
-from courseRunFunctions import curlPostRequest
 from tkinter import Button, Entry, IntVar, Label, Radiobutton, StringVar,scrolledtext,filedialog, ttk, messagebox
 import tkinter as tk
 from tkinter.constants import CENTER, DISABLED, END, INSERT
@@ -14,6 +13,7 @@ with open("TooltipDescription.json") as f:
 
 with open("config.json") as file:
     config = json.load(file)
+
 #Global method for this File - This method allow copy and paste but not editing textbox
 def txtEvent(event):
     if(event.state==12 and event.keysym=='c' ):
@@ -65,7 +65,7 @@ class AddEnrolmentMainPage(tk.Frame):
         self.entry_CRN.place(x=270, y=240)
         
 
-        self.label_TpUEN = Label(self, text="Training Partner - UEN", width=20, font=("bold", 10), anchor='w')
+        self.label_TpUEN = Label(self, text="Training Partner - UEN*", width=20, font=("bold", 10), anchor='w')
         self.label_TpUEN.place(x=100, y=265)
 
         self.label_UEN_ttp = CreateToolTip(self.label_TpUEN, tooltipDescription["UEN"])
@@ -87,7 +87,7 @@ class AddEnrolmentMainPage(tk.Frame):
         self.label_TraineeTitle = Label(self, text="Trainee Details", width=20, font=("bold", 15))
         self.label_TraineeTitle.place(x=137, y=315)
 
-        self.Label_TraineeEmpUen = Label(self, text="Trainee - Employer UEN", width=20, font=("bold", 10), anchor='w')
+        self.Label_TraineeEmpUen = Label(self, text="Trainee - Employer UEN*", width=20, font=("bold", 10), anchor='w')
         self.Label_TraineeEmpUen.place(x=100, y=350)
 
         self.Label_TraineeEmpUen_ttp = CreateToolTip(self.Label_TraineeEmpUen, tooltipDescription["UEN"])
@@ -185,12 +185,11 @@ class AddEnrolmentMainPage(tk.Frame):
 
             # print (json.dumps(payload, indent=4))
             return str(json.dumps(payload, indent=4))
-        
-
 
     def show_frame(self, cont):
         frame = self.frames[cont]
         frame.tkraise()
+
 # Page 2 for Create Enrolment
 class AddEnrolmentPage2(tk.Frame):
     def __init__(self, parent, controller):

@@ -5,18 +5,13 @@ from tkinter import ttk, scrolledtext
 from PIL import ImageTk, Image
 from tkinter import filedialog
 from tkinter import messagebox
-
-from EnrolmentFunction import getDeleteEnrolmentPayLoad, cancelEnrolment, curlPostRequest, \
-    curlPostRequestUpdateEnrolmentFee, getUpdateEnrolmentFeePayLoad, updateEnrolmentFee
-from courseRunFunctions import getDeleteCourseRunPayLoad
+from EnrolmentFunction import curlPostRequestUpdateEnrolmentFee, getUpdateEnrolmentFeePayLoad, updateEnrolmentFee
 import json
-
 from tooltip import CreateToolTip
 
 # Load Tooltip Json object as ttDescription
 with open("TooltipDescription.json") as f:
     tooltipDescription = json.load(f)
-
 
 # Update Fee Collection Page
 class updateEnrolFeePage(tk.Frame):
@@ -45,12 +40,12 @@ class updateEnrolFeePage(tk.Frame):
         self.entry_ERN = Entry(self)
         self.entry_ERN.place(x=275, y=110)
 
-        label_ERN_ttp = CreateToolTip(label_ERN, tooltipDescription["CourseReferenceNumber"])
+        label_ERN_ttp = CreateToolTip(label_ERN, tooltipDescription["EnrolRefNum"])
 
         label_statusCollection = Label(self, text="Fee Status Collection*", width=20, font=("bold", 10))
         label_statusCollection.place(x=100, y=140)
 
-        #label_statusCollection_ttp = CreateToolTip(label_statusCollection, tooltipDescription["CourseVacCode"])
+        label_statusCollection_ttp = CreateToolTip(label_statusCollection, tooltipDescription["collectionStatus"])
 
         self.statusCollection = ttk.Combobox(self, width=27, state="readonly")
         self.statusCollection['values'] = ["Full Payment",
@@ -194,14 +189,14 @@ class updateEnrolFeePage(tk.Frame):
             files = [('JSON', '*.json'),
                      ('Text Document', '*.txt')]
             file = filedialog.asksaveasfile(filetypes=files, defaultextension='.json')
-            filetext = str(getUpdateEnrolmentFeePayLoad(entry_ERN.get())) if method == "payload" else str(
+            filetext = str(getUpdateEnrolmentFeePayLoad(self.entry_ERN.get())) if method == "payload" else str(
                 responseText.get("1.0", END))
             file.write(filetext)
             file.close()
             messagebox.showinfo("Successful", "File has been downloaded")
 
         # This method activates two other methods.
-        # 1) this method calls the delete method in courseRunFunction and return the response
+        # 1) this method calls the delete method in enrolmentFunction and return the response
         # 2) Based on the response, if a status 200 is received, it will display the response
         def updateFeeCallBack(enrolRefNum):
             resp = updateEnrolmentFee(enrolRefNum)
