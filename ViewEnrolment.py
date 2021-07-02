@@ -5,12 +5,9 @@ from tkinter import Button, Entry, IntVar, Label, Radiobutton, StringVar, ttk, s
 from PIL import ImageTk, Image
 from tkinter import filedialog
 from tkinter import messagebox
-
 from EnrolmentFunction import curlGetRequestViewEnrolment, getEnrolment, getDeleteEnrolmentPayLoad, cancelEnrolment,curlPostRequest
 from courseRunFunctions import getDeleteCourseRunPayLoad
 import json
-
-
 from tooltip import CreateToolTip
 
 #Load Tooltip Json object as ttDescription
@@ -22,6 +19,8 @@ def txtEvent(event):
         return
     else:
         return "break"
+
+# ViewEnrolment Page
 class viewEnrolmentPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
@@ -125,7 +124,7 @@ class viewEnrolmentPage(tk.Frame):
                 responseText.insert(tk.END, display.decode())
 
         # This call back method activates two other methods.
-        # 1) this method calls the get method in courseRunFunction and return the response
+        # 1) this method calls the get method in enrolmentFunction and return the response
         # 2) Based on the response, if a status 200 is received, it will display the response
         def submitCallBack():
             responseText.delete("1.0", "end")
@@ -185,7 +184,7 @@ class viewEnrolmentPage(tk.Frame):
         self.current_frame.pack(fill="both", expand=True)
 
 
-# Delete Course Run Page
+# Delete Enrolment Page
 class deleteEnrolmentPage(tk.Frame):
 
     def __init__(self, parent, controller):
@@ -355,7 +354,7 @@ class deleteEnrolmentPage(tk.Frame):
             messagebox.showinfo("Successful", "File has been downloaded")
 
         # This method activates two other methods.
-        # 1) this method calls the delete method in courseRunFunction and return the response
+        # 1) this method calls the delete method in enrolmentFunction and return the response
         # 2) Based on the response, if a status 200 is received, it will display the response
         def deleteCallBack(enrolRefNum):
             resp = cancelEnrolment(enrolRefNum)

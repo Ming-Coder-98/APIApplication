@@ -1,6 +1,5 @@
 from EncryptAndDecryptFunction import doDecryption, doEncryption
 from EnrolmentFunction import addEnrolment, displayPostRequestEnrolment
-from courseRunFunctions import curlPostRequest
 from tkinter import Button, Entry, IntVar, Label, Radiobutton, StringVar,scrolledtext,filedialog, ttk, messagebox
 import tkinter as tk
 from tkinter.constants import CENTER, DISABLED, END, INSERT
@@ -66,7 +65,7 @@ class AddEnrolmentMainPage(tk.Frame):
         self.entry_CRN.place(x=270, y=240)
         
 
-        self.label_TpUEN = Label(self, text="Training Partner - UEN", width=20, font=("bold", 10), anchor='w')
+        self.label_TpUEN = Label(self, text="Training Partner - UEN*", width=20, font=("bold", 10), anchor='w')
         self.label_TpUEN.place(x=100, y=265)
 
         self.label_UEN_ttp = CreateToolTip(self.label_TpUEN, tooltipDescription["UEN"])
@@ -88,7 +87,7 @@ class AddEnrolmentMainPage(tk.Frame):
         self.label_TraineeTitle = Label(self, text="Trainee Details", width=20, font=("bold", 15))
         self.label_TraineeTitle.place(x=137, y=315)
 
-        self.Label_TraineeEmpUen = Label(self, text="Trainee - Employer UEN", width=20, font=("bold", 10), anchor='w')
+        self.Label_TraineeEmpUen = Label(self, text="Trainee - Employer UEN*", width=20, font=("bold", 10), anchor='w')
         self.Label_TraineeEmpUen.place(x=100, y=350)
 
         self.Label_TraineeEmpUen_ttp = CreateToolTip(self.Label_TraineeEmpUen, tooltipDescription["UEN"])

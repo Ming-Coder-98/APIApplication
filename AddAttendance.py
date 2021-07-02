@@ -56,7 +56,7 @@ class addAttendancePage1(tk.Frame):
 
         # label_CourseModeOfTraining_ttp = CreateToolTip(label_CourseModeOfTraining, tooltipDescription["ModeOfTraining"])
 
-        attendanceStatusCode = ttk.Combobox(self, width=27, state="readonly")
+        attendanceStatusCode = ttk.Combobox(self, width=17, state="readonly")
         attendanceStatusCode['values'] = ["Select an Option",
                                           "1 - Confirmed",
                                           "2 - Unconfirmed",
@@ -94,7 +94,7 @@ class addAttendancePage1(tk.Frame):
 
         # label_CourseModeOfTraining_ttp = CreateToolTip(label_CourseModeOfTraining, tooltipDescription["ModeOfTraining"])
 
-        traineeIdType = ttk.Combobox(self, width=27, state="readonly")
+        traineeIdType = ttk.Combobox(self, width=17, state="readonly")
         traineeIdType['values'] = ["Select an Option",
                                    "SB - SG Blue Identification Card",
                                    "SP - SG Pink Identification Card",
@@ -128,7 +128,7 @@ class addAttendancePage1(tk.Frame):
         label_surveyLanguage = Label(self, text="Survey Language", width=20, font=("bold", 10), anchor='w')
         label_surveyLanguage.place(x=80, y=360)
 
-        surveyLanguage = ttk.Combobox(self, width=27, state="readonly")
+        surveyLanguage = ttk.Combobox(self, width=17, state="readonly")
         surveyLanguage['values'] = ["Select an Option",
                                     "EL - English",
                                     "MN - Mandarin",

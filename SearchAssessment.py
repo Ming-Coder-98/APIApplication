@@ -40,7 +40,7 @@ class searchAssessmentPage1(tk.Frame):
         label_updateFromDate = Label(self, text="Last Update Dates From", width=20, font=("bold", 10), anchor='w')
         label_updateFromDate.place(x=80, y=135)
 
-        # label_openRegDate_ttp = CreateToolTip(label_openRegDate, tooltipDescription["CourseRegistrationDateOpen"])
+        label_updateFromDate_ttp = CreateToolTip(label_updateFromDate, tooltipDescription["lastUpdateDateFrom"])
 
         entry_updateFromDate = Entry(self)
         entry_updateFromDate.place(x=250, y=135)
@@ -48,7 +48,7 @@ class searchAssessmentPage1(tk.Frame):
         label_updateToDate = Label(self, text="Last Update Dates To", width=20, font=("bold", 10), anchor='w')
         label_updateToDate.place(x=80, y=160)
 
-        # label_closeRegDate_ttp = CreateToolTip(label_closeRegDate, tooltipDescription["CourseRegistrationDateClose"])
+        label_updateToDate_ttp = CreateToolTip(label_updateToDate, tooltipDescription["lastUpdateDateTo"])
 
         entry_updateToDate = Entry(self)
         entry_updateToDate.place(x=250, y=160)
@@ -59,9 +59,9 @@ class searchAssessmentPage1(tk.Frame):
         label_field = Label(self, text="Field", width=20, font=("bold", 10), anchor='w')
         label_field.place(x=80, y=225)
 
-        # label_CourseModeOfTraining_ttp = CreateToolTip(label_CourseModeOfTraining, tooltipDescription["ModeOfTraining"])
+        label_field_ttp = CreateToolTip(label_field, tooltipDescription["field"])
 
-        field = ttk.Combobox(self, width=27, state="readonly")
+        field = ttk.Combobox(self, width=17, state="readonly")
         field['values'] = ["Select an Option",
                            "updatedOn",
                            "createdOn"]
@@ -71,9 +71,9 @@ class searchAssessmentPage1(tk.Frame):
         label_order = Label(self, text="Order", width=20, font=("bold", 10), anchor='w')
         label_order.place(x=80, y=250)
 
-        # label_CourseModeOfTraining_ttp = CreateToolTip(label_CourseModeOfTraining, tooltipDescription["ModeOfTraining"])
+        label_order_ttp = CreateToolTip(label_order, tooltipDescription["order"])
 
-        order = ttk.Combobox(self, width=27, state="readonly")
+        order = ttk.Combobox(self, width=17, state="readonly")
         order['values'] = ["Select an Option",
                            "asc",
                            "desc"]
@@ -86,7 +86,7 @@ class searchAssessmentPage1(tk.Frame):
         label_runId = Label(self, text="Course Run Id", width=20, font=("bold", 10), anchor='w')
         label_runId.place(x=80, y=315)
 
-        # label_runId_ttp = CreateToolTip(self.label_runId, tooltipDescription["CourseRunId"])
+        label_runId_ttp = CreateToolTip(label_runId, tooltipDescription["CourseRunId"])
 
         entry_runId = Entry(self)
         entry_runId.place(x=250, y=315)
@@ -102,7 +102,7 @@ class searchAssessmentPage1(tk.Frame):
         label_traineeId = Label(self, text="Trainee Id", width=20, font=("bold", 10), anchor='w')
         label_traineeId.place(x=80, y=365)
 
-        # label_runId_ttp = CreateToolTip(self.label_runId, tooltipDescription["CourseRunId"])
+        label_traineeId_ttp = CreateToolTip(label_traineeId, tooltipDescription["TrainerID"])
 
         entry_traineeId = Entry(self)
         entry_traineeId.place(x=250, y=365)
@@ -110,7 +110,7 @@ class searchAssessmentPage1(tk.Frame):
         label_ERN = Label(self, text="Enrolment Ref Number", width=20, font=("bold", 10), anchor='w')
         label_ERN.place(x=80, y=390)
 
-        # label_CourseModeOfTraining_ttp = CreateToolTip(label_CourseModeOfTraining, tooltipDescription["ModeOfTraining"])
+        label_ERN_ttp = CreateToolTip(label_ERN, tooltipDescription["EnrolRefNum"])
 
         entry_ERN = Entry(self)
         entry_ERN.place(x=250, y=390)
@@ -118,7 +118,7 @@ class searchAssessmentPage1(tk.Frame):
         label_skillCode = Label(self, text="Skill Code", width=20, font=("bold", 10), anchor='w')
         label_skillCode.place(x=80, y=415)
 
-        # label_runId_ttp = CreateToolTip(self.label_runId, tooltipDescription["CourseRunId"])
+        label_skillCode_ttp = CreateToolTip(label_skillCode, tooltipDescription["skillCode"])
 
         entry_skillCode = Entry(self)
         entry_skillCode.place(x=250, y=415)
@@ -183,15 +183,6 @@ class searchAssessmentPage1(tk.Frame):
             # print(json.dumps(payload, indent=4))
             return str(json.dumps(payload, indent=4))
 
-        # Initialies the file and object first in order to prevent clearing of data
-        # addCourseRunPagePreview.payload = loadFile("EmptyaddCourseRunPayLoad.json")
-        # addCourseRunPageForm.payload = "{}"
-
-        # def previewCallBack():
-        # addCourseRunPageForm.payload = storeAndsave_all()
-        # print(addCourseRunPageForm.payload)
-        # controller.show_frame(addCourseRunPage2)
-
     def show_frame(self, cont):
         frame = self.frames[cont]
         frame.tkraise()
@@ -225,7 +216,7 @@ class searchAssessmentPage2(tk.Frame):
         label_0 = Label(self, text="Search Assessment", width=20, font=("bold", 20))
         label_0.place(x=90, y=27)
 
-        label_TpUEN = Label(self, text="Training Partner - UEN", width=20, font=("bold", 10), anchor='w')
+        label_TpUEN = Label(self, text="Training Partner - UEN*", width=20, font=("bold", 10), anchor='w')
         label_TpUEN.place(x=100, y=80)
 
         label_UEN_ttp = CreateToolTip(label_TpUEN, tooltipDescription["UEN"])
@@ -237,23 +228,23 @@ class searchAssessmentPage2(tk.Frame):
         label_tpCode = Label(self, text="TP Code*", width=20, font=("bold", 10), anchor='w')
         label_tpCode.place(x=100, y=105)
 
-        # label_runId_ttp = CreateToolTip(self.label_runId, tooltipDescription["CourseRunId"])
+        label_tpCode_ttp = CreateToolTip(label_tpCode, tooltipDescription["TpCode"])
 
         entry_tpCode = Entry(self)
         entry_tpCode.place(x=250, y=105)
 
-        label_page = Label(self, text="Number of Pages", width=20, font=("bold", 10), anchor='w')
+        label_page = Label(self, text="Number of Pages*", width=20, font=("bold", 10), anchor='w')
         label_page.place(x=100, y=130)
 
-        # label_runId_ttp = CreateToolTip(self.label_runId, tooltipDescription["CourseRunId"])
+        label_page_ttp = CreateToolTip(label_page, tooltipDescription["page"])
 
         entry_page = Entry(self)
         entry_page.place(x=250, y=130)
 
-        label_pageSize = Label(self, text="Page Sizes", width=20, font=("bold", 10), anchor='w')
+        label_pageSize = Label(self, text="Page Sizes*", width=20, font=("bold", 10), anchor='w')
         label_pageSize.place(x=100, y=155)
 
-        # label_runId_ttp = CreateToolTip(self.label_runId, tooltipDescription["CourseRunId"])
+        label_pageSize_ttp = CreateToolTip(label_pageSize, tooltipDescription["pageSize"])
 
         entry_pageSize = Entry(self)
         entry_pageSize.place(x=250, y=155)
@@ -353,11 +344,7 @@ class searchAssessmentPage2(tk.Frame):
 
         # adding of single line text box
         edit = Entry(self, background="light gray")
-
-        # positioning of text box
         edit.place(x=285, height=21, y=244)
-
-        # setting focus
         edit.focus_set()
 
         butt_resp = Button(tab2, text='Find', command=lambda: find("curl"), highlightthickness=0, bd=0,

@@ -5,18 +5,13 @@ from tkinter import ttk, scrolledtext
 from PIL import ImageTk, Image
 from tkinter import filedialog
 from tkinter import messagebox
-
-from EnrolmentFunction import getDeleteEnrolmentPayLoad, cancelEnrolment, curlPostRequest, \
-    curlPostRequestUpdateEnrolmentFee, getUpdateEnrolmentFeePayLoad, updateEnrolmentFee
-from courseRunFunctions import getDeleteCourseRunPayLoad
+from EnrolmentFunction import curlPostRequestUpdateEnrolmentFee, getUpdateEnrolmentFeePayLoad, updateEnrolmentFee
 import json
-
 from tooltip import CreateToolTip
 
 # Load Tooltip Json object as ttDescription
 with open("TooltipDescription.json") as f:
     tooltipDescription = json.load(f)
-
 
 # Update Fee Collection Page
 class updateEnrolFeePage(tk.Frame):
@@ -194,14 +189,14 @@ class updateEnrolFeePage(tk.Frame):
             files = [('JSON', '*.json'),
                      ('Text Document', '*.txt')]
             file = filedialog.asksaveasfile(filetypes=files, defaultextension='.json')
-            filetext = str(getUpdateEnrolmentFeePayLoad(entry_ERN.get())) if method == "payload" else str(
+            filetext = str(getUpdateEnrolmentFeePayLoad(self.entry_ERN.get())) if method == "payload" else str(
                 responseText.get("1.0", END))
             file.write(filetext)
             file.close()
             messagebox.showinfo("Successful", "File has been downloaded")
 
         # This method activates two other methods.
-        # 1) this method calls the delete method in courseRunFunction and return the response
+        # 1) this method calls the delete method in enrolmentFunction and return the response
         # 2) Based on the response, if a status 200 is received, it will display the response
         def updateFeeCallBack(enrolRefNum):
             resp = updateEnrolmentFee(enrolRefNum)

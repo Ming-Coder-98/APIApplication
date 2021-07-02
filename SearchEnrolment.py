@@ -20,7 +20,6 @@ def txtEvent(event):
         return
     else:
         return "break"
-
 # Frame for Page 1 - Search Enrolment
 class searchEnrolmentPage1(tk.Frame):
     def __init__(self, parent, controller):
@@ -64,7 +63,7 @@ class searchEnrolmentPage1(tk.Frame):
 
         label_field_ttp = CreateToolTip(label_field, tooltipDescription["field"])
 
-        field = ttk.Combobox(self, width=27, state="readonly")
+        field = ttk.Combobox(self, width=17, state="readonly")
         field['values'] = ["Select an Option",
                            "updatedOn",
                            "createdOn"]
@@ -76,7 +75,7 @@ class searchEnrolmentPage1(tk.Frame):
 
         label_order_ttp = CreateToolTip(label_order, tooltipDescription["order"])
 
-        order = ttk.Combobox(self, width=27, state="readonly")
+        order = ttk.Combobox(self, width=17, state="readonly")
         order['values'] = ["Select an Option",
                            "asc",
                            "desc"]
@@ -106,9 +105,9 @@ class searchEnrolmentPage1(tk.Frame):
         label_status = Label(self, text="Enrolment Status", width=20, font=("bold", 10), anchor = 'w')
         label_status.place(x=80, y=365)
 
-        label_status_ttp = CreateToolTip(label_status, tooltipDescription["status"])
+        label_status_ttp = CreateToolTip(label_status, tooltipDescription["enrolmentStatus"])
 
-        status = ttk.Combobox(self, width=27, state="readonly")
+        status = ttk.Combobox(self, width=17, state="readonly")
         status['values'] = ["Select an Option",
                             "Confirmed",
                            "Cancelled"]
@@ -118,7 +117,7 @@ class searchEnrolmentPage1(tk.Frame):
         label_traineeId = Label(self, text="Trainee Id", width=20, font=("bold", 10), anchor = 'w')
         label_traineeId.place(x=80, y=390)
 
-        label_traineeId = CreateToolTip(label_traineeId, tooltipDescription["TraineeId"])
+        label_traineeId_ttp = CreateToolTip(label_traineeId, tooltipDescription["TraineeId"])
 
         entry_traineeId = Entry(self)
         entry_traineeId.place(x=250, y=390)
@@ -129,7 +128,7 @@ class searchEnrolmentPage1(tk.Frame):
 
         label_statusCollection_ttp = CreateToolTip(label_statusCollection, tooltipDescription["collectionStatus"])
 
-        statusCollection = ttk.Combobox(self, width=27, state="readonly")
+        statusCollection = ttk.Combobox(self, width=17, state="readonly")
         statusCollection['values'] = ["Select an Option",
                                       "Full Payment",
                                            "Pending Payment",
@@ -142,9 +141,9 @@ class searchEnrolmentPage1(tk.Frame):
         label_idType = Label(self, text="ID Type", width=20, font=("bold", 10), anchor = 'w')
         label_idType.place(x=80, y=440)
 
-        label_idType_ttp = CreateToolTip(label_idType, tooltipDescription["TraineeIdType"])
+        label_IdType_ttp = CreateToolTip(label_idType, tooltipDescription["TraineeIdType"])
 
-        idType = ttk.Combobox(self, width=27, state="readonly")
+        idType = ttk.Combobox(self, width=17, state="readonly")
         idType['values'] = ["Select an Option",
                             "NRIC",
                            "FIN",
@@ -174,7 +173,7 @@ class searchEnrolmentPage1(tk.Frame):
 
         label_sponsorshipType_ttp = CreateToolTip(label_sponsorshipType, tooltipDescription["SponsorshipType"])
 
-        sponsorshipType = ttk.Combobox(self, width=27, state="readonly")
+        sponsorshipType = ttk.Combobox(self, width=17, state="readonly")
         sponsorshipType['values'] = ["Select an Option",
                                      "EMPLOYER",
                                      "INDIVIDUAL"
@@ -240,7 +239,6 @@ class searchEnrolmentPage1(tk.Frame):
                 payload['enrolment']['trainingPartner'] = {}
                 payload['enrolment']['trainingPartner']['uen'] = config['UEN']
 
-            #print(json.dumps(payload, indent=4))
             return str(json.dumps(payload, indent=4))
 
     def show_frame(self, cont):
@@ -248,7 +246,7 @@ class searchEnrolmentPage1(tk.Frame):
         frame.tkraise()
 
 
-# Search Enrolment Page
+# Search Enrolment Preview Page
 class searchEnrolmentPage2(tk.Frame):
 
     def refresh(controllerCurlText):
@@ -276,7 +274,7 @@ class searchEnrolmentPage2(tk.Frame):
         label_0 = Label(self, text="Search Enrolment", width=20, font=("bold", 20))
         label_0.place(x=90, y=27)
 
-        label_TpUEN = Label(self, text="Training Partner - UEN", width=20, font=("bold", 10), anchor = 'w')
+        label_TpUEN = Label(self, text="Training Partner - UEN*", width=20, font=("bold", 10), anchor = 'w')
         label_TpUEN.place(x=100, y=80)
 
         label_UEN_ttp = CreateToolTip(label_TpUEN, tooltipDescription["UEN"])
@@ -477,7 +475,7 @@ class searchEnrolmentPage2(tk.Frame):
             messagebox.showinfo("Successful", "File has been downloaded")
 
         # This method activates two other methods.
-        # 1) this method calls the delete method in courseRunFunction and return the response
+        # 1) this method calls the delete method in enrolmentFunction and return the response
         # 2) Based on the response, if a status 200 is received, it will display the response
         def searchEnrolmentCallBack(searchEnrolmentPayload):
             resp = searchEnrolment(searchEnrolmentPayload)

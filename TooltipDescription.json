@@ -24,7 +24,8 @@
     "PostalCode": "Information of Postal Code is required if Mode of training is not 2 or 4.\nExample: 123455",
     "WheelChairAccess": "Indication if the course run location is wheel chair accessible\nExample: true",
 
-    "SessionId":"",
+    "SessionId":"Indication of the ID of the session\n Eg: TGS-2020000703-224596-S1",
+    "SessionMonth":"Indication of the Month of the session\n Eg: 112021",
     "SessionStartDate":"Start Date should not be later than End Date \nExample: 20210616(YYYYMMDD) ",
     "SessionStartTime":"Start time should not be later than End Time if session is on the same day.\nExample: 17:30 (HH:MM)",
     "SessionEndDate":"End Date should not be earlier than Start Date \nExample: 20210621(YYYYMMDD) ",
@@ -64,10 +65,12 @@
     "assessmentDate":"Date the assessment was conducted",
     "page":"Page number of page displayed, starting from 0",
     "pageSize":"The number of items to be displayed on one page.",
-    "lastUpdateDateFrom":"This parameter is mandatory if retrieveType is DELTA. This will return records with last update date same or greater than this input value. Format YYYY-MM-DD.",
-    "lastUpdateDateTo":"Optional parameter. This will return records up till the specified date. Format YYYY-MM-DD.",
-    "field":"Field to sort by. Available fields -updatedOn, -createdOn. Will default to updatedOn if null",
-    "order":"Sort order. Ascending - asc, Descending - desc. Will default to desc if null",
     "status":"Status of enrolment records to be searched",
-    "enrolmentDate":"example: 2021-05-15"
+    "enrolmentStatus":"Status of the trainee's of the enrolment to the course",
+    "enrolmentDate": "Date of the Enrolment\n Example: 2020-05-15",
+    "lastUpdateDateTo": "Optional parameter. This will return records up till the specified date. Format YYYY-MM-DD\n Example: 2020-02-01",
+    "lastUpdateDateFrom" : "Mandatory if retrieveType is DELTA. This will return records with last update date same or greater than this input value. Format YYYY-MM-DD.\nExample: 2020-01-01",
+    "field": "Field to sort by. Available fields -updatedOn, -createdOn. Will default to updatedOn if null",
+    "order" : "Sort order. Ascending - asc, Descending - desc. Will default to desc if null",
+    "conferringInstitute":"UEN/branch code of the supporting assessment TP for the results. If left blank, the trainingPartner.code is set as the default value."
 }

@@ -66,7 +66,7 @@ class AddAssessmentMainPage(tk.Frame):
         self.entry_CRN = Entry(self)
         self.entry_CRN.place(x=270, y=240)
 
-        self.label_TpUEN = Label(self, text="Training Partner - UEN", width=20, font=("bold", 10), anchor='w')
+        self.label_TpUEN = Label(self, text="Training Partner - UEN*", width=20, font=("bold", 10), anchor='w')
         self.label_TpUEN.place(x=100, y=265)
 
         self.label_UEN_ttp = CreateToolTip(self.label_TpUEN, tooltipDescription["UEN"])
@@ -112,7 +112,7 @@ class AddAssessmentMainPage(tk.Frame):
         self.entry_TraineeId.place(x=270, y=375)
         entry_list.append(self.entry_TraineeId)
 
-        self.Label_TraineeName = Label(self, text="Trainee - Full Name", width=20, font=("bold", 10), anchor='w')
+        self.Label_TraineeName = Label(self, text="Trainee - Full Name*", width=20, font=("bold", 10), anchor='w')
         self.Label_TraineeName.place(x=100, y=400)
 
         self.Label_TraineeName_ttp = CreateToolTip(self.Label_TraineeName, tooltipDescription["TrainerName"])
@@ -121,7 +121,7 @@ class AddAssessmentMainPage(tk.Frame):
         self.entry_TraineeName.place(x=270, y=400)
         entry_list.append(self.entry_TraineeName)
 
-        self.label_results = Label(self, text="Results", width=20, font=("bold", 10), anchor='w')
+        self.label_results = Label(self, text="Results*", width=20, font=("bold", 10), anchor='w')
         self.label_results.place(x=100, y=425)
 
         self.label_IdType_ttp = CreateToolTip(self.label_TraineeIdType, tooltipDescription["TraineeIdType"])
@@ -137,7 +137,7 @@ class AddAssessmentMainPage(tk.Frame):
         self.Label_score = Label(self, text="Score", width=20, font=("bold", 10), anchor='w')
         self.Label_score.place(x=100, y=450)
 
-        # self.Label_score_ttp = CreateToolTip(self.Label_TraineeName, tooltipDescription["TrainerName"])
+        self.Label_score_ttp = CreateToolTip(self.Label_score, tooltipDescription["Result"])
 
         self.entry_score = Entry(self)
         self.entry_score.place(x=270, y=450)
@@ -145,7 +145,7 @@ class AddAssessmentMainPage(tk.Frame):
         self.label_grade = Label(self, text="Grades", width=20, font=("bold", 10), anchor='w')
         self.label_grade.place(x=100, y=475)
 
-        # self.label_IdType_ttp = CreateToolTip(self.label_TraineeIdType, tooltipDescription["TraineeIdType"])
+        self.label_grade_ttp = CreateToolTip(self.label_grade, tooltipDescription["Grade"])
 
         self.grade = ttk.Combobox(self, width=17, state="readonly")
         self.grade['values'] = ["Select An Option",
@@ -158,10 +158,10 @@ class AddAssessmentMainPage(tk.Frame):
         self.grade.current(0)
         self.grade.place(x=270, y=475)
 
-        self.Label_assessmentDate = Label(self, text="Assessment Date", width=20, font=("bold", 10), anchor='w')
+        self.Label_assessmentDate = Label(self, text="Assessment Date*", width=20, font=("bold", 10), anchor='w')
         self.Label_assessmentDate.place(x=100, y=500)
 
-        # self.Label_score_ttp = CreateToolTip(self.Label_TraineeName, tooltipDescription["TrainerName"])
+        self.Label_assessmentDatettp = CreateToolTip(self.Label_assessmentDate, tooltipDescription["assessmentDate"])
 
         self.entry_assessmentDate = Entry(self)
         self.entry_assessmentDate.place(x=270, y=500)
@@ -170,7 +170,7 @@ class AddAssessmentMainPage(tk.Frame):
         self.Label_skillCode = Label(self, text="Skill Code", width=20, font=("bold", 10), anchor='w')
         self.Label_skillCode.place(x=100, y=525)
 
-        # self.Label_score_ttp = CreateToolTip(self.Label_TraineeName, tooltipDescription["TrainerName"])
+        self.Label_skillCode_ttp = CreateToolTip(self.Label_skillCode, tooltipDescription["skillCode"])
 
         self.entry_skillCode = Entry(self)
         self.entry_skillCode.place(x=270, y=525)
@@ -179,7 +179,7 @@ class AddAssessmentMainPage(tk.Frame):
         self.Label_branchCode = Label(self, text="UEN/Branch Code (Results)", width=20, font=("bold", 10), anchor='w')
         self.Label_branchCode.place(x=100, y=550)
 
-        # self.Label_score_ttp = CreateToolTip(self.Label_TraineeName, tooltipDescription["TrainerName"])
+        self.Label_branchCode_ttp = CreateToolTip(self.Label_branchCode, tooltipDescription["conferringInstitute"])
 
         self.entry_branchCode = Entry(self)
         self.entry_branchCode.place(x=270, y=550)

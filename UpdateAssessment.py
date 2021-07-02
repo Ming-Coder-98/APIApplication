@@ -64,8 +64,7 @@ class UpdateAssessmentMainPage(tk.Frame):
         self.Action.current(0)
         self.Action.place(x=270, y=255)
         def changeLabel():
-            print(self.Action.get())
-            if self.Action.get() == 'Void':
+            if self.Action.get() == 'Void' or self.Action.get() == 'Select An Option':
                 self.Grade.place_forget()
                 self.Result.place_forget()
                 self.entry_AssessmentDate.place_forget()
@@ -152,8 +151,11 @@ class UpdateAssessmentMainPage(tk.Frame):
 
         nextButton = tk.Button(self, text="Next", bg="white", width=25, pady=5, command=lambda: NextCallBack() if self.var.get() == 2 else controller.show_frame(UpdateAssessmentPageFileUploadPage))
         nextButton.place(x=250, y=675, anchor=CENTER)
+
+        #This function is used during the initialization to hide certain label
+        changeLabel()
+
         def NextCallBack():
-            print("nothing")
             UpdateAssessmentPreviewPage.payload = StoreAndSave()
             UpdateAssessmentPreviewPage.refresh(controller.frames[UpdateAssessmentPreviewPage].curlText)
             controller.show_frame(UpdateAssessmentPreviewPage)
@@ -256,11 +258,7 @@ class UpdateAssessmentPreviewPage(tk.Frame):
         self.varResp.set(1)
         # adding of single line text box
         edit = Entry(self, background="light gray")
-
-        # positioning of text box
         edit.place(x=285, height=21, y=204)
-
-        # setting focus
         edit.focus_set()
 
         butt_resp = Button(tab2, text='Find', command=lambda: find("curl"), highlightthickness=0, bd=0,
@@ -297,7 +295,6 @@ class UpdateAssessmentPreviewPage(tk.Frame):
                 responseText.insert(tk.END, display.decode())
 
         def updateCallBack():
-            print("Create Enrolment:" + UpdateAssessmentPreviewPage.payload)
             responseText.delete("1.0","end")
             resp = updateEnrolment(UpdateAssessmentPreviewPage.refNumber,UpdateAssessmentPreviewPage.payload)
             try:
@@ -541,7 +538,6 @@ class UpdateAssessmentPageFileUploadPage(tk.Frame):
             if (payload != ''):
                 responseText.delete("1.0","end")
                 resp = updateAssessment(self.entry_EnrolRefNum.get(),payload)
-                print(resp)
                 try:
                     resp = doDecryption(resp)
                     resp = json.loads(resp.decode())
