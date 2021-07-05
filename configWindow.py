@@ -129,7 +129,7 @@ def storeAndsave_all():
     if (entries[3].entry.get() != ''):
         configInfoJson["keyPath"] = entries[3].entry.get()
     #Save config File
-    saveJsonFormat(configInfoJson, "config.json")
+    saveJsonFormat(configInfoJson, config_path)
     entries = entries
     tkinter.messagebox.showinfo(title="Success", message="Configuration Information Successfully Saved")
     
@@ -147,7 +147,7 @@ class showConfigWindow(Toplevel):
     def displayConfigInfo(frame):
 
         #Load Config Infomation
-        configData = loadFile("config.json")
+        configData = loadFile(config_path)
         configData = json.loads(configData)
         
 

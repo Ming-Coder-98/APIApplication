@@ -16,5 +16,7 @@ def resource_path(relative_path):
 
     return os.path.join(base_path, relative_path)
 
-tooltip_path = resource_path("TooltipDescription.json")
-config_path = resource_path("config.json")
+# tooltip_path = resource_path("TooltipDescription.json")
+# config_path = resource_path("config.json")
+tooltip_path = "TooltipDescription.json"
+config_path = "config.json"
