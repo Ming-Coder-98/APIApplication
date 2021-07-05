@@ -224,7 +224,7 @@ class addCourseRunPage2(tk.Frame):
         label_1 = Label(self, text="Run", width=20, font=("bold", 15))
         label_1.place(x=137, y=100)
 
-        label_courseVacCode = Label(self, text="Course Vacancy Code*", width=20, font=("bold", 10), anchor='w')
+        label_courseVacCode = Label(self, text="Vacancy Code*", width=20, font=("bold", 10), anchor='w')
         label_courseVacCode.place(x=80, y=140)
 
         label_courseVacCode_ttp = CreateToolTip(label_courseVacCode, tooltipDescription["CourseVacCode"])
@@ -237,7 +237,7 @@ class addCourseRunPage2(tk.Frame):
         self.courseVacCode.current(0)
         self.courseVacCode.place(x=250, y=140)
 
-        label_courseVacDescription = Label(self, text="Course Vacancy Description", width=20, font=("bold", 10),
+        label_courseVacDescription = Label(self, text="Vacancy Description", width=20, font=("bold", 10),
                                            anchor='w')
         label_courseVacDescription.place(x=80, y=165)
 

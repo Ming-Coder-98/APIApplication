@@ -40,11 +40,11 @@ class viewEnrolmentPage(tk.Frame):
         label_0 = Label(self, text="View Enrolment", width=20, font=("bold", 20))
         label_0.place(x=90, y=53)
 
-        label_EnrolRefNum = Label(self, text="Enrolment Reference Number", width=22, font=("bold", 10), anchor='w')
+        label_EnrolRefNum = Label(self, text="Enrolment Reference Number*", width=22, font=("bold", 10), anchor='w')
         label_EnrolRefNum.place(x=100, y=130)
         label_EnrolRefNum_ttp = CreateToolTip(label_EnrolRefNum, tooltipDescription["EnrolRefNum"])
         entry_1 = Entry(self)
-        entry_1.place(x=275, y=132)
+        entry_1.place(x=280, y=132)
 
         # This method is used to update the display information dynamically in "Payload" Tab whenever user key in a value
         def typing(event):
@@ -208,11 +208,11 @@ class deleteEnrolmentPage(tk.Frame):
         label_0.place(x=90, y=53)
 
         # Enrolment Ref Number
-        label_ERN = Label(self, text="Enrolment Reference Number", width=22, font=("bold", 10), anchor='w')
+        label_ERN = Label(self, text="Enrolment Reference Number*", width=22, font=("bold", 10), anchor='w')
         label_ERN.place(x=100, y=110)
 
         entry_ERN = Entry(self)
-        entry_ERN.place(x=275, y=110)
+        entry_ERN.place(x=280, y=110)
 
         label_ERN_ttp = CreateToolTip(label_ERN, tooltipDescription["EnrolRefNum"])
 

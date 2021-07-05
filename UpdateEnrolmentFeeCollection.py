@@ -36,15 +36,15 @@ class updateEnrolFeePage(tk.Frame):
         label_0.place(x=30, y=53)
 
         # Enrolment Ref Number
-        label_ERN = Label(self, text="Enrolment Reference Number", width=22, font=("bold", 10), anchor='w')
+        label_ERN = Label(self, text="Enrolment Reference Number*", width=22, font=("bold", 10), anchor='w')
         label_ERN.place(x=100, y=110)
 
         self.entry_ERN = Entry(self)
-        self.entry_ERN.place(x=275, y=110)
+        self.entry_ERN.place(x=280, y=110)
 
         label_ERN_ttp = CreateToolTip(label_ERN, tooltipDescription["EnrolRefNum"])
 
-        label_statusCollection = Label(self, text="Fee Status Collection*", width=20, font=("bold", 10))
+        label_statusCollection = Label(self, text="Fee Status Collection*", width=22, font=("bold", 10), anchor='w')
         label_statusCollection.place(x=100, y=140)
 
         label_statusCollection_ttp = CreateToolTip(label_statusCollection, tooltipDescription["collectionStatus"])
@@ -56,7 +56,7 @@ class updateEnrolFeePage(tk.Frame):
                                            "Cancelled"
                                            ]
         self.statusCollection.current(0)
-        self.statusCollection.place(x=272, y=140)
+        self.statusCollection.place(x=280, y=140)
 
 
         # This method is used to update the display information dynamically in "Payload" Tab whenever user key in a value
