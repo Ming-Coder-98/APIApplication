@@ -53,7 +53,7 @@ class addAttendancePage1(tk.Frame):
         entry_sessionID = Entry(self)
         entry_sessionID.place(x=250, y=160)
 
-        label_attendanceStatusCode = Label(self, text="Attendance Status Code", width=20, font=("bold", 10), anchor='w')
+        label_attendanceStatusCode = Label(self, text="Attendance Status Code*", width=20, font=("bold", 10), anchor='w')
         label_attendanceStatusCode.place(x=80, y=185)
 
         # label_CourseModeOfTraining_ttp = CreateToolTip(label_CourseModeOfTraining, tooltipDescription["ModeOfTraining"])
@@ -67,7 +67,7 @@ class addAttendancePage1(tk.Frame):
         attendanceStatusCode.current(0)
         attendanceStatusCode.place(x=250, y=185)
 
-        label_traineeID = Label(self, text="Trainee ID", width=20, font=("bold", 10), anchor='w')
+        label_traineeID = Label(self, text="Trainee ID*", width=20, font=("bold", 10), anchor='w')
         label_traineeID.place(x=80, y=210)
 
         # label_closeRegDate_ttp = CreateToolTip(label_closeRegDate, tooltipDescription["CourseRegistrationDateClose"])
@@ -75,7 +75,7 @@ class addAttendancePage1(tk.Frame):
         entry_traineeID = Entry(self)
         entry_traineeID.place(x=250, y=210)
 
-        label_traineeName = Label(self, text="Trainee Name", width=20, font=("bold", 10), anchor='w')
+        label_traineeName = Label(self, text="Trainee Name*", width=20, font=("bold", 10), anchor='w')
         label_traineeName.place(x=80, y=235)
 
         # label_closeRegDate_ttp = CreateToolTip(label_closeRegDate, tooltipDescription["CourseRegistrationDateClose"])
@@ -91,7 +91,7 @@ class addAttendancePage1(tk.Frame):
         entry_traineeEmail = Entry(self)
         entry_traineeEmail.place(x=250, y=260)
 
-        label_traineeIdType = Label(self, text="Trainee ID Type", width=20, font=("bold", 10), anchor='w')
+        label_traineeIdType = Label(self, text="Trainee ID Type*", width=20, font=("bold", 10), anchor='w')
         label_traineeIdType.place(x=80, y=285)
 
         # label_CourseModeOfTraining_ttp = CreateToolTip(label_CourseModeOfTraining, tooltipDescription["ModeOfTraining"])
@@ -127,7 +127,7 @@ class addAttendancePage1(tk.Frame):
         entry_traineeHours = Entry(self)
         entry_traineeHours.place(x=250, y=335)
 
-        label_surveyLanguage = Label(self, text="Survey Language", width=20, font=("bold", 10), anchor='w')
+        label_surveyLanguage = Label(self, text="Survey Language*", width=20, font=("bold", 10), anchor='w')
         label_surveyLanguage.place(x=80, y=360)
 
         surveyLanguage = ttk.Combobox(self, width=17, state="readonly")

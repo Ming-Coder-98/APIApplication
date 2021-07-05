@@ -29,19 +29,19 @@ class getCourseSessionPage(tk.Frame):
         label_0 = Label(self, text="View Course Sessions", width=20, font=("bold", 20))
         label_0.place(x=90, y=23)
 
-        label_runId = Label(self, text="Course Run ID", width=20, font=("bold", 10), anchor='w')
+        label_runId = Label(self, text="Course Run ID*", width=21, font=("bold", 10), anchor='w')
         label_runId.place(x=105, y=90)
         label_runId_ttp = CreateToolTip(label_runId, tooltipDescription["CourseRunId"])
         entry_runId = Entry(self)
         entry_runId.place(x=275, y=90)
 
-        label_CRN = Label(self, text="Course References Number", width=20, font=("bold", 10), anchor='w')
+        label_CRN = Label(self, text="Course References Number*", width=21, font=("bold", 10), anchor='w')
         label_CRN.place(x=105, y=120)
         label_CRN_ttp = CreateToolTip(label_CRN, tooltipDescription["CourseReferenceNumber"])
         entry_CRN = Entry(self)
         entry_CRN.place(x=275, y=120)
 
-        label_sessionMonth = Label(self, text="Session Month (Optional)", width=20, font=("bold", 10), anchor='w')
+        label_sessionMonth = Label(self, text="Session Month (Optional)", width=21, font=("bold", 10), anchor='w')
         label_sessionMonth.place(x=105, y=150)
         label_sessionMonth_ttp = CreateToolTip(label_sessionMonth, tooltipDescription["SessionMonth"])
         entry_sessionMonth = Entry(self)

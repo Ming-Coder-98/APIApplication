@@ -33,7 +33,7 @@ class viewCourseRunPage(tk.Frame):
         label_0 = Label(self, text="View Course Run", width=20, font=("bold", 20))
         label_0.place(x=90, y=53)
 
-        label_1 = Label(self, text="Course Run ID", width=20, font=("bold", 10), anchor='w')
+        label_1 = Label(self, text="Course Run ID*", width=20, font=("bold", 10), anchor='w')
         label_1.place(x=105, y=130)
         label_1_ttp = CreateToolTip(label_1, ttDescription["CourseRunId"])
         entry_1 = Entry(self)
@@ -178,7 +178,7 @@ class deleteCourseRunPage(tk.Frame):
         label_0.place(x=90, y=53)
 
         # Course Run Id
-        label_1 = Label(self, text="Course Run ID ", width=20, font=("bold", 10), anchor='w')
+        label_1 = Label(self, text="Course Run ID*", width=20, font=("bold", 10), anchor='w')
         label_1.place(x=105, y=100)
 
         entry_1 = Entry(self)
@@ -186,7 +186,7 @@ class deleteCourseRunPage(tk.Frame):
         label_1_ttp = CreateToolTip(label_1, ttDescription["CourseRunId"])
 
         # Course Ref Number
-        label_CRN = Label(self, text="Course Reference Number", width=20, font=("bold", 10), anchor='w')
+        label_CRN = Label(self, text="Course Reference Number*", width=20, font=("bold", 10), anchor='w')
         label_CRN.place(x=105, y=130)
 
         entry_CRN = Entry(self)
