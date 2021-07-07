@@ -36,30 +36,33 @@ class searchAssessmentPage1(tk.Frame):
         label_0 = Label(self, text="Search Assessment", width=20, font=("bold", 20))
         label_0.place(x=90, y=53)
 
+        label_optionalFields = Label(self, text="Optional Fields", width=20, font=("bold", 17))
+        label_optionalFields.place(x=120, y=100)
+
         label_filterTitle = Label(self, text="Filter Details:", width=20, font=("bold", 15))
-        label_filterTitle.place(x=137, y=100)
+        label_filterTitle.place(x=137, y=140)
 
         label_updateFromDate = Label(self, text="Last Update Dates From", width=20, font=("bold", 10), anchor='w')
-        label_updateFromDate.place(x=80, y=135)
+        label_updateFromDate.place(x=80, y=175)
 
         label_updateFromDate_ttp = CreateToolTip(label_updateFromDate, tooltipDescription["lastUpdateDateFrom"])
 
         entry_updateFromDate = Entry(self)
-        entry_updateFromDate.place(x=250, y=135)
+        entry_updateFromDate.place(x=250, y=175)
 
         label_updateToDate = Label(self, text="Last Update Dates To", width=20, font=("bold", 10), anchor='w')
-        label_updateToDate.place(x=80, y=160)
+        label_updateToDate.place(x=80, y=200)
 
         label_updateToDate_ttp = CreateToolTip(label_updateToDate, tooltipDescription["lastUpdateDateTo"])
 
         entry_updateToDate = Entry(self)
-        entry_updateToDate.place(x=250, y=160)
+        entry_updateToDate.place(x=250, y=200)
 
         label_sortTitle = Label(self, text="Sort by Details:", width=20, font=("bold", 15))
-        label_sortTitle.place(x=137, y=190)
+        label_sortTitle.place(x=137, y=230)
 
         label_field = Label(self, text="Field", width=20, font=("bold", 10), anchor='w')
-        label_field.place(x=80, y=225)
+        label_field.place(x=80, y=260)
 
         label_field_ttp = CreateToolTip(label_field, tooltipDescription["field"])
 
@@ -68,10 +71,10 @@ class searchAssessmentPage1(tk.Frame):
                            "updatedOn",
                            "createdOn"]
         field.current(0)
-        field.place(x=250, y=225)
+        field.place(x=250, y=260)
 
         label_order = Label(self, text="Order", width=20, font=("bold", 10), anchor='w')
-        label_order.place(x=80, y=250)
+        label_order.place(x=80, y=285)
 
         label_order_ttp = CreateToolTip(label_order, tooltipDescription["order"])
 
@@ -80,54 +83,54 @@ class searchAssessmentPage1(tk.Frame):
                            "asc",
                            "desc"]
         order.current(0)
-        order.place(x=250, y=250)
+        order.place(x=250, y=285)
 
         label_sortTitle = Label(self, text="Assessment Details:", width=20, font=("bold", 15))
-        label_sortTitle.place(x=137, y=280)
+        label_sortTitle.place(x=137, y=310)
 
         label_runId = Label(self, text="Course Run Id", width=20, font=("bold", 10), anchor='w')
-        label_runId.place(x=80, y=315)
+        label_runId.place(x=80, y=340)
 
         label_runId_ttp = CreateToolTip(label_runId, tooltipDescription["CourseRunId"])
 
         entry_runId = Entry(self)
-        entry_runId.place(x=250, y=315)
+        entry_runId.place(x=250, y=340)
 
         label_CRN = Label(self, text="Course Reference Number", width=20, font=("bold", 10), anchor='w')
-        label_CRN.place(x=80, y=340)
+        label_CRN.place(x=80, y=365)
 
         label_CRN_ttp = CreateToolTip(label_CRN, tooltipDescription["ExternalCourseReferenceNumber"])
 
         entry_CRN = Entry(self)
-        entry_CRN.place(x=250, y=340)
+        entry_CRN.place(x=250, y=365)
 
         label_traineeId = Label(self, text="Trainee Id", width=20, font=("bold", 10), anchor='w')
-        label_traineeId.place(x=80, y=365)
+        label_traineeId.place(x=80, y=390)
 
         label_traineeId_ttp = CreateToolTip(label_traineeId, tooltipDescription["TrainerID"])
 
         entry_traineeId = Entry(self)
-        entry_traineeId.place(x=250, y=365)
+        entry_traineeId.place(x=250, y=390)
 
         label_ERN = Label(self, text="Enrolment Ref Number", width=20, font=("bold", 10), anchor='w')
-        label_ERN.place(x=80, y=390)
+        label_ERN.place(x=80, y=415)
 
         label_ERN_ttp = CreateToolTip(label_ERN, tooltipDescription["EnrolRefNum"])
 
         entry_ERN = Entry(self)
-        entry_ERN.place(x=250, y=390)
+        entry_ERN.place(x=250, y=415)
 
         label_skillCode = Label(self, text="Skill Code", width=20, font=("bold", 10), anchor='w')
-        label_skillCode.place(x=80, y=415)
+        label_skillCode.place(x=80, y=440)
 
         label_skillCode_ttp = CreateToolTip(label_skillCode, tooltipDescription["skillCode"])
 
         entry_skillCode = Entry(self)
-        entry_skillCode.place(x=250, y=415)
+        entry_skillCode.place(x=250, y=440)
 
         previewButton = tk.Button(self, text="Next", bg="white", width=25, pady=5,
                                   command=lambda: NextCallBack())
-        previewButton.place(x=250, y=465, anchor=CENTER)
+        previewButton.place(x=250, y=495, anchor=CENTER)
 
         def NextCallBack():
             searchAssessmentPage2.payload = StoreAndSave()
