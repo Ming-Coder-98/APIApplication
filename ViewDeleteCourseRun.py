@@ -192,7 +192,7 @@ class deleteCourseRunPage(tk.Frame):
         entry_CRN = Entry(self)
         entry_CRN.place(x=275, y=130)
 
-        label_CRN_ttp = CreateToolTip(label_CRN, ttDescription["CourseReferenceNumber"])
+        label_CRN_ttp = CreateToolTip(label_CRN, ttDescription["ExternalCourseReferenceNumber"])
 
         # This method is used to update the display information dynamically in "Payload" Tab whenever user key in a value
         def typing():

@@ -96,7 +96,7 @@ class searchAssessmentPage1(tk.Frame):
         label_CRN = Label(self, text="Course Reference Number", width=20, font=("bold", 10), anchor='w')
         label_CRN.place(x=80, y=340)
 
-        label_CRN_ttp = CreateToolTip(label_CRN, tooltipDescription["CourseReferenceNumber"])
+        label_CRN_ttp = CreateToolTip(label_CRN, tooltipDescription["ExternalCourseReferenceNumber"])
 
         entry_CRN = Entry(self)
         entry_CRN.place(x=250, y=340)

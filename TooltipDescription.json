@@ -23,6 +23,7 @@
     "EnrolRefNum": "Indication of the Reference Number generated during the creation of Enrolment.\nExample:ENR-2003-123456",
     "enrolmentStatus":"Status of the trainee's of the enrolment to the course",
     "enrolmentDate": "Date of the Enrolment\n Example: 2020-05-15",
+    "ExternalCourseReferenceNumber":"",
 
     "Floor": "Information of Floor is required if Mode of training is not 2 or 4.\nExample: 15",
     "field": "Field to sort by. Available fields -updatedOn, -createdOn. Will default to updatedOn if null",

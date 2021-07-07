@@ -57,7 +57,7 @@ class ViewSessionAttendance(tk.Frame):
         self.label_crn = Label(self, text="Reference Number*", width=20, font=("bold", 10), anchor = 'w')
         self.label_crn.place(x=100, y=130)
 
-        label_crn_ttp = CreateToolTip(self.label_crn, tooltipDescription["CourseReferenceNumber"])
+        label_crn_ttp = CreateToolTip(self.label_crn, tooltipDescription["ExternalCourseReferenceNumber"])
 
         self.entry_crn = Entry(self)
         self.entry_crn.place(x=250, y=130)

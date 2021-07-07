@@ -61,7 +61,7 @@ class AddEnrolmentMainPage(tk.Frame):
         self.label_CRN = Label(self, text="Course Reference Number*", width=20, font=("bold", 10), anchor='w')
         self.label_CRN.place(x=100, y=240)
 
-        self.label_CRN_ttp = CreateToolTip(self.label_CRN, tooltipDescription["CourseReferenceNumber"])
+        self.label_CRN_ttp = CreateToolTip(self.label_CRN, tooltipDescription["ExternalCourseReferenceNumber"])
 
         self.entry_CRN = Entry(self)
         self.entry_CRN.place(x=270, y=240)
@@ -89,11 +89,11 @@ class AddEnrolmentMainPage(tk.Frame):
         self.label_TraineeTitle = Label(self, text="Trainee Details", width=20, font=("bold", 15))
         self.label_TraineeTitle.place(x=137, y=315)
 
-        self.Label_TraineeEmpUen = Label(self, text="Trainee - Employer UEN*", width=20, font=("bold", 10), anchor='w')
+        self.Label_TraineeEmpUen = Label(self, text="Trainee - Employer UEN", width=20, font=("bold", 10), anchor='w')
         self.Label_TraineeEmpUen.place(x=100, y=350)
 
         self.Label_TraineeEmpUen_ttp = CreateToolTip(self.Label_TraineeEmpUen, tooltipDescription["UEN"])
-        self.entry_TraineeEmpUen = Entry(self, state=DISABLED, textvariable=uenReadOnly)
+        self.entry_TraineeEmpUen = Entry(self)
         self.entry_TraineeEmpUen.place(x=270, y=350)
         entry_list.append(self.entry_TraineeEmpUen)
 
@@ -174,8 +174,8 @@ class AddEnrolmentMainPage(tk.Frame):
                     payload['enrolment']['trainee']['employer']['contact']['contactNumber']['countryCode'] = self.entry_TraineeEmpCountryCode.get()
                 if self.entry_TraineeEmpPhone.get() != '':
                     payload['enrolment']['trainee']['employer']['contact']['contactNumber']['phoneNumber'] = self.entry_TraineeEmpPhone.get()
-            if uenReadOnly.get() != '':
-                payload['enrolment']['trainee']['employer']['uen'] = uenReadOnly.get()
+            if self.entry_TraineeEmpUen.get() != '':
+                payload['enrolment']['trainee']['employer']['uen'] = self.entry_TraineeEmpUen.get()
             if self.entry_TraineeEmpEmail.get() != '':
                 payload['enrolment']['trainee']['employer']['contact']['emailAddress'] = self.entry_TraineeEmpEmail.get()
             if self.entry_TraineeEmpName.get() != '':
