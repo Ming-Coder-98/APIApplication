@@ -1,6 +1,7 @@
 import requests
 import json
 from resources import config_path
+from tkinter import messagebox
 keyPath = ""
 certPath = ""
 #Preload keypath and certPath
@@ -15,10 +16,14 @@ def httpRequestInit():
 def getHttpRequest(request_url):
       httpRequestInit()
       print(request_url)
-      response = requests.get(request_url, cert = (certPath,keyPath))
-      # print(response.request.headers)
-      printResponse(response)
-      return response
+      if keyPath != '' and certPath != '':
+            response = requests.get(request_url, cert = (certPath,keyPath))
+            # print(response.request.headers)
+            printResponse(response)
+            return response
+      else:
+            messagebox.showerror(title="Error", message="Unable to call API - Key Path or Cert Path is empty")
+            return None
       
 #payload must not be in Bytes
 def postHttpRequest(request_url, payload):

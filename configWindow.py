@@ -124,10 +124,8 @@ def storeAndsave_all():
 
     configInfoJson["UEN"] = entries[0].entry.get()
     configInfoJson["key"] = entries[1].entry.get()
-    if (entries[2].entry.get() != ''):
-        configInfoJson["certPath"] = entries[2].entry.get()
-    if (entries[3].entry.get() != ''):
-        configInfoJson["keyPath"] = entries[3].entry.get()
+    configInfoJson["certPath"] = entries[2].entry.get()
+    configInfoJson["keyPath"] = entries[3].entry.get()
     #Save config File
     saveJsonFormat(configInfoJson, config_path)
     entries = entries
