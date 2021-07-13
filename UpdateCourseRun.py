@@ -7,7 +7,7 @@ from tkinter import messagebox, Button, Entry, Label, StringVar, ttk, filedialog
 from tkinter.constants import CENTER, END, INSERT
 from tooltip import CreateToolTip
 from PIL import Image, ImageTk
-from HttpRequestFunction import loadFile
+from AdditionalFunction import loadFile
 from courseRunFunctions import curlPostRequest, getCourseRun, updateCourserun
 
 

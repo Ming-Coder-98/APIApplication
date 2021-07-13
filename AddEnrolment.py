@@ -498,6 +498,7 @@ class AddEnrolmentPreviewPage(tk.Frame):
         def createCallBack():
             responseText.delete("1.0","end")
             resp = addEnrolment(AddEnrolmentPreviewPage.payload)
+            print(resp)
             resp = doDecryption(resp)
             resp = json.loads(resp.decode())
             AddEnrolmentPreviewPage.textPayload = StringVar(self, value = str(json.dumps(resp,indent=4))) 

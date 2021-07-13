@@ -1,7 +1,7 @@
 {
     "key": "WB9YusKNEEwYwpXuv0Bx5yuGzPIhXTBnMevAumwtcQ4=",
-    "certPath": "C:/Users/User/Desktop/auto-py-to-exe-master/auto-py-to-exe-master/output/cert.pem",
-    "keyPath": "C:/Users/User/Desktop/auto-py-to-exe-master/auto-py-to-exe-master/output/key.pem",
+    "certPath": "",
+    "keyPath": "",
     "IV": "SSGAPIInitVector",
     "UEN": "199900650G"
 }

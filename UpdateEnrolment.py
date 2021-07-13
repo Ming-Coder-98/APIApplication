@@ -181,6 +181,7 @@ class UpdateEnrolmentMainPage(tk.Frame):
             for entry1 in entry_listEmp:
                 if (entry1.get() != ''):
                     payload['enrolment']['employer'] = {}
+                    payload['enrolment']['employer']['contact'] = {}
                     break
             for entry2 in entry_listTrainee:
                 if (entry2.get() != ''):
@@ -206,27 +207,27 @@ class UpdateEnrolmentMainPage(tk.Frame):
                     payload['enrolment']['trainee']['contactNumber']['areaCode'] = self.entry_TraineeAreaCode.get()     
 
             if self.entry_TraineeEmail.get() != '':
-                payload['enrolment']['trainee']['emailAddress'] = self.entry_TraineeEmail.get()
+                payload['enrolment']['trainee']['email'] = self.entry_TraineeEmail.get()
            
             if (self.entry_EmpEmail.get() != ''):
-                payload['enrolment']['employer']['emailAddress'] = self.entry_EmpEmail.get()
+                payload['enrolment']['employer']['contact']['email'] = self.entry_EmpEmail.get()
 
             if (self.entry_EmpName.get() != ''):
-                payload['enrolment']['employer']['fullName'] = self.entry_EmpName.get()
+                payload['enrolment']['employer']['contact']['fullName'] = self.entry_EmpName.get()
 
             if (self.entry_EmpAreaCode.get() != '' or self.entry_EmpCountryCode.get() != '' or self.entry_EmpPhone.get() != ''):
-                payload['enrolment']['employer']['contactNumber'] = {}
+                payload['enrolment']['employer']['contact']['contactNumber'] = {}
                 if (self.entry_EmpPhone.get() != ''):
-                    payload['enrolment']['employer']['contactNumber']['phoneNumber'] = self.entry_EmpPhone.get()
+                    payload['enrolment']['employer']['contact']['contactNumber']['phoneNumber'] = self.entry_EmpPhone.get()
                 if (self.entry_EmpCountryCode.get() != ''):
-                    payload['enrolment']['employer']['contactNumber']['countryCode'] = self.entry_EmpCountryCode.get()
+                    payload['enrolment']['employer']['contact']['contactNumber']['countryCode'] = self.entry_EmpCountryCode.get()
                 if (self.entry_EmpAreaCode.get() != ''):
-                    payload['enrolment']['employer']['contactNumber']['areaCode'] = self.entry_EmpAreaCode.get()
+                    payload['enrolment']['employer']['contact']['contactNumber']['areaCode'] = self.entry_EmpAreaCode.get()
             
             if self.entry_DiscountAmt.get() != '':
                 payload['enrolment']['fees']['discountAmount'] = self.entry_DiscountAmt.get()
             if self.collectionStatus.get() != 'Select An Option':
-                payload['enrolment']['fees']['collectionStatus'] = self.collectionStatus.get()
+                payload['enrolment']['fees']['feeCollectionStatus'] = self.collectionStatus.get()
 
             UpdateEnrolmentPreviewPage.refNumber = self.entry_EnrolRefNum.get()       
             return str(json.dumps(payload, indent=4))

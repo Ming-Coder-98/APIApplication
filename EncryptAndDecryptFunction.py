@@ -6,40 +6,44 @@ from base64 import b64decode, b64encode
 import json
 from resources import config_path
 
-configInfo = loadFile(config_path)
-configInfoJson = json.loads(configInfo)
 
 
-certPath = (configInfoJson["certPath"],configInfoJson["keyPath"])
-backend = default_backend()
-padder = padding.PKCS7(128).padder()
-unpadder = padding.PKCS7(128).unpadder()
-key = any
-iv = (configInfoJson["IV"]).encode()
-
-
-#encryption Function
+#-------------------- Description --------------------
+#doEncryption encrypt the payload in Bytes format. This method is used when encryption is required based on the API requirement (Request Encrypted)
+#doEncryption operate with an external Json file (config.json) where it would load the encryption key ("key") and Initialization Vector ("IV") which will be used to encrypt the payload
+#It uses cryptography libraries with a default backend and a preconfigured Initialization Vector - "SSGAPIInitVector"
+#Input parameter (payloadByte) : payload to encrypt in Bytes 
+#Output parameter (ciphertxt_out) : encrypted payload in Bytes
+#Additional Note : "config_path" refers to the location path of the config.json file
+#-----------------------------------------------------
 def doEncryption(payloadByte):
-    global key, certPath
-    #preConfiguration
-    certPath = (configInfoJson["certPath"],configInfoJson["keyPath"])
+    #preConfiguration - obtained the required information from config.json file in the folder
+    configInfo = loadFile(config_path)
+    configInfoJson = json.loads(configInfo) 
     key = b64decode(configInfoJson["key"])
-    cipher = Cipher(algorithms.AES(key), modes.CBC(iv), backend=backend)
+    cipher = Cipher(algorithms.AES(key), modes.CBC((configInfoJson["IV"]).encode()), backend=default_backend())
     padder = padding.PKCS7(128).padder()
     
     encryptor = cipher.encryptor()
     payloadToSend = padder.update(payloadByte) + padder.finalize()
-    ct = encryptor.update(payloadToSend) + encryptor.finalize()
-    ct_out = b64encode(ct)
-    return ct_out
+    ciphertxt = encryptor.update(payloadToSend) + encryptor.finalize()
+    ciphertxt_out = b64encode(ciphertxt)
+    return ciphertxt_out
 
-# #decryption
+#-------------------- Description --------------------
+#doDecryption encrypt the payload in Bytes format. This method is used when decryption is required based on the API requirement (Response Encrypted)
+#doDecryption operate with an external Json file (config.json) where it would load the encryption key ("key") and Initialization Vector ("IV") which will be used to decrypt the payload
+#It uses cryptography libraries with a default backend and a preconfigured Initialization Vector - "SSGAPIInitVector"
+#Input parameter (response) : response to decrypt in Bytes 
+#Output parameter (plain) : decrypted response in Bytes
+#Additional Note : "config_path" refers to the location path of the config.json file
+#-----------------------------------------------------
 def doDecryption(response):
-    global key, certPath
-    #preConfiguration
-    certPath = (configInfoJson["certPath"],configInfoJson["keyPath"])
+    #preConfiguration - obtained the required information from config.json file in the folder
+    configInfo = loadFile(config_path)
+    configInfoJson = json.loads(configInfo)
     key = b64decode(configInfoJson["key"])
-    cipher = Cipher(algorithms.AES(key), modes.CBC(iv), backend=backend)
+    cipher = Cipher(algorithms.AES(key), modes.CBC((configInfoJson["IV"]).encode()), backend=default_backend())
     unpadder = padding.PKCS7(128).unpadder()
 
     result = b64decode(response)
@@ -48,8 +52,4 @@ def doDecryption(response):
     plain = unpadder.update(plain) + unpadder.finalize()
     return plain
 
-#Display Info In pretty-print(readable) format
-def pprintJsonFormat(plain):
-    json_load = json.loads(plain.decode())  
-    text = json.dumps(json_load, indent = 4)
-    print(text)
+

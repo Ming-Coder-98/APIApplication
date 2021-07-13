@@ -1,84 +1,19 @@
+from HttpRequestFunction import getHttpRequest, postHttpRequestJson
+from AdditionalFunction import pprintJsonFormat, saveJsonFormat, loadFile
 import re
 from EncryptAndDecryptFunction import *
-from HttpRequestFunction import *
 import requests
 import json
-
-fileName = "demoConfig.json"
-
-def retrieveSesId():
-    # Load the runId saved
-    tempFile = open(fileName)
-    jsonTempFile = json.load(tempFile)
-    runId = jsonTempFile["runId"]
-    uen = jsonTempFile["UEN"]
-    courseReferenceNumber = jsonTempFile["CourseRefNum"]
-    #print(runId, uen, courseReferenceNumber)
-
-    # Call a Get HTTP to see if runId exists
-    print("Search up for Session ID")
-    resp = getHttpRequest("https://uat-api.ssg-wsg.sg/courses/runs/" + str(runId) + "/sessions" + "?uen="+ str(uen) + "&courseReferenceNumber=" + str(courseReferenceNumber))
-    print(resp.text)
-    return resp
-
-
-def saveSesIdDetails(resp):
-    configInfo = loadFile(fileName)
-    configInfo = json.loads(configInfo)
-    configInfo["SesId"] = resp.json()["data"]["sessions"][0]["id"]
-    saveJsonFormat(configInfo, fileName)
-
-
-def retrieveAttendance():
-    tempFile = open(fileName)
-    jsonTempFile = json.load(tempFile)
-    runId = jsonTempFile["runId"]
-    uen = jsonTempFile["UEN"]
-    courseReferenceNumber = jsonTempFile["CourseRefNum"]
-    sesId = jsonTempFile["SesId"]
-    baseRetrieveAttendanceurl = "https://uat-api.ssg-wsg.sg/courses/runs/"
-    response = getHttpRequest(baseRetrieveAttendanceurl + str(runId) + "/sessions/attendance?uen=" + str(uen) + "&courseReferenceNumber=" + str(courseReferenceNumber) + "&sessionId=" + str(sesId))
-    result = doDecryption(response.text)
-    pprintJsonFormat(result)
-
-
-def uploadAttendance():
-
-    saveSesIdDetails(retrieveSesId())
-    updateAttendancePayload()
-
-    tempFile = open(fileName)
-    jsonTempFile = json.load(tempFile)
-    runId = jsonTempFile["runId"]
-    baseAttendanceURL = "https://uat-api.ssg-wsg.sg/courses/runs/" + str(runId) + "/sessions/attendance"
-    attendancePayload = loadFile("AttendancePayLoad.json")
-    ciptertext = doEncryption(attendancePayload.encode())
-    response = postHttpRequestJson(baseAttendanceURL, ciptertext.decode())
-    print(response.text)
-
-    if (response.status_code < 400):
-        print("Successfully uploaded Attendance")
-    else:
-        raise Exception
-
-
-#Update the latest Session Id, UEN ,and Course Ref Number payload according to the config file
-def updateAttendancePayload():
-    #load config File
-    configInfo = loadFile(fileName)
-    configInfoJson = json.loads(configInfo)
-
-    #load Attendance Json File
-    attendancePayload = loadFile("AttendancePayLoad.json")
-    attendancePayload = json.loads(attendancePayload)
-
-    #Update the latest value and save
-    attendancePayload["course"]["sessionID"] = configInfoJson["SesId"]
-    attendancePayload["course"]["referenceNumber"] = configInfoJson["CourseRefNum"]
-    attendancePayload["uen"] = configInfoJson["UEN"]
-
-    saveJsonFormat(attendancePayload, "AttendancePayLoad.json")
-
+#-------------------- Description --------------------
+#getSessionAttendance uses getHttpRequest in HttpRequestFunction.py to call Course Session Attendance API.  It is used to retrieve course session attendance information
+#Based on the values passed in, the URL will be set dynamically before calling the HTTP Request. Upon completion, the method will return the text decypted using doDecryption method 
+#Input parameter (runId) : Course Run Id
+#Input parameter (uen) : Training Partner UEN obtained from config.json
+#Input parameter (crn) : Course Reference Number
+#Input parameter (sessionId) : Session Id of the Course Run
+#Output parameter (text) : Response return from the server in Readable Text format
+#Additional Note : json.loads follow by json.dumps is used to indent the text into readable format
+#-----------------------------------------------------
 def getSessionAttendance(runId, uen, crn, sessionId):
     if uen != '':
         uen = "?uen=" + uen
@@ -92,7 +27,15 @@ def getSessionAttendance(runId, uen, crn, sessionId):
     text = json.dumps(json_load, indent = 4)
     return text
 
-#This method is to update the curl text dynamically for displaying purpose in viewEnrolmentPage
+#-------------------- Description --------------------
+#displayViewSession is a formatting method that display the information in the Application in a readable format for GET HTTP Request API for View Session Attendance Page
+#Based on the values passed in, the URL will be displayed dynamically to the User in the Application
+#Input parameter (runId) : Course Run Id
+#Input parameter (uen) : Training Partner UEN obtained from config.json
+#Input parameter (crn) : Course Reference Number
+#Input parameter (sessionId) : Session Id of the Course Run
+#Output parameter (text) : Formatted Version of the text to be display
+#-----------------------------------------------------  
 def displayViewSession(runId, uen, crn, sessionId):
     if uen != '':
         uen = "?uen=" + uen
@@ -109,11 +52,15 @@ def displayViewSession(runId, uen, crn, sessionId):
       )
     return text
 
-#This method is to update the curl text dynamically for displaying purpose in AddAttendancePage
+#-------------------- Description --------------------
+#curlRequestUploadAttendance is a formatting method that display the information in the Application in a readable format for GET HTTP Request API for Upload Session Attendance Page
+#Based on the values passed in, the URL will be displayed dynamically to the User in the Application
+#Input parameter (runId) : Course Run Id
+#Input parameter (payloadToDisplay) : Request Body information that is going to be send over to the server
+#Output parameter (text) : Formatted Version of the text to be display
+#-----------------------------------------------------  
 def curlRequestUploadAttendance(runId, payloadToDisplay):
-     # Remove Whitespacing new line and tabs for accurate content length
-      payloadToSend = re.sub(r"[\n\t\s]*", "", payloadToDisplay)
-      req = requests.Request('POST',"https://uat-api.ssg-wsg.sg/courses/runs/" +  str(runId) + "/sessions/attendance" ,headers={'accept':'application/json'},data=str(payloadToSend)).prepare()
+      req = requests.Request('POST',"https://uat-api.ssg-wsg.sg/courses/runs/" +  str(runId) + "/sessions/attendance" ,headers={'accept':'application/json'},data=str(payloadToDisplay)).prepare()
       text =  '{}\n{}\r\n{}\n{}\r\n\r\n{}\n{}'.format(
             '----------------Request Information----------------',
           req.method + ' ' + req.url,
@@ -124,10 +71,16 @@ def curlRequestUploadAttendance(runId, payloadToDisplay):
       )
       return text
 
-
+#-------------------- Description --------------------
+#uploadAttendanceFn uses getHttpRequest in HttpRequestFunction.py to call Upload Course Session Attendance API.  It is used to upload a course session attendance information
+#The payload will be encrypted using doEncryption method before calling POST Http Request
+#Upon completion, the method will return the text decypted using doDecryption method 
+#Input parameter (runId) : Course Run Id
+#Input parameter (attendancePayload) : Attendance information in text format to send as payload in POST Http Request
+#Output parameter (text) : Response return from the server in Readable Text format
+#-----------------------------------------------------
 def uploadAttendanceFn(runId, attendancePayload):
     baseAttendanceURL = "https://uat-api.ssg-wsg.sg/courses/runs/" + str(runId) + "/sessions/attendance"
     ciptertext = doEncryption(attendancePayload.encode())
     response = postHttpRequestJson(baseAttendanceURL, ciptertext.decode())
-    #print(response.text)
     return response.text

@@ -296,8 +296,6 @@ class deleteCourseRunPage(tk.Frame):
         # 2) Based on the response, if a status 200 is received, it will display the response
         def deleteCallBack(runId):
             resp = deleteCourserun(runId)
-            if (resp.status_code < 400):
-                messagebox.showinfo("Successful", "Successfully Delete Course Run: " + runId)
             responseText.delete("1.0" ,"end")
             responseText.insert(tk.END, resp.text)
             tabControl.select(tab3)

@@ -1,27 +1,33 @@
+from AdditionalFunction import pprintJsonFormat
 import base64
 import json
 import re
 
 import requests
-from EncryptAndDecryptFunction import doDecryption, doEncryption, pprintJsonFormat
-from HttpRequestFunction import getHttpRequest, loadFile, postHttpRequestJson, saveJsonFormat
+from EncryptAndDecryptFunction import doDecryption, doEncryption
+from HttpRequestFunction import getHttpRequest, postHttpRequestJson
 
-def deleteAssessment():
-    deleteAssessmentURL = "https://uat-api.ssg-wsg.sg/tpg/assessments/details/ASM-2106-000048"
-    payload = "{\"assessment\":{\"action\": \"void\"}}"
-    cancelPayloadEncrypt = doEncryption(payload.encode())
-    resp = postHttpRequestJson(deleteAssessmentURL, cancelPayloadEncrypt.decode())
-    plainText = doDecryption(resp.text)
-    pprintJsonFormat(plainText)
-
-def getAssessment(crn):
-    resp = getHttpRequest("https://uat-api.ssg-wsg.sg/tpg/assessments/details/" + crn)
+#-------------------- Description --------------------
+#getAssessment uses getHttpRequest in HttpRequestFunction.py to call view Assessment API  It is used when retrieving an assessment record to view
+#Upon completion, the method will return the text decypted using doDecryption method 
+#Input parameter (assessmentRefNum) : Assessment Reference Number to set the URL for GET Http Request
+#Output parameter (text) : Response return from the server in Readable Text format
+#Additional Note : json.loads follow by json.dumps is used to indent the text into readable format
+#-----------------------------------------------------
+def getAssessment(assessmentRefNum):
+    resp = getHttpRequest("https://uat-api.ssg-wsg.sg/tpg/assessments/details/" + assessmentRefNum)
     plainText = doDecryption(resp.text)
     json_load = json.loads(plainText.decode())
     text = json.dumps(json_load, indent = 4)
     return text
-def displayViewAssessment(crn):
-    req = requests.Request('GET',"https://uat-api.ssg-wsg.sg/tpg/assessments/details/" + crn,headers={'accept':'application/json'}).prepare()
+
+#-------------------- Description --------------------
+#displayViewAssessment is a formatting method that display the information in the Application in a readable format for GET HTTP Request API for View Assessment API
+#Input parameter (assessmentRefNum) : Assessment Reference Number to set the URL for GET Http Request
+#Output parameter (text) : Formatted Version of the text to be display
+#-----------------------------------------------------
+def displayViewAssessment(assessmentRefNum):
+    req = requests.Request('GET',"https://uat-api.ssg-wsg.sg/tpg/assessments/details/" + assessmentRefNum,headers={'accept':'application/json'}).prepare()
     text =  '{}\n{}\r\n{}\n{}\r\n\r\n'.format(
             '----------------Request Information----------------',
             req.method + ' ' + req.url,
@@ -31,7 +37,11 @@ def displayViewAssessment(crn):
     return text
 
 
-#This method is to update the curl text dynamically for displaying purpose in SearchAssessmentPage
+#-------------------- Description --------------------
+#curlRequestSearchAssessment is a formatting method that display the information in the Application in a readable format for POST HTTP Request API (Search Assessment) 
+#Input parameter (payloadToDisplay) : Request Body information that is going to be send over to the server
+#Output parameter (text) : Formatted Version of the text to be display
+#----------------------------------------------------- 
 def curlRequestSearchAssessment(payloadToDisplay):
      # Remove Whitespacing new line and tabs for accurate content length
       payloadToSend = re.sub(r"[\n\t\s]*", "", payloadToDisplay)
@@ -46,11 +56,14 @@ def curlRequestSearchAssessment(payloadToDisplay):
       )
       return text
 
-#This method is to update the curl text dynamically for displaying purpose in SearchAssessmentPage
+#-------------------- Description --------------------
+#displayUpdateAssessment is a formatting method that display the information in the Application in a readable format for POST HTTP Request API (Update or Void Assessment API) 
+#Input parameter (refNum) : Assessment Reference Number
+#Input parameter (payloadToDisplay) : Request Body information that is going to be send over to the server
+#Output parameter (text) : Formatted Version of the text to be display
+#----------------------------------------------------- 
 def displayUpdateAssessment(refNum,payloadToDisplay):
-     # Remove Whitespacing new line and tabs for accurate content length
-      payloadToSend = re.sub(r"[\n\t\s]*", "", payloadToDisplay)
-      req = requests.Request('POST',"https://uat-api.ssg-wsg.sg/tpg/assessments/details/" + refNum ,headers={'accept':'application/json'},data=str(payloadToSend)).prepare()
+      req = requests.Request('POST',"https://uat-api.ssg-wsg.sg/tpg/assessments/details/" + refNum ,headers={'accept':'application/json'},data=str(payloadToDisplay)).prepare()
       text =  '{}\n{}\r\n{}\n{}\r\n\r\n{}\n{}'.format(
             '----------------Request Information----------------',
           req.method + ' ' + req.url,
@@ -63,6 +76,14 @@ def displayUpdateAssessment(refNum,payloadToDisplay):
 
 
 
+#-------------------- Description --------------------
+#searchAssessment uses postHttpRequestJson in HttpRequestFunction.py to call Search Assessment API. It is used to search existing Assessment record
+#The payload will be encrypted using doEncryption method before calling POST Http Request.
+#Upon calling the Http Request, the server will response back the information encrypted. The method returns the response decrypted using doDecrypted method
+#Input parameter (searchAssessmentPayload) : Assessment information in text format to send as payload in POST Http Request
+#Output parameter (text) : Response return from the server in Readable Text format
+#Additional Note : json.loads follow by json.dumps is used to indent the text into readable format
+#-----------------------------------------------------
 def searchAssessment(searchAssessmentPayload):
     searchAssessmentURL = ("https://uat-api.ssg-wsg.sg/tpg/assessments/search")
 
@@ -73,7 +94,13 @@ def searchAssessment(searchAssessmentPayload):
     text = json.dumps(json_load, indent = 4)
     return text
 
-
+#-------------------- Description --------------------
+#updateAssessment uses postHttpRequestJson in HttpRequestFunction.py to call Update or Void Assessment API. It is used when updating an existing Assessment
+#The payload will be encrypted using doEncryption method before calling POST Http Request. Upon completion, the method will return the text decypted using doDecryption method.
+#Input parameter (refNum) : Assessment Reference Number to delete and set the URL for POST Http Request
+#Input parameter (payload) : Assessment information in text format to send as payload in POST Http Request
+#Output parameter (text) : Response return from the server in Readable Text format 
+#----------------------------------------------------- 
 def updateAssessment(refNum, payload):
     updateAssessmentURL = "https://uat-api.ssg-wsg.sg/tpg/assessments/details/" + refNum
     updateAssessmenEncrypt = doEncryption(payload.encode())
@@ -83,15 +110,14 @@ def updateAssessment(refNum, payload):
     text = json.dumps(json_load, indent = 4)
     return text
     
-# This method is to update the curl text dynamically for displaying purpose in AddEnrolment Page
+#-------------------- Description --------------------
+#displayPostRequestAssessment is a formatting method that display the information in the Application in a readable format for POST HTTP Request API (Create Assessment) 
+#Input parameter (payloadToDisplay) : Request Body information that is going to be send over to the server
+#Output parameter (text) : Formatted Version of the text to be display
+#----------------------------------------------------- 
 def displayPostRequestAssessment(payloadToDisplay):
-    # Remove Whitespacing new line and tabs for accurate content length
-    try:
-        payloadToSend = re.sub(r"[\n\t\s]*", "", payloadToDisplay)
-    except :
-        payloadToSend = payloadToDisplay
     req = requests.Request('POST', "https://uat-api.ssg-wsg.sg/tpg/assessments",
-                           headers={'accept': 'application/json'}, data=str(payloadToSend)).prepare()
+                           headers={'accept': 'application/json'}, data=str(payloadToDisplay)).prepare()
     text = '{}\n{}\r\n{}\n{}\r\n\r\n{}\n{}'.format(
         '----------------Request Information----------------',
         req.method + ' ' + req.url,
@@ -102,13 +128,18 @@ def displayPostRequestAssessment(payloadToDisplay):
     )
     return text
 
+#-------------------- Description --------------------
+#addAssessmentFn uses postHttpRequestJson in HttpRequestFunction.py to call Create Assessment API. It is used when creating a new Assessment Record
+#The payload will be encrypted using doEncryption method before calling POST Http Request. Upon completion, the method will return the text decypted using doDecryption method.
+#Input parameter (assessmentPayload) : Assessment information in text format to send as payload in POST Http Request
+#Output parameter (text) : Response return from the server in Readable Text format 
+#Additional Note : json.loads follow by json.dumps is used to indent the text into readable format
+#----------------------------------------------------- 
 def addAssessmentFn(assessmentPayload):
     addAssessmentURL = "https://uat-api.ssg-wsg.sg/tpg/assessments"
     ciptertext = doEncryption(assessmentPayload.encode())
     response = postHttpRequestJson(addAssessmentURL, ciptertext.decode())
-    print(response.text)
     plainText = doDecryption(response.text)
-    pprintJsonFormat(plainText)
     json_load = json.loads(plainText.decode())
     text = json.dumps(json_load, indent=4)
     return text

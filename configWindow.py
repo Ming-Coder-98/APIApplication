@@ -1,7 +1,7 @@
 import json
 from os import makedirs
 import os
-from HttpRequestFunction import loadFile, saveJsonFormat
+from AdditionalFunction import loadFile, saveJsonFormat
 import tkinter as tk
 from tkinter import *
 from tkinter import filedialog
@@ -10,16 +10,10 @@ from resources import config_path
 
 def displayFileLabel(window ,filePath, type):
     global pathName, certPemPath
-    # label_2 = Label(window)
-
-    # label_2.config(text=os.path.basename(filePath), fg="blue")
-    print(entries)
     if (type == "cert"):
-        # label_2.place(relx= 0.65, rely=0.275)
         entries[2].clear_text()
         entries[2].insert_text(filePath)
     else :
-        # label_2.place(relx= 0.65, rely=0.425)
         entries[3].clear_text()
         entries[3].insert_text(filePath)
 
@@ -29,14 +23,12 @@ def displayFileLabel(window ,filePath, type):
 #This method is used to saved the local Certificate Pem file path in a local variable 
 def getCertPemFile(window):
     filePath=filedialog.askopenfilename()
-    certPemPath = filePath
     displayFileLabel(window, filePath, "cert")
 
 
 #This method is used to saved the local Key Pem file path in a local variable 
 def getKeyPemFile(window):
     filePath=filedialog.askopenfilename()
-    keyPemPath = filePath
     displayFileLabel(window, filePath,"key")
 
 
@@ -44,8 +36,7 @@ def getKeyPemFile(window):
 class setConfigWindow(Toplevel):
     global entries
     entries = []
-    def __init__(self, master = None):
-        print("init")       
+    def __init__(self, master = None):      
         
         super().__init__(master = master)
         self.title("Configuration Window")
