@@ -147,7 +147,7 @@ class addAttendancePage1(tk.Frame):
         entry_referenceNumber = Entry(self)
         entry_referenceNumber.place(x=250, y=385)
 
-        label_corppassID = Label(self, text="Corpass ID", width=20, font=("bold", 10), anchor='w')
+        label_corppassID = Label(self, text="Corpass ID*", width=20, font=("bold", 10), anchor='w')
         label_corppassID.place(x=80, y=410)
 
         # label_closeRegDate_ttp = CreateToolTip(label_closeRegDate, tooltipDescription["CourseRegistrationDateClose"])

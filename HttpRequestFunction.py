@@ -1,63 +1,63 @@
+from AdditionalFunction import loadFile, printResponse
 import requests
 import json
 from resources import config_path
 from tkinter import messagebox
-keyPath = ""
-certPath = ""
-#Preload keypath and certPath
+
+#-------------------- Description --------------------
+#httpRequestInit is an automated configuration method that is triggered whenever the following method is called - getHttpRequest, postHttpRequest, postHttpRequestJson.
+#httpRequestInit operate with an external Json file (config.json) where it would load the Cert Pem File ("certPath") and Key Pem File ("keyPath") which will be used when calling the API
+#It uses loadFile function from Additional Function.py to load the config.json file
+#Additional Note : "config_path" refers to the location path of the config.json file
+#-----------------------------------------------------
 def httpRequestInit():
-      
       global keyPath, certPath
       config = loadFile(config_path)
       config = json.loads(config)
       keyPath = config["keyPath"]
       certPath = config["certPath"]
 
+#-------------------- Description --------------------
+#getHttpRequest is a method to send GET Http request.
+#getHttpRequest uses requests library to send the GET Http request
+#Input parameter (request_url) : URL to send the GET Http request to 
+#Output parameter (response) : Response Object
+#Additional Note : "cert" is used as a Client Side Certificates.  It can be specific as a single file (containing the private key and the certificate)
+#-----------------------------------------------------
 def getHttpRequest(request_url):
       httpRequestInit()
-      print(request_url)
-      if keyPath != '' and certPath != '':
-            response = requests.get(request_url, cert = (certPath,keyPath))
-            # print(response.request.headers)
-            printResponse(response)
-            return response
-      else:
-            messagebox.showerror(title="Error", message="Unable to call API - Key Path or Cert Path is empty")
-            return None
+      response = requests.get(request_url, cert = (certPath,keyPath))
+      return response
+
       
-#payload must not be in Bytes
+#-------------------- Description --------------------
+#postHttpRequest is a method to send POST Http request.
+#postHttpRequest starts by invoking httpRequestInit() method
+#postHttpRequest uses requests library to send the POST Http request
+#Input parameter (request_url) : URL to send the POST Http request to 
+#Input parameter (payload) : payload information set as POST  
+#Output parameter (response) : Response Object
+#Additional Note 1 : This method is used when encryption is not needed
+#Additional Note 2 : "cert" is used as a Client Side Certificates.  It can be specific as a single file (containing the private key and the certificate)
+#-----------------------------------------------------
 def postHttpRequest(request_url, payload):
       httpRequestInit()
-      print("Post Http Request")
       response = requests.post(request_url, data = payload,cert = (certPath,keyPath))
-      # print(response.request.headers)
-      # print(response.request.body)
-      # print(response.status_code)
       printResponse(response)
       return response
 
-#payload must not be in Bytes
-#Reminder: doEncryption Function return in Byte
-#Use this if Encryption is needed
+#-------------------- Description --------------------
+#postHttpRequestJson is a method to send POST Http request.
+#postHttpRequestJson starts by invoking httpRequestInit() method
+#postHttpRequestJson uses requests library to send the POST Http request
+#Input parameter (request_url) : URL to send the POST Http request to 
+#Input parameter (payload) : payload information set as POST
+#Output parameter (response) : Response Object
+#Additional Note 1 : This method is used when encryption is needed. The reason behind is to form-encoded the payload. Using "json = payload", helps to encode it automatically
+#Additional Note 3 : "cert" is used as a Client Side Certificates.  It can be specific as a single file (containing the private key and the certificate)
+#-----------------------------------------------------
 def postHttpRequestJson(request_url, payload):
       httpRequestInit()
-      print("Post Http Request Json")
       response = requests.post(request_url, json = payload,cert =  (certPath,keyPath))
-      # print(response.request.body)
-      #printResponse(response)
       return response
 
-def loadFile(payloadFileName):
-      global payload
-      #This is a template to load the file
-      courseRunPayload = open(payloadFileName, "r")
-      payload = courseRunPayload.read()
-      return payload
-
-def saveJsonFormat(content, fileName):
-      with open(fileName, 'w') as f:
-            json.dump(content, f, indent=4)
-
-def printResponse(response):
-      print("Status Code: ", response.status_code)
-      print(response.text)
