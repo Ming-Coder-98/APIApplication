@@ -1,5 +1,5 @@
 # CONTRIBUTIONS:
-# Authors: Lam Zi Wen, Grace Chua, Chong Zhe Ming
+# Authors: Lam Zi Wen, Chua Mint Sheen Grace, Chong Zhe Ming
 
 from resources import resource_path
 from tkinter import Label, Menu
