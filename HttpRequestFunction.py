@@ -54,7 +54,7 @@ def postHttpRequest(request_url, payload):
 #Input parameter (payload) : payload information set as POST
 #Output parameter (response) : Response Object
 #Additional Note 1 : This method is used when encryption is needed. The reason behind is to form-encoded the payload. Using "json = payload", helps to encode it automatically
-#Additional Note 3 : "cert" is used as a Client Side Certificates.  It can be specific as a single file (containing the private key and the certificate)
+#Additional Note 2 : "cert" is used as a Client Side Certificates.  It can be specific as a single file (containing the private key and the certificate)
 #-----------------------------------------------------
 def postHttpRequestJson(request_url, payload):
       httpRequestInit()

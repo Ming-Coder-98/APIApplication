@@ -10,8 +10,8 @@
     "CourseRegistrationDateClose":"Closing Registration Date should not be earlier than Opening Registration Date\nExample: 20210621(YYYYMMDD)",
     "CourseStartDate":"Course Start Date should not be earlier than Opening/Closing Registration Dates \nExample: 20210628(YYYYMMDD)",
     "CourseEndDate":"Course End Date should not be earlier than Opening/Closing Registration Dates\nExample: 20210628(YYYYMMDD)",
-    "CourseVacCode":"Example: 01",
-    "CourseVacDescription":"Example: Description",
+    "CourseVacCode":"Indication of the Course vacancy information code \nExample: 01",
+    "CourseVacDescription":"Indication of the Course vacancy information code \nExample: Description",
     "CourseRunId": "The Course Run Id is used as a URL for GET Request Call\nExample: https://api.ssg-wsg.sg/courses/runs/{runId}",
     "conferringInstitute":"UEN/branch code of the supporting assessment TP for the results. If left blank, the trainingPartner.code is set as the default value.",
     "collectionStatus":"Status of the trainee's or employer's payment of the course fees to the training partner",
@@ -30,8 +30,8 @@
 
     "Grade":"The letter grade of the assessment, entered as A-F, if applicable",
 
-    "InfoTypeCode": "Example: 01",
-    "InfoTypeDescription": "Example: Description",
+    "InfoTypeCode": "Indication of the Course run schedule info code \nExample: 01",
+    "InfoTypeDescription": "Indication of the the description of Course run schedule info \nExample: Description",
     "IntakeSize": "Indication of the maximum pax for a class. Example: 50",
 
     "lastUpdateDateTo": "Optional parameter. This will return records up till the specified date. Format YYYY-MM-DD\n Example: 2020-02-01",
@@ -53,7 +53,7 @@
     "Result":"The outcome of the assessment, specified as pass, fail or exempt",
     
     "Street": "Example: Street ABC",
-    "ScheduleInfo": "Example: Sat / 5 Sats / 9am - 6pm",
+    "ScheduleInfo": "Indication of the Course run schedule info \nExample: Sat / 5 Sats / 9am - 6pm",
     "SessionId":"Indication of the ID of the session\n Eg: TGS-2020000703-224596-S1",
     "SessionMonth":"Indication of the Month of the session\n Eg: 112021",
     "SessionStartDate":"Start Date should not be later than End Date \nExample: 20210616(YYYYMMDD) ",
