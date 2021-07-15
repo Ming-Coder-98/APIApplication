@@ -14,7 +14,7 @@ import json
 #Output parameter (text) : Response return from the server in Readable Text format
 #Additional Note : json.loads follow by json.dumps is used to indent the text into readable format
 #-----------------------------------------------------
-def getSessionAttendance(runId, uPIPen, crn, sessionId):
+def getSessionAttendance(runId, uen, crn, sessionId):
     if uen != '':
         uen = "?uen=" + uen
     if crn != '':
