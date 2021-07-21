@@ -1,6 +1,5 @@
 import json
 
-
 def loadFile(payloadFileName):
       global payload
       #This is a template to load the file

@@ -1,3 +1,6 @@
+# CONTRIBUTIONS:
+# Authors: Lam Zi Wen, Chua Mint Sheen Grace, Chong Zhe Ming
+
 from resources import resource_path
 from tkinter import Label, Menu
 import tkinter as tk

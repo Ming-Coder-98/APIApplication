@@ -1,7 +1,7 @@
 {
     "key": "WB9YusKNEEwYwpXuv0Bx5yuGzPIhXTBnMevAumwtcQ4=",
-    "certPath": "",
-    "keyPath": "",
+    "certPath": "C:/Users/Ming/Downloads/APIApplication/cert.pem",
+    "keyPath": "C:/Users/Ming/Downloads/APIApplication/key.pem",
     "IV": "SSGAPIInitVector",
     "UEN": "199900650G"
 }
