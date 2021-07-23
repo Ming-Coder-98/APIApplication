@@ -167,6 +167,6 @@ class StartPage(tk.Frame):
 
 app = APIProject()
 app.geometry("500x747")
-app.winfo_toplevel().title("SSG-WSG API Application")
+app.winfo_toplevel().title("SSG API Testing Application")
 app.resizable(0, 0)
 app.mainloop()
