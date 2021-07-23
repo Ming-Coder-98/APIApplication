@@ -285,6 +285,8 @@ class AddAssessmentPreviewPage(tk.Frame):
         # Configuration for Notebook layout
         tabControl = ttk.Notebook(self)
 
+        #Tab 2 refers to Request
+        #Tab 3 refers to Response
         tab2 = ttk.Frame(tabControl)
         tab3 = ttk.Frame(tabControl)
 
@@ -308,6 +310,9 @@ class AddAssessmentPreviewPage(tk.Frame):
                                command=lambda: controller.show_frame(AddAssessmentMainPage),
                                )
         backButton.place(relx=0.5, rely=0.2, anchor=CENTER)
+
+        #exportButton1 refers to "Export Decrytped Payload" button
+        #exportButton2 refers tp "Export Decrypted Response" button
         exportButton1 = tk.Button(self, text="Export Decrypted Payload", bg="white", width=20, pady=3,
                                   command=lambda: downloadFile("payload"))
         exportButton1.place(relx=0.3, rely=0.90, anchor=CENTER)
@@ -468,7 +473,7 @@ class addAssessmentPageFileUpload(tk.Frame):
         self.curlText.bind("<Key>", lambda e: txtEvent(e))
         responseText.bind("<Key>", lambda e: txtEvent(e))
 
-        browseButton = tk.Button(self, text="Browse", command=lambda: getCertPemFile(self))
+        browseButton = tk.Button(self, text="Browse", command=lambda: getFile(self))
         browseButton.pack(in_=fileuploadframe, side=tk.LEFT)
         submitButton = tk.Button(self, text="Create", bg="white", width=25, pady=4, command=lambda: submitCallBack())
         submitButton.place(relx=0.5, rely=0.21, anchor=CENTER)
@@ -577,7 +582,7 @@ class addAssessmentPageFileUpload(tk.Frame):
 
             edit.focus_set()
 
-        def getCertPemFile(window):
+        def getFile(window):
             self.curlText.delete("1.0", "end")
             filePath = filedialog.askopenfilename(filetypes=[('JSON', '*.json')])
             fileUploadEntry.delete(0, 'end')

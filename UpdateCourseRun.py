@@ -1235,7 +1235,7 @@ class updateCourseRunPageFormFileUpload(tk.Frame):
 
         fileUploadEntry = tk.Entry(fileuploadframe, width=45)
         fileUploadEntry.pack(side=tk.LEFT, fill=tk.X )
-        fileUploadButton = tk.Button(self,text="Browse", command=lambda:getCertPemFile(self))       
+        fileUploadButton = tk.Button(self,text="Browse", command=lambda:getFile(self))       
         fileUploadButton.pack(in_=fileuploadframe, side=tk.LEFT)
 
          #Configuration for Notebook layout
@@ -1315,7 +1315,7 @@ class updateCourseRunPageFormFileUpload(tk.Frame):
                
             edit.focus_set()
 
-        def getCertPemFile(window):
+        def getFile(window):
             curlText.delete("1.0","end")
             filePath=filedialog.askopenfilename(filetypes=[('JSON', '*.json')])
             fileUploadEntry.delete(0, 'end')

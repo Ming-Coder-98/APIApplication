@@ -598,7 +598,7 @@ class addEnrolmentPageFileUpload(tk.Frame):
         responseText.bind("<Key>", lambda e: txtEvent(e))
 
 
-        browseButton = tk.Button(self,text="Browse", command=lambda:getCertPemFile(self))       
+        browseButton = tk.Button(self,text="Browse", command=lambda:getFile(self))       
         browseButton.pack(in_=fileuploadframe, side=tk.LEFT)
         submitButton = tk.Button(self, text="Create", bg="white", width=25, pady=4, command=lambda: submitCallBack())
         submitButton.place(relx=0.5, rely=0.21, anchor=CENTER)
@@ -700,7 +700,7 @@ class addEnrolmentPageFileUpload(tk.Frame):
                
             edit.focus_set()
 
-        def getCertPemFile(window):
+        def getFile(window):
             self.curlText.delete("1.0","end")
             filePath=filedialog.askopenfilename(filetypes=[('JSON', '*.json')])
             fileUploadEntry.delete(0, 'end')

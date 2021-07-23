@@ -1039,7 +1039,7 @@ class addCourseRunPageFormFileUpload(tk.Frame):
         responseText.place(height=405, width=440, y=20)
         # responseText.bind("<Key>", lambda e: "break")
 
-        browseButton = Button(self, text="Browse", command=lambda: getCertPemFile(self))
+        browseButton = Button(self, text="Browse", command=lambda: getFile(self))
         browseButton.pack(in_=fileuploadframe, side=tk.LEFT)
         submitButton = Button(self, text="Create", bg="white", width=25, pady=4, command=lambda: submitCallBack())
         submitButton.place(relx=0.5, rely=0.21, anchor=CENTER)
@@ -1103,7 +1103,7 @@ class addCourseRunPageFormFileUpload(tk.Frame):
 
             edit.focus_set()
 
-        def getCertPemFile(window):
+        def getFile(window):
             curlText.delete("1.0", "end")
             filePath = filedialog.askopenfilename(filetypes=[('JSON', '*.json')])
             fileUploadEntry.delete(0, 'end')
