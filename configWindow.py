@@ -40,7 +40,7 @@ class setConfigWindow(Toplevel):
         
         super().__init__(master = master)
         self.title("Configuration Window")
-        self.geometry("470x180")
+        self.geometry("470x180+200+200")
         self.resizable(False,False)
 
         frame = tk.Frame(self)

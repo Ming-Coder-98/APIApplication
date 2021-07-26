@@ -1,3 +1,4 @@
+import os
 from AdditionalFunction import loadFile, printResponse
 import requests
 import json
@@ -16,6 +17,11 @@ def httpRequestInit():
       config = json.loads(config)
       keyPath = config["keyPath"]
       certPath = config["certPath"]
+      isCertPathExist = os.path.exists(certPath)
+      isKeyPathExist = os.path.exists(keyPath)
+      if isKeyPathExist == False or isCertPathExist == False:
+            messagebox.showerror("Error", "Invalid Cert or Key Path")
+
 
 #-------------------- Description --------------------
 #getHttpRequest is a method to send GET Http request.
