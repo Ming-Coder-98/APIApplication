@@ -192,8 +192,6 @@ class AddAssessmentMainPage(tk.Frame):
                                    addAssessmentPageFileUpload))
         nextButton.place(x=250, y=675, anchor=CENTER)
 
-        # retrieveButton = tk.Button(self, text="Retrieve required fields", bg="white", width=25, pady=5)
-        # retrieveButton.place(x=250, y=265, anchor=CENTER)
         def NextCallBack():
             AddAssessmentPreviewPage.payload = StoreAndSave()
             AddAssessmentPreviewPage.refresh(controller.frames[AddAssessmentPreviewPage].curlText)
@@ -241,7 +239,6 @@ class AddAssessmentMainPage(tk.Frame):
                 payload['assessment']['conferringInstitute'] = {}
                 payload['assessment']['conferringInstitute']['code'] = self.entry_branchCode.get()
 
-            print (json.dumps(payload, indent=4))
             return str(json.dumps(payload, indent=4))
 
     def show_frame(self, cont):
@@ -285,8 +282,8 @@ class AddAssessmentPreviewPage(tk.Frame):
         # Configuration for Notebook layout
         tabControl = ttk.Notebook(self)
 
-        #Tab 2 refers to Request
-        #Tab 3 refers to Response
+        #Tab 2 refers to Request Tab
+        #Tab 3 refers to Response Tab
         tab2 = ttk.Frame(tabControl)
         tab3 = ttk.Frame(tabControl)
 
@@ -485,14 +482,15 @@ class addAssessmentPageFileUpload(tk.Frame):
         exportRespButton = tk.Button(self, text="Export Decrypted Response", bg="white", width=25, pady=5,
                                      command=lambda: downloadFile())
         exportRespButton.place(relx=0.5, rely=0.95, anchor=CENTER)
-
+        
+        #Radio button for Request
         self.varPayload = IntVar()
         Radiobutton(tab2, text="Decrypt", variable=self.varPayload, value=1, width=12, anchor='w',
                     command=lambda: displayPayload("decrypt")).place(x=0, y=-5)
         Radiobutton(tab2, text="Encrypt", variable=self.varPayload, value=2, width=12, anchor='w',
                     command=lambda: displayPayload("encrypt")).place(x=130, y=-5)
         self.varPayload.set(1)
-
+        #Radio button for Response
         self.varResp = IntVar()
         Radiobutton(tab3, text="Decrypt", variable=self.varResp, value=1, width=12, anchor='w',
                     command=lambda: displayResp("decrypt")).place(x=0, y=-5)

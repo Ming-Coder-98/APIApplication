@@ -16,6 +16,7 @@
     "conferringInstitute":"UEN/branch code of the supporting assessment TP for the results. If left blank, the trainingPartner.code is set as the default value.",
     "collectionStatus":"Status of the trainee's or employer's payment of the course fees to the training partner",
     "CourseAdminEmail":"Example: test@gmail.com",
+    "CorpPassId":"Corppass Id given",
 
     "discountAmount":"Amount of discount the training partner is deducting from course fees",
     "DOB":"Trainee's date of birth \nExample: 1950-10-16",
@@ -38,6 +39,8 @@
     "lastUpdateDateFrom" : "Mandatory if retrieveType is DELTA. This will return records with last update date same or greater than this input value. Format YYYY-MM-DD.\nExample: 2020-01-01",
 
     "ModeOfTraining":"Indication the type of training conducted \nExample: 2 - Asynchronous eLearning",
+
+    "NumberOfHours":"No of Hours or duration on the session attended. Range from 0.5 - 8.0. The field is mandatory only for \"On-the-Job\" Mode of Training.",
 
     "RegisteredUserCount": "Indication of course run registered user count. This number cannot be more than intakeSize + threshold\nExample: 60",
     "Room": "Information of Room is required if Mode of training is not 2 or 4.\nExample: 24",
@@ -64,6 +67,8 @@
     "Score":"The numerical score or percentage score of the assessment, entered as a whole number, if applicable",
     "SponsorshipType":"Sponsorship type for the course enrolment",
     "status":"Status of enrolment records to be searched",
+    "StatusCode":"Attendance Taken Status Code\n Example: 1",
+    "SurveyLanguage":"Survey Language used for sending out the survey.",
 
     "TrainerCode":"Indication whether the trainer is a new or existing trainer\n\nExample: 1 - Existing",
     "TrainerDescription":"Example: Description of the Trainer",
@@ -80,6 +85,7 @@
     "TpCode":"Code for the training partner conducting the course for which the trainee is enrolled",
     "TraineeIdType":"Trainee's ID type",
     "TraineeId":"Trainee's government-issued ID number\n Example S1234567H",
+    "TraineeName":"Name of Trainee",
     "Threshold": "Indication of any additional pax that can register above maximum pax. If threshold = 10, Total allowed registration pax is intakeSize + threshold = 60\nExample: 60",
     
     "UEN": "UEN of the training partner organisation conducting the course for which the trainee is enrolled",

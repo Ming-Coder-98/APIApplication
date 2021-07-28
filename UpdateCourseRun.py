@@ -1099,6 +1099,8 @@ class updateCourseRunPagePreview(tk.Frame):
         tab3 = ttk.Frame(tabControl)
 
         # Adding of tabs
+        #Tab 2 refers to Request Tab
+        #Tab 3 refers to Response Tab
         tabControl.add(tab2, text='Request')
         tabControl.add(tab3, text='Reponse')
         tabControl.place(width=440, height=460, x=30, y=182)
@@ -1120,6 +1122,9 @@ class updateCourseRunPagePreview(tk.Frame):
                                command=lambda: controller.show_frame(updateCourseRunPagePage4),
                                )
         backButton.place(relx=0.5, rely=0.2, anchor=CENTER)
+        
+        #Exportbutton1 refers to Export Payload
+        #Exportbutton2 refers to Export Response
         exportButton1 = tk.Button(self, text="Export Payload", bg="white", width=15, pady=5, command = lambda: downloadFile("payload"))
         exportButton1.place(relx=0.3, rely=0.90, anchor=CENTER)
         exportButton2 = tk.Button(self, text="Export Response", bg="white", width=15, pady=5,command = lambda: downloadFile("response"))
@@ -1244,7 +1249,9 @@ class updateCourseRunPageFormFileUpload(tk.Frame):
         tab2 = ttk.Frame(tabControl)
         tab3 = ttk.Frame(tabControl)
         
-        #Adding of tabs
+        # Adding of tabs
+        #Tab 2 refers to Request Tab
+        #Tab 3 refers to Response Tab
         tabControl.add(tab2, text ='Request')
         tabControl.add(tab3, text ='Reponse')
         tabControl.place(width= 440, height= 460, x = 30, y = 222)
@@ -1264,10 +1271,6 @@ class updateCourseRunPageFormFileUpload(tk.Frame):
                                command=lambda: controller.show_frame(updateCourseRunPageSelect),
                                )
         backButton.place(relx=0.5, rely=0.27, anchor=CENTER)
-        # exportButton1 = tk.Button(self, text="Export Payload", bg="white", width=15, pady=5, command = lambda: downloadFile("payload"))
-        # exportButton1.place(relx=0.3, rely=0.95, anchor=CENTER)
-        # exportButton2 = tk.Button(self, text="Export Response", bg="white", width=15, pady=5,command = lambda: downloadFile("response"))
-        # exportButton2.place(relx=0.7, rely=0.95, anchor=CENTER)
         
         #adding of single line text box
         edit = Entry(self, background="light gray") 

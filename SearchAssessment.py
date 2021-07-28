@@ -305,6 +305,8 @@ class searchAssessmentPage2(tk.Frame):
         tab3 = ttk.Frame(tabControl)
 
         # Adding of tabs
+        #Tab 2 refers to Request Tab
+        #Tab 3 refers to Response Tab
         tabControl.add(tab2, text='Request')
         tabControl.add(tab3, text='Response')
         tabControl.place(width=440, height=460, x=30, y=222)
@@ -325,6 +327,9 @@ class searchAssessmentPage2(tk.Frame):
         backButton = tk.Button(self, text="Back", bg="white", width=15, pady=5,
                                command=lambda: clearEntryBox())
         backButton.place(relx=0.35, rely=0.27, anchor=CENTER)
+        
+        #Exportbutton1 refers to Export Payload
+        #Exportbutton2 refers to Export Response
         exportButton1 = tk.Button(self, text="Export Payload", bg="white", width=15, pady=5,
                                   command=lambda: downloadFile("payload"))
         exportButton1.place(relx=0.3, rely=0.95, anchor=CENTER)

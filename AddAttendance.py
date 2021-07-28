@@ -48,7 +48,7 @@ class addAttendancePage1(tk.Frame):
         label_sessionID = Label(self, text="Session ID", width=20, font=("bold", 10), anchor='w')
         label_sessionID.place(x=80, y=160)
 
-        # label_closeRegDate_ttp = CreateToolTip(label_closeRegDate, tooltipDescription["CourseRegistrationDateClose"])
+        label_sessionID_ttp = CreateToolTip(label_sessionID, tooltipDescription["SessionId"])
 
         entry_sessionID = Entry(self)
         entry_sessionID.place(x=250, y=160)
@@ -56,7 +56,7 @@ class addAttendancePage1(tk.Frame):
         label_attendanceStatusCode = Label(self, text="Attendance Status Code*", width=20, font=("bold", 10), anchor='w')
         label_attendanceStatusCode.place(x=80, y=185)
 
-        # label_CourseModeOfTraining_ttp = CreateToolTip(label_CourseModeOfTraining, tooltipDescription["ModeOfTraining"])
+        label_attendanceStatusCode_ttp = CreateToolTip(label_attendanceStatusCode, tooltipDescription["StatusCode"])
 
         attendanceStatusCode = ttk.Combobox(self, width=17, state="readonly")
         attendanceStatusCode['values'] = ["Select an Option",
@@ -70,7 +70,7 @@ class addAttendancePage1(tk.Frame):
         label_traineeID = Label(self, text="Trainee ID*", width=20, font=("bold", 10), anchor='w')
         label_traineeID.place(x=80, y=210)
 
-        # label_closeRegDate_ttp = CreateToolTip(label_closeRegDate, tooltipDescription["CourseRegistrationDateClose"])
+        label_traineeID_ttp = CreateToolTip(label_traineeID, tooltipDescription["TraineeId"])
 
         entry_traineeID = Entry(self)
         entry_traineeID.place(x=250, y=210)
@@ -78,7 +78,7 @@ class addAttendancePage1(tk.Frame):
         label_traineeName = Label(self, text="Trainee Name*", width=20, font=("bold", 10), anchor='w')
         label_traineeName.place(x=80, y=235)
 
-        # label_closeRegDate_ttp = CreateToolTip(label_closeRegDate, tooltipDescription["CourseRegistrationDateClose"])
+        label_traineeNamee_ttp = CreateToolTip(label_traineeName, tooltipDescription["TraineeName"])
 
         entry_traineeName = Entry(self)
         entry_traineeName.place(x=250, y=235)
@@ -86,7 +86,7 @@ class addAttendancePage1(tk.Frame):
         label_traineeEmail = Label(self, text="Trainee Email", width=20, font=("bold", 10), anchor='w')
         label_traineeEmail.place(x=80, y=260)
 
-        # label_closeRegDate_ttp = CreateToolTip(label_closeRegDate, tooltipDescription["CourseRegistrationDateClose"])
+        label_traineeEmail_ttp = CreateToolTip(label_traineeEmail, tooltipDescription["TrainerEmail"])
 
         entry_traineeEmail = Entry(self)
         entry_traineeEmail.place(x=250, y=260)
@@ -94,7 +94,7 @@ class addAttendancePage1(tk.Frame):
         label_traineeIdType = Label(self, text="Trainee ID Type*", width=20, font=("bold", 10), anchor='w')
         label_traineeIdType.place(x=80, y=285)
 
-        # label_CourseModeOfTraining_ttp = CreateToolTip(label_CourseModeOfTraining, tooltipDescription["ModeOfTraining"])
+        label_traineeIdType_ttp = CreateToolTip(label_traineeIdType, tooltipDescription["TraineeIdType"])
 
         traineeIdType = ttk.Combobox(self, width=17, state="readonly")
         traineeIdType['values'] = ["Select an Option",
@@ -108,7 +108,7 @@ class addAttendancePage1(tk.Frame):
         label_TraineePhone = Label(self, text="Trainee Contact Number*", width=20, font=("bold", 10), anchor='w')
         label_TraineePhone.place(x=80, y=310)
 
-        # Label_TraineePhone_ttp = CreateToolTip(self.Label_TraineeEmpPhone, tooltipDescription["Phone"])
+        Label_TraineePhone_ttp = CreateToolTip(label_TraineePhone, tooltipDescription["Phone"])
 
         entry_TraineeCountryCode = Entry(self, width=3)
         entry_TraineeCountryCode.place(x=250, y=310)
@@ -122,13 +122,14 @@ class addAttendancePage1(tk.Frame):
         label_traineeHours = Label(self, text="Number of Hours", width=20, font=("bold", 10), anchor='w')
         label_traineeHours.place(x=80, y=335)
 
-        # label_closeRegDate_ttp = CreateToolTip(label_closeRegDate, tooltipDescription["CourseRegistrationDateClose"])
+        label_traineeHours = CreateToolTip(label_traineeHours, tooltipDescription["NumberOfHours"])
 
         entry_traineeHours = Entry(self)
         entry_traineeHours.place(x=250, y=335)
 
         label_surveyLanguage = Label(self, text="Survey Language*", width=20, font=("bold", 10), anchor='w')
         label_surveyLanguage.place(x=80, y=360)
+        label_surveyLanguage_ttp = CreateToolTip(label_surveyLanguage, tooltipDescription["SurveyLanguage"])  
 
         surveyLanguage = ttk.Combobox(self, width=17, state="readonly")
         surveyLanguage['values'] = ["Select an Option",
@@ -142,7 +143,7 @@ class addAttendancePage1(tk.Frame):
         label_referenceNumber = Label(self, text="Reference Number", width=20, font=("bold", 10), anchor='w')
         label_referenceNumber.place(x=80, y=385)
 
-        # label_closeRegDate_ttp = CreateToolTip(label_closeRegDate, tooltipDescription["CourseRegistrationDateClose"])
+        label_referenceNumber_ttp = CreateToolTip(label_referenceNumber, tooltipDescription["CourseReferenceNumber"])
 
         entry_referenceNumber = Entry(self)
         entry_referenceNumber.place(x=250, y=385)
@@ -150,7 +151,7 @@ class addAttendancePage1(tk.Frame):
         label_corppassID = Label(self, text="Corpass ID*", width=20, font=("bold", 10), anchor='w')
         label_corppassID.place(x=80, y=410)
 
-        # label_closeRegDate_ttp = CreateToolTip(label_closeRegDate, tooltipDescription["CourseRegistrationDateClose"])
+        label_corppassID_ttp = CreateToolTip(label_corppassID, tooltipDescription["CorpPassId"])
 
         entry_corppassID = Entry(self)
         entry_corppassID.place(x=250, y=410)
@@ -260,6 +261,8 @@ class addAttendancePage2(tk.Frame):
         tab3 = ttk.Frame(tabControl)
 
         # Adding of tabs
+        #Tab 2 refers to Request Tab
+        #Tab 3 refers to Response Tab
         tabControl.add(tab2, text='Request')
         tabControl.add(tab3, text='Response')
         tabControl.place(width=440, height=460, x=30, y=222)
@@ -281,6 +284,9 @@ class addAttendancePage2(tk.Frame):
         backButton = tk.Button(self, text="Back", bg="white", width=15, pady=5,
                                command=lambda: controller.show_frame(addAttendancePage1))
         backButton.place(relx=0.5, rely=0.25, anchor=CENTER)
+
+        #Exportbutton1 refers to Export Payload
+        #Exportbutton2 refers to Export Response
         exportButton1 = tk.Button(self, text="Export Payload", bg="white", width=15, pady=5,
                                   command=lambda: downloadFile("payload"))
         exportButton1.place(relx=0.3, rely=0.95, anchor=CENTER)

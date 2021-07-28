@@ -408,7 +408,9 @@ class UpdateAssessmentPageFileUploadPage(tk.Frame):
         tab2 = ttk.Frame(tabControl)
         tab3 = ttk.Frame(tabControl)
         
-        #Adding of tabs
+        # Adding of tabs
+        #Tab 2 refers to Request Tab
+        #Tab 3 refers to Response Tab
         tabControl.add(tab2, text ='Request')
         tabControl.add(tab3, text ='Reponse')
         tabControl.place(width= 440, height= 460, x = 30, y = 222)
@@ -435,12 +437,12 @@ class UpdateAssessmentPageFileUploadPage(tk.Frame):
 
         exportRespButton = tk.Button(self, text="Export Decrypted Response", bg="white", width=25, pady=5, command = lambda: downloadFile())
         exportRespButton.place(relx=0.5, rely=0.95, anchor=CENTER)
-        
+        #Radio button for Request
         self.varPayload = IntVar()
         Radiobutton(tab2, text="Decrypt", variable=self.varPayload, value=1, width=12, anchor='w', command = lambda:displayPayload("decrypt")).place(x=0,y=-5)
         Radiobutton(tab2, text="Encrypt", variable=self.varPayload, value=2,width=12, anchor='w',command = lambda:displayPayload("encrypt")).place(x=130,y=-5)
         self.varPayload.set(1)
-
+        #Radio button for Response
         self.varResp = IntVar()
         Radiobutton(tab3, text="Decrypt", variable=self.varResp, value=1, width=12, anchor='w', command = lambda:displayResp("decrypt")).place(x=0,y=-5)
         Radiobutton(tab3, text="Encrypt", variable=self.varResp, value=2,width=12, anchor='w',command = lambda:displayResp("encrypt")).place(x=130,y=-5)

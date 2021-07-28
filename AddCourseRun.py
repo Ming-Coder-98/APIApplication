@@ -161,7 +161,6 @@ class addCourseRunPage1(tk.Frame):
             uen_Info = loadFile(config_path)
             config_uenJson = json.loads(uen_Info)
             uen_number = config_uenJson["UEN"]
-            # self.courseRunInfoPythonObject["course"]["trainingProvider"]["uen"] = uen_number
             self.payload = json.loads(addCourseRunPageForm.payload)
 
             # Create the required field
@@ -355,7 +354,6 @@ class addCourseRunPage2(tk.Frame):
                 payloadToEdit["course"]["runs"][0]['courseVacancy'][
                     'code'] = self.courseVacCode.get()[0]
 
-            # print(payloadToEdit)
             return str(json.dumps(payloadToEdit, indent=4))
 
         def callback():
@@ -376,7 +374,6 @@ class addCourseRunPage3(tk.Frame):
     def addFrame(self, addFrame):      
         self.label_sessionId = Label(addFrame, text="Session Id*", width=20, font=("bold", 10))
         self.label_sessionId.place(x=0, y=0)
-        # label_CRN_ttp = CreateToolTip(label_courseVac, tooltipDescription["CourseReferenceNumber"])
         self.entry_sessionIdadd = Entry(addFrame)
         self.entry_sessionIdadd.place(x=170, y=0)
 
@@ -901,6 +898,8 @@ class addCourseRunPageForm(tk.Frame):
         tab3 = ttk.Frame(tabControl)
 
         # Adding of tabs
+        # tab2 refers to request tab
+        # tab3 refers to response tab
         tabControl.add(tab2, text='Request')
         tabControl.add(tab3, text='Reponse')
         tabControl.place(width=440, height=460, x=30, y=222)
@@ -930,6 +929,8 @@ class addCourseRunPageForm(tk.Frame):
                                command=lambda: controller.show_frame(addCourseRunPage4),
                                )
         backButton.place(relx=0.5, rely=0.25, anchor=CENTER)
+        #Exportbutton1 refers to Export Payload
+        #Exportbutton2 refers to Export Response
         exportButton1 = tk.Button(self, text="Export Payload", bg="white", width=15, pady=5,
                                   command=lambda: downloadFile("payload"))
         exportButton1.place(relx=0.3, rely=0.95, anchor=CENTER)
@@ -1026,6 +1027,8 @@ class addCourseRunPageFormFileUpload(tk.Frame):
         tab3 = ttk.Frame(tabControl)
 
         # Adding of tabs
+        #Tab 2 refers to Request Tab
+        #Tab 3 refers to Response Tab
         tabControl.add(tab2, text='Request')
         tabControl.add(tab3, text='Reponse')
         tabControl.place(width=440, height=460, x=30, y=222)
@@ -1048,6 +1051,8 @@ class addCourseRunPageFormFileUpload(tk.Frame):
                             )
         backButton.place(relx=0.5, rely=0.26, anchor=CENTER)
 
+        #Exportbutton1 refers to Export Payload
+        #Exportbutton2 refers to Export Response
         exportButton1 = Button(self, text="Export Payload", bg="white", width=15, pady=5,
                                command=lambda: downloadFile("payload"))
         exportButton1.place(relx=0.3, rely=0.95, anchor=CENTER)
@@ -1117,8 +1122,6 @@ class addCourseRunPageFormFileUpload(tk.Frame):
         def submitCallBack():
             responseText.delete("1.0", "end")
             payload = contentInfo
-            # payload = json.loads(payload)
-            # print(payload)
             resp = createCourserun(payload)
             textPayload = StringVar(self, value=resp.text)
             responseText.insert(INSERT, textPayload.get())

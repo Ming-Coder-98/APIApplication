@@ -418,6 +418,8 @@ class AddEnrolmentPreviewPage(tk.Frame):
         tab3 = ttk.Frame(tabControl)
 
         # Adding of tabs
+        #Tab 2 refers to Request Tab
+        #Tab 3 refers to Response Tab
         tabControl.add(tab2, text='Request')
         tabControl.add(tab3, text='Reponse')
         tabControl.place(width=440, height=460, x=30, y=182)
@@ -437,21 +439,25 @@ class AddEnrolmentPreviewPage(tk.Frame):
                                command=lambda: controller.show_frame(AddEnrolmentPage2),
                                )
         backButton.place(relx=0.5, rely=0.2, anchor=CENTER)
+        #Exportbutton1 refers to Export Payload
+        #Exportbutton2 refers to Export Response
         exportButton1 = tk.Button(self, text="Export Decrypted Payload", bg="white", width=20, pady=3, command = lambda: downloadFile("payload"))
         exportButton1.place(relx=0.3, rely=0.90, anchor=CENTER)
         exportButton2 = tk.Button(self, text="Export Decrypted Response", bg="white", width=20, pady=3,command = lambda: downloadFile("response"))
         exportButton2.place(relx=0.7, rely=0.90, anchor=CENTER)
         
-        
+        #Radio button for Request  
         self.varPayload = IntVar()
         Radiobutton(tab2, text="Decrypt", variable=self.varPayload, value=1, width=12, anchor='w', command = lambda:displayPayload("decrypt")).place(x=0,y=-5)
         Radiobutton(tab2, text="Encrypt", variable=self.varPayload, value=2,width=12, anchor='w',command = lambda:displayPayload("encrypt")).place(x=130,y=-5)
         self.varPayload.set(1)
 
+        #Radio button for Response
         self.varResp = IntVar()
         Radiobutton(tab3, text="Decrypt", variable=self.varResp, value=1, width=12, anchor='w', command = lambda:displayResp("decrypt")).place(x=0,y=-5)
         Radiobutton(tab3, text="Encrypt", variable=self.varResp, value=2,width=12, anchor='w',command = lambda:displayResp("encrypt")).place(x=130,y=-5)
         self.varResp.set(1)
+        
         # adding of single line text box
         edit = Entry(self, background="light gray")
 
